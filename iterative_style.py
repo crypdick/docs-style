@@ -98,9 +98,7 @@ DIFF_SYSTEM_PROMPT = (
 def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
     """Parse *edits_text* produced by the LLM into a list of ``(before, after)`` tuples.
 
-    The function supports two formats:
-
-    1. **XML blocks** (preferred, multi-line capable):::
+    The function parses **XML blocks** of the form:
 
            <edit>
            <before>
@@ -111,7 +109,6 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
            </after>
            </edit>
 
-    2. **Legacy single-line** ``<before> -> <after>`` entries.
     """
 
     # 1. Try the XML format first.
@@ -126,6 +123,16 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
         before_raw, after_raw = match.group(1), match.group(2)
         before = before_raw.strip("\n")
         after = after_raw.strip("\n")
+
+        # Skip any edit that merely moves or modifies the sentinel value indicating
+        # "no changes". The model occasionally (wrongly) embeds the sentinel
+        # string inside an <edit> block which should be treated as a no-op.
+        if (
+            before.strip() == DIFF_END_MARKER
+            or after.strip() == DIFF_END_MARKER
+        ):
+            continue  # Ignore this bogus edit outright.
+
         # Skip no-op edits: identical text or differences consisting only of whitespace.
         if not before or not after:
             continue
@@ -140,22 +147,7 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
     if edits:
         return edits  # Successfully parsed XML edits.
 
-    # 2. Fallback to legacy single-line format.
-    for raw in edits_text.splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#"):
-            continue  # Skip blank/comment lines.
-        if "->" not in line:
-            continue  # Malformed line.
-        before, after = map(str.strip, line.split("->", 1))
-        if not before or not after:
-            continue
-
-        if re.sub(r"\s+", "", before) == re.sub(r"\s+", "", after):
-            continue  # whitespace-only change
-
-        if before != after:
-            edits.append((before, after))
+    
 
     return edits
 
