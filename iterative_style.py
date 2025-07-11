@@ -78,7 +78,10 @@ DIFF_SYSTEM_PROMPT = (
     "Only modify the DOCUMENT—never the STYLE GUIDE. "
     "Separate <edit> blocks only by whitespace/newlines—no other text. If several identical snippets require the same "
     "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
-    f"'{DIFF_END_MARKER}'.  Do NOT output anything else."
+    f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
+    "Never output an <edit> block whose <before> and <after> content are identical after normalising "
+    "whitespace (including newlines, tabs, and spaces). If no such meaningful edits remain, respond with "
+    f"'{DIFF_END_MARKER}'."
 )
 
 APPLY_SYSTEM_PROMPT = (
@@ -123,7 +126,15 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
         before_raw, after_raw = match.group(1), match.group(2)
         before = before_raw.strip("\n")
         after = after_raw.strip("\n")
-        if before and after and before != after:
+        # Skip no-op edits: identical text or differences consisting only of whitespace.
+        if not before or not after:
+            continue
+
+        if re.sub(r"\s+", "", before) == re.sub(r"\s+", "", after):
+            # The change is purely whitespace – ignore it.
+            continue
+
+        if before != after:
             edits.append((before, after))
 
     if edits:
@@ -137,7 +148,13 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
         if "->" not in line:
             continue  # Malformed line.
         before, after = map(str.strip, line.split("->", 1))
-        if before and after and before != after:
+        if not before or not after:
+            continue
+
+        if re.sub(r"\s+", "", before) == re.sub(r"\s+", "", after):
+            continue  # whitespace-only change
+
+        if before != after:
             edits.append((before, after))
 
     return edits
