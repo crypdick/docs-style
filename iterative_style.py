@@ -30,28 +30,28 @@ Environment:
     OPENAI_API_KEY must be set and is preferably loaded from a ``.env`` file in
     the project root.
 """
+
 from __future__ import annotations
 
-import os
-import sys
-from pathlib import Path
-from typing import Optional, List, Tuple
-
-from dotenv import load_dotenv
-import openai
 import itertools
+import os
+import re
+import shutil
+import sys
 import threading
 import time
 from contextlib import contextmanager
-import re
-import shutil
 from datetime import datetime
+from pathlib import Path
+
+import openai
+from dotenv import load_dotenv
 
 # ---------------------------------------------------------------------------
 # Console colours (ANSI)
 # ---------------------------------------------------------------------------
 
-RAW_DIFF_COLOR = "\033[33m"       # Yellow
+RAW_DIFF_COLOR = "\033[33m"  # Yellow
 FILTERED_DIFF_COLOR = "\033[32m"  # Green
 RESET_COLOR = "\033[0m"
 
@@ -95,6 +95,7 @@ DIFF_SYSTEM_PROMPT = (
 # Helper functions
 # ---------------------------------------------------------------------------
 
+
 def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
     """Parse *edits_text* produced by the LLM into a list of ``(before, after)`` tuples.
 
@@ -127,10 +128,7 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
         # Skip any edit that merely moves or modifies the sentinel value indicating
         # "no changes". The model occasionally (wrongly) embeds the sentinel
         # string inside an <edit> block which should be treated as a no-op.
-        if (
-            before.strip() == DIFF_END_MARKER
-            or after.strip() == DIFF_END_MARKER
-        ):
+        if before.strip() == DIFF_END_MARKER or after.strip() == DIFF_END_MARKER:
             continue  # Ignore this bogus edit outright.
 
         # Skip no-op edits: identical text or differences consisting only of whitespace.
@@ -146,8 +144,6 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
 
     if edits:
         return edits  # Successfully parsed XML edits.
-
-    
 
     return edits
 
@@ -216,9 +212,11 @@ def _log_incident(
 
     incident_path.write_text(content, encoding="utf-8")
 
+
 # ---------------------------------------------------------------------------
 # User-facing progress feedback
 # ---------------------------------------------------------------------------
+
 
 @contextmanager
 def spinner(message: str = "Processing…"):
@@ -262,19 +260,22 @@ def generate_diff(style_guide: str, document: str) -> str:
         {
             "role": "user",
             "content": (
-                "<style_guide>\n" + style_guide + "\n</style_guide>\n\n" +
-                "<document>\n" + document + "\n</document>"
+                "<style_guide>\n"
+                + style_guide
+                + "\n</style_guide>\n\n"
+                + "<document>\n"
+                + document
+                + "\n</document>"
             ),
         },
     ]
     return chat(messages)
 
 
-
-
 # ---------------------------------------------------------------------------
 # Main flow
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     if len(sys.argv) != 2:
@@ -358,8 +359,10 @@ def main() -> None:
 
         # Only pause for user review if the document actually changed.
         if changed:
-            print("Please review the changes and commit them in git if desired.\n"
-                  "Press <ENTER> to continue to the next style guide, or Ctrl+C to abort.")
+            print(
+                "Please review the changes and commit them in git if desired.\n"
+                "Press <ENTER> to continue to the next style guide, or Ctrl+C to abort."
+            )
             try:
                 input()
             except KeyboardInterrupt:

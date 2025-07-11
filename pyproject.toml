@@ -16,5 +16,4 @@ exclude = [
 [tool.ruff.lint]
 # Enable commonly useful lint rule sets.
 select = ["E", "F", "I", "UP", "N", "B"]
-# Silence no rules explicitly for now.
-ignore = []
+ignore = ["E501"]

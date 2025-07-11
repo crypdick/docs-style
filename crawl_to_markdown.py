@@ -24,26 +24,24 @@ Dependencies are managed via the uv inline metadata at the top of this file.
 The script detects an ``<article>``, ``<main>``, or fallback ``<body>`` tag to
 extract content while ignoring sidebars and other page furniture.
 """
+
 from __future__ import annotations
 
 import argparse
 import sys
 from collections import deque
 from pathlib import Path
-from typing import List, Set, Tuple
-from urllib.parse import urljoin, urlparse, urldefrag
+from urllib.parse import urldefrag, urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup, Tag
 from markdownify import markdownify as md
 
 # Type alias for stored page info: (url, title, saved_path)
-PageInfo = Tuple[str, str, Path]
+PageInfo = tuple[str, str, Path]
 
 
-HEADERS = {
-    "User-Agent": "markdown-crawler/1.0 (+https://github.com/ray-project)"
-}
+HEADERS = {"User-Agent": "markdown-crawler/1.0 (+https://github.com/ray-project)"}
 
 
 def sanitize_path(url: str, base_netloc: str) -> Path:
@@ -62,23 +60,23 @@ def sanitize_path(url: str, base_netloc: str) -> Path:
 
 def extract_main_content(soup: BeautifulSoup) -> Tag | None:
     """Return the tag that contains the main textual content."""
-    for selector in ("article", "main", "div[role=\"main\"]"):
+    for selector in ("article", "main", 'div[role="main"]'):
         tag = soup.select_one(selector)
         if tag:
             return tag
     return soup.body  # Fallback
 
 
-def crawl(base_url: str, output_dir: Path) -> List[PageInfo]:
+def crawl(base_url: str, output_dir: Path) -> list[PageInfo]:
     parsed_base = urlparse(base_url)
     base_netloc = parsed_base.netloc
     base_scheme = parsed_base.scheme
     base_path_prefix = parsed_base.path.rstrip("/") or "/"  # e.g., '/style'
 
-    visited: Set[str] = set()
+    visited: set[str] = set()
     queue: deque[str] = deque([base_url])
 
-    saved_pages: List[PageInfo] = []
+    saved_pages: list[PageInfo] = []
 
     session = requests.Session()
     session.headers.update(HEADERS)
@@ -89,7 +87,9 @@ def crawl(base_url: str, output_dir: Path) -> List[PageInfo]:
 
         # Skip URLs that are outside the base path prefix (e.g., '/style').
         parsed_current = urlparse(url)
-        if parsed_current.netloc != base_netloc or not parsed_current.path.startswith(base_path_prefix):
+        if parsed_current.netloc != base_netloc or not parsed_current.path.startswith(
+            base_path_prefix
+        ):
             continue
 
         if url in visited:
@@ -141,7 +141,7 @@ def crawl(base_url: str, output_dir: Path) -> List[PageInfo]:
     return saved_pages
 
 
-def write_concatenated_markdown(pages: List[PageInfo], combined_path: Path) -> None:
+def write_concatenated_markdown(pages: list[PageInfo], combined_path: Path) -> None:
     """Write all pages into a single Markdown file with delimiters."""
     combined_path.parent.mkdir(parents=True, exist_ok=True)
     with combined_path.open("w", encoding="utf-8") as fout:
@@ -183,4 +183,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main() 
+    main()
