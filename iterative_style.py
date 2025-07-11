@@ -41,7 +41,7 @@ import sys
 import threading
 import time
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import openai
@@ -201,7 +201,8 @@ def _log_incident(
 ) -> None:
     """Write an incident log file containing the problematic diff and context."""
 
-    timestamp = datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+    # Use timezone-aware datetime to avoid DeprecationWarning (Python 3.12+)
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     fname = f"{timestamp}_{guide_path.stem}.log"
     incident_path = INCIDENTS_DIR / fname
 
