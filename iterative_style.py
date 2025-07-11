@@ -115,8 +115,6 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
            </edit>
 
     """
-
-    # 1. Try the XML format first.
     xml_pattern = re.compile(
         r"<edit>\s*<before>(.*?)</before>\s*<after>(.*?)</after>\s*</edit>",
         re.DOTALL | re.IGNORECASE,
