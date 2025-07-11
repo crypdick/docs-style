@@ -1,0 +1,22 @@
+
+
+
+# Pluralize a single letter Stay organized with collections Save and categorize content based on your preferences.
+
+To form the plural of a single letter, italicize the letter and add an
+apostrophe followed by the unitalicized letter *s*.
+
+Recommended: We called tech support
+because the printer wasn't printing uppercase *B*'s or lowercase
+*p*'s.
+
+Recommended: If you still use a pen and paper,
+dotting your *i*'s is still necessary. Cross your *t*'s, too.
+
+When the capitalization is irrelevant, use uppercase.
+
+Recommended: Mind your *P*'s
+and *Q*'s.
+
+
+
