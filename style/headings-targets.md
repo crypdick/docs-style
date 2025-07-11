@@ -1,5 +1,5 @@
 
-# Make headings into link targets Stay organized with collections Save and categorize content based on your preferences.
+# Make headings into link targets  
 
 This page discusses how to turn a heading into a link target by using an
 `id` attribute. For more information about how to format headings, see

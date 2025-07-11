@@ -1,5 +1,5 @@
 
-# Hyphens Stay organized with collections Save and categorize content based on your preferences.
+# Hyphens  
 
 Use a hyphen (-) when needed for clarity. A hyphen can separate parts of words to avoid
 misreadings, and it can combine terms when they should be read as a unit.

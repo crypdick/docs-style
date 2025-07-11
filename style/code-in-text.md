@@ -1,6 +1,6 @@
 
 
-# Code in text Stay organized with collections Save and categorize content based on your preferences.
+# Code in text  
 
 In ordinary text sentences (as opposed to, say, [code samples](/style/code-samples)),
 use code font to mark up most things that have anything to do with code. Code

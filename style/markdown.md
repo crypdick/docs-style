@@ -4,7 +4,7 @@
 
 
 
-# Markdown versus HTML Stay organized with collections Save and categorize content based on your preferences.
+# Markdown versus HTML  
 
 Use either HTML or Markdown. Some of this style guide assumes that you're using HTML. If you're
 using Markdown, details like what HTML elements to use in various contexts might be

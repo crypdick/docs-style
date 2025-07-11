@@ -1,5 +1,5 @@
 
-# API reference code comments Stay organized with collections Save and categorize content based on your preferences.
+# API reference code comments  
 
 When you're documenting an API, provide a complete API reference, typically
 generated from source code using document comments that describe all public

@@ -4,7 +4,7 @@
 
 
 
-# Contractions Stay organized with collections Save and categorize content based on your preferences.
+# Contractions  
 
 In general, we write our documentation in an [informal tone](/style/tone), so we
 recommend using common two-word contractions such as *you're*, *don't*, and

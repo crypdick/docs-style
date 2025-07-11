@@ -1,6 +1,6 @@
 
 
-# Headings and titles Stay organized with collections Save and categorize content based on your preferences.
+# Headings and titles  
 
 Use sentence case for headings and titles. Use descriptive headings and titles because they help
 a reader navigate their browser and the page. It's easier to jump between pages and sections of a

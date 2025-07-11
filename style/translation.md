@@ -4,7 +4,7 @@
 
 
 
-# Write for a global audience Stay organized with collections Save and categorize content based on your preferences.
+# Write for a global audience  
 
 We write our developer documentation in US English, but some of it is
 translated into languages other than English or is read by developers for whom

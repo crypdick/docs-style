@@ -1,7 +1,7 @@
 
 
 
-# Trademarks Stay organized with collections Save and categorize content based on your preferences.
+# Trademarks  
 
 Follow any usage guidelines that trademark owners provide.
 

@@ -1,6 +1,6 @@
 
 
-# Abbreviations Stay organized with collections Save and categorize content based on your preferences.
+# Abbreviations  
 
 Abbreviations include acronyms, initialisms, shortened words, and
 contractions.

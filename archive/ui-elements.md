@@ -4,7 +4,7 @@
 
 
 
-# UI elements and interaction Stay organized with collections Save and categorize content based on your preferences.
+# UI elements and interaction  
 
 
 

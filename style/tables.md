@@ -4,7 +4,7 @@
 
 
 
-# Tables Stay organized with collections Save and categorize content based on your preferences.
+# Tables  
 
 In many contexts, tables are the best way to represent sets of related pieces of data. However,
 in some contexts, other approaches are better choices.

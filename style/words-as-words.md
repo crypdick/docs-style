@@ -1,6 +1,6 @@
 
 
-# Use italics to discuss terms Stay organized with collections Save and categorize content based on your preferences.
+# Use italics to discuss terms  
 
 This page describes two circumstances when we italicize terms that we're
 introducing or discussing.

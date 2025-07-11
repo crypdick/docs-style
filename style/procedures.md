@@ -1,5 +1,5 @@
 
-# Procedures Stay organized with collections Save and categorize content based on your preferences.
+# Procedures  
 
 A procedure is a sequence of numbered steps for accomplishing a task. For information about
 lists of items that aren't part of a procedure, see the

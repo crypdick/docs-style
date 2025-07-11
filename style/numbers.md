@@ -1,6 +1,6 @@
 
 
-# Numbers Stay organized with collections Save and categorize content based on your preferences.
+# Numbers  
 
 For information about formatting quantities like 10 MB, see
 [Units of measurement](/style/units-of-measure).

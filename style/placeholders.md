@@ -1,7 +1,7 @@
 
 
 
-# Format placeholders Stay organized with collections Save and categorize content based on your preferences.
+# Format placeholders  
 
 This page explains how to format placeholders in commands, code samples, and text
 strings. This page doesn't explain how to implement visual styling for placeholders, but it does

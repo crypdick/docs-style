@@ -1,7 +1,7 @@
 
 
 
-# Avoid excessive claims Stay organized with collections Save and categorize content based on your preferences.
+# Avoid excessive claims  
 
 In documentation, don't make excessive claims. An *excessive claim* is an assertion
 in the documentation that does any of the following:

@@ -1,6 +1,6 @@
 
 
-# Pronouns Stay organized with collections Save and categorize content based on your preferences.
+# Pronouns  
 
 Ensure that a pronoun clearly refers
 to its antecedent (the noun that it's replacing).

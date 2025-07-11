@@ -1,7 +1,7 @@
 
 
 
-# Notes, cautions, warnings, and other notices Stay organized with collections Save and categorize content based on your preferences.
+# Notes, cautions, warnings, and other notices  
 
 To give the reader important or useful information that isn't part of the flow of the text, you
 can offset the information with a notice. However, there's

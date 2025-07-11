@@ -1,7 +1,7 @@
 
 
 
-# Third-party content Stay organized with collections Save and categorize content based on your preferences.
+# Third-party content  
 
 Don't copy content from another source because it might violate copyright. Instead, paraphrase
 and link to their content.

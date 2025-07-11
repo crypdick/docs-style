@@ -1,7 +1,7 @@
 
 
 
-# Ellipses Stay organized with collections Save and categorize content based on your preferences.
+# Ellipses  
 
 In general, don't use ellipses. An ellipsis is made up of
 three contiguous periods. Ellipses indicate the omission of part of a sentence, paragraph, or larger

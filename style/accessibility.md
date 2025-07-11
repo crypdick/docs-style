@@ -1,4 +1,4 @@
-# Write accessible documentation Stay organized with collections Save and categorize content based on your preferences.
+# Write accessible documentation  
 
 We write our developer documentation with accessibility in mind. This page is not an exhaustive
 reference, but describes some general guidelines and examples that illustrate best practices to

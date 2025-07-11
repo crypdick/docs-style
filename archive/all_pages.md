@@ -3,7 +3,7 @@
 *Source: [https://developers.google.com/style/highlights](https://developers.google.com/style/highlights)*
 
 
-# Highlights Stay organized with collections Save and categorize content based on your preferences.
+# Highlights  
 
 
 The style guide covers a lot of material, so the following page provides an overview of its most
@@ -60,7 +60,7 @@ important points. For more information about topics on the page, follow the link
 *Source: [https://developers.google.com/style/word-list](https://developers.google.com/style/word-list)*
 
 
-# Word list Stay organized with collections Save and categorize content based on your preferences.
+# Word list  
 
 **Note**: This document includes references to terms that Google considers
 disrespectful or offensive. The terms are listed here to provide usage
@@ -3449,7 +3449,7 @@ zippy [link](#zippy)
 *Source: [https://developers.google.com/style/product-names](https://developers.google.com/style/product-names)*
 
 
-# Product names Stay organized with collections Save and categorize content based on your preferences.
+# Product names  
 
 
 This page describes how to use product names.
@@ -3571,7 +3571,7 @@ Don't use product names or feature names as verbs.
 *Source: [https://developers.google.com/style/text-formatting](https://developers.google.com/style/text-formatting)*
 
 
-# Text-formatting summary Stay organized with collections Save and categorize content based on your preferences.
+# Text-formatting summary  
 
 
 The page summarizes, and provides a quick reference for, many of the general text-formatting
@@ -3660,7 +3660,7 @@ Other punctuation conventions
 *Source: [https://developers.google.com/style/accessibility](https://developers.google.com/style/accessibility)*
 
 
-# Write accessible documentation Stay organized with collections Save and categorize content based on your preferences.
+# Write accessible documentation  
 
 
 We write our developer documentation with accessibility in mind. This page is not an exhaustive
@@ -3947,7 +3947,7 @@ of communicating information.
 *Source: [https://developers.google.com/style/excessive-claims](https://developers.google.com/style/excessive-claims)*
 
 
-# Avoid excessive claims Stay organized with collections Save and categorize content based on your preferences.
+# Avoid excessive claims  
 
 
 In documentation, don't make excessive claims. An *excessive claim* is an assertion
@@ -4004,7 +4004,7 @@ prevents account takeovers from phishing attacks.
 *Source: [https://developers.google.com/style/future](https://developers.google.com/style/future)*
 
 
-# Future features Stay organized with collections Save and categorize content based on your preferences.
+# Future features  
 
 
 Avoid documenting future features or products, even in innocuous
@@ -4021,7 +4021,7 @@ See also [Present tense](/style/tense) and
 *Source: [https://developers.google.com/style/translation](https://developers.google.com/style/translation)*
 
 
-# Write for a global audience Stay organized with collections Save and categorize content based on your preferences.
+# Write for a global audience  
 
 
 We write our developer documentation in US English, but some of it is
@@ -4211,7 +4211,7 @@ review costs.
 *Source: [https://developers.google.com/style/inclusive-documentation](https://developers.google.com/style/inclusive-documentation)*
 
 
-# Write inclusive documentation Stay organized with collections Save and categorize content based on your preferences.
+# Write inclusive documentation  
 
 **Note**: This document includes references to terms that
 Google considers disrespectful or offensive. The terms are used here to
@@ -4445,7 +4445,7 @@ Some general guidelines in this area include the following:
 *Source: [https://developers.google.com/style/jargon](https://developers.google.com/style/jargon)*
 
 
-# Jargon Stay organized with collections Save and categorize content based on your preferences.
+# Jargon  
 
 
 Jargon is the specialized and often figurative terminology of a specific group to represent a
@@ -4517,7 +4517,7 @@ readers search for those terms. If you're going to use jargon, consider the foll
 *Source: [https://developers.google.com/style/prescriptive-documentation](https://developers.google.com/style/prescriptive-documentation)*
 
 
-# Prescriptive documentation Stay organized with collections Save and categorize content based on your preferences.
+# Prescriptive documentation  
 
 
 Write prescriptive documentation.
@@ -4613,7 +4613,7 @@ new project or an existing one, here's what you should do.
 *Source: [https://developers.google.com/style/other-sources](https://developers.google.com/style/other-sources)*
 
 
-# Third-party content Stay organized with collections Save and categorize content based on your preferences.
+# Third-party content  
 
 
 Don't copy content from another source because it might violate copyright. Instead, paraphrase
@@ -4653,7 +4653,7 @@ Unless you are sure that your company owns the assets, avoid copying from these 
 *Source: [https://developers.google.com/style/timeless-documentation](https://developers.google.com/style/timeless-documentation)*
 
 
-# Timeless documentation Stay organized with collections Save and categorize content based on your preferences.
+# Timeless documentation  
 
 
 Timeless documentation is documentation that avoids words and phrases that anchor the
@@ -4730,7 +4730,7 @@ the following words and phrases:
 *Source: [https://developers.google.com/style/tone](https://developers.google.com/style/tone)*
 
 
-# Voice and tone Stay organized with collections Save and categorize content based on your preferences.
+# Voice and tone  
 
 
 In your documents, aim for a voice and tone that's conversational, friendly,
@@ -4833,7 +4833,7 @@ please see [link to other document].
 *Source: [https://developers.google.com/style/abbreviations](https://developers.google.com/style/abbreviations)*
 
 
-# Abbreviations Stay organized with collections Save and categorize content based on your preferences.
+# Abbreviations  
 
 
 Abbreviations include acronyms, initialisms, shortened words, and
@@ -5032,7 +5032,7 @@ For more information about articles, see [Articles](/style/articles).
 *Source: [https://developers.google.com/style/voice](https://developers.google.com/style/voice)*
 
 
-# Active voice Stay organized with collections Save and categorize content based on your preferences.
+# Active voice  
 
 
 In general, use active voice (in which the grammatical subject of the
@@ -5097,7 +5097,7 @@ in January.
 *Source: [https://developers.google.com/style/anthropomorphism](https://developers.google.com/style/anthropomorphism)*
 
 
-# Anthropomorphism Stay organized with collections Save and categorize content based on your preferences.
+# Anthropomorphism  
 
 
 Don't attribute human qualities to software or hardware.
@@ -5126,7 +5126,7 @@ device.
 *Source: [https://developers.google.com/style/articles](https://developers.google.com/style/articles)*
 
 
-# Articles (a, an, the) Stay organized with collections Save and categorize content based on your preferences.
+# Articles (a, an, the)  
 
 
 For ease of comprehension and translation, include definite and indefinite
@@ -5159,7 +5159,7 @@ of the abbreviation can vary, see
 *Source: [https://developers.google.com/style/capitalization](https://developers.google.com/style/capitalization)*
 
 
-# Capitalization Stay organized with collections Save and categorize content based on your preferences.
+# Capitalization  
 
 
 Follow the standard [capitalization rules](https://owl.purdue.edu/owl/general_writing/mechanics/help_with_capitals.html) for American English. Additionally,
@@ -5269,7 +5269,7 @@ first letter of each word is capitalized—for example, `AssertionAccount`.
 *Source: [https://developers.google.com/style/contractions](https://developers.google.com/style/contractions)*
 
 
-# Contractions Stay organized with collections Save and categorize content based on your preferences.
+# Contractions  
 
 
 In general, we write our documentation in an [informal tone](/style/tone), so we
@@ -5301,7 +5301,7 @@ Don't use three-word contractions such as *mightn't've*.
 *Source: [https://developers.google.com/style/plurals-parentheses](https://developers.google.com/style/plurals-parentheses)*
 
 
-# Plurals in parentheses Stay organized with collections Save and categorize content based on your preferences.
+# Plurals in parentheses  
 
 
 Don't put optional plurals in parentheses. Instead, use either plural or
@@ -5323,7 +5323,7 @@ a specific context to indicate both, use *one or more*.
 *Source: [https://developers.google.com/style/possessives](https://developers.google.com/style/possessives)*
 
 
-# Possessives Stay organized with collections Save and categorize content based on your preferences.
+# Possessives  
 
 
 In general, to form a possessive, follow these guidelines.
@@ -5408,7 +5408,7 @@ For more information, see
 *Source: [https://developers.google.com/style/prepositions](https://developers.google.com/style/prepositions)*
 
 
-# Prepositions Stay organized with collections Save and categorize content based on your preferences.
+# Prepositions  
 
 
 There's no rule against placing a preposition at the end of a sentence.
@@ -5439,7 +5439,7 @@ For information about which preposition to use when referring to UI elements, se
 *Source: [https://developers.google.com/style/tense](https://developers.google.com/style/tense)*
 
 
-# Present tense Stay organized with collections Save and categorize content based on your preferences.
+# Present tense  
 
 
 Use present tense for statements that describe general behavior that's not associated with
@@ -5485,7 +5485,7 @@ unsubscribe message. The server would then remove you from the mailing list.
 *Source: [https://developers.google.com/style/pronouns](https://developers.google.com/style/pronouns)*
 
 
-# Pronouns Stay organized with collections Save and categorize content based on your preferences.
+# Pronouns  
 
 
 Ensure that a pronoun clearly refers
@@ -5611,7 +5611,7 @@ values are set at compile time.
 *Source: [https://developers.google.com/style/person](https://developers.google.com/style/person)*
 
 
-# Second person and first person Stay organized with collections Save and categorize content based on your preferences.
+# Second person and first person  
 
 ## Address the reader as *you*
 
@@ -5681,7 +5681,7 @@ with an explicit *audience* sentence near the beginning of the document).
 *Source: [https://developers.google.com/style/sentence-structure](https://developers.google.com/style/sentence-structure)*
 
 
-# Sentence structure Stay organized with collections Save and categorize content based on your preferences.
+# Sentence structure  
 
 
 If you want to tell the reader to do something, try to mention the circumstance, conditions, or
@@ -5703,7 +5703,7 @@ procedural instructions, see [Procedures](/style/procedures).
 *Source: [https://developers.google.com/style/reference-verbs](https://developers.google.com/style/reference-verbs)*
 
 
-# Verb forms in reference documentation Stay organized with collections Save and categorize content based on your preferences.
+# Verb forms in reference documentation  
 
 
 When you're writing reference documentation for a method, phrase the main
@@ -5731,7 +5731,7 @@ For more information and examples, see the
 *Source: [https://developers.google.com/style/colons](https://developers.google.com/style/colons)*
 
 
-# Colons Stay organized with collections Save and categorize content based on your preferences.
+# Colons  
 
 
 A colon indicates that closely-related information follows.
@@ -5779,7 +5779,7 @@ For information about when it's better to use colons than dashes, see [Dashes](/
 *Source: [https://developers.google.com/style/commas](https://developers.google.com/style/commas)*
 
 
-# Commas Stay organized with collections Save and categorize content based on your preferences.
+# Commas  
 
 
 Use commas to separate items in a series, and use commas to separate certain kinds of
@@ -5886,7 +5886,7 @@ For information about punctuating examples, see [Format examples](/style/format-
 *Source: [https://developers.google.com/style/dashes](https://developers.google.com/style/dashes)*
 
 
-# Dashes Stay organized with collections Save and categorize content based on your preferences.
+# Dashes  
 
 
 This page explains when to use em dashes. For information about hyphens, see the following:
@@ -5978,7 +5978,7 @@ Recommended:
 *Source: [https://developers.google.com/style/ellipses](https://developers.google.com/style/ellipses)*
 
 
-# Ellipses Stay organized with collections Save and categorize content based on your preferences.
+# Ellipses  
 
 
 In general, don't use ellipses. An ellipsis is made up of
@@ -6050,7 +6050,7 @@ understand all the other Python code in there...we'll explain it all in class.
 *Source: [https://developers.google.com/style/hyphens](https://developers.google.com/style/hyphens)*
 
 
-# Hyphens Stay organized with collections Save and categorize content based on your preferences.
+# Hyphens  
 
 
 Use a hyphen (-) when needed for clarity. A hyphen can separate parts of words to avoid
@@ -6313,7 +6313,7 @@ scan for new files at one-, two-, or three-hour intervals.
 *Source: [https://developers.google.com/style/parentheses](https://developers.google.com/style/parentheses)*
 
 
-# Parentheses Stay organized with collections Save and categorize content based on your preferences.
+# Parentheses  
 
 
 Some of us love to use parentheses. Unfortunately, some readers ignore
@@ -6352,7 +6352,7 @@ Not recommended: Enter a six-digit hex number (for example, if you want the colo
 *Source: [https://developers.google.com/style/periods](https://developers.google.com/style/periods)*
 
 
-# Periods and other end punctuation Stay organized with collections Save and categorize content based on your preferences.
+# Periods and other end punctuation  
 
 
 End a complete sentence with a period, unless it's a question. There are
@@ -6477,7 +6477,7 @@ example.
 *Source: [https://developers.google.com/style/quotation-marks](https://developers.google.com/style/quotation-marks)*
 
 
-# Quotation marks Stay organized with collections Save and categorize content based on your preferences.
+# Quotation marks  
 
 
 Use straight double quotation marks and apostrophes.
@@ -6585,7 +6585,7 @@ Not recommended: She said, 'I heard him shout
 *Source: [https://developers.google.com/style/semicolons](https://developers.google.com/style/semicolons)*
 
 
-# Semicolons Stay organized with collections Save and categorize content based on your preferences.
+# Semicolons  
 
 
 If possible, avoid using semicolons. In a few cases, a semicolon is preferred:
@@ -6626,7 +6626,7 @@ If possible, avoid using semicolons. In a few cases, a semicolon is preferred:
 *Source: [https://developers.google.com/style/slashes](https://developers.google.com/style/slashes)*
 
 
-# Slashes Stay organized with collections Save and categorize content based on your preferences.
+# Slashes  
 
 
 Avoid using slashes, except in code.
@@ -6730,7 +6730,7 @@ Not recommended: c/o, w/
 *Source: [https://developers.google.com/style/dates-times](https://developers.google.com/style/dates-times)*
 
 
-# Dates and times Stay organized with collections Save and categorize content based on your preferences.
+# Dates and times  
 
 
 Expressing dates and times in a clear and unambiguous way helps support
@@ -6891,7 +6891,7 @@ southern hemisphere. Instead, use the month, quarter, or temperature (if relevan
 *Source: [https://developers.google.com/style/format-examples](https://developers.google.com/style/format-examples)*
 
 
-# Format examples Stay organized with collections Save and categorize content based on your preferences.
+# Format examples  
 
 
 To introduce an example in a sentence, use the guidance in the following table:
@@ -6912,7 +6912,7 @@ For more information, see
 *Source: [https://developers.google.com/style/images](https://developers.google.com/style/images)*
 
 
-# Diagrams, figures, and other images Stay organized with collections Save and categorize content based on your preferences.
+# Diagrams, figures, and other images  
 
 
 Use images only when they provide useful visual explanations of information
@@ -7310,7 +7310,7 @@ Consider the following guidelines for adding images to pages:
 *Source: [https://developers.google.com/style/footnotes](https://developers.google.com/style/footnotes)*
 
 
-# Footnotes Stay organized with collections Save and categorize content based on your preferences.
+# Footnotes  
 
 
 A footnote is an annotation with additional information usually provided at the end of a page,
@@ -7338,7 +7338,7 @@ Recommended: You want to add a footnote to this sentence.1
 *Source: [https://developers.google.com/style/headings](https://developers.google.com/style/headings)*
 
 
-# Headings and titles Stay organized with collections Save and categorize content based on your preferences.
+# Headings and titles  
 
 
 Use sentence case for headings and titles. Use descriptive headings and titles because they help
@@ -7641,7 +7641,7 @@ The following sections describe the views in the data preparation editor.
 *Source: [https://developers.google.com/style/italics-terms](https://developers.google.com/style/italics-terms)*
 
 
-# Use italics to discuss terms Stay organized with collections Save and categorize content based on your preferences.
+# Use italics to discuss terms  
 
 
 This page describes two circumstances when we italicize terms that we're
@@ -7679,7 +7679,7 @@ possessive of a singular noun, add *'s* to the end of the word.
 *Source: [https://developers.google.com/style/lists](https://developers.google.com/style/lists)*
 
 
-# Lists Stay organized with collections Save and categorize content based on your preferences.
+# Lists  
 
 ## List or table?
 
@@ -7926,7 +7926,7 @@ For more information, see [etc.](/style/word-list#etc)
 *Source: [https://developers.google.com/style/notices](https://developers.google.com/style/notices)*
 
 
-# Notes, cautions, warnings, and other notices Stay organized with collections Save and categorize content based on your preferences.
+# Notes, cautions, warnings, and other notices  
 
 
 To give the reader important or useful information that isn't part of the flow of the text, you
@@ -8026,7 +8026,7 @@ table entries.
 *Source: [https://developers.google.com/style/numbers](https://developers.google.com/style/numbers)*
 
 
-# Numbers Stay organized with collections Save and categorize content based on your preferences.
+# Numbers  
 
 
 For information about formatting quantities like 10 MB, see
@@ -8308,7 +8308,7 @@ a pie chart or a bar graph.
 *Source: [https://developers.google.com/style/paragraph-structure](https://developers.google.com/style/paragraph-structure)*
 
 
-# Paragraph structure Stay organized with collections Save and categorize content based on your preferences.
+# Paragraph structure  
 
 
 Break up your paragraphs to aid in the scannability of the page and to avoid
@@ -8349,7 +8349,7 @@ enlarged text.
 *Source: [https://developers.google.com/style/phone-numbers](https://developers.google.com/style/phone-numbers)*
 
 
-# Format phone numbers in text Stay organized with collections Save and categorize content based on your preferences.
+# Format phone numbers in text  
 
 
 This page describes how to use and format phone numbers in technical documentation. This page
@@ -8418,7 +8418,7 @@ Recommended: 415‑555‑0132, extension 987
 *Source: [https://developers.google.com/style/plural-single-letter](https://developers.google.com/style/plural-single-letter)*
 
 
-# Pluralize a single letter Stay organized with collections Save and categorize content based on your preferences.
+# Pluralize a single letter  
 
 
 To form the plural of a single letter, italicize the letter and add an
@@ -8444,7 +8444,7 @@ and *Q*'s.
 *Source: [https://developers.google.com/style/procedures](https://developers.google.com/style/procedures)*
 
 
-# Procedures Stay organized with collections Save and categorize content based on your preferences.
+# Procedures  
 
 
 A procedure is a sequence of numbered steps for accomplishing a task. For information about
@@ -8750,7 +8750,7 @@ Recommended:
 *Source: [https://developers.google.com/style/tables](https://developers.google.com/style/tables)*
 
 
-# Tables Stay organized with collections Save and categorize content based on your preferences.
+# Tables  
 
 
 In many contexts, tables are the best way to represent sets of related pieces of data. However,
@@ -8888,7 +8888,7 @@ Where possible, avoid linking to tables; instead, refer to them by table number.
 *Source: [https://developers.google.com/style/units-of-measure](https://developers.google.com/style/units-of-measure)*
 
 
-# Units of measurement Stay organized with collections Save and categorize content based on your preferences.
+# Units of measurement  
 
 
 Put a nonbreaking space between the number and the unit.
@@ -9039,7 +9039,7 @@ For example, if using a feature incurs additional fees, add a link to pricing ca
 *Source: [https://developers.google.com/style/cross-references](https://developers.google.com/style/cross-references)*
 
 
-# Cross-references and linking Stay organized with collections Save and categorize content based on your preferences.
+# Cross-references and linking  
 
 
 In general, cross-references link to nonessential information that adds to
@@ -9456,7 +9456,7 @@ text. This helps readers find links in your content.
 *Source: [https://developers.google.com/style/headings-targets](https://developers.google.com/style/headings-targets)*
 
 
-# Make headings into link targets Stay organized with collections Save and categorize content based on your preferences.
+# Make headings into link targets  
 
 
 This page discusses how to turn a heading into a link target by using an
@@ -9605,7 +9605,7 @@ reach the page but not the specific section or heading.
 *Source: [https://developers.google.com/style/api-reference-comments](https://developers.google.com/style/api-reference-comments)*
 
 
-# API reference code comments Stay organized with collections Save and categorize content based on your preferences.
+# API reference code comments  
 
 
 When you're documenting an API, provide a complete API reference, typically
@@ -9822,7 +9822,7 @@ If a method is deprecated, tell the reader what to do to make their code work.
 *Source: [https://developers.google.com/style/code-in-text](https://developers.google.com/style/code-in-text)*
 
 
-# Code in text Stay organized with collections Save and categorize content based on your preferences.
+# Code in text  
 
 
 In ordinary text sentences (as opposed to, say, [code samples](/style/code-samples)),
@@ -10091,7 +10091,7 @@ To link to a class or method:
 *Source: [https://developers.google.com/style/code-samples](https://developers.google.com/style/code-samples)*
 
 
-# Code samples Stay organized with collections Save and categorize content based on your preferences.
+# Code samples  
 
 
 This page explains how to format code samples. For more information about formatting and
@@ -10210,7 +10210,7 @@ Style for Contributors](https://source.android.com/setup/contribute/code-style) 
 *Source: [https://developers.google.com/style/code-syntax](https://developers.google.com/style/code-syntax)*
 
 
-# Document command-line syntax Stay organized with collections Save and categorize content based on your preferences.
+# Document command-line syntax  
 
 
 This page shows how to document command-line commands and their arguments. For more
@@ -10720,7 +10720,7 @@ following table *only* in the context of process control:
 *Source: [https://developers.google.com/style/placeholders](https://developers.google.com/style/placeholders)*
 
 
-# Format placeholders Stay organized with collections Save and categorize content based on your preferences.
+# Format placeholders  
 
 
 This page explains how to format placeholders in commands, code samples, and text
@@ -11060,7 +11060,7 @@ This output includes the following values:
 *Source: [https://developers.google.com/style/ui-elements](https://developers.google.com/style/ui-elements)*
 
 
-# UI elements and interaction Stay organized with collections Save and categorize content based on your preferences.
+# UI elements and interaction  
 
 ## Focus on the task
 
@@ -11568,7 +11568,7 @@ For information about writing procedures, see [Procedures](/style/procedures).
 *Source: [https://developers.google.com/style/semantic-tagging](https://developers.google.com/style/semantic-tagging)*
 
 
-# HTML and semantic tagging Stay organized with collections Save and categorize content based on your preferences.
+# HTML and semantic tagging  
 
 
 Use HTML elements for the purposes that they were designed for. For example, when
@@ -11613,7 +11613,7 @@ In particular, follow these guidelines:
 *Source: [https://developers.google.com/style/html-formatting](https://developers.google.com/style/html-formatting)*
 
 
-# HTML formatting Stay organized with collections Save and categorize content based on your preferences.
+# HTML formatting  
 
 
 Follow Google's [HTML/CSS
@@ -11664,7 +11664,7 @@ Break code snippets (in `<pre>` blocks) at 80 characters:
 *Source: [https://developers.google.com/style/markdown](https://developers.google.com/style/markdown)*
 
 
-# Markdown versus HTML Stay organized with collections Save and categorize content based on your preferences.
+# Markdown versus HTML  
 
 
 Use either HTML or Markdown. Some of this style guide assumes that you're using HTML. If you're
@@ -11690,7 +11690,7 @@ it may be best to use whatever they use.
 *Source: [https://developers.google.com/style/examples](https://developers.google.com/style/examples)*
 
 
-# Example domains and names Stay organized with collections Save and categorize content based on your preferences.
+# Example domains and names  
 
 
 Don't use real domain names, email addresses, or people's names in your examples. Don't reveal
@@ -11899,7 +11899,7 @@ identifier `deleted:serviceAccount:my-service-account@my-project.iam.gserviceacc
 *Source: [https://developers.google.com/style/filenames](https://developers.google.com/style/filenames)*
 
 
-# Filenames and file types Stay organized with collections Save and categorize content based on your preferences.
+# Filenames and file types  
 
 ## Guidelines for names
 
@@ -12025,7 +12025,7 @@ corresponding file type names to use.
 *Source: [https://developers.google.com/style/trademarks](https://developers.google.com/style/trademarks)*
 
 
-# Trademarks Stay organized with collections Save and categorize content based on your preferences.
+# Trademarks  
 
 
 Follow any usage guidelines that trademark owners provide.
@@ -12065,7 +12065,7 @@ usage](https://www.google.com/permissions/trademark/rules.html).
 *Source: [https://developers.google.com/style/spelling](https://developers.google.com/style/spelling)*
 
 
-# Word list Stay organized with collections Save and categorize content based on your preferences.
+# Word list  
 
 **Note**: This document includes references to terms that Google considers
 disrespectful or offensive. The terms are listed here to provide usage
@@ -15454,7 +15454,7 @@ zippy [link](#zippy)
 *Source: [https://developers.google.com/style/wordlist](https://developers.google.com/style/wordlist)*
 
 
-# Word list Stay organized with collections Save and categorize content based on your preferences.
+# Word list  
 
 **Note**: This document includes references to terms that Google considers
 disrespectful or offensive. The terms are listed here to provide usage
@@ -18843,7 +18843,7 @@ zippy [link](#zippy)
 *Source: [https://developers.google.com/style/commas-serial](https://developers.google.com/style/commas-serial)*
 
 
-# Commas Stay organized with collections Save and categorize content based on your preferences.
+# Commas  
 
 
 Use commas to separate items in a series, and use commas to separate certain kinds of
@@ -18950,7 +18950,7 @@ For information about punctuating examples, see [Format examples](/style/format-
 *Source: [https://developers.google.com/style/links-external](https://developers.google.com/style/links-external)*
 
 
-# Cross-references and linking Stay organized with collections Save and categorize content based on your preferences.
+# Cross-references and linking  
 
 
 In general, cross-references link to nonessential information that adds to
@@ -19367,7 +19367,7 @@ text. This helps readers find links in your content.
 *Source: [https://developers.google.com/style/link-text](https://developers.google.com/style/link-text)*
 
 
-# Cross-references and linking Stay organized with collections Save and categorize content based on your preferences.
+# Cross-references and linking  
 
 
 In general, cross-references link to nonessential information that adds to
@@ -19784,7 +19784,7 @@ text. This helps readers find links in your content.
 *Source: [https://developers.google.com/style/fonts](https://developers.google.com/style/fonts)*
 
 
-# HTML and semantic tagging Stay organized with collections Save and categorize content based on your preferences.
+# HTML and semantic tagging  
 
 
 Use HTML elements for the purposes that they were designed for. For example, when
@@ -19829,7 +19829,7 @@ In particular, follow these guidelines:
 *Source: [https://developers.google.com/style/resources](https://developers.google.com/style/resources)*
 
 
-# About this guide Stay organized with collections Save and categorize content based on your preferences.
+# About this guide  
 
 
 This style guide provides editorial guidelines for writing clear and consistent technical
@@ -19912,7 +19912,7 @@ When you depart from this guide, be consistent throughout your document.
 *Source: [https://developers.google.com/style/words-as-words](https://developers.google.com/style/words-as-words)*
 
 
-# Use italics to discuss terms Stay organized with collections Save and categorize content based on your preferences.
+# Use italics to discuss terms  
 
 
 This page describes two circumstances when we italicize terms that we're
@@ -19950,7 +19950,7 @@ possessive of a singular noun, add *'s* to the end of the word.
 *Source: [https://developers.google.com/style/typographical-conventions](https://developers.google.com/style/typographical-conventions)*
 
 
-# Text-formatting summary Stay organized with collections Save and categorize content based on your preferences.
+# Text-formatting summary  
 
 
 The page summarizes, and provides a quick reference for, many of the general text-formatting
@@ -20039,7 +20039,7 @@ Other punctuation conventions
 *Source: [https://developers.google.com/style/formatting-words-as-words](https://developers.google.com/style/formatting-words-as-words)*
 
 
-# Use italics to discuss terms Stay organized with collections Save and categorize content based on your preferences.
+# Use italics to discuss terms  
 
 
 This page describes two circumstances when we italicize terms that we're
@@ -20077,7 +20077,7 @@ possessive of a singular noun, add *'s* to the end of the word.
 *Source: [https://developers.google.com/style/formatting-key-terms](https://developers.google.com/style/formatting-key-terms)*
 
 
-# Use italics to discuss terms Stay organized with collections Save and categorize content based on your preferences.
+# Use italics to discuss terms  
 
 
 This page describes two circumstances when we italicize terms that we're
@@ -20115,7 +20115,7 @@ possessive of a singular noun, add *'s* to the end of the word.
 *Source: [https://developers.google.com/style/command-line-terminology](https://developers.google.com/style/command-line-terminology)*
 
 
-# Document command-line syntax Stay organized with collections Save and categorize content based on your preferences.
+# Document command-line syntax  
 
 
 This page shows how to document command-line commands and their arguments. For more
@@ -20625,7 +20625,7 @@ following table *only* in the context of process control:
 *Source: [https://developers.google.com/style/img-elements](https://developers.google.com/style/img-elements)*
 
 
-# Cross-references and linking Stay organized with collections Save and categorize content based on your preferences.
+# Cross-references and linking  
 
 
 In general, cross-references link to nonessential information that adds to
@@ -21042,7 +21042,7 @@ text. This helps readers find links in your content.
 *Source: [https://developers.google.com/style/file-names](https://developers.google.com/style/file-names)*
 
 
-# Filenames and file types Stay organized with collections Save and categorize content based on your preferences.
+# Filenames and file types  
 
 ## Guidelines for names
 
@@ -21168,7 +21168,7 @@ corresponding file type names to use.
 *Source: [https://developers.google.com/style/dates](https://developers.google.com/style/dates)*
 
 
-# Dates and times Stay organized with collections Save and categorize content based on your preferences.
+# Dates and times  
 
 
 Expressing dates and times in a clear and unambiguous way helps support

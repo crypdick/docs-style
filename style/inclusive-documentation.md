@@ -4,7 +4,7 @@
 
 
 
-# Write inclusive documentation Stay organized with collections Save and categorize content based on your preferences.
+# Write inclusive documentation  
 
 
 

@@ -1,7 +1,7 @@
 
 
 
-# Pluralize a single letter Stay organized with collections Save and categorize content based on your preferences.
+# Pluralize a single letter  
 
 To form the plural of a single letter, italicize the letter and add an
 apostrophe followed by the unitalicized letter *s*.

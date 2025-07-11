@@ -1,6 +1,6 @@
 
 
-# Present tense Stay organized with collections Save and categorize content based on your preferences.
+# Present tense  
 
 Use present tense for statements that describe general behavior that's not associated with
 a particular time.

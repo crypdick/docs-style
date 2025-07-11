@@ -4,7 +4,7 @@
 
 
 
-# Active voice Stay organized with collections Save and categorize content based on your preferences.
+# Active voice  
 
 In general, use active voice (in which the grammatical subject of the
 sentence is the person or thing performing the action) instead of passive voice

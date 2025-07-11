@@ -1,7 +1,7 @@
 
 
 
-# Code samples Stay organized with collections Save and categorize content based on your preferences.
+# Code samples  
 
 This page explains how to format code samples. For more information about formatting and
 explaining code that appears in text, command-line syntax, and placeholders, see the following

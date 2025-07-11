@@ -4,7 +4,7 @@
 
 
 
-# Second person and first person Stay organized with collections Save and categorize content based on your preferences.
+# Second person and first person  
 
 
 

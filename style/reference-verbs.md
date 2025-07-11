@@ -4,7 +4,7 @@
 
 
 
-# Verb forms in reference documentation Stay organized with collections Save and categorize content based on your preferences.
+# Verb forms in reference documentation  
 
 When you're writing reference documentation for a method, phrase the main
 method description in terms of what the method does (*gets*, *lists*, *creates*,

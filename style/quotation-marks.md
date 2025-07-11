@@ -1,6 +1,6 @@
 
 
-# Quotation marks Stay organized with collections Save and categorize content based on your preferences.
+# Quotation marks  
 
 Use straight double quotation marks and apostrophes.
 

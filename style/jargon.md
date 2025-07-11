@@ -1,5 +1,5 @@
 
-# Jargon Stay organized with collections Save and categorize content based on your preferences.
+# Jargon  
 
 Jargon is the specialized and often figurative terminology of a specific group to represent a
 larger concept—for example, *camel case*, *swim lane*,

@@ -1,7 +1,4 @@
-
-
-
-# Commas Stay organized with collections Save and categorize content based on your preferences.
+# Commas
 
 Use commas to separate items in a series, and use commas to separate certain kinds of
 clauses.
@@ -79,10 +76,7 @@ A couple of specific places where commas are a good idea:
   adverb, such as *otherwise*, *however*, or *therefore*, and put a comma after
   the conjunctive adverb.
 
-In general, don't use a comma before the causal conjunction *because* unless it starts a nonrestrictive clause. For more information,
-see the *Chicago Manual of Style* Q&A entry on
-[using
-commas with *because*](https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Commas/faq0018.html).
+In general, don't use a comma before the causal conjunction *because* unless it starts a nonrestrictive clause.
 
 | Recommended | Not recommended |
 | --- | --- |
@@ -90,14 +84,6 @@ commas with *because*](https://www.chicagomanualofstyle.org/qanda/data/faq/topic
 | The variable must have a value; otherwise, the server returns an error. | The variable must have a value otherwise the server returns an error. |
 | You can use the same key name in multiple backend services and backend buckets, because each set of keys is independent of the others. | You can use the same key name in multiple backend services and backend buckets because each set of keys is independent of the others. |
 
-## Punctuate numbers
-
-For information about punctuating numbers, see [Commas and decimal
-points in numbers](/style/numbers#commas-and-decimal-points-in-numbers).
-
-## Punctuate examples
-
-For information about punctuating examples, see [Format examples](/style/format-examples).
 
 
 

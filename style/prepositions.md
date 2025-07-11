@@ -1,6 +1,6 @@
 
 
-# Prepositions Stay organized with collections Save and categorize content based on your preferences.
+# Prepositions  
 
 There's no rule against placing a preposition at the end of a sentence.
 Place the preposition where it makes the most sense and makes the sentence easiest

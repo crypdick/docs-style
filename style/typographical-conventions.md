@@ -4,7 +4,7 @@
 
 
 
-# Text-formatting summary Stay organized with collections Save and categorize content based on your preferences.
+# Text-formatting summary  
 
 The page summarizes, and provides a quick reference for, many of the general text-formatting
 conventions covered elsewhere in the style guide. For more information, see

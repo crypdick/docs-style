@@ -1,5 +1,5 @@
 
-# Capitalization Stay organized with collections Save and categorize content based on your preferences.
+# Capitalization  
 
 Follow the standard [capitalization rules](https://owl.purdue.edu/owl/general_writing/mechanics/help_with_capitals.html) for American English. Additionally,
 do the following:

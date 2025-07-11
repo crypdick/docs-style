@@ -1,6 +1,6 @@
 
 
-# Voice and tone Stay organized with collections Save and categorize content based on your preferences.
+# Voice and tone  
 
 In your documents, aim for a voice and tone that's conversational, friendly,
 and respectful without using slang or being overly colloquial or frivolous; a voice that's

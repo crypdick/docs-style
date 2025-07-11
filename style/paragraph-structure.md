@@ -4,7 +4,7 @@
 
 
 
-# Paragraph structure Stay organized with collections Save and categorize content based on your preferences.
+# Paragraph structure  
 
 Break up your paragraphs to aid in the scannability of the page and to avoid
 walls of text. Readers scan for information and read on different devices with

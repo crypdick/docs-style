@@ -1,6 +1,6 @@
 
 
-# Cross-references and linking Stay organized with collections Save and categorize content based on your preferences.
+# Cross-references and linking  
 
 In general, cross-references link to nonessential information that adds to
 the reader's understanding.

@@ -4,7 +4,7 @@
 
 
 
-# Semicolons Stay organized with collections Save and categorize content based on your preferences.
+# Semicolons  
 
 If possible, avoid using semicolons. In a few cases, a semicolon is preferred:
 

@@ -1,6 +1,6 @@
 
 
-# Dashes Stay organized with collections Save and categorize content based on your preferences.
+# Dashes  
 
 This page explains when to use em dashes. For information about hyphens, see the following:
 

@@ -4,7 +4,7 @@
 
 
 
-# Plurals in parentheses Stay organized with collections Save and categorize content based on your preferences.
+# Plurals in parentheses  
 
 Don't put optional plurals in parentheses. Instead, use either plural or
 singular constructions and keep things consistent throughout your documentation. Choose

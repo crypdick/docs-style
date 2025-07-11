@@ -1,4 +1,4 @@
-# Example domains and names Stay organized with collections Save and categorize content based on your preferences.
+# Example domains and names  
 
 Don't use real domain names, email addresses, or people's names in your examples. Don't reveal
 personally identifiable information (PII), such as domain names, email addresses,

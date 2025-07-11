@@ -1,7 +1,7 @@
 
 
 
-# Anthropomorphism Stay organized with collections Save and categorize content based on your preferences.
+# Anthropomorphism  
 
 Don't attribute human qualities to software or hardware.
 

@@ -4,7 +4,7 @@
 
 
 
-# Periods and other end punctuation Stay organized with collections Save and categorize content based on your preferences.
+# Periods and other end punctuation  
 
 End a complete sentence with a period, unless it's a question. There are
 exceptions for working in lists.

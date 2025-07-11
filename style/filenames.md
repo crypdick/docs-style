@@ -4,7 +4,7 @@
 
 
 
-# Filenames and file types Stay organized with collections Save and categorize content based on your preferences.
+# Filenames and file types  
 
 
 

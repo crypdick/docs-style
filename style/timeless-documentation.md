@@ -1,5 +1,5 @@
 
-# Timeless documentation Stay organized with collections Save and categorize content based on your preferences.
+# Timeless documentation  
 
 Timeless documentation is documentation that avoids words and phrases that anchor the
 documentation to a point in time or assume knowledge of prior or future products and features. In
