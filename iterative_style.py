@@ -59,7 +59,7 @@ RESET_COLOR = "\033[0m"
 # Configuration
 # ---------------------------------------------------------------------------
 
-MODEL_NAME = "gpt-4.1-nano"  # Follow user instruction verbatim.
+MODEL_NAME = "gpt-4.1-mini"
 STYLE_DIR = Path(__file__).parent / "style"
 INCIDENTS_DIR = Path(__file__).parent / "incidents"
 DIFF_END_MARKER = "NO_CHANGES"
