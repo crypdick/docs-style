@@ -87,7 +87,10 @@ DIFF_SYSTEM_PROMPT = (
     "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
     f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
     "Never output an <edit> block whose <before> and <after> content are identical after normalising "
-    "whitespace (including newlines, tabs, and spaces). These are a NO-OP and should be discarded."
+    "whitespace (including newlines, tabs, and spaces). These are a NO-OP and should be discarded. "
+    "Each <edit> MUST remain small and local: the <before> snippet should not exceed 10 lines of text or ~300 characters. "
+    "If the required change spans more than this limit, break it into multiple <edit> blocks, one per contiguous section. This is to because "
+    "if there are any mistake in the diff, it will fail to apply."
 )
 
 
