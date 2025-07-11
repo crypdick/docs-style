@@ -83,6 +83,7 @@ DIFF_SYSTEM_PROMPT = (
     "</edit>\n\n"
     "The STYLE GUIDE will be supplied inside <style_guide>…</style_guide> and the DOCUMENT inside <document>…</document>. "
     "Only modify the DOCUMENT—never the STYLE GUIDE. "
+    "Do NOT remove or alter Markdown anchor tags or link identifiers such as '[](){ #anchor-id }' (and similar inline anchor syntaxes). "
     "Separate <edit> blocks only by whitespace/newlines—no other text. If several identical snippets require the same "
     "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
     f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
