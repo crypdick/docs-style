@@ -1,15 +1,6 @@
 
 # Document command-line syntax  
 
-
-This page shows how to document command-line commands and their arguments. For more
-information about formatting code that appears in text, placeholders, and code samples, see the
-following links:
-
-* [Code in text](/style/code-in-text)
-* [Formatting placeholders](/style/placeholders)
-* [Code samples](/style/code-samples)
-
 ## Best practices
 
 When you write procedural or conceptual documentation for a command-line command, apply the
@@ -43,9 +34,6 @@ following best practices:
   commands if they're not first removed. For that reason, avoid using these
   arguments in click-to-copy examples.
 
-  For more information, see the
-  [Optional arguments in click-to-copy commands](#click-to-copy-commands)
-  section of this document.
 
 ## Format a command
 
@@ -70,11 +58,10 @@ To format a command with multiple elements, do the following:
   + Windows: A caret preceded with a space ( `^`)
 * Format placeholder text with [placeholders](/style/placeholders).
 * Follow the command line with a descriptive list of the placeholders
-  used in the command line. For more information, see [Explaining placeholders](/style/placeholders#explain-placeholders).
+  used in the command line.
 * When documenting a command-line option or argument, use end puctuation for complete
   sentences. Don't use end punctuation for single words or noun phrases, unless there is a mix of
   sentences and noun phrases. This guidance is similar to [end punctuation in lists](/style/lists#capitalization-and-end-punctuation).
-  For more information, see [Google AIP guidelines for documentation](https://google.aip.dev/192#style).
 
 When you're documenting a `bash` or `sh` command, follow the
 [quotation mark style](https://google.github.io/styleguide/shellguide.html#s5.7-quoting)
@@ -229,8 +216,7 @@ commands. Instead, choose one of the following approaches:
   [use only the necessary arguments](#best-practices)
   to complete the task for the most common use case. If possible, remove optional arguments from
   the command; always provide a link to the command reference for the command, where readers can
-  find the full list of options. For more information, check with product management or a
-  technical support specialist for the most relevant arguments.
+  find the full list of options.
 
   Recommended:
 
@@ -355,23 +341,14 @@ Wakeup reason: 0
 
 ```
 
-For more information about presenting output, also see the following:
-
-* For more information about how to present output in procedures, see [Order of multiple
-  components in a step](/style/procedures#order-of-multiple-components-in-a-step).
-* For more information about using placeholders in output, see [Placeholders in output](/style/placeholders#placeholders-in-output).
-* For more information about using examples such as domain names and IP addresses in output, see [Example domains and names](/style/examples).
-
 ## Command-line terminology
 
 When discussing commands and their constituent parts in the `gcloud` CLI
 and in Linux commands, follow this guidance:
 
-* Avoid mapping nomenclature of the `gcloud` CLI's commands to
-  Linux commands.
 * Linux commands can be complicated. It's wise to describe what the entire
   command does rather than what its individual elements are called.
-* For Linux commands or commands in the `gcloud` CLI, ask yourself if the reader must
+* For Linux commands, ask yourself if the reader must
   know the name of the command-line element or if explaining the command is sufficient.
 
 ### gcloud commands
@@ -441,10 +418,6 @@ The preceding command consists of the following elements:
 In addition to the term flag, *option* is often used as a
 catchall term when you don't want to mire the reader in specialized
 nomenclature.
-
-For more information, see the
-[Cloud SDK: gcloud](https://cloud.google.com/sdk/gcloud/reference/)
-topic.
 
 ### Linux commands
 

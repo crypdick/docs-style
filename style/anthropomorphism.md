@@ -6,8 +6,7 @@
 Don't attribute human qualities to software or hardware.
 
 Anthropomorphism is a category of figurative language, which is less precise and is often harder
-to understand and translate than direct language. For more information, see
-[Write for a global audience](/style/translation).
+to understand and translate than direct language.
 
 Recommended: A Delimiter object specifies
 where to split a string.

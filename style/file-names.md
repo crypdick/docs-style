@@ -58,8 +58,7 @@ The following sections discuss how to reference files.
 When referring to a specific file, do the following:
 
 * Use [code font](/style/code-in-text).
-* Include the word *file* after the filename. For more information, see
-  [Grammatical treatment of code elements](/style/code-in-text#grammatical-treatment-of-code-elements).
+* Include the word *file* after the filename.
 * Use the exact spelling of the filename even if it doesn't follow
   [naming guidelines](#naming-guidelines).
 * If a sample of the file is included on the page, follow the

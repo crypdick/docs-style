@@ -21,33 +21,20 @@ internationalization in mind. The following list defines these terms:
 * *Internationalization:* Designing a product and its associated documentation to minimize
   the localization effort—for example, placing all UI strings in a separate file to simplify
   translation.
-
-For more information, see
-[Language localization](https://wikipedia.org/wiki/Language_localisation).
-
-For other writing best practices, see the following resources:
-
-* [Write accessible documentation](/style/accessibility)
-* [Write inclusive documentation](/style/inclusive-documentation)
-* [Voice and tone](/style/tone)
-
+  S
 ## Best practices
 
 * Use [present tense](/style/tense).
 * Write [dates and times](/style/dates-times) in unambiguous and
   clear ways.
-* Use screenshots and text in figures sparingly. For more information, see
-  [Figures and other images](/style/images).
 * Use qualifying nouns for technical keywords. For example, when referring to a file called
   `example.yaml`, call it the *`example.yaml` file* and not
-  *`example.yaml`* by itself. For more information, see
-  [Keywords](/style/code-in-text#keywords).
+  *`example.yaml`* by itself.
 * Provide context. Don't assume that the reader already knows what you're talking about.
 * Avoid negative constructions when possible. Consider whether it's necessary to tell the reader
   what they can't do instead of what they can.
 * Avoid directional language (for example, *above* or *below*) in procedural
-  documentation. For more information, see
-  [UI elements and interaction](/style/ui-elements#buttons).
+  documentation
 
 ## Write short sentences
 
@@ -61,10 +48,9 @@ review costs.
 
 * Use active voice. The subject of the sentence is the person or thing performing the action.
   With passive voice, it's often hard for readers to figure out who's supposed to do something.
-  For more information, see [Active voice](/style/voice).
+ 
 * Address the reader directly. Use *you*, instead of *the user* or *they*, unless
-  you're referring to someone who uses the software that the reader is developing. For more
-  information, see [Second person and first person](/style/person).
+  you're referring to someone who uses the software that the reader is developing.
 * Use a simple word. For example, don't use words like *commence* when you mean *start*
   or *begin*. Don't use *consequently* when you mean *so*. Don't use words like
   *utilize* or *leverage* when you mean *use*. (It's fine to use these words when
@@ -84,7 +70,7 @@ review costs.
   the following terms:
 * Define abbreviations. Abbreviations can be confusing out of context, and they don't translate
   well. Spell things out whenever possible, at least the first time that you use
-  a given term. For more information, see [Abbreviations](/style/abbreviations).
+  a given term.
 * Don't use too many modifiers. In particular, don't use more than two nouns as modifiers of
   another noun.
 
@@ -102,8 +88,7 @@ review costs.
 
   Not recommended: Only request one token.
 * Don't omit relative pronouns. To provide clarity and to avoid ambiguity, use relative
-  pronouns such as *that* and *which*. For more information, see
-  [Relative pronouns](/style/pronouns#relative-pronouns).
+  pronouns such as *that* and *which*.
 
   Recommended: You can programmatically update
   the rules that you previously defined.
@@ -130,7 +115,7 @@ review costs.
   | Identify all of the datasets. | Identify all the datasets. |
   | Start the profiler, and then run the app. | Start the profiler, then run the app. |
 
-  See also [Optional pronouns](/style/pronouns#optional-pronouns).
+ 
 * Repeat a word if the redundancy improves comprehension.
 
   | Recommended | Not recommended |
@@ -159,20 +144,16 @@ review costs.
   + Use standard English word order. Sentences follow the *subject + verb + object* order.
   + Try to keep the main subject and verb as close to the beginning of the sentence as possible.
   + Use the conditional clause first. If you want to tell the audience to do something in a
-    particular circumstance, mention the circumstance before you provide the instruction. For more
-    information, see [Sentence structure](/style/sentence-structure).
+    particular circumstance, mention the circumstance before you provide the instruction.
   + Make list items consistent. Make list items parallel in structure. Be consistent in your
-    capitalization and punctuation. For more information, see [Lists](/style/lists).
+    capitalization and punctuation.
   + Use consistent typographic formats. Use bold and italics consistently. Don't switch from
-    using italics for emphasis to underlining. For more information, see
-    [Text-formatting summary](/style/text-formatting).
-  + Use consistent capitalization. For more information, see
-    [Capitalization](/style/capitalization).
+    using italics for emphasis to underlining.
+  + Use consistent capitalization.
 
   ## Be inclusive
 
-  You're not writing for your culture. Write with inclusivity in mind. For more information, see
-  [Writing inclusive documentation](/style/inclusive-documentation).
+  You're not writing for your culture. Write with inclusivity in mind.
 
   + Don't be too culturally specific. In particular, don't refer to specific holidays, cultural
     practices, or sports unless you're certain they're known worldwide.

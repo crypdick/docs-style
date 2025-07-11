@@ -69,9 +69,7 @@ other punctuation for clarity.
 A couple of specific places where commas are a good idea:
 
 * In general, put a comma before the word *which* at the start of a
-  nonrestrictive clause. For more information about this topic, see this guide's section on [relative pronouns](/style/pronouns#relative-pronouns) and Grammar
-  Girl's page on
-  [*which* versus *that*](http://www.quickanddirtytips.com/education/grammar/which-versus-that-0?page=all).
+  nonrestrictive clause.
 * In general, put a semicolon or a period or a dash before a conjunctive
   adverb, such as *otherwise*, *however*, or *therefore*, and put a comma after
   the conjunctive adverb.

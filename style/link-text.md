@@ -87,10 +87,6 @@ described in the following sections.
 One option for effective link text is to match the link text to the page
 title or heading that you're referencing.
 
-For more information about how to capitalize the page title in a
-cross-reference, see
-[Capitalization in references to titles and headings](/style/capitalization#capitalization-in-references-to-titles-and-headings).
-
 Recommended: For more
 information, see
 [Load balancing and scaling](https://cloud.google.com/compute/docs/load-balancing-and-autoscaling).
@@ -167,8 +163,7 @@ Not recommended: [Google Kubernetes Engine](https://cloud.google.com/kubernetes-
 
 If the text includes a command or another element usually conveyed with
 code font, include the description of the code element with the link text,
-unless doing so is awkward or redundant. For more information about elements
-that appear in code font, see [Code in text](/style/code-in-text).
+unless doing so is awkward or redundant.
 
 Recommended: To create an
 instance with a custom hostname, run the `gcloud instances create`
@@ -198,14 +193,10 @@ information, see..." or "For more information about..., see... ."
 
 Include the "about..." clause when the link text or surrounding context
 doesn't clearly indicate why you're referring the reader to this information.
-For more information, see the
-[Clarify the purpose of a link](#clarify-purpose)
-section of this document.
 
 Don't use *on* instead of *about*.
 
-Use *see* to refer to links and cross-references. For more information, see
-[see](/style/word-list#see).
+Use *see* to refer to links and cross-references.
 
 Recommended: For more information, see
 [Load balancing and scaling](https://cloud.google.com/compute/docs/load-balancing-and-autoscaling).
@@ -279,9 +270,7 @@ then provide that context. The following are a few such situations:
     Recommended: For more information, see
     [Install libraries](#different-page)
     in "Building new audiences based on existing customer lifetime value."
-  * **Links that open in a new tab.** For more information, see the
-    [Open links in the current tab](#current-tab) section of this
-    document.
+  * **Links that open in a new tab.**
   * **Links that go to a different domain or server.** For more
     information, see the
     [Don't use external link icons](#external-link-icons) section
@@ -312,24 +301,6 @@ Not recommended:
 ```
 <a href="/style/accessibility" target="_blank">Accessible content</a>
 ```
-
-## Don't use external link icons
-
-Don't use an external link icon to indicate that the link goes to a different
-domain or server. If you think it's important to inform the reader that they're
-leaving a Google domain, mention it in the text and don't rely on an icon.
-
-Recommended: For
-more information, see
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
-Sometimes OK:
-For more information, see the Wikipedia page about
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
-Not recommended:
-For more information, see
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
 
 ## Punctuation around link text
 

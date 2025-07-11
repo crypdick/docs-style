@@ -27,13 +27,11 @@ following sources (in this order):
 3. The [Merriam-Webster
    dictionary](https://www.merriam-webster.com/).
 
-As always, deviate from our guidance when it serves your readers. For
-more information, see [Break the rules](/style#rules).
+As always, deviate from our guidance when it serves your readers.
 
 **Note**: Don't use a hyphen (-) or a double
 hyphen (--) in place of a dash (—). The dash is a distinct punctuation mark
-that has different uses. For more information, see
-[Dashes](/style/dashes).
+that has different uses.
 
 ## Prefixes
 

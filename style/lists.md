@@ -26,7 +26,7 @@ lists in our documentation:
 
 | List type | Used for | HTML elements |
 | --- | --- | --- |
-| Numbered list | A set of items where the sequence is significant, such as ordered steps, phases, or priorities. The following is an example of a numbered list:  Here's a sequence of steps to follow:   1. Open the box. 2. Remove the bobcat from the box. 3. Feed the bobcat.  Nested sequential lists are labeled with lowercase letters or lowercase Roman numerals. The following is an example of a nested sequential list:  Here's a list of things to do after breakfast, in order:   1. Go shopping.    1. Buy groceries:       * Flour       * Eggs       * Sugar       * Butter    2. Go to mall:       1. Buy dress.       2. Buy shoes. 2. Make cake. 3. Build birthday present out of spare parts. 4. Clean house.  See also [Sub-steps in numbered procedures](/style/procedures#sublists). | `ol`, `li` |
+| Numbered list | A set of items where the sequence is significant, such as ordered steps, phases, or priorities. The following is an example of a numbered list:  Here's a sequence of steps to follow:   1. Open the box. 2. Remove the bobcat from the box. 3. Feed the bobcat.  Nested sequential lists are labeled with lowercase letters or lowercase Roman numerals. The following is an example of a nested sequential list:  Here's a list of things to do after breakfast, in order:   1. Go shopping.    1. Buy groceries:       * Flour       * Eggs       * Sugar       * Butter    2. Go to mall:       1. Buy dress.       2. Buy shoes. 2. Make cake. 3. Build birthday present out of spare parts. 4. Clean house.  | `ol`, `li` |
 | Bulleted list | A set of items that's not a sequence, such as a set of nonsequential options or examples. Make sure it's clear whether or not every item is required. The following is an example of a bulleted list:  Here's a list of things that can go wrong, in no particular order:   * Your bicycle might explode. * The sun might go out. * An ant might break its leg and require a tiny splint. | `ul`, `li` |
 | Description list | A set of terms, each with a description, definition, or explanation. Use this type of list if you want to draw attention to two or more terms (such as a glossary). The following is an example of a description list:  Here are some descriptions of types of birds:  Emu  The best kind of bird.  Crow  The other best kind of bird.  Peacock  Also the best kind of bird.  Phoenix  An even better kind of bird. | `dl`, `dt`, `dd` |
 | Description list that uses bulleted run-in headings | A set of introductory terms or phrases, each followed by a description, definition, or explanation. Use this type of list if you want to highlight and explain several concepts or save space. For information about how to format and punctuate run-in headings and their descriptions, see [Description lists that use run-in headings](#description-lists-that-use-run-in-headings) in this document.  The following is an example of a description list that uses bulleted run-in headings:  Here are some descriptions of types of birds:   * **Emu**: the best kind of bird * **Crow**: the other best kind of bird * **Peacock**: also the best kind of bird * **Phoenix**: an even better kind of bird | `ul`, `li` |
@@ -68,11 +68,6 @@ completed by the list items. You can also use *the following* as a noun phrase (
 | To get the USB driver, follow these steps:   1. Click **Tools >    Android > SDK Manager**. 2. Select **Google USB Driver**, and then click **OK**. | To get the USB driver:   1. Click    **Tools > Android >    SDK Manager**. 2. Select **Google USB Driver**, and then click **OK**. |
 | If you need to add an instance manually, do the following:   1. Click **Create instance**. 2. For **Name**, enter a name. | If you need to add an instance manually:   1. Click **Create instance**. 2. For **Name**, enter a name. |
 | Objectives  * Create an instance * Snapshot an instance * Delete an instance | Objectives In the following tutorial, you will complete the following tasks:   * Create an instance * Snapshot an instance * Delete an instance |
-
-For information about introducing sub-steps, see [Sub-steps in numbered procedures](/style/procedures#sublists).
-
-For information about punctuation and capitalization of lists, see
-[Capitalization and end punctuation](#capitalization).
 
 ## Unusual list numbering
 
@@ -191,10 +186,7 @@ To end the descriptive text, punctuate as follows:
 + If the description includes a verb or expresses a standalone thought, end the
   description with a period.
 
-Don't use a dash to set off a description from an item in a description list. For more
-information, see
-[Colons instead of dashes in
-lists](/style/dashes#colons-instead-of-dashes-in-description-lists).
+Don't use a dash to set off a description from an item in a description list.
 
 Recommended:
 
@@ -242,11 +234,3 @@ transactions.
 Not recommended: The service processes
 event logs, clickstream data, social network interactions, e-commerce
 transactions, etc.
-
-For more information, see [etc.](/style/word-list#etc)
-
-
-
-
-
-

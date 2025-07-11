@@ -25,9 +25,7 @@ The following is a list of commonly used notices.
 Note
 :   An ordinary aside or tip. Provides information that is useful but not critical to the reader.
     For example, "Generating excessive amounts of traffic to external systems can resemble a
-    denial-of-service attack." For more information, see
-    [when to use](#when-to-use-a-note-notice-type)
-    and [when not to use](#when-not-to-use-a-note-notice-type) a note notice type.
+    denial-of-service attack."
 
 Caution
 :   Tells the reader to proceed carefully. For example, "We don't recommend using a

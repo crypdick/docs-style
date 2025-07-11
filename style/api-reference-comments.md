@@ -8,14 +8,6 @@ classes, methods, constants, and other members.
 Use the basic guidelines in this document as appropriate for a given programming
 language. This document doesn't specify how to mark up document comments.
 
-For more information, see the following resources:
-
-* [AIP-192: Documentation](https://google.aip.dev/192)
-  in Google's API standards
-* [Inline API documentation](https://cloud.google.com/apis/design/documentation)
-  in the Google Cloud API design guide
-* The specific style guide for each programming language
-
 ## Documentation basics
 
 The API reference **must** provide a description for each of the following:

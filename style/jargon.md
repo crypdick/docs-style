@@ -11,9 +11,7 @@ Typically, the meaning of jargon isn't understood except by the specific group. 
 jargon can hamper our efforts to publish content that's clear, that reaches a
 [global audience](/style/translation)
 in multiple languages, that serves readers at various levels of product knowledge, and that's
-inclusive of different groups and cultures. For more information about writing with
-inclusivity and diversity in mind, see
-[Write inclusive documentation](/style/inclusive-documentation).
+inclusive of different groups and cultures.
 
 However, some jargon is widely understood and accepted by our industry or by the intended
 audience of a document. It can be valuable to include jargon in a document when you know that

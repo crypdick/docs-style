@@ -2,8 +2,7 @@
 # Make headings into link targets  
 
 This page discusses how to turn a heading into a link target by using an
-`id` attribute. For more information about how to format headings, see
-[Headings and titles](/style/headings).
+`id` attribute.
 
 In some content management systems, anchors are automatically created for headings. However, you
 might want to add a *custom* anchor to a heading for several reasons:

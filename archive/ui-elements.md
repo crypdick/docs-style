@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # UI elements and interaction  
 
 
@@ -37,8 +31,6 @@ the **Advanced options** section.
 
 The rest of this page focuses on scenarios where you've decided it's
 useful to explicitly discuss UI elements.
-
-For information about writing procedures, see [Procedures](/style/procedures).
 
 ## Format names of UI elements
 
@@ -119,8 +111,7 @@ Not recommended:
 In the **MyApp** page, click **Edit**.
 
 *Page* is the preferred term when referring to a web page in general, and to a sub-page
-of a console in particular. For more information, see
-[console](/style/word-list#console).
+of a console in particular.
 
 Recommended:
 In the Google Cloud console, go to the **Deployments** page.
@@ -260,10 +251,6 @@ To inspect an element, right-click the element and select
 **Inspect** or **Inspect element**, depending on your browser. Look for one of the following
 types of labels: `aria-labelledby`, `aria-label`,
 `aria-describedby`, `label`, `placeholder`, or `title`.
-For more information, see
-[Using aria-label](https://www.w3.org/TR/WCAG20-TECHS/ARIA14.html)
-and
-[Accessible Name and Description calculation](https://www.w3.org/TR/html-aapi/#accessible-name-and-description-calculation).
 
 If a button with an icon doesn't include a tooltip, submit a bug report
 requesting that a tooltip be added. Tooltips are crucial for accessibility, and
@@ -436,7 +423,6 @@ Not recommended: To save, press
 
 To refer to a key that the user types to enter that key's value as text input,
 use the `code` element, not the `kbd` element.
-For more information, see [Code font](/style/text-formatting#code-font).
 
 To refer to a keyboard key, use the key's name. If that's ambiguous, use the
 form *the `KEY_NAME` key*.
@@ -488,26 +474,16 @@ When documenting the UI, use the following prepositions.
 
 ## Verbs in procedures
 
-To describe an action on the page, use the following verbs. For more
-information about each verb, see its corresponding entry on the
-[word list](/style/word-list).
+To describe an action on the page, use the following verbs.
 
-* [Click](/style/word-list#click)
-* [Choose](/style/word-list#choose)
-* [Drag](/style/word-list#drag)
-* [Enable](/style/word-list#enable)
-* [Enter, type](/style/word-list#enter)
-* Go to (see [scroll](/style/word-list#scroll))
-* [Hold the pointer over](/style/word-list#hold-the-pointer-over)
-* [Press](/style/word-list#press)
-* [Select](/style/word-list#select)
-* [Tap](/style/word-list#tap)
-* [Turn on, turn off](/style/word-list#turn-on)
-
-For information about writing procedures, see [Procedures](/style/procedures).
-
-
-
-
-
-
+* Click
+* Choose
+* Drag
+* Enable
+* Enter, type
+* Go to (see scroll)
+* Hold the pointer over
+* Press
+* Select
+* Tap
+* Turn on, turn off

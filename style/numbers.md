@@ -180,11 +180,6 @@ en dash (`&ndash;`).
 Recommended:
 2012-2016
 
-For more information, see the following:
-
-* [Ranges of numbers with units](/style/units-of-measure#ranges)
-* [Range of numbers](/style/hyphens#number-range)
-
 ## Suspended hyphens
 
 When two or more hyphenated compounds that start with numbers modify the same
@@ -195,8 +190,7 @@ scan for new files at one-, two-, or three-hour intervals.
 
 ## Currency
 
-Make sure that it's clear what country's currency you are describing. For more information, see
-the [currency](/style/units-of-measure#currency) section in Units of measurement.
+Make sure that it's clear what country's currency you are describing.
 
 For US dollars, use a comma to delineate the thousands place of whole
 currency. Use a period to delineate whole currency and fractions of currency.
@@ -240,8 +234,6 @@ Use a period for a decimal point, also in the standard American style.
 **Note**: Even though in some scientific writing,
 four-digit numbers don't use commas, our style is to use a comma for a
 four-digit number.
-
-For more information about decimal points and digit group separators, see Wikipedia's [decimal mark](http://wikipedia.org/wiki/Decimal_mark) entry.
 
 ## Dimensions
 

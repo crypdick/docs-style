@@ -61,7 +61,6 @@ unique.
   `h2`, and so on. In Markdown: `#`, `##`, and so on.
 * Use a level-1 heading for the page title or main content heading.
 
-For more information and examples, see [Headings and titles](/style/headings).
 
 ## Links
 
@@ -69,12 +68,10 @@ For more information and examples, see [Headings and titles](/style/headings).
   Links should make sense when read out of context.
 * Don't use *click here* or *read this document*. Some people who use screen readers
   jump from link to link to scan a page and need to understand what a link contains.
-* Use *see* to refer to links and cross-references. For more information, see
-  [see](/style/word-list#see).
+* Use *see* to refer to links and cross-references.
 * When a link does anything that the reader might not expect, such as downloading a file,
   opening in a new tab, or jumping to another section on the same page, explain that behavior when
-  you link. For more information, see
-  [Explain unexpected link behavior](/style/cross-references#explain-behavior).
+  you link.
 * When possible, avoid adjacent links. Instead, put a character in between to separate them.
 
 ## Lists
@@ -100,10 +97,6 @@ For more information and examples, see [Headings and titles](/style/headings).
 * Avoid when possible tables in the middle of a numbered procedure.
 * Don't merge cells. Don't use `colspan` or `rowspan` attributes.
 * Don't use tables unless it's the best method to present your information. Tables are
-  challenging for screen readers. For more information, see
-  [List or table](/style/tables#list-or-table).
+  challenging for screen readers.
 * Don't present new information in tables through images or symbols alone; always provide a
-  descriptive `alt` attribute for the image or symbol. For more information, see
-  [Alt text](/style/images#alt-text).
-
-For more information, see [Tables](/style/tables).
+  descriptive `alt` attribute for the image or symbol.

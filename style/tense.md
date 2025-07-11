@@ -27,7 +27,7 @@ Not recommended: A message is sent
 that notifies any Pub/Sub subscribers.
 
 Don't use future tense to describe how a product or feature will work after the next release
-or update. For more information, see [Document future features](/style/future).
+or update.
 
 Also avoid the hypothetical future *would*—for example:
 

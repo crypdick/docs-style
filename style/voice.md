@@ -34,9 +34,6 @@ The server sends an acknowledgment.
 Not recommended: The service is queried by
 you, and an acknowledgment is sent by the server.
 
-For more information, see
-[Active voice vs. passive voice](https://developers.google.com/tech-writing/one/active-voice)
-in Google's Technical Writing One guide.
 
 ## Exceptions
 

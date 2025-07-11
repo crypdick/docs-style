@@ -62,17 +62,13 @@ usually a colon if it immediately precedes the table, and usually a period if th
 Recommended: Change the environment variables
 to values for your deployment, as listed in the following table:
 
-For more information, see the
-[Tables](/style/accessibility#tables) section of the "Accessibility" page.
-
 ## Table placement
 
 * When introducing a table, use a complete sentence and try to refer to the
   table's position, using a phrase like *the following table* or *the preceding table*.
 * Don't put a table in the middle of a sentence.
 * Avoid using footnotes when possible. If your table does refer to footnotes, place them
-  immediately following the table. For more information, see
-  [Footnotes](/style/footnotes).
+  immediately following the table.
 
 ## Table captions
 
@@ -113,8 +109,7 @@ Recommended:
 * If the table is long or complicated—for example, with multiple header rows or columns—consider
   splitting it into multiple tables.
 * Don't present new information in tables through images or symbols alone; always provide a
-  descriptive `alt` attribute for the image or symbol. For more information, see
-  [Alt text](/style/images#alt-text).
+  descriptive `alt` attribute for the image or symbol.
 
 ## Table column heads
 

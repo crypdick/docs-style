@@ -7,31 +7,6 @@ provide imaginary (fictitious) examples or use
 [placeholders](/style/placeholders), like
 `USER_ID` or `EMAIL_ADDRESS`.
 
-## Example domain names
-
-When you need a generic domain name in an example, use example.com,
-example.org, or example.net. These domains are reserved by the
-[Internet Assigned Numbers Authority](https://www.iana.org/domains/reserved)
-for use in documentation.
-
-Alternatively, you can use any of the following domain names, which Google
-owns specifically for use in documentation:
-
-* altostrat.com
-* examplepetstore.com
-* example-pet-store.com
-* myownpersonaldomain.com
-* my-own-personal-domain.com
-* cymbalgroup.com
-
-If you need an example domain name for an internationalized domain name, use one of the
-[IDN Test TLDs](https://en.wikipedia.org/wiki/IDN_Test_TLDs) and copy from the
-"URL of the test site" column.
-
-Recommended: Hostnames that include non-ASCII characters
-are encoded using Punycode. For example, `http://مثال.إختبار` is encoded as
-`xn--kgbechtv`.
-
 ## Example email addresses
 
 If you need a generic email address, use one of the domains listed

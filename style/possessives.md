@@ -73,9 +73,3 @@ value returned by the `wordCount` method.
 
 Not recommended: Compare the number to
 `wordCount`'s return value.
-
-For more information, see
-[Grammatical treatment of code elements](/style/code-in-text#grammatical-treatment-of-code-elements).
-
-
-

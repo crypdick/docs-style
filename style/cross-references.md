@@ -86,10 +86,6 @@ described in the following sections.
 One option for effective link text is to match the link text to the page
 title or heading that you're referencing.
 
-For more information about how to capitalize the page title in a
-cross-reference, see
-[Capitalization in references to titles and headings](/style/capitalization#capitalization-in-references-to-titles-and-headings).
-
 Recommended: For more
 information, see
 [Load balancing and scaling](https://cloud.google.com/compute/docs/load-balancing-and-autoscaling).
@@ -166,8 +162,7 @@ Not recommended: [Google Kubernetes Engine](https://cloud.google.com/kubernetes-
 
 If the text includes a command or another element usually conveyed with
 code font, include the description of the code element with the link text,
-unless doing so is awkward or redundant. For more information about elements
-that appear in code font, see [Code in text](/style/code-in-text).
+unless doing so is awkward or redundant.
 
 Recommended: To create an
 instance with a custom hostname, run the `gcloud instances create`
@@ -197,14 +192,10 @@ information, see..." or "For more information about..., see... ."
 
 Include the "about..." clause when the link text or surrounding context
 doesn't clearly indicate why you're referring the reader to this information.
-For more information, see the
-[Clarify the purpose of a link](#clarify-purpose)
-section of this document.
 
 Don't use *on* instead of *about*.
 
-Use *see* to refer to links and cross-references. For more information, see
-[see](/style/word-list#see).
+Use *see* to refer to links and cross-references.
 
 Recommended: For more information, see
 [Load balancing and scaling](https://cloud.google.com/compute/docs/load-balancing-and-autoscaling).

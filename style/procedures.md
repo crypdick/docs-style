@@ -30,7 +30,7 @@ Also recommended: To customize the buttons, do the following:
 Not recommended: To customize the
 buttons:
 
-For more information about introducing lists, see [Lists](/style/lists#introductory-sentences-for-lists).
+
 
 ## Single-step procedures
 
@@ -61,7 +61,7 @@ sub-sub-steps get lowercase Roman numerals.
 When a step has sub-steps, treat the step like an [introductory sentence](#introductory-sentences): put a colon or a
 period at the end of the step, as appropriate.
 
-For more information about lists, see [Lists](/style/lists#introductory-sentences-for-lists).
+
 
 Recommended:
 
@@ -284,7 +284,7 @@ Recommended:
 | Set the context (such as a tool or an environment) in which the reader performs a procedure.  If there are multiple headings associated with a set of procedures, restate the context of the procedure in the first step, even if the context is the same as in the previous procedure. | In Cloud Shell, connect to the development cluster.  In the Google Cloud console, go to the **BigQuery** page. |  |
 | Write in the order that the reader needs to follow. State the location of the action before stating the action. | In Google Docs, click **File > New > Document**.  In the Google Cloud console, go to the **Monitoring** page. | Click **File > New > Document** in Google Docs.  Go to the **Monitoring** page in the Google Cloud console. |
 | State the purpose or goal of the action before stating the action. | To start a new document, click **File > New > Document**. | Click **File > New > Document** to start a new document. |
-| Don't use directional language to orient the reader, such as *above*, *below*, or *right-hand side*. This type of language doesn't work well for accessibility or for localization. If a UI element is hard to find, provide a screenshot.  For information about documenting icons, see [Buttons and icons](/style/ui-elements#buttons). | Click menu**Menu**.  In the preceding diagram,...  In the following diagram,... | Click the button with three lines.  In the above diagram, ...  In the diagram below, ... |
+| Don't use directional language to orient the reader, such as *above*, *below*, or *right-hand side*. This type of language doesn't work well for accessibility or for localization. If a UI element is hard to find, provide a screenshot. | Click menu**Menu**.  In the preceding diagram,...  In the following diagram,... | Click the button with three lines.  In the above diagram, ...  In the diagram below, ... |
 | Don't use *please*. | To open a document, click **File > Open**. | To open a document, please click **File > Open**. |
 | Avoid using *run the following command* to introduce code. Instead, focus on what the command does. | In Cloud Shell, deploy the load generator:...  Define a firewall rule to allow internal traffic:... | In Cloud Shell, deploy the load generator by running the following command:...  Run the following command:... |
 | If the reader must press **Enter** after a step, then include that instruction as part of the step. | Click the search box, type `custom function`, and then press **Enter**. | 1. Click the search box and type `custom function`. 2. Press **Enter**. |

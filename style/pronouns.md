@@ -77,8 +77,7 @@ in the following contexts:
   Standardized Aardvark Treats. We cannot guarantee the happiness of your aardvark
   otherwise."
 
-Use the second-person pronoun (*you*) whenever possible. For more information about
-second person, see [Second person and first person](/style/person).
+Use the second-person pronoun (*you*) whenever possible.
 
 ## Relative pronouns
 

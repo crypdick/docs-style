@@ -105,9 +105,7 @@ notebook. Its title starts with a bare infinitive.
 
 ## Heading and title format
 
-* Use sentence case for headings and titles. For more information, see
-  [Capitalization in titles and
-  headings](/style/capitalization#capitalization-in-titles-and-headings).
+* Use sentence case for headings and titles.
 * Don't include numbers in headings to indicate a sequence of sections.
 * Use punctuation in headings sparingly, if at all. Punctuation can be a sign that your heading is
   too complicated. Consider rewriting.
@@ -116,13 +114,11 @@ notebook. Its title starts with a bare infinitive.
   instance of the word in a paragraph needs to be defined.
   You can define the abbreviation in the page title or heading, but consider if the additional
   length adds value.
-  For SEO, use the more prominent version of the term in headings. For more information, see
-  [Abbreviations](/style/abbreviations).
+  For SEO, use the more prominent version of the term in headings.
 * In general, guidance that applies to text also applies to headings—for example,
   [contractions](/style/contractions) and [articles](/style/articles).
 * Avoid using code items in headings when possible. If you must mention a code item in a heading,
-  add a descriptive noun to the item in code font. For more information, see
-  [Grammatical treatment of code elements](/style/code-in-text#grammatical-treatment-of-code-elements).
+  add a descriptive noun to the item in code font.
 * Use heading tags to structure your content hierarchically—for example,
   `<h1>`, `<h2>`, and `<h3>` in HTML, or
   `#`, `##`, and `###` in Markdown.
@@ -139,20 +135,7 @@ notebook. Its title starts with a bare infinitive.
     only under an `<h2>` tag.
 
     Recommended:
-
-    ### HTML
-
-    ```
-
-    <h1>Transfer data sets</h1>
-
-    <p>This document provides a high-level overview of ways to transfer your data to Google
-    Cloud.</p>
-
-    <h2>Estimate costs</h2>
-
-    ```
-
+    
     ### Markdown
 
     ```

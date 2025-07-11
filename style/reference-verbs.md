@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Verb forms in reference documentation  
 
 When you're writing reference documentation for a method, phrase the main
@@ -19,12 +13,5 @@ task on the specified task list.
 
 Not recommended: tasks.insert: Create a
 new task on the specified task list.
-
-For more information and examples, see the
-[Google Cloud API design guide](https://cloud.google.com/apis/design/documentation#method_description).
-
-
-
-
 
 

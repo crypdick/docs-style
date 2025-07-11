@@ -27,12 +27,6 @@ eventually updated to sentence case, the reference will match.
 When you reference the title of any work or source that doesn't follow this guide, retain the
 original capitalization.
 
-For more information about internal and external references, see
-[Cross-references and linking](/style/cross-references).
-
-For more information about formatting references to third-party sources,
-see [HTML and semantic tagging](/style/semantic-tagging).
-
 ## Capitalization and colons
 
 Use a lowercase letter to begin the first word of the text immediately
@@ -64,8 +58,7 @@ proper noun or proper adjective.
 
 ## Capitalization in lists
 
-Use sentence case for items in all types of lists. For more information, see
-[Capitalization and end punctuation](/style/lists#capitalization-and-end-punctuation).
+Use sentence case for items in all types of lists.
 
 ## Capitalization for tables in text
 

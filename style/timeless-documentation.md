@@ -40,8 +40,8 @@ The following words and phrases can undermine timelessness in documentation:
   for a product or feature, or they can inappropriately imply that a product or feature might change.
   In those cases, don't use such words and phrases.
 
-  For more information, see [Documenting future features](/style/future).
-* **Words and phrases that are implied**. At Google, we assume our documentation is
+ 
+* **Words and phrases that are implied**.  assume our documentation is
   current unless a specific release version is specified. Thus, words and phrases such as
   *currently* and *as of this writing* are implied by the existence of the documentation
   itself.

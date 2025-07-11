@@ -1,15 +1,4 @@
-
-
-
 # Document command-line syntax  
-
-This page shows how to document command-line commands and their arguments. For more
-information about formatting code that appears in text, placeholders, and code samples, see the
-following links:
-
-* [Code in text](/style/code-in-text)
-* [Formatting placeholders](/style/placeholders)
-* [Code samples](/style/code-samples)
 
 ## Best practices
 
@@ -44,10 +33,6 @@ following best practices:
   commands if they're not first removed. For that reason, avoid using these
   arguments in click-to-copy examples.
 
-  For more information, see the
-  [Optional arguments in click-to-copy commands](#click-to-copy-commands)
-  section of this document.
-
 ## Format a command
 
 To mark a block of code such as a lengthy command or a code sample, use the
@@ -71,15 +56,10 @@ To format a command with multiple elements, do the following:
   + Windows: A caret preceded with a space ( `^`)
 * Format placeholder text with [placeholders](/style/placeholders).
 * Follow the command line with a descriptive list of the placeholders
-  used in the command line. For more information, see [Explaining placeholders](/style/placeholders#explain-placeholders).
+  used in the command line.
 * When documenting a command-line option or argument, use end puctuation for complete
   sentences. Don't use end punctuation for single words or noun phrases, unless there is a mix of
-  sentences and noun phrases. This guidance is similar to [end punctuation in lists](/style/lists#capitalization-and-end-punctuation).
-  For more information, see [Google AIP guidelines for documentation](https://google.aip.dev/192#style).
-
-When you're documenting a `bash` or `sh` command, follow the
-[quotation mark style](https://google.github.io/styleguide/shellguide.html#s5.7-quoting)
-in Google's shell style guide.
+  sentences and noun phrases.
 
 ## Command prompt
 
@@ -230,8 +210,7 @@ commands. Instead, choose one of the following approaches:
   [use only the necessary arguments](#best-practices)
   to complete the task for the most common use case. If possible, remove optional arguments from
   the command; always provide a link to the command reference for the command, where readers can
-  find the full list of options. For more information, check with product management or a
-  technical support specialist for the most relevant arguments.
+  find the full list of options.
 
   Recommended:
 
@@ -355,152 +334,3 @@ Upload done, resetting board...
 Wakeup reason: 0
 
 ```
-
-For more information about presenting output, also see the following:
-
-* For more information about how to present output in procedures, see [Order of multiple
-  components in a step](/style/procedures#order-of-multiple-components-in-a-step).
-* For more information about using placeholders in output, see [Placeholders in output](/style/placeholders#placeholders-in-output).
-* For more information about using examples such as domain names and IP addresses in output, see [Example domains and names](/style/examples).
-
-## Command-line terminology
-
-When discussing commands and their constituent parts in the `gcloud` CLI
-and in Linux commands, follow this guidance:
-
-* Avoid mapping nomenclature of the `gcloud` CLI's commands to
-  Linux commands.
-* Linux commands can be complicated. It's wise to describe what the entire
-  command does rather than what its individual elements are called.
-* For Linux commands or commands in the `gcloud` CLI, ask yourself if the reader must
-  know the name of the command-line element or if explaining the command is sufficient.
-
-### gcloud commands
-
-```
-
-gcloud GROUP | COMMAND [--account=ACCOUNT] [--configuration=CONFIGURATION] \
-    [--flatten=[KEY,...]][--format=FORMAT] [--help] [--project=PROJECT_ID] \
-    [--quiet, -q][--verbosity=VERBOSITY; default="warning"] [--version, -v] \
-    [-h] [--log-http][--trace-token=TRACE_TOKEN] [--no-user-output-enabled]
-
-```
-
-For the sake of accurate classification, the `gcloud` CLI's
-syntax distinguishes between a *command* and a *command group*. In
-docs, however, command-line contents are generally referred to as commands.
-
-You can use commands (and groups) alone or with one or more flags. A
-*flag* is a Google Cloud-specific term for any element
-other than the command or group name itself. A command or flag might also
-take an *argument*, for example, a region value.
-
-#### Example command
-
-```
-gcloud init
-```
-
-#### Example command with a flag
-
-```
-gcloud init --skip-diagnostics
-```
-
-#### Example command with multiple elements
-
-```
-
-gcloud ml-engine jobs submit training ${JOB_NAME} \
-    --package-path=trainer \
-    --module-name=trainer.task \
-    --staging-bucket=gs://${BUCKET} \
-    --job-dir=gs://${BUCKET}/${JOB_NAME} \
-    --runtime-version=1.2 \
-    --region=us-central1 \
-    --config=config/config.yaml \
-    -- \
-    --data_dir=gs://${BUCKET}/data \
-    --output_dir=gs://${BUCKET}/${JOB_NAME} \
-    --train_steps=10000
-
-```
-
-The preceding command consists of the following elements:
-
-* `ml-engine` is a `gcloud` command group.
-* `jobs` is an `ml-engine` command group.
-* `submit` is a `jobs` command group.
-* `training` is a `submit` command.
-* `${JOB_NAME}` is an argument that refers to an environment
-  variable called `JOB_NAME` that was set earlier.
-* `--package-path` is a flag set to a path to a Python package to build.
-* `--` in isolation separates the `gcloud` arguments that precede it from
-  the [user arguments](https://cloud.google.com/sdk/gcloud/reference/ml-engine/jobs/submit/training#USER_ARGS)
-  that follow it.
-
-In addition to the term flag, *option* is often used as a
-catchall term when you don't want to mire the reader in specialized
-nomenclature.
-
-For more information, see the
-[Cloud SDK: gcloud](https://cloud.google.com/sdk/gcloud/reference/)
-topic.
-
-### Linux commands
-
-**Caution**: Linux command syntax is notoriously complex.
-This section covers only the most common elements. For a more detailed reference,
-see [The Linux Command Line](http://wiki.lib.sun.ac.za/images/c/ca/TLCL-13.07.pdf).
-
-Where the `gcloud` CLI uses the catchall terms
-flag and option, Linux commands use *options*, *parameters*,
-*arguments*, and a host of specialized syntax elements. The following is an
-example:
-
-```
-
-find /usr/src/linux -follow -type f -name '*.[ch]' | xargs grep -iHn pcnet
-
-```
-
-The preceding command consists of the following elements:
-
-* `find` is the command name.
-* `/usr/src/linux` is an argument that specifies the path to look
-  in. Easier to refer to as only a path.
-* `-follow` is an option. The hyphen (`-`), often called a *dash* in
-  this context, is part of the option.
-* `-type` is an option with a value of `f`.
-* `-name` is an option with a value of `'*.[ch]'`, where
-  the asterisk (`*`) is a *metacharacter* signifying a wildcard.
-  Metacharacters are used in Linux shell commands for *globbing*, or filename
-  expansion. In addition to the asterisk, metacharacters include the question mark
-  (`?`) and caret (`^`).
-
-The results of the first command are redirected by using a *pipe*
-(`|`) to the `xargs grep -iHn pcnet` command. Other
-redirection symbols include the greater than symbol (`>`), less than symbol
-(`<`), left double angle quotation mark (`<<`), and right double
-angle quotation mark (`>>`). Redirection means capturing
-output from a file, command, program, script, or even code block within a script
-and sending it as input to another file, command, program, or script.
-
-### Linux signals
-
-Linux signals require vocabulary choices that
-are generally discouraged elsewhere in documentation. We recommend using the terms in the
-following table *only* in the context of process control:
-
-| Signal | Description |
-| --- | --- |
-| `SIGKILL` | Signal sent to *kill* a specified process, all members of a specified process group, or all processes on the system. `SIGKILL` cannot be caught, blocked, or ignored. Do not substitute *cancel*, *end*, *exit*, *quit*, *stop*, or *terminate*. |
-| `SIGTERM` | Signal sent as a request to *terminate* a process. Although similar to `SIGKILL`, this signal gives the process a chance to clean up any child processes that might be running. Do not substitute *cancel*, *end*, *exit*, *quit*, or *stop*. |
-| `SIGQUIT` | Signal sent from a keyboard to *quit* a process. Some processes can catch, block, or ignore a quit signal. Do not substitute *cancel*, *end*, *exit*, *quit*, or *stop*. |
-| `SIGINT` | Signal sent to *interrupt* a process immediately. The default action of this signal is to terminate a process gracefully. It can be handled, ignored, or caught. It can be sent from a terminal—for example, when a user presses `Control+C`. Do not substitute *suspend*, *end*, *exit*, *pause*, or *terminate*. |
-| `SIGPAUSE` | Signal that tells a process to *pause*, or *sleep*, until any signal is delivered that either terminates the process or invokes a signal-catching function. Do not substitute *cancel* or *interrupt*. |
-| `SIGSUSPEND` | Signal sent to temporarily *suspend* execution of a process. Used to prevent delivery of a particular signal during the execution of a critical code section. Do not substitute *pause* or *exit*. |
-| `SIGSTOP` | Signal sent to *stop* execution of a process for later continuation (upon receiving a `SIGCONT` signal). `SIGSTOP` cannot be caught, blocked, or ignored. Do not substitute *cancel*, *end*, *exit*, *interrupt*, *quit*, or *terminate*. |
-
-
-

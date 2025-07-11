@@ -3,8 +3,7 @@
 
 If you want to tell the reader to do something, try to mention the circumstance, conditions, or
 goal before you provide the instruction. Mentioning the circumstance first lets the reader skip
-the instruction if it doesn't apply. For information about how to apply this guideline to
-procedural instructions, see [Procedures](/style/procedures).
+the instruction if it doesn't apply.
 
 | Recommended | Not recommended |
 | --- | --- |

@@ -7,8 +7,7 @@
 # Text-formatting summary  
 
 The page summarizes, and provides a quick reference for, many of the general text-formatting
-conventions covered elsewhere in the style guide. For more information, see
-[Visual formatting](/style/semantic-tagging#visual-formatting).
+conventions covered elsewhere in the style guide.
 
 Bold
 :   Use bold formatting, `<b>` or `**`, only for
@@ -33,13 +32,12 @@ Italic
 :   Although an asterisk, `*`, can also indicate italics in Markdown, we recommend
     underscores to make it easier for humans to distinguish italics from bold in the Markdown file.
 :   Italicize titles of books, movies, web series, and other full-length works, unless they're part
-    of a link. For more information, see [Cross-references and linking](/style/cross-references).
+    of a link.
 :   Italicize mathematical variables and version variables. For example, *x* + *y* = 3,
     version 1.4.*x*.
 
 Underline
-:   Reserve underlining for link text. For more information, see
-    [Style link text](https://developers.google.com/style/cross-references#style-link-text).
+:   Reserve underlining for link text. 
 
 Code font
 :   Use `<code>` in HTML or ``` in Markdown to apply a monospace font

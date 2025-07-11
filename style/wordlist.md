@@ -17,11 +17,11 @@ term. Apply this guidance as follows:
 
 ### Numbers and Symbols
 
-+ [link](#+)
++
 :   OK to use *+* with numbers in text, such as *customer records with
     300+ demographic attributes*, except in formal contexts.
 
-& (ampersand) [link](#ampersand)
+& (ampersand)
 :   Don't use *&* instead of *and* in headings, text, navigation, or
     tables of contents.
 :   It's OK to use *&* when referencing UI elements that use *&*, or
@@ -32,23 +32,23 @@ term. Apply this guidance as follows:
 
 ### A
 
-a and an [link](#a-an)
+a and an
 :   Use *a* when the next word starts with a consonant *sound*,
-    regardless of what letter it starts with. For more information, see [Articles (a, an, the)](/style/articles).
+    regardless of what letter it starts with.
 
-A/B testing [link](#ab)
+A/B testing
 :   Capitalize and use slash notation for *A/B*.
 
-abnormal [link](#abnormal)
+abnormal
 :   Don't use to refer to a person.
 :   OK to use to refer to a condition of a computer system.
 
-abort [link](#abort)
+abort
 :   Avoid in general usage. Instead, use words like *stop*, *exit*,
     *cancel*, or *end*. In Linux, *abort* refers to a type of
     signal that terminates an abnormal process.
 
-about versus on [link](#about-on)
+about versus on
 :   When a cross-reference includes information that describes what the
     cross-reference links to, use *about* instead of *on*.
 :   Recommended: For more information
@@ -57,78 +57,77 @@ about versus on [link](#about-on)
     on indexes, see [Managing
     indexes](https://cloud.google.com/firestore/docs/query-data/indexing).
 
-above [link](#above)
+above
 :   Don't use for a range of version numbers. Instead, use
     [*later*](#later).
 :   Don't use to refer to a position in a document. Instead, use
     *earlier* or *preceding*.
 :   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language. For more information,
-    see [Writing accessible documentation](/style/accessibility).
+    that avoid directional language.
 :   It's OK to use *above* in a non-directional way, such as when describing a hierarchy.
 
-access (verb) [link](#access)
+access (verb)
 :   Avoid when you can. Instead, use friendlier words like *see*,
     *edit*, *find*, *use*, or *view*.
 
-access token [link](#access-token)
+access token
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-account name [link](#account-name)
+account name
 :   Don't use. Instead, use [*username*](#username).
 
-actionable [link](#actionable)
+actionable
 :   Avoid unless it's the clearest and simplest phrasing for your audience.
     Instead, leave it out or replace it with a phrase like *that you can act
     on* or *useful*.
 :   Don't use *actionable* in the legal sense without consulting a
     lawyer.
 
-action bar [link](#action-bar)
+action bar
 :   In Android documentation, don't use. Instead, use
     [*app bar*](#app-bar).
 
-ad tech [link](#ad-tech)
+ad tech
 :   Write out on first mention: *advertising technology (ad tech)*.
 :   Don't use *adtech* or *ad-tech*.
 
-address bar [link](#address-bar)
+address bar
 :   Use to refer to the URL bar or the combined URL bar and search box in a
     browser.
 :   Don't use *omnibox*.
 
-ad hoc [link](#ad-hoc)
+ad hoc
 :   OK to use in database and analytics contexts to mean "free-form" or
     "user-written" (for example, *ad hoc queries* or *an ad hoc
     chart*). For other contexts, try to find a more specific English
     equivalent.
 :   Don't hyphenate or italicize the term.
 
-admin [link](#admin)
+admin
 :   Write out *administrator* unless it's the name of a UI label or other
     element.
 :   It's OK to use *admin* in Android
     documentation.
 
-administrator [link](#administrator)
+administrator
 :   In Android documentation, don't use. Instead, use *admin*.
 
-advertised route priority [link](#advertised-route-priority)
+advertised route priority
 :   OK to also use *base advertised route priority* when discussing
     region-to-region costs.
 :   Don't shorten or use variations of these terms.
 
-agnostic [link](#agnostic)
+agnostic
 :   Don't use. Instead, use a more precise term like
     *platform-independent*.
 
-AI [link](#ai)
+AI
 :   In general, you can use *AI* without spelling out *artificial intelligence*.
 :   Most readers are familiar with the abbreviation *AI*. If you think your audience isn't
     familiar with the term, spell it out on first use.
 
-aka [link](#aka)
+aka
 :   Don't use. Instead, write out *also known as*, or present an
     alternative term using parentheses or the word *or*. You can also
     write out a definition.
@@ -139,58 +138,47 @@ aka [link](#aka)
 :   Recommended: Geographic data, or
     geospatial data, is ...
 
-all apps screen [link](#all-apps-screen)
+all apps screen
 :   In Android documentation: Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-allowlist (verb), allowlisted, allowlisting [link](#allowlist)
+allowlist (verb), allowlisted, allowlisting
 :   Don't use as a verb. Instead, rewrite to improve clarity.
 :   OK to use *allowlist* as a noun.
-:   For more information, see [blacklist](#blacklist).
+:  
 
-allows you to [link](#allows-you-to)
-:   Don't use. Instead, use *lets you*. For more information, see [enable](#enable).
+allows you to
+:   Don't use. Instead, use *lets you*.
 
-alpha [link](#alpha)
+alpha
 :   Lowercase except when part of a product name.
 :   Recommended: PRODUCT\_NAME
     Alpha
 :   Recommended: PRODUCT\_NAME
     is in alpha.
 
-America, American [link](#america)
+America, American
 :   Use only to refer to the *Americas* or the *American continent*.
 :   Don't use to refer to the United States. Instead, use a more precise term
     like *the US* or *the United States*, and *people in the
-    US*. For more information, see [US](#us).
+    US*.
 
-among [link](#among)
-:   See [between versus among](#between).
+among
 
-AM, PM [link](#am-pm)
+
+AM, PM
 :   To be consistent with [Material Design](https://material.io/design/communication/data-formats.html#date-and-time),
     use all caps, no periods, and a space before.
 :   Recommended: 9:00 AM
 :   Recommended: 10:30 PM
 
-and/or [link](#and-or)
-:   Don't use unless space is limited, such as in a table. For more
-    information, see [Slashes](/style/slashes#and-or).
+and/or
+:   Don't use unless space is limited, such as in a table.
 
-Android [link](#android)
-:   When referring to the operating system, capitalize *Android*.
+and so on
+:   Avoid using *and so on* whenever possible.
 
-Android-powered device [link](#android-powered)
-:   Not *Android device*.
-
-and so on [link](#and-so-on)
-:   Avoid using *and so on* whenever possible. For more information,
-    see [etc.](#etc)
-
-anti\* [link](#anti)
-:   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
-
-anti-pattern [link](#anti-pattern)
+anti-pattern
 :   Avoid using *anti-pattern*, particularly as a standalone heading.
     Instead, consider using a more specific and broadly understood term.
 :   Recommended: Avoid these five SQL
@@ -200,24 +188,19 @@ anti-pattern [link](#anti-pattern)
 :   Not recommended: Avoid these five SQL
     anti-patterns.
 
-API [link](#api)
+API
 :   Use *API* to refer to either a web API or a language-specific API.
 :   Don't use *API* when referring to a method or a class. For example,
     don't write *This resource has one API* to mean "This resource has
     one method."
 
-API Console key [link](#api-console-key)
-:   In most contexts, use *API key* instead of *API Console key*.
-:   In Apps admin APIs, it's OK to use *API Console key* to distinguish
-    from other API keys.
-
-API key [link](#api-key)
+API key
 :   Not *developer key* or *dev key*.
 
-APIs Explorer [link](#apis-explorer)
+APIs Explorer
 :   Not *API explorer* or other variants.
 
-app [link](#app)
+app
 :   In general, use *app* instead of *application* when referring to
     programs for end users, especially in the context of mobile or web
     software.
@@ -226,33 +209,31 @@ app [link](#app)
 :   Use *application* in standard phrases such as *application
     programming interface*.
 
-app bar [link](#app-bar)
+app bar
 :   In Android contexts, formerly *action bar*.
 
-appendix [link](#appendix)
+appendix
 :   Use the plural *appendixes*, not *appendices*.
 
-application [link](#application)
-:   See [app](#app).
+application
 
-as [link](#as)
+
+as
 :   If you mean *because*, then use *because* instead of
     *as*. *As* is ambiguous; it can refer to the passage of time.
     *Because* refers to causation or the reason for something.
 
-as of this writing [link](#as-of-this-writing)
+as of this writing
 :   Avoid because this phrase is implied. The phrase can also prematurely
     disclose product or feature strategy or inappropriately imply that a
     product or feature might change.
-:   See also [currently](#currently) and [presently](#presently).
+
 :   Recommended: BigQuery doesn't support
     that function.
 :   Not recommended: As of this writing,
     BigQuery doesn't support that function.
-:   For more information, see [Timeless
-    documentation](/style/timeless-documentation).
 
-authentication and authorization [link](#authentication-and-authorization)
+authentication and authorization
 :   In general, use the word *authenticated* only to refer to users,
     and use *authorized* only to refer to requests that are sent by a
     client app on behalf of an authenticated user.
@@ -264,60 +245,60 @@ authentication and authorization [link](#authentication-and-authorization)
 :   When you want to use a preposition with *authenticate*, use
     *against*.
 
-authN, authZ [link](#authn-authz)
+authN, authZ
 :   Don't use. Instead, use *authentication* or *authorization*.
 
-auto\* [link](#auto)
-:   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
+auto\*
 
-autohealing [link](#autohealing)
+
+autohealing
 :   Not *auto-healing*.
 
-auto mode VPC network [link](#auto-mode-vpc)
+auto mode VPC network
 :   Not *auto mode network*.
 
-autopopulate [link](#autopopulate)
+autopopulate
 :   Not *auto populate* or *auto-populate*.
 
-autoscaling [link](#autoscaling)
+autoscaling
 :   Not *auto-scaling*.
 
-autotagging [link](#autotagging)
+autotagging
 :   Not *auto-tagging*.
 
-autoupdate [link](#autoupdate)
+autoupdate
 :   Don't use. Instead, use *automatically update*.
 
--aware [link](#aware)
+-aware
 :   Avoid using as a compound modifier, as in *healthcare-aware*.
 :   OK to use when it's part of a product name, such as *Identity-Aware
     Proxy*.
 
 ### B
 
-backend [link](#backend)
+backend
 :   Not *back-end* or *back end*.
 
-bar [link](#bar)
-:   Avoid when possible. For more information, see [foo](#foo).
+bar
+:   Avoid when possible.
 
-bare metal [link](#bare-metal)
+bare metal
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 :   Hyphenate when used as a compound modifier, such as *bare-metal
     server*.
 
-base64 [link](#base64)
+base64
 :   Lowercase except at the beginning of a sentence,
     heading, or list item. Otherwise, capitalize *Base64* only if it's part of a
     formal name.
 :   Write *base64* in code font *only* if it's a string literal or
     otherwise quoted from code.
 
-baz [link](#baz)
-:   Avoid when possible. For more information, see [foo](#foo).
+baz
+:   Avoid when possible.
 
-below [link](#below)
+below
 :   Don't use for a range of version numbers. Instead, use
     [*earlier*](#earlier).
 :   Don't use to refer to a position in a document. Instead, use *later*
@@ -329,19 +310,19 @@ below [link](#below)
     average*, *below the mean*, *below zero*.
 :   It's OK to use *below* in a non-directional way, such as when describing a hierarchy.
 
-best effort [link](#best-effort)
+best effort
 :   Avoid where possible. Instead, use more specific wording. After providing
     a description, you can add a phrase like "sometimes referred to as *best
     effort*."
 
-beta [link](#beta)
+beta
 :   Lowercase except when part of a product name.
 :   Recommended: PRODUCT\_NAME
     Beta
 :   Recommended: PRODUCT\_NAME
     is currently in beta.
 
-between versus among [link](#between)
+between versus among
 :   It's fine to use *between* when talking about more than two things;
     however, *between* isn't interchangeable with *among*.
 :   Use *between* when you're talking about two or more distinct
@@ -368,7 +349,7 @@ between versus among [link](#between)
 :   See also [Grammar Girl's
     discussion of *between* and *among*](http://www.quickanddirtytips.com/education/grammar/between-versus-among).
 
-big-endian [link](#big-endian)
+big-endian
 :   Hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
 :   Recommended: The codebase assumes
@@ -380,12 +361,12 @@ big-endian [link](#big-endian)
 :   Not recommended: The codebase assumes big
     endian byte ordering.
 
-billing charges [link](#billing-charges)
+billing charges
 :   Don't use *billing charges* to mean charges that appear on a bill.
     Instead, use *billed charges*.
 :   Use *billing charges* to describe the cost of creating the bill.
 
-black-box [link](#black-box)
+black-box
 :   Avoid using *black-box*, *blackbox*, or *black box* to
     describe monitoring and testing. Consider using a more precise term for
     clarity.
@@ -393,20 +374,20 @@ black-box [link](#black-box)
     * For monitoring, use *synthetic monitoring*.
     * For testing, use *opaque-box testing*.
 
-Black Friday [link](#black-friday)
+Black Friday
 :   Avoid unless explicitly referring to an event in the US. Instead use
     *peak scale event*.
 
-blackhat, black hat, black-hat [link](#blackhat)
+blackhat, black hat, black-hat
 :   Don't use. Instead, use precise terms for the kind of violation or
     practice, such as *illegal*, *unethical*, or *in violation of
     rules*.
 
-blackhole (verb), blackholed (adjective) [link](#blackhole)
+blackhole (verb), blackholed (adjective)
 :   Don't use. Instead, use a more descriptive term or phrase, such as
     *dropped without notification*.
 
-blacklist, black list, black-list [link](#blacklist)
+blacklist, black list, black-list
 :   Don't use *blacklist*, *whitelist*, and *graylist*.
     Instead, use more precise terms that are appropriate for your domain.
 :   * For the noun *blacklist*, consider using a replacement such as
@@ -441,17 +422,17 @@ blacklist, black list, black-list [link](#blacklist)
 :   For more information, see the
     [inclusive documentation](/style/inclusive-documentation) page.
 
-blacklisted, black listed, black-listed [link](#blacklisted)
-:   Don't use. See [blacklist](#blacklist).
+blacklisted, black listed, black-listed
+:   Don't use.
 
-blacklisting, black listing, black-listing [link](#blacklisting)
-:   Don't use. See [blacklist](#blacklist).
+blacklisting, black listing, black-listing
+:   Don't use.
 
-blast radius [link](#blast-radius)
+blast radius
 :   Don't use. Instead, use a more precise term like *affected area* or
     *spatial impact*.
 
-blind [link](#blind)
+blind
 :   Avoid using *blind to* or *blind eye to*. Instead, use more
     precise terms like *ignore*, *unaware of*, *disregard*,
     *avoid*, or *reject*.
@@ -465,10 +446,10 @@ blind [link](#blind)
     impaired*, *person who is low-vision*, *magnification user*
     (if applicable).
 
-blue-green [link](#blue-green)
+blue-green
 :   Not *blue/green* or *blue green*.
 
-boolean [link](#boolean)
+boolean
 :   In most contexts, *boolean* refers to a specific data type in a
     specific programming language. In such cases, use code font and the exact
     spelling and capitalization of the programming keyword.
@@ -477,7 +458,7 @@ boolean [link](#boolean)
     uppercase.
 
 
-break-glass [link](#break-glass)
+break-glass
 :   Don't use. Instead, use a more precise term depending on context:
 
     * To describe a general emergency or procedure that grants emergency
@@ -485,15 +466,15 @@ break-glass [link](#break-glass)
     * To describe a fallback procedure, use *manual fallback* or
       *preplanned procedure*.
 
-brown bag, brown-bag [link](#brown-bag)
+brown bag, brown-bag
 :   Don't use. Instead, use a more precise term like *learning session*,
     *lunch and learn*, *lunchtime learning session*,
     *casual training*, or *informal training*.
 
-build cop, build sheriff [link](#build-cop)
+build cop, build sheriff
 :   Don't use. Instead, use a more precise term like *build monitor*.
 
-button [link](#button)
+button
 :   In a UI, a link isn't the same as a button; don't use the term
     *button* to refer to a link.
 :   Use *button* to refer to mechanical buttons (like the volume control
@@ -503,7 +484,7 @@ button [link](#button)
 
 ### C
 
-can [link](#can)
+can
 :   Use *can* in the following ways:
 
     * To convey permission or ability (for example, "You can access the
@@ -518,47 +499,47 @@ can [link](#can)
 :   For information about clarifying who's performing an action, see
     [Active voice](/style/voice).
 
-canary [link](#canary)
+canary
 :   Don't use *canary* as a verb, and don't use *canarying*.
 :   When possible, avoid [jargon](/style/jargon) like *canary* and
     *canary testing*. If you use one of these phrases, define it on first
     use or provide a link to the definition, and use it consistently
     throughout the document.
 
-cell phone, cellphone [link](#cell-phone)
+cell phone, cellphone
 :   Don't use. Instead, use *mobile phone*, or if you're talking about
     more than phones, then use *mobile device*.
 :   It's OK to use *phone* (without *mobile*) when the context is
-    clear.:   cellular data [link](#cellular-data)
+    clear.:   cellular data
         :   Don't use. Instead, use *mobile data*.
 
-        cellular network [link](#cellular-network)
+        cellular network
         :   Don't use. Instead, use *mobile network*.
 
-        chapter [link](#chapter)
+        chapter
         :   When referring to documentation that isn't in the form of a book, don't
             use the term *chapter*. Instead, refer to documents, pages, or
             sections.
 
-        check [link](#check)
+        check
         :   Don't use to refer to marking a checkbox. Instead, use *select*.
         :   Recommended: Select **Automatically
             check for updates**.
         :   Not recommended: Check **Automatically
             check for updates**.
 
-        checkbox [link](#checkbox)
+        checkbox
         :   Not *check box*.
 
-        choose [link](#choose)
+        choose
         :   *Choose* is fine to use for generic contexts. For UI elements, use
             [select](#select).
 
-        chubby [link](#chubby)
+        chubby
         :   Don't use. Instead, use a word that clearly explains what you mean, such
             as *unused* or *overextended*.
 
-        clear [link](#clear)
+        clear
         :   Use (as a verb) to refer to clearing a check mark from a checkbox.
         :   Recommended: Clear **Automatically
             check for updates**.
@@ -568,7 +549,7 @@ cell phone, cellphone [link](#cell-phone)
             **Automatically check for updates**.
 
 
-        click [link](#click)
+        click
         :   When the environment is a desktop with a mouse, use *click* for most
             targets, such as buttons, links, list items, and radio buttons. Don't use
             *click on*.
@@ -583,72 +564,72 @@ cell phone, cellphone [link](#cell-phone)
         :   For Android apps, don't use
             *click*. Instead, use [tap](/style/word-list#tap).
 
-        click here [link](#click-here)
+        click here
         :   Don't use. For information and alternatives, see
             [Avoid vague link text](/style/cross-references#vague-link-text).
 
-        clickthrough (noun), click through (verb) [link](#clickthrough)
+        clickthrough (noun), click through (verb)
 
-        client [link](#client)
+        client
         :   In REST and RPC API documentation, *client* is short for *client
             app*—that is, the app that the developer is writing.
         :   Don't use *client* as an abbreviation for *client library*;
             instead, use *library*.
 
-        client ID [link](#client-id)
+        client ID
         :   Lowercase except at the beginning of a sentence,
             heading, or list item.
 
-        client secret [link](#client-secret)
+        client secret
         :   Lowercase except at the beginning of a sentence,
             heading, or list item.
 
-        co\* [link](#co)
-        :   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
+        co\*
+        
 
-        codebase [link](#codebase)
+        codebase
         :   Not *code base*.
 
-        codelab [link](#codelab)
+        codelab
         :   Not *code lab* or *code-lab*. For more information, see
             [documentation](#documentation).
 
-        cold [link](#cold)
+        cold
         :   When possible, avoid [jargon](/style/jargon) like *cold
             failover*, *cold standby*, and *cold spare*. If you use one
             of these phrases, define it on first use and use it consistently
             throughout the document.
 
-        colocate [link](#colocate)
+        colocate
         :   Not *co-locate* or *colo*.
 
-        compliant, compliance [link](#compliant)
+        compliant, compliance
         :   Use with caution. A claim that a product or its output is *compliant*
             with a standard is a strong statement.
 
-        comprise [link](#comprise)
+        comprise
         :   Don't use. Instead, use *consist of*, *contain*, or
             *include*.
 
-        config [link](#config)
+        config
         :   Avoid when possible. Instead, spell out the full word when it's used in a
             non-code sense: *configuration* or *configuring*. Use the
             verbatim code item name when referring to, for example, a data structure
             or a file with that name.
 
-        confidential [link](#confidential)
+        confidential
         :   *Confidential* data is data that is protected to prevent unauthorized access. See
             [sensitive](#sensitive).
 
-        cons [link](#cons)
+        cons
         :   Don't use. Instead, use a more precise term, such as *disadvantages*.
 
-        content type [link](#content-type)
+        content type
         :   Be as specific as possible when writing about a content type, and use the term only when applicable.
             For example, you can use this term if you're referring to the value of the `Content-Type` HTTP header.
-            Also see [media type](#media-type).
+           
 
-        Control+S, Command+S, and other keyboard commands [link](#control-keys)
+        Control+S, Command+S, and other keyboard commands
         :   To refer to a `Control` character, use
             `Control`+CHARACTER.
         :   Don't use *Ctl-S*, *Cmd-S*, or *Cloverleaf-S*.
@@ -660,14 +641,14 @@ cell phone, cellphone [link](#cell-phone)
         :   Recommended: `Control+S`
             (`Command+S` on macOS)
 
-        Copy and paste [link](#copy-paste)
+        Copy and paste
         :   Avoid using. Instead, explain what to enter into a field and not how.
         :   Recommended: In the
             **Query** field, enter the output from the previous step.
         :   Not recommended: Copy the output from
             the previous step and paste into the **Query** field.
 
-        could [link](#could)
+        could
         :   Avoid using. Instead, use *can* where possible.
         :   See also [can](#can), [may](#may),
             [might](#might), [must](#must),
@@ -677,21 +658,21 @@ cell phone, cellphone [link](#cell-phone)
         :   For information about tenses, see [Present
             tense](/style/tense).
 
-        CPU [link](#cpu)
+        CPU
         :   All caps. No need to expand the abbreviation on first mention.
 
-        crazy, bonkers, mad, lunatic, insane, loony [link](#crazy)
+        crazy, bonkers, mad, lunatic, insane, loony
         :   Don't use. Instead, use *complicated*, *complex*,
             *baffling*, *strange*, or *unexpected*, and only for
             inanimate objects.
 
-        Create a new ... [link](#create-new)
+        Create a new ...
         :   Avoid using unless you need to distinguish the item from another recently
             created item. Instead, use *Create a ...*
         :   Recommended: Create a project.
         :   Not recommended: Create a new project.
 
-        cripple [link](#cripple)
+        cripple
         :   Don't use. Instead, use more precise language. For example, instead of
             *it crippled the server*, write *it slowed the server down*.
         :   When referring to people, use terms that specifically describe a physical
@@ -701,14 +682,14 @@ cell phone, cellphone [link](#cell-phone)
             keyboard); *person who uses a wheelchair, walker, or cane*;
             *wheelchair user*; *person with restricted or limited mobility*.
 
-        cross-site request forgery [link](#cross-site-request-forgery)
+        cross-site request forgery
         :   Lowercase except at the beginning of a sentence,
             heading, or list item.
 
-        curated roles [link](#curated-roles)
+        curated roles
         :   Don't use. Instead, use *predefined roles*.
 
-        currently [link](#currently)
+        currently
         :   Avoid because this word is implied. The word can also prematurely disclose
             product or feature strategy or inappropriately imply that a product or
             feature might change.
@@ -721,93 +702,91 @@ cell phone, cellphone [link](#cell-phone)
         :   For more information, see
             [Timeless documentation](/style/timeless-documentation).
 
-        custom mode VPC network [link](#custom-mode-vpc-network)
+        custom mode VPC network
         :   Not *custom mode network*.
 
-        curl [link](#curl)
+        curl
         :   Not *cURL*.
-        :   For information about when to use code format, see
-            [Items that are sometimes in code font](https://developers.google.com/style/code-in-text#items-that-are-sometimes-in-code-font).
 
-        Cyber Monday [link](#cyber-monday)
+        Cyber Monday
         :   Avoid unless explicitly referring to an event in the US. Instead use
             *peak scale event*.
 
 ### D
 
-dash [link](#dash)
+dash
 :   A dash (`—`) isn't the same character as a hyphen
     (`-`). The characters are used for different purposes.
     Therefore, don't use the word *dash* to refer to a hyphen.
 
 
-data [link](#data)
+data
 :   Use *data* as singular, not plural; *the data is*, not
     *the data are*.
 :   Use data as a mass noun, not a count noun; *less data*, not
     *fewer data*.
 
-data center [link](#data-center)
+data center
 :   Not *datacenter*.
 
-data center campus [link](#data-center-campus)
+data center campus
 :   Use when referring to an entire physical location, which can encompass one
     or more data centers.
 
-data cleaning [link](#data-cleaning)
+data cleaning
 :   Not *data cleansing*.
 
-data flow (noun); dataflow (noun) [link](#dataflow)
+data flow (noun); dataflow (noun)
 :   If it's possible to replace with the phrase *flow of data*, then use
     two words: *data flow*.
 :   If that replacement doesn't work, such as when referring to something like
     stream processing or reactive programming, then use one word:
     *dataflow*.
 
-data source [link](#data-source)
+data source
 :   Not *datasource*.
 
-datastore [link](#datastore)
+datastore
 :   Not *data store*.
 
-data type [link](#data-type)
+data type
 :   Not *datatype*.
 
-dead-letter queue, dead letter [link](#dead-letter)
+dead-letter queue, dead letter
 :   Define on first use, for example *dead-letter queue (unprocessed
     messages queue)*.
 
-deep linking [link](#deep-linking)
+deep linking
 :   Not *deep-linking*. However, if you can replace with
     *linking*, then do so.
 
-deficient [link](#deficient)
+deficient
 :   Don't use to refer to a person.
 :   OK to use to refer to a condition of a computer system.
 
-deformed [link](#deformed)
+deformed
 :   Don't use to refer to a person.
 :   OK to use to refer to a condition of a computer system or
     inanimate object.
 
-demilitarized zone (DMZ) [link](#dmz)
+demilitarized zone (DMZ)
 :   Don't use. Instead, use a more precise term like *perimeter network*.
 
-denigrate [link](#denigrate)
+denigrate
 :   Don't use. Instead, use *disparage*.
 
-denylist (verb), denylisted, denylisting [link](#denylisted)
+denylist (verb), denylisted, denylisting
 :   Don't use as a verb. Instead, rewrite to improve clarity.
 :   OK to use *denylist* as a noun.
-:   For more information, see [blacklist](#blacklist).
+:  
 
-deprecate [link](#deprecate)
+deprecate
 :   To *deprecate* an item is to recommend against the item's use,
     typically as a warning that the item will soon be unavailable or
     unsupported. Don't use *deprecated* to mean *removed*,
     *deleted*, *shut down*, or *turned down*.
 
-deselect [link](#deselect)
+deselect
 :   Don't use to refer to clearing a check mark from a checkbox. Instead, use
     *clear*.
 :   Recommended: Clear **Automatically
@@ -817,7 +796,7 @@ deselect [link](#deselect)
 :   Not recommended: Uncheck
     **Automatically check for updates**.
 
-desire, desired [link](#desire)
+desire, desired
 :   Don't use. Instead, use a word like *want* or *need*.
 :   Recommended: Set the value to the
     size that you want.
@@ -826,24 +805,24 @@ desire, desired [link](#desire)
 :   Not recommended: Set the value to
     the desired size.
 
-Developers Console [link](#developers-console)
-:   Don't use. For more information, see [console](#console).
+Developers Console
+:   Don't use.
 
-DevOps [link](#devops)
+DevOps
 :   Short for *development operations*. No need to spell out on first
-    mention unless the audience requires it. For more information, see [DevOps](https://wikipedia.org/wiki/DevOps).
+    mention unless the audience requires it.
 
-dialog [link](#dialog)
+dialog
 :   Use *dialog* for the UI element sometimes called a [dialog box](http://wikipedia.org/wiki/Dialog_box).
 :   Use *dialogue* only for verbal interaction between people.
 
-directory, folder [link](#directory)
+directory, folder
 :   If the context that you're documenting (such as an IDE's GUI) uses one
     term or the other, use that term. If not, then use *directory* in a
     command-line context, and *folder* in a GUI context. When in doubt,
     default to *directory*.
 
-disable [link](#disable)
+disable
 :   Don't use *disable* or *disabled* to describe something that's
     broken.
 :   When describing a user action or the state of a UI element, use a more
@@ -851,12 +830,12 @@ disable [link](#disable)
     *unavailable*, *deactivate*, *turn off*, or
     *deselect*, depending on the context. Use the same term consistently throughout your
     document.
-    See also [enable](#enable).
+   
 
-disclosure triangle, disclosure widget [link](#disclosure-triangle)
+disclosure triangle, disclosure widget
 :   Don't use. Instead, use *expander arrow*.
 
-display (verb) [link](#display)
+display (verb)
 :   Don't use as an intransitive verb. *Display* is a transitive verb;
     therefore, it requires an object. It is often misused in technical
     documentation, as demonstrated by the following example:
@@ -872,16 +851,16 @@ display (verb) [link](#display)
 :   Recommended: The Output Directories
     area displays the vector image.
 
-distributed denial-of-service (DDoS) [link](#ddos)
+distributed denial-of-service (DDoS)
 :   Hyphenate as shown. On subsequent mention, use *DDoS*.
 
-DNS server policy [link](#dns-server-policy)
+DNS server policy
 :   Lowercase *server policy*.
 
-DNSKEY [link](#dnskey)
+DNSKEY
 :   One word, all capital letters.
 
-documentation or document or documents [link](#documentation)
+documentation or document or documents
 :   To refer specifically to the text on a page that explains a product, feature, or service,
     use *this document*, and not *this article*, *this topic*, *this doc*, or
     *this page*. It's OK to use *this tutorial*, *this quickstart*, or *this
@@ -901,10 +880,10 @@ documentation or document or documents [link](#documentation)
 :   Not recommended: This page provides
     guidance about creating tables.
 
-documentation set [link](#docset)
+documentation set
 :   Not *doc set* or *docset*.
 
-does not yet [link](#does-not-yet)
+does not yet
 :   Avoid in timeless documentation because this phrase can become outdated.
     The phrase can also prematurely disclose product or feature strategy or
     inappropriately imply that a product or feature might change.
@@ -913,23 +892,23 @@ does not yet [link](#does-not-yet)
 :   Not recommended: The Google Cloud
     console does not yet support this IAM role.
 
-dojo [link](#dojo)
+dojo
 :   Don't use. Instead, use a precise term that is accurate for the context,
     such as *training* or *workshop*.
 
-domain name registrar [link](#domain-name-registrar)
+domain name registrar
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-Domain Name System Security Extensions (DNSSEC) [link](#dnssec)
+Domain Name System Security Extensions (DNSSEC)
 :   Write out and capitalize each word on first use. OK to abbreviate as
     *DNSSEC* after first use.
 
-double-tap [link](#double-tap)
+double-tap
 :   Hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-downscope [link](#downscope)
+downscope
 :   Consider using a more descriptive term like *constrain scope* or
     *reduce scope*. Because *downscope* might not be broadly
     understood, if you use the term, make sure to define it on first use.:   :   Don't use *down scope* or *down-scope*
@@ -939,23 +918,23 @@ downscope [link](#downscope)
             recommender helps you *downscope* (reduce) the permissions that are
             available to your users.
 
-        drag [link](#drag)
+        drag
         :   Use *drag*, not *click and drag* and not *drag and drop*.
         :   OK to use *drag-and-drop* as an adjective.
         :   Recommended: Drag the USER
             to the **Authorized** box.
 
-        drop-down [link](#drop-down)
+        drop-down
         :   In most cases, you can omit *drop-down* from phrases like *drop-down list* or
             *drop-down menu*, and just use *list* or *menu*. Include *drop-down* as a
             modifier only if the omission would cause ambiguity. Don't use *drop-down* as a
             standalone noun.
 
-        dumb down [link](#dumb-down)
+        dumb down
         :   Don't use. Instead, use a word or phrase what's happening, such as
             *simplify* or *remove technical jargon*.
 
-        dummy variable [link](#dummy-variable)
+        dummy variable
         :   Don't use to refer to placeholders. Instead, use *placeholder*.
         :   Also don't use if referring to the concept in statistics known as a
             [dummy variable](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)).
@@ -966,14 +945,14 @@ downscope [link](#downscope)
 
 ### E
 
-each [link](#each)
+each
 :   *Each* refers to every individual item taken individually, not to a
     group of items taken collectively. In other words, *each* isn't a
     synonym for *all*. For example, *a list of each item* is
     ambiguous; *a list of all the items* or *a list of the items* is
     generally clearer.
 
-earlier [link](#earlier)
+earlier
 :   Use for a range of version numbers, not *lower*.
 :   Recommended: Use version 2.2 or
     earlier.
@@ -984,26 +963,26 @@ earlier [link](#earlier)
 :   When referring to a position in a document, use *earlier* or
     *preceding*, not *higher*.
 
-easy, easily [link](#easy)
+easy, easily
 :   What might be easy for you might not be easy for others. Try eliminating
     this word from the sentence because usually the same meaning can be conveyed
     without it.
 
-ecommerce [link](#ecommerce)
+ecommerce
 :   Not *e-commerce*.
 
-edge availability domain [link](#edge-availability-domain)
+edge availability domain
 :   Don't use *edge availability zone*, *metro availability domain*,
     or *metro availability zone*. Don't shorten to *EAD*.
 
-e.g. [link](#eg)
+e.g.
 :   Don't use. Instead, use phrases like *for example* or *such as*.
     Many people confuse *e.g.* and *i.e.*
 
-egress [link](#egress)
+egress
 :   When referring to the networking term, use lowercase.
 
-either [link](#either)
+either
 :   When using *either*, use parallel syntax.
 :   Recommended: Do either option 1 or
     option 2.
@@ -1016,25 +995,25 @@ either [link](#either)
     distract some readers, but if it's the best phrasing for your situation,
     then use it.
 
-element [link](#element)
+element
 :   In HTML and XML, a tag is a component of an element that indicates
     the start or end of the element. (For example, the
     `<i>` start tag indicates the beginning of the
     `<i>example</i>` element.) In general, don't use
     the term *tag* to refer to an entire element.
 
-email [link](#email)
+email
 :   Not *e-mail*, *Email*, or *E-mail*.
 :   Don't use as a verb.
 :   Use a specific verb in front of the word. For example, *send email*.
     This construction is better for translation and a
     [global audience](/style/translation).
 
-emoji [link](#emoji)
+emoji
 :   Use *emoji* for both singular and plural forms. See [Don't
     know the difference between emoji and emoticons? Let me explain](https://www.theguardian.com/technology/2015/feb/06/difference-between-emoji-and-emoticons-explained) and [What's the Plural of Emoji?](http://www.theatlantic.com/technology/archive/2016/01/whats-the-plural-of-emoji-emojis/422763/)
 
-enable [link](#enable)
+enable
 :   In procedures, use the appropriate label and action for the
     [UI element](/style/ui-elements) that the user interacts with. When describing a
     user action or the state of a UI element, use a more precise term where possible. It's OK to
@@ -1057,14 +1036,11 @@ enable [link](#enable)
     to detect features in images.
 :   Not recommended: The API allows you
     to detect features in images.
-:   In Google Workspace documentation, if possible, use
-    *turn on* or *on* instead. If referring to the state of a UI element, use
-    *available*.
 
-endpoint [link](#endpoint)
+endpoint
 :   Not *end point*.
 
-enter [link](#enter)
+enter
 :   Use *enter* to refer to the user entering text. If it's important to
     not press `Enter`, explicitly say so. See also
     [*type*](#type).
@@ -1073,15 +1049,15 @@ enter [link](#enter)
 :   Recommended: In the **Size** box,
     type a font size.
 
-ephemeral external IP address [link](#ephemeral-external-ip-address)
+ephemeral external IP address
 :   Don't use *ephemeral IP address* or *external IP address* to
     refer to ephemeral external IP addresses.
 
-error-prone (adjective) [link](#error-prone)
+error-prone (adjective)
 :   Hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-etc. [link](#etc)
+etc.
 :   Avoid using *etc.*, *and so forth*, and *and so on*
     wherever possible. If you really need to use one, use *etc.*
     Always include the period, even if a comma follows immediately after.
@@ -1096,7 +1072,7 @@ etc. [link](#etc)
 :   Not recommended: If your app
     experiences instability, high latency, etc., follow these steps:
 
-eventually [link](#eventually)
+eventually
 :   Avoid in timeless documentation because this word can become outdated. The
     word can also prematurely disclose product or feature strategy or
     inappropriately imply that a product or feature might change.
@@ -1109,34 +1085,34 @@ eventually [link](#eventually)
 :   For more information, see
     [Timeless documentation](/style/timeless-documentation).
 
-execute [link](#execute)
+execute
 :   Verb commonly used to refer to function calls, SQL queries, and other processes. When the meaning
     is the same, use the simpler word *run* instead. If you need to use a more precise term
     for your context, use that term.
 
-expander arrow [link](#expander-arrow)
+expander arrow
 :   The UI element used to expand or collapse a section of navigation or
     content. If you describe this element, use the terms *expander arrow*
     and *expandable section*
 :   Don't use terms like *expando* or *zippy*.
 
-exploit [link](#exploit)
+exploit
 :   Don't use *exploit* to mean "use."
 :   Only use *exploit* in the negative sense, such as to describe
     *exploiting a security vulnerability*.
 
-external VPN gateway [link](#external-vpn-gateway)
+external VPN gateway
 :   Write *external* and *gateway* all lowercase except at the
     beginning of a sentence, heading or list item.
 
-extract [link](#extract)
+extract
 :   Use instead of *unarchive* or *uncompress*.
 
 ### F
 
-fail over (verb), failover (noun, adjective) [link](#failover)
+fail over (verb), failover (noun, adjective)
 
-fat [link](#fat)
+fat
 :   Don't use. Instead, use a precise modifier that conveys the appropriate
     meaning. For example, use *high-capacity network connection* instead
     of *fat connection* or *full-featured client* instead of *fat
@@ -1145,36 +1121,36 @@ fat [link](#fat)
     refer in a more concrete manner to the *removal of unused items*.
 :   OK to use as an acronym when referring to file allocation table (FAT).
 
-female adapter [link](#female-adapter)
+female adapter
 :   Don't use. Instead, use a genderless word like *socket*.
 
-Fast Healthcare Interoperability Resources (FHIR) [link](#fhir)
+Fast Healthcare Interoperability Resources (FHIR)
 :   Refer to *a FHIR* (pronounced "a fire," as in "a FHIR store"), not *an FHIR*.
     For more information, see
     [Indefinite articles before abbreviations](/style/abbreviations#articles).
 
-filename [link](#filename)
+filename
 :   Not *file name*
 
-file system [link](#file-system)
+file system
 :   Not *filesystem*.
 
-fill in; fill out [link](#fill-in)
+fill in; fill out
 :   Use *fill in* when referring to entering information in individual
     fields.
 :   Use *fill out* when referring to completing an entire form.:   :   Recommended: Fill out the
             questionnaire. Be sure to fill in the required fields.
 
-        final solution [link](#final-solution)
+        final solution
         :   Don't use. Instead, use *solution* as a standalone term or, depending
             on the context, *definitive*, *optimal*, *best*, or *last
             solution*.
 
-        fintech [link](#fintech)
+        fintech
         :   Write out on first mention: *financial technology (fintech)*. Don't
             use *FinTech* or *fin-tech*.
 
-        firewalls [link](#firewalls)
+        firewalls
         :   Don't use in Compute Engine or networking documentation. Instead, use
             *firewall rules*.
         :   Exception: If you're explaining how firewall rules work, you can explain
@@ -1182,14 +1158,14 @@ fill in; fill out [link](#fill-in)
         :   Outside of Compute Engine or networking documentation, the term
             *firewalls* is acceptable.
 
-        first-class, first-class citizen, first class [link](#first-class)
+        first-class, first-class citizen, first class
         :   Don't use socially-charged terms for technical concepts where possible.
             Instead, consider terms such as *core feature*, *built-in*,
             *top-level*.
 
-        following [link](#following)
+        following
         :   It's not necessary to use a noun after *following* unless it helps
-            provide clarity and enables accessibility. See [Tables](/style/tables#table-placement).
+            provide clarity and enables accessibility.
         :   Recommended: ... in the following
             code sample ...
         :   Recommended: ... in the following
@@ -1197,74 +1173,72 @@ fill in; fill out [link](#fill-in)
         :   Recommended: ... do the following:
             ...
 
-        foo [link](#foo)
+        foo
         :   Avoid when possible even though it's a common term in the developer
             community. Instead, use a clearer and more meaningful placeholder name.
 
-        for instance [link](#for-instance)
+        for instance
         :   Avoid when possible. Instead, use *for example* or *such as*.
 
-        frontend [link](#frontend)
+        frontend
         :   Not *front-end* or *front end*.
 
-        functionality [link](#functionality)
+        functionality
         :   Use with caution. With respect to hardware or software,
             *functionality* refers to a set of associated functions or
             capabilities and how they work. However, the word is sometimes overused,
             especially when the intended meaning is *capabilities* or
             *features*.
 
-        future, in the future [link](#future)
+        future, in the future
         :   Avoid in timeless documentation because this word or phrase can become
             outdated.
-        :   See also [eventually](#eventually) and [soon](#soon). For more
-            information, see [Timeless
-            documentation](/style/timeless-documentation).
+
 
 ### G
 
-GBps [link](#gigabytes-per-second)
+GBps
 :   Short for *gigabytes per second*. By convention, we don't use
-    *GB/s*. For more information, see [Units of measurement](/style/units-of-measure).
+    *GB/s*.
 
-Gbps [link](#gbps)
+Gbps
 :   Short for *gigabits per second*. By convention, we don't use
-    *Gb/s*. For more information, see [Units of measurement](/style/units-of-measure).
+    *Gb/s*.
 
 
-gender-neutral he, him, or his (or she or her) [link](#gender)
+gender-neutral he, him, or his (or she or her)
 :   Don't use. Instead, use the singular *they* (see [Jane Austen and other famous authors violate what everyone learned in
     their English class](http://www.pemberley.com/janeinfo/austheir.html)). Don't use *he/she* or *(s)he* or other
     such punctuational approaches. For more information, see
     [Pronouns](/style/pronouns).
 
-generative AI [link](#generative-ai)
+generative AI
 :   Spell out *generative*. Use sentence case.
 :   Don't use *gen AI* or *Gen AI*.
 :   Don't hyphenate *generative AI* as an adjective unless you must do
-    so for clarity. See also [AI](#ai).
+    so for clarity.
 
-ghetto [link](#ghetto)
+ghetto
 :   Don't use. Instead use more precise terms like *clumsy*,
     *workaround*, or *inelegant* to refer to code that isn't in a
     production-ready state.
 
-gimp, gimpy [link](#gimp)
+gimp, gimpy
 :   Don't use. Instead, use precise, non-figurative language to refer to a
     deficiency in a component.
 :   OK to use in reference to companies, tools, software packages, and other
     entities that use the term in their names.
 
-GKE node [link](#gke-node)
+GKE node
 :   Use when first introducing GKE nodes on a given page. For subsequent
     mentions, you can use *node*. A GKE node is a worker machine that
     runs containerized applications and other workloads. The machine is a
-    Compute Engine VM that GKE creates during cluster creation. See also [virtual machine (VM) instance](#virtual-machine-instance).
+    Compute Engine VM that GKE creates during cluster creation.
 
-grandfather clause, grand-father clause, grand father clause [link](#grandfather-clause)
-:   Don't use. See [grandfathered](#grandfathered).
+grandfather clause, grand-father clause, grand father clause
+:   Don't use.
 
-grandfathered [link](#grandfathered)
+grandfathered
 :   Don't use to refer to something that is allowed to violate a rule because
     it predates the rule. Instead, use an adjective like *legacy* or
     *exempt* or a verb like *made an exception*.
@@ -1274,7 +1248,7 @@ grandfathered [link](#grandfathered)
     grandfathered in because it was released before the new requirements were
     announced.
 
-gray-box, grey-box [link](#gray-box)
+gray-box, grey-box
 :   Avoid using *gray-box*, *graybox*, or *gray box* to
     describe testing.
 :   To refer to testing that's a combination of clear and opaque testing
@@ -1283,59 +1257,59 @@ gray-box, grey-box [link](#gray-box)
     consider using a more precise term for clarity, such as *translucent-box
     testing*.
 
-grayed-out, greyed-out, gray out, grey out [link](#grayed-out)
+grayed-out, greyed-out, gray out, grey out
 :   Don't use. Instead, use *unavailable*.
 
-grayhat, greyhat, gray hat, grey hat [link](#grayhat)
+grayhat, greyhat, gray hat, grey hat
 :   Don't use. Follow the guidance for [black hat](#blackhat) when
     referring to someone violating rules or laws.
 
-graylist, greylist, gray list, grey list, gray-list, grey-list [link](#graylist)
-:   Don't use. See [blacklist](#blacklist).
+graylist, greylist, gray list, grey list, gray-list, grey-list
+:   Don't use.
 
-graylisted, greylisted, gray listed, grey listed, gray-listed, grey-listed [link](#graylisted)
-:   Don't use. See [blacklist](#blacklist).
+graylisted, greylisted, gray listed, grey listed, gray-listed, grey-listed
+:   Don't use.
 
-graylisting, greylisting, gray listing, grey listing, gray-listing, grey-listing [link](#graylisting)
-:   Don't use. See [blacklist](#blacklist).
+graylisting, greylisting, gray listing, grey listing, gray-listing, grey-listing
+:   Don't use.
 
-guru [link](#guru)
+guru
 :   If possible, use a more precise term. For example, if you mean
     *expert* or *teacher*, use those terms.
 
-guys, you guys [link](#guys)
+guys, you guys
 :   When referring to a group of people use non-gendered language, such as
     *everyone* or *folks*.
 
-gypsy [link](#gypsy)
+gypsy
 :   Don't use. To refer to the people, use *Romani*, *Roma*, or
     *Traveller*, as appropriate for the specific group you're referring
     to. In place of metaphorical uses of the term, use more precise phrases.
 
 ### H
 
-hamburger, hamburger menu [link](#hamburger)
+hamburger, hamburger menu
 :   Don't use. Instead use the `aria-label` for that particular
     icon. For example, menu **Menu**.
     For more information, see
     [Buttons and icons](/style/ui-elements#buttons).
 
-hands off, hands-off [link](#hands-off)
+hands off, hands-off
 :   Use a less figurative phrase, such as *automated*. If you're
     referring to a group that doesn't do anything during a process, write a
     description.
 
-hands on, hands-on [link](#hands-on)
+hands on, hands-on
 :   Use a less figurative phrase, such as *customizable*, or write a
     description of the activity.
 
-hang, hung [link](#hang)
+hang, hung
 :   Don't use to refer to a computer or system that is not responding.
     Instead, use *stop responding* or *not responding*. For more
     information, see [Avoid unnecessarily
     violent language](/style/inclusive-documentation#violent-language).
 
-happiness and satisfaction [link](#happiness)
+happiness and satisfaction
 :   Use *happiness* when referring to a customer's perception of a
     site's reliability. Use *satisfaction* when referring to whether the
     site meets the customer's needs.
@@ -1350,18 +1324,18 @@ happiness and satisfaction [link](#happiness)
     a "need" to watch a show on TV. If the show is available, the customer's
     need is satisfied. But if playback is slow or choppy, the customer might
     not be happy.
-:   For more information about SRE and measuring reliability, see [The Happiness Test](https://www.coursera.org/lecture/site-reliability-engineering-slos/the-happiness-test-ELmSr).
 
-hardcode (verb), hardcoded (adjective) [link](#hardcode)
 
-he, him, his [link](#he)
+hardcode (verb), hardcoded (adjective)
+
+he, him, his
 :   Don't use a gendered pronoun except for a specific individual of known
     gender. Use *they* and *their* for the general singular pronoun.
 
-healthcare [link](#healthcare)
+healthcare
 :   Not *health care* or *health-care*.
 
-health check [link](#health-check)
+health check
 :   Use with caution. When describing an action taken for a computer system,
     only use the term *health check* if this is the term that appears in
     the interface. Be certain to remove any ambiguity regarding whether the
@@ -1370,19 +1344,19 @@ health check [link](#health-check)
     referring to a node *being responsive* instead of referring to a node
     being healthy.
 
-healthy [link](#healthy)
-:   Don't use. See [health check](#health-check).
+healthy
+:   Don't use.
 
-high availability (noun), high-availability (adjective) [link](#high-availability)
+high availability (noun), high-availability (adjective)
 :   Lowercase except when part of a product name, but OK to abbreviate as
     *HA* after first use.
 
-higher [link](#higher)
+higher
 :   Don't use for a range of version numbers. Instead, use [*later*](#later).
 :   Don't use to refer to a position in a document. Use *earlier* or
     *preceding*.
 :   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language. For more information, see [Writing accessible documentation](/style/accessibility).
+    that avoid directional language.
 :   In Android documentation, use
     *higher* for a range of version numbers, not *later*.
 :   A release with the highest version number might not be the latest version.
@@ -1390,14 +1364,14 @@ higher [link](#higher)
     update after version 3.0 has been released, then version 2.0.1 might be
     the latest version, even though its version number is lower than 3.0.
 
-high performance computing (HPC) [link](#high-performance-computing)
+high performance computing (HPC)
 :   Don't hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-hit [link](#hit)
+hit
 :   Don't use as a synonym for *click*, *press*, or *type*.
 
-hold the pointer over [link](#hold-the-pointer-over)
+hold the pointer over
 :   Only use this verb phrase in the following cases:
 
     * When the user needs to hold their mouse over a UI element, but not
@@ -1407,24 +1381,24 @@ hold the pointer over [link](#hold-the-pointer-over)
     * When the duration of time is important.
 
     The phrase *point to* is more common.
-:   See also [point to](#point-to).
+
 :   Recommended: In the **Admin**
     menu, hold the pointer over **File**, and then click **New**.
 :   Not recommended: In the **Admin**
     menu, hover over **File**, and then click **New**.
 
-holiday, the holidays [link](#holiday)
+holiday, the holidays
 :   Don't use to refer to the end of the year. Instead, refer to specific
     quarters or months.
 
-home screen [link](#home-screen)
+home screen
 :   Two words in Android contexts; not *homescreen* or
     *home-screen*.
 
-hostname [link](#hostname)
+hostname
 :   Not *host name*.
 
-hot [link](#hot)
+hot
 :   When possible, avoid [jargon](/style/jargon) like *hot failover*,
     *hot standby*, and *hot spare*. If you use one of these phrases,
     define it on first use and use it consistently throughout the document. However, see
@@ -1443,44 +1417,44 @@ hotspot[link](#hotspot)
 :   Not recommended: Hotspotting in one
     table can affect the performance of other tables.
 
-housekeeping, house keeping, house-keeping [link](#housekeeping)
+housekeeping, house keeping, house-keeping
 :   Don't use. Instead, use less figurative and more precise terms, such as
     *maintenance* and *cleanup*.
 
-hover [link](#hover)
+hover
 :   Don't use. Instead use [*hold the
     pointer over*](#hold-the-pointer-over).
 
-HTTPS [link](#https)
+HTTPS
 :   Not *HTTPs*.
 
 ### I
 
-IaaS [link](#iaas)
+IaaS
 :   Write out on first mention: *infrastructure as a service (IaaS)*.
 
 
-ID [link](#id)
+ID
 :   Not *Id* or *id,* except in string literals or enums.
 :   In some contexts, it's best to spell out as *identifier* or
     *identification*.
 
-i.e. [link](#ie)
+i.e.
 :   Don't use. Instead, use phrases like *that is*. Many people confuse
     *e.g.* and *i.e.*
 
-if [link](#if)
-:   Wondering whether to use *if* or *whether*? See [whether](#whether).
+if
+
 :   Although it is common in casual usage to omit the word *then* in *if...then*
     statements, you should include helper words like *then* in technical documentation. For
     more information, see
     [Use clear, precise, and unambiguous language](/style/translation#clear-language).
 
-image [link](#image)
+image
 :   *Image* by itself doesn't localize well because of its many meanings. Consider adding
     context—for example, *disk image* or *container image*.
 
-impact [link](#impact)
+impact
 :   Use only as a noun. Instead of writing that something *has an
     impact*, use the word *affect*.
 :   Recommended: This issue affects
@@ -1490,20 +1464,20 @@ impact [link](#impact)
 :   Not recommended: This issue impacts
     user experience.
 
-index [link](#index)
+index
 :   Use the plural *indexes* unless there is a domain-specific reason
     (for example, a mathematical or financial context) to use *indices*.
 
-ingest [link](#ingest)
+ingest
 :   Use *import*, *load*, or *copy* when referring to simple movement of data. Use
     *ingest* only when referring to such operations that also involve significant processing
     of the data.
 
-ingress [link](#ingress)
+ingress
 :   When referring to the networking term, use lowercase. When referring
     to the GKE term or API, capitalize *Ingress*.
 
-in order to [link](#in-order-to)
+in order to
 :   Avoid *in order to*; instead, use *to*.
 :   Use *in order to* when needed to clarify meaning or to make
     something easier to read.
@@ -1516,58 +1490,58 @@ in order to [link](#in-order-to)
 :   Not recommended: The infrastructure
     is required to support search.
 
-inline [link](#inline)
+inline
 :   One word as an adjective, *inline*, not *in line* or
     *in-line*.
 
-instance group [link](#instance-group)
+instance group
 :   Don't abbreviate to *IG*. See also [managed instance
     group](#mig).
 
-intercluster [link](#intercluster)
+intercluster
 :   Use unhyphenated *intercluster*, not *inter-cluster*.
 
-interface [link](#interface)
+interface
 :   OK to use as a noun.
 :   Don't use as a verb. Instead, use *interact*, *talk*,
     *speak*, *communicate*, or other similar terms.
 
-internal DNS [link](#internal-dns)
+internal DNS
 :   Write *internal* all lowercase except at the beginning of a
     sentence, heading, or list item.
 
-Internationalized Domain Name (IDN) [link](#idn)
+Internationalized Domain Name (IDN)
 :   Write out and capitalize each word on first use. OK to abbreviate as
     *IDN* after first use.
 
-internet [link](#internet)
+internet
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-Internet Key Exchange (IKE) [link](#ike)
+Internet Key Exchange (IKE)
 :   Write out and capitalize each word on first use. OK to abbreviate
     *IKE* after first use.
 
-I/O (see also [Google I/O](#google-io)) [link](#io)
+I/O (see also [Google I/O](#google-io))
 :   Not *I-O* or *IO*.
 
-IoT [link](#iot)
+IoT
 :   OK to use as an abbreviation for *Internet of Things*. Note
     the lowercase *o*.
 
-IPsec [link](#ipsec)
+IPsec
 :   Not *IPSec* or *IPSECShort*.
 :   Short for *Internet Protocol Security*. No need to spell out on
     first mention.
 
 ### J
 
-jank, janky [link](#jank)
+jank, janky
 :   Use only to refer to a glitch or problem with graphics that is caused by a loss of data or
     inadequate refresh rate. Don't use otherwise. Use a less figurative term to refer to something
     of poor or unreliable quality.
 
-just [link](#just)
+just
 :   Avoid. Usually, *just* is a filler word that you can delete without
     affecting your meaning.
 :   Recommended: BigQuery skips the row.
@@ -1596,46 +1570,46 @@ just [link](#just)
 
 ### K
 
-k8s [link](#k8s)
+k8s
 :   Don't use. Instead, use *Kubernetes*.
 
-KBps [link](#kilobytes-per-second)
+KBps
 :   Short for *kilobytes per second*. By convention, we don't use
-    *KB/s*. For more information, see [Units of measurement](/style/units-of-measure).
+    *KB/s*.
 
-Kbps [link](#kbps)
+Kbps
 :   Short for *kilobits per second*. By convention, we don't use
-    *Kb/s*. For more information, see [Units of measurement](/style/units-of-measure).
+    *Kb/s*.
 
-kebab, kabob, kebab menu, kabob menu [link](#kebab)
+kebab, kabob, kebab menu, kabob menu
 :   Don't use. Instead use the `aria-label` for that particular
     icon. For example, more\_vert
     **More**. For more information, see
     [Buttons and icons](/style/ui-elements#buttons).
 
-kebab case, kabob case, kebab-case, kabob-case [link](#kebab-case)
+kebab case, kabob case, kebab-case, kabob-case
 :   Don't use. Instead, use *dash-case*.
 
-key [link](#key)
+key
 :   Don't use as an adjective in the sense of *crucial* or
     *important*.
 :   If you use *key* as a noun, specify which kind of key you're
     referring to on first mention, because there are many kinds of
     keys in technical contexts.
 
-key pair [link](#key-pair)
+key pair
 :   A pair of keys, such as a public key and a private key. Contrast with
     *key-value pair*, which refers to a pairing that specifies a value
     for a variable (as in configuration files).
 
-key ring [link](#key-ring)
+key ring
 :   Use instead of *keyring* (without the space) when referring to a
     grouping of Cloud KMS keys.
 
-key-value pair [link](#key-value)
+key-value pair
 :   Use instead of *key/value pair* or *key value pair*.
 
-kill [link](#kill)
+kill
 :   Avoid when possible. Instead, use words like *stop*, *exit*,
     *cancel*, or *end*. For exceptions to this rule, see
     [Documenting command-line
@@ -1643,11 +1617,11 @@ kill [link](#kill)
 
 ### L
 
-lame [link](#lame)
+lame
 :   Don't use. Instead, use precise, non-figurative language to refer to a
     deficiency in a component.
 
-later [link](#later)
+later
 :   Use for a range of version numbers, not *higher*.
 :   Recommended: Use version 2.2 or
     later.
@@ -1663,7 +1637,7 @@ later [link](#later)
 :   When referring to a position in a document, use *later* or
     *following*, not *below*.
 
-latest [link](#latest)
+latest
 :   Avoid in timeless documentation because this word can become outdated.
 :   If you must use *latest*, give the reader a reference
     point—for example, a version number or release date.
@@ -1676,58 +1650,57 @@ latest [link](#latest)
 :   For more information, see
     [Timeless documentation](/style/timeless-documentation).
 
-learnings [link](#learnings)
+learnings
 :   Don't use. Instead, refer to *knowledge* or *things that you
     learned*.
 
-left-nav, right-nav [link](#left-nav)
-:   Don't use directional language. For more information, see
-    [Writing accessible documentation](/style/accessibility).
+left-nav, right-nav
+:   Don't use directional language.
 :   If referring to applications, use *[navigation menu](/style/ui-elements#term-navigation-menu)*.
 :   If referring to navigational elements for documentation, use *content
     navigation menu*.
 
-legacy [link](#legacy)
+legacy
 :   If possible, use a more precise term. If you do use *legacy*,
     include or point to a definition to clarify what you mean in the current
     context. Don't use *legacy* with any sort of pejorative
     connotation.
 
-let's (as a contraction of *let us*) [link](#lets)
+let's (as a contraction of *let us*)
 :   Don't use if at all possible.
 :   Not recommended: Let's click the
     **OK** button now.
 
-Letter of Authorization and Connecting Facility Assignment (LOA-CFA) [link](#loa-cfa)
+Letter of Authorization and Connecting Facility Assignment (LOA-CFA)
 :   Write out and capitalize each word on first use. OK to abbreviate as
     *LOA-CFA* after first use.
 
-leverage [link](#leverage)
+leverage
 :   Avoid using if you mean *use*. If possible, use a more precise term.
     For example, *use*, *build on*, or *take advantage of*.
 
-lifecycle [link](#lifecycle)
+lifecycle
 :   Not *life cycle* or *life-cycle*.
 
-lift and shift [link](#lift-and-shift)
-:   See [rehost](#rehost).
+lift and shift
 
-    like versus such as [link](#like)
+
+    like versus such as
     :   It's OK to use either *like* or *such as* for comparisons or
         examples.
 
-    limits [link](#limits)
+    limits
     :   In an API context, *limit* often refers to usage limits (number of
         queries allowed per second or per day). Where possible, specify the kind
         of limit that you mean, such as *usage limit* or *service
         limit*; the word *limit* can refer to many different kinds of
-        limits, including rules about acceptable use. See also [quota](#quota).
+        limits, including rules about acceptable use.
 
-    lint [link](#lint)
+    lint
     :   Write both command-line tool name and command in lowercase. Use code font
         except where inappropriate.
 
-    little-endian [link](#little-endian)
+    little-endian
     :   Hyphenate. Lowercase except at the beginning of a sentence,
         heading, or list item.
     :   Recommended: The codebase assumes
@@ -1739,65 +1712,65 @@ lift and shift [link](#lift-and-shift)
     :   Not recommended: The codebase assumes
         little endian byte ordering.
 
-    livestream [link](#livestream)
+    livestream
     :   Not *live stream*.
 
-    load balancing (noun), load-balancing (adjective) [link](#load-balancing)
+    load balancing (noun), load-balancing (adjective)
 
-    lock screen [link](#lock-screen)
+    lock screen
     :   Two words in Android contexts; not *lockscreen* or
         *lock-screen*.
 
-    login (noun or adjective), log in (verb) [link](#login)
+    login (noun or adjective), log in (verb)
     :   For the verb form, *sign in* is generally better.
     :   If you're documenting a tool that uses the term *log in*, then use
         that term.
 
-    long press [link](#long-press)
+    long press
     :   In Android documentation, don't use. Instead, use *touch & hold*.
         (Not *touch and hold*.)
 
-    long-running operation [link](#lro)
+    long-running operation
     :   Not *long running operation*.
     :   OK to abbreviate as *LRO* after the first use.
 
-    lower [link](#lower)
+    lower
     :   Don't use for a range of version numbers. Instead, use [*earlier*](#earlier).
     :   Don't use to refer to a position in a document. Instead, use *later*
         or *following*.
     :   Don't use to refer to a position in the UI. Instead, write instructions
-        that avoid directional language. For more information, see [Writing accessible documentation](/style/accessibility).
+        that avoid directional language.
     :   In Android documentation, use
         *lower* for a range of version numbers, not *earlier*.
 
 ### M
 
-male adapter [link](#male-adapter)
+male adapter
 :   Don't use. Instead, use a genderless word like *plug*.
 
-man hours, manhours, man-hours [link](#man-hours)
+man hours, manhours, man-hours
 :   Avoid using gendered terms. Instead use terms like *person hours*.
 
-man-in-the-middle (MITM) [link](#mitm)
+man-in-the-middle (MITM)
 :   Avoid using gendered terms. Instead use terms like *on-path
     attacker* or *person-in-the-middle (PITM)*.
 
-manmade, man made [link](#manmade)
+manmade, man made
 :   Avoid using gendered terms. Instead use a word like *artificial*,
     *manufactured*, or *synthetic*.
 
-manned [link](#manned)
+manned
 :   Avoid using gendered terms. Instead use terms like *staffed* or
     *crewed*.
 
-manpower, man power, man-power [link](#manpower)
+manpower, man power, man-power
 :   Avoid using gendered terms. Instead use terms like *staff* or
     *workforce*.
 
-Markdown [link](#markdown)
+Markdown
 :   Always capitalized, even when you're referring to a nonstandard version.
 
-master [link](#master)
+master
 :   Use with caution. Never use in conjunction with *slave*. Where
     possible, replace *master* with a specific term that is accurate for
     the context, such as *primary*, *main*, *original*,
@@ -1811,16 +1784,16 @@ master [link](#master)
     *master*, then use this word only in direct reference to the code
     item ([formatted as code](/style/code-in-text)), make it clear
     what you're referring to, and use the new term thereafter.
-:   See also [*slave*](#slave).
 
-Material Design [link](#material-design)
+
+Material Design
 :   Capitalize each word in *Material Design*.
 
-matrix [link](#matrix)
+matrix
 :   Use the plural *matrixes* unless there is a domain-specific reason
     (for example, a mathematical context) to use *matrices*.
 
-may [link](#may)
+may
 :   In general, reserve for official policy or legal considerations.
 :   To convey *possibility*, use *can* or *might*
     instead.
@@ -1831,44 +1804,44 @@ may [link](#may)
 :   For information about clarifying who's performing an action, see
     [Active voice](/style/voice).
 
-MBps [link](#megabytes-per-second)
+MBps
 :   Short for *megabytes per second*. By convention, we don't use
     *MB/s*. For more information, see
     [Units of measurement](/style/units-of-measure).
 
-Mbps [link](#mbps)
+Mbps
 :   Short for *megabits per second*. By convention, we don't use
     *Mb/s*. For more information, see
     [Units of measurement](/style/units-of-measure).
 
-media type [link](#media-type)
+media type
 :   In general, use the term [*media type*](https://www.iana.org/assignments/media-types/media-types.xhtml).
     In contexts where you need to refer to a *content type*—For example, if you mention
     the `Content-Type` HTTP header—it's okay to use *content type* instead, to avoid
     confusion. Don't use *MIME type*.
 
-meta\* [link](#meta)
-:   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
+meta\*
 
-metafeed [link](#metafeed)
+
+metafeed
 :   Not *meta-feed*.
 
-metageneration [link](#metageneration)
+metageneration
 :   Not *meta-generation*.
 
-method [link](#method)
+method
 :   In programming contexts where *method* refers to a member of a class
     (as in Java), avoid also using the word generically to mean "approach" or
     "manner."
 
-metropolitan area (metro) [link](#metro)
+metropolitan area (metro)
 :   In networking, a *metro* is a city where a colocation facility is
     located.
 
-microservices [link](#microservices)
+microservices
 :   Not *Microservices* or *micro-services*.
 
-might [link](#might)
+might
 :   Use to convey possibility or an uncertain outcome (for example, "You
     might be prompted to enter your credentials").
 :   See also [can](#can), [could](#could),
@@ -1877,67 +1850,65 @@ might [link](#might)
 :   For information about clarifying who's performing an action, see
     [Active voice](/style/voice).
 
-MIME type [link](#mime-type)
+MIME type
 :   *MIME* stands for "Multipurpose Internet Mail Extensions," and was originally used to
     refer to email standards.
     Don't use *MIME* when you mean [*media type*](https://www.iana.org/assignments/media-types/media-types.xhtml).
     If you feel that might be ambiguous to an audience familiar with the term *MIME*,
     then you can write *media (MIME) type* for clarity.
 
-mobile [link](#mobile)
+mobile
 :   Don't use *mobile* as a standalone noun. Instead, specify
     *mobile phone*, or if you're talking about more than phones, then use
     *mobile device*.
 
-mobile data [link](#mobile-data)
+mobile data
 :   Use instead of *cellular data*.
 
-mobile device [link](#mobile-device)
+mobile device
 :   Use *mobile device* when you're referring to more than phones (for
     example, tablets and phones). It's OK to use *phone* (without
     *mobile*) when the context is clear.
 
-mobile network [link](#mobile-network)
+mobile network
 :   Use instead of *cellular network*.
 
-mobile phone [link](#mobile-phone)
+mobile phone
 :   If you're talking about more than phones, then use *mobile device*.
     It's OK to use *phone* (without *mobile*) when the context is
     clear.
 
-mom test [link](#mom-test)
+mom test
 :   Don't use *mom test*, *grandmother test*, *grandma test*,
     or *girlfriend test*. Instead, use terms like *beginner user
     test* or *novice user test*.
 
-monkey, monkey test [link](#monkey)
+monkey, monkey test
 :   Don't use *monkey* to refer to people. When referring to tests, refer
     to the specific function. For example: *automated, random tests*.
 
-multi\* [link](#multi)
-:   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
+multi\*
 
-multi-cluster [link](#multi-cluster)
+
+multi-cluster
 :   Hyphenate. We generally prefer to close prefixed words, but this is an
     exception because it's an established term.
 
-multi-region, multi-regional [link](#multi-region)
-:   Hyphenate when referring to a Google Cloud location that consists of more
-    than one region.
+multi-region, multi-regional
 :   You can use *multi-regional* as an adjective in the context of
     multi-regions, but consider *multi-region* as
     an attributive noun instead, such as in "The dataset is in the EU
     multi-region location." Use *multiregional* in other contexts.
 
-multi-service [link](#multi-service)
+multi-service
 :   Hyphenate. We generally prefer to close prefixed words, but this is
     an exception because it's an established term.
 
-multi-tenancy [link](#multi-tenancy)
+multi-tenancy
 :   Hyphenate. We generally prefer to close prefixed words, but this is
     an exception because it's an established term.
 
-must [link](#must)
+must
 :   Use to describe a required action or state (for example, "You must have
     the Editor role"). You can also write *you need* in order to convey a
     requirement.
@@ -1949,17 +1920,17 @@ must [link](#must)
 
 ### N
 
-N/A [link](#na)
+N/A
 :   Not *NA*. Spell out as *not available* or *not applicable*
     on first reference.
 
-name server [link](#name-server)
+name server
 :   Not *nameserver*.
 
-namespace [link](#namespace)
+namespace
 :   Not *name space*.
 
-native [link](#native)
+native
 :   Avoid using *native* to refer to people.
 :   When referring to software products, try to use a more precise
     term—for example, use *built-in* to describe a feature that's
@@ -1972,17 +1943,17 @@ native [link](#native)
     *modern cloud*, *born in the cloud*, *cloud first*, and
     *cloud-born*.
 
-navigation bar [link](#navigation-bar)
+navigation bar
 :   Don't use to refer to a *navigation menu*. For more information, see
     [Navigation menu](/style/ui-elements#term-navigation-menu).
 
-neither [link](#neither)
+neither
 :   Write *neither A nor B*, not *neither A or B*.
 
-network IP address [link](#network-ip-address)
+network IP address
 :   Don't use. Instead, use *internal IP address*.
 
-new, newer [link](#new)
+new, newer
 :   Avoid in timeless documentation because this word can become outdated.
 :   *New* also implies that the reader knows the older product and that
     labeling something as *new* is therefore meaningful.
@@ -1992,24 +1963,18 @@ new, newer [link](#new)
     Instead, use [*later*](#later). Make sure that you provide
     a version number or release date by which to understand *later*.
 
-    In Android documentation, use
-    [*higher*](#higher) instead of *later*.
 :   Recommended: The service's network
     analysis feature reports on network health.
 :   Not recommended: Network analysis, a
     new feature in the service, reports on network health.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
-ninja [link](#ninja)
+
+ninja
 :   Don't use to refer to a person. Instead, use a term such as *expert*.
     OK to use in reference to companies, tools, software packages, and other
     entities that use the term in their names.
 
-non\* [link](#non)
-:   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
-
-nonce [link](#nonce)
+nonce
 :   Use with caution: this term has a secondary slang meaning that can cause
     confusion for global readers. Always define the term on first use, and
     only use it in specific technical contexts such as authentication and
@@ -2017,10 +1982,10 @@ nonce [link](#nonce)
 :   In end-user documentation and other contexts, use a more descriptive
     phrase, such as *a number that will be used only once*.
 
-non-key [link](#non-key)
+non-key
 :   An exception to our usual preference for closed forms.
 
-NoOps [link](#noops)
+NoOps
 :   Don't use. Instead, use *fully managed*. If you must include the
     term, define it at first use with language such as *fully managed* or
     *no operations*, but not *non-operational*. Don't use
@@ -2029,14 +1994,14 @@ NoOps [link](#noops)
     [*no-op*](https://wikipedia.org/wiki/NOP_(code)) or the
     specific instruction name for your context.
 
-NoSQL [link](#nosql)
+NoSQL
 :   Not *No-SQL* or *No SQL*.
 
-notification drawer [link](#notification-drawer)
+notification drawer
 :   In Android contexts, don't hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-now [link](#now)
+now
 :   Avoid when describing features of products or services because this word
     is implied.
 :   If the intent of the text is a comparison between past and present, you
@@ -2047,23 +2012,21 @@ now [link](#now)
     combinations of user properties.
 :   Not recommended: This feature now lets
     you use combinations of user properties.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
-nuke [link](#nuke)
+nuke
 :   Don't use. Instead use *remove* or *attack*. For example, a
     *denial-of-service attack*.
 
 ### O
 
-OAuth 2.0 [link](#oauth-20)
+OAuth 2.0
 :   Not *OAuth 2*, *OAuth2*, or *Oauth*.
 
-off-the-shelf, commercial off-the-shelf (COTS) [link](#off-the-shelf)
+off-the-shelf, commercial off-the-shelf (COTS)
 :   Use more widely understood terms like *ready-made*, *prebuilt*,
     *standard*, or *default*.
 
-old, older [link](#old)
+old, older
 :   Don't use to refer to a previous version of a product. Instead, use
     [*earlier*](#earlier).
 :   Make sure that you provide a version number by which to understand
@@ -2074,16 +2037,14 @@ old, older [link](#old)
     doesn't work in versions earlier than 1.17.0.
 :   Not recommended: This functionality
     doesn't work in older versions.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
-omnibox [link](#omnibox)
+omnibox
 :   Don't use. Instead, use *address bar*.
 
-once [link](#once)
+once
 :   If you mean *after*, then use *after* instead of *once*.
 
-on-premises [link](#on-premises)
+on-premises
 :   Not *on prem*, *on premise*, or *on-premise*. Hyphenate
     when used as any part of speech.
 :   Use to refer to a customer's resources that they manage in their own
@@ -2098,25 +2059,25 @@ on-premises [link](#on-premises)
 :   OK: Moving data from on-premises to
     Google Cloud.
 
-OS [link](#os)
+OS
 :   OK to use as a shortening of "operating system."
 
-outpost [link](#outpost)
+outpost
 :   Don't use. Instead, use *channel*.
 :   Recommended: social media channels
 
-outside the box, out of the box, out-of-the-box [link](#out)
+outside the box, out of the box, out-of-the-box
 :   Avoid using in a figurative way. OK to use literally.
 
-overview screen [link](#overview-screen)
+overview screen
 :   In Android documentation, don't use. Instead, use *recents screen*.
 
 ### P
 
-PaaS [link](#paas)
+PaaS
 :   Write out on first mention: *platform as a service (PaaS)*.
 
-page [link](#page)
+page
 :   Use *page* to refer to the following:
 
     * A whole web page, which can include text, images, links, banners, navigational panes,
@@ -2127,32 +2088,32 @@ page [link](#page)
     [documentation or document or documents](#documentation).
 :   Recommended: To refresh the page, press `F5`.
 
-parameter [link](#parameter)
+parameter
 :   In our API documentation, *parameter* is usually short for *query
     parameter*; it's a `NAME=VALUE` pair
     that's appended to a URL in an HTTP `GET` request. In some
     contexts, however, the term can have other meanings.
 
-parent-child or parent/child [link](#parent-child)
+parent-child or parent/child
 :   Not *parent – child* or *parent—child*.
 
-path [link](#path)
+path
 :   Avoid using *filepath*, *file path*, *pathname*, or *path
     name* if possible.
 
-peer gateway [link](#peer-gateway)
+peer gateway
 :   Don't use *on-premises gateway* when you mean a *peer gateway*.
     A peer gateway can be an on-premises device or service or another cloud
     gateway.
 
-peer network [link](#peer-network)
+peer network
 :   Don't use *on-premises network* when you mean a *peer network*.
     A peer network can be an on-premises network or another cloud network.
 
-peering zone [link](#peering-zone)
+peering zone
 :   Not *peer zone*.
 
-per [link](#per)
+per
 :   To express a rate, use *per* instead of the division slash (/),
     unless space constraints require the use of the slash. For more
     information, see [Units of
@@ -2171,14 +2132,14 @@ per [link](#per)
 :   Not recommended: per the style guide
 :   Not recommended: as per your request
 
-performant [link](#performant)
+performant
 :   Avoid where possible. Instead, use a more precise term.
 :   Recommended: an accurate machine
     learning model
 :   Not recommended: a performant machine
     learning model
 
-persist [link](#persist)
+persist
 :   Don't use as a transitive verb. It's best to avoid using as a verb at all,
     especially in [passive voice](/style/voice).
 :   Recommended: To make the token
@@ -2189,26 +2150,26 @@ persist [link](#persist)
 :   Not recommended: To persist the token
     ...
 
-persistent disk [link](#persistent-disk)
+persistent disk
 :   Not *PD*.:   Lowercase except at the start of a sentence.
 
-    personally identifiable information (PII) [link](#pii)
+    personally identifiable information (PII)
     :   Some government agencies use the less common term *personally
         identifying information*; use this alternate term only in contexts
         where you're referring to a document that uses this term.
 
-    pets versus cattle, pets vs. cattle, pets v. cattle [link](#pets-versus-cattle)
+    pets versus cattle, pets vs. cattle, pets v. cattle
     :   Don't use. Instead, use more precise terms like *persistent versus
         dynamic* or *manually configured versus automated*. For more
         information, see
         [Avoid
         unnecessarily violent language](/style/inclusive-documentation#violent-language).
 
-    plain text [link](#plain-text)
+    plain text
     :   In most contexts, use *plain text*, but use *plaintext* in a
         cryptography context.
 
-    please [link](#please)
+    please
     :   Don't use *please* in the normal course of explaining how to use a
         product, even if you're explaining a difficult task.
     :   Don't use the phrase *please note*.
@@ -2217,15 +2178,13 @@ persistent disk [link](#persistent-disk)
         inconveniences a reader, or suggests a potential issue with a product.
     :   Recommended: If the issue persists,
         please contact your account representative.
-    :   For more information, see
-        [voice and tone](/style/tone#politeness).
 
-        plugin (noun), plug-in (adjective), plug in (verb) [link](#plugin)
+        plugin (noun), plug-in (adjective), plug in (verb)
 
-        PM [link](#pm)
-        :   See [AM, PM](#am-pm).
+        PM
+        
 
-        point to [link](#point-to)
+        point to
         :   Use to refer to the action of pointing the mouse pointer (focus). This
             action doesn't imply a length of time waiting for the UI to react to user
             action.
@@ -2234,25 +2193,25 @@ persistent disk [link](#persistent-disk)
             phrase *hold the pointer over* if you want the user to wait for the
             UI to react.
 
-        POJO [link](#pojo)
+        POJO
         :   If you're not actually writing about a Plain Old Java Object for a Java
             audience, use *simple object*. You can write *a simple object,
             similar to a POJO in Java* if that helps your audience.
 
-        PoP [link](#pop)
+        PoP
         :   Acronym for *point of presence*.
         :   Recommended: point of presence (PoP)
         :   Not recommended: point of presence
             (POP)
 
-        pop-up, popup [link](#pop-up)
+        pop-up, popup
         :   Don't use.
         :   To describe a window that appears and asks for, or presents, additional
             information, use [*dialog*](#dialog).
         :   To describe a menu that rises from an interface (such as a right-click
             context menu), use *menu*.
 
-        populate [link](#populate)
+        populate
         :   OK to use if you're writing about a process populating a table or other
             entity. If you're writing about a person, use *fill in*.
         :   Recommended: The SQL command
@@ -2262,23 +2221,23 @@ persistent disk [link](#persistent-disk)
         :   Not recommended: When you have
             finished populating the form ...
 
-        port [link](#port)
+        port
         :   Use *listen on* (not *to*).
 
-        possible [link](#possible)
+        possible
         :   Don't use *possible* or *impossible* to mean *you can* or
             *you can't*.
 
-        PostgreSQL [link](#postgresql)
+        PostgreSQL
         :   If the UI uses the name *Postgres*, it's OK to match the UI. Don't
             use *PostgreSQL*.
 
-        postmortem [link](#postmortem)
+        postmortem
         :   Avoid in general usage. Instead, use *retrospective*.
         :   In disaster recovery (DR) and DevOps contexts, use *blameless
             postmortem*.
 
-        practitioner [link](#practitioner)
+        practitioner
         :   Avoid using without any supporting information to define the roles that
             you're referring to.
         :   Recommended: The framework describes
@@ -2287,31 +2246,31 @@ persistent disk [link](#persistent-disk)
         :   Not recommended: The framework
             describes best practices for cloud practitioners.
 
-        pre\* [link](#pre)
-        :   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
+        pre\*
+        
 
-        prebuilt [link](#prebuilt)
+        prebuilt
         :   Not *pre-built*.
 
-        precapture [link](#precapture)
+        precapture
         :   Not *pre-capture*.
 
-        preemptible [link](#preemptible)
+        preemptible
         :   Not *pre-emptible* or *pre-emptive*.
 
-        pre-existing [link](#pre-existing)
+        pre-existing
         :   Not *preexisting*.
 
-        preferred pronouns [link](#preferred-pronouns)
+        preferred pronouns
         :   Don't use. Instead, use *pronouns*.
 
-        prerecorded [link](#prerecorded)
+        prerecorded
         :   Not *pre-recorded*.
 
-        pre-shared key [link](#pre-shared-key)
+        pre-shared key
         :   Not *preshared key*.
 
-        presently, at present [link](#presently)
+        presently, at present
         :   Avoid because this word or phrase is implied. The word or phrase can also
             prematurely disclose product or feature strategy or inappropriately imply
             that a product or feature might change.
@@ -2320,33 +2279,31 @@ persistent disk [link](#persistent-disk)
         :   Recommended: This setting is required.
         :   Not recommended: At present, this
             setting is required.
-        :   For more information, see
-            [Timeless documentation](/style/timeless-documentation).
 
-        press [link](#press)
+        press
         :   Use when referring to pressing a key or a key combination to cause an
             action to occur. Also use for mechanical buttons.
         :   For on-screen and soft (capacitive) buttons, use *tap*.
         :   Recommended: Press
             `Control+C` (or `Command+C` on macOS).
 
-        presubmit [link](#presubmit)
+        presubmit
         :   Not *pre-submit*.
 
-        primitive [link](#primitive)
+        primitive
         :   Use with caution. Don't use *primitive* in a disparaging sense.
 
-        pros [link](#pros)
+        pros
         :   Don't use. Instead, use a more precise term, such as *advantages*.
 
 ### Q
 
-quick, quickly [link](#quick)
+quick, quickly
 :   What might be quick for you might not be quick for others. Try
     eliminating this word from the sentence because usually the same meaning
     can be conveyed without it.
 
-quota [link](#quota)
+quota
 :   In API contexts, often refers to API usage limits. Where possible, it's
     best to use a more specific term, such as *usage limit*; the word
     *quota* means many different things to many different people.
@@ -2354,20 +2311,20 @@ quota [link](#quota)
 
 ### R
 
-RDP [link](#rdp)
+RDP
 :   Don't use as a verb. Instead, use *connect using RDP*. If it's
     clear from context that they're using RDP, it's OK to use *connect*.
 
-re\* [link](#re)
-:   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
+re\*
 
-read-only [link](#read-only)
+
+read-only
 :   Not *read only*. Always hyphenate *read-only*.
 
-recents screen [link](#recents-screen)
+recents screen
 :   In Android contexts, use instead of *overview screen*.
 
-redline [link](#redline)
+redline
 :   Don't use as a verb. Instead, use precise terms appropriate to the
     context.
 :   In the context of editing or providing a review, refer to those actions or
@@ -2375,13 +2332,12 @@ redline [link](#redline)
 :   In the context of setting priorities and planning work, refer to those
     actions or to *priority lining*.
 
-regex [link](#regex)
+regex
 :   Don't use. Instead, use *regular expression*.
 
-rehost [link](#lift-and-shift)
+rehost
 :   Use to describe the migration of an app or workload with no changes or
-    minimal changes to that app or workload. Also known as *lift and shift*. For more
-    information, see [Rehost: lift and shift](https://cloud.google.com/architecture/migration-to-gcp-getting-started#rehost_lift_and_shift) in the Cloud Architecture Center.
+    minimal changes to that app or workload. Also known as *lift and shift*.
 :   On first mention, associate rehost with lift and shift. Okay to use *rehosting* as needed
     after first mention.
 :   Recommended: You can use this reference architecture to
@@ -2390,34 +2346,34 @@ rehost [link](#lift-and-shift)
     your application in the cloud (also known as lift and shift).
 :   Don't use *the forklift approach*.
 
-repo [link](#repo)
+repo
 :   Don't use. Instead, use *repository*.
 
-Representational State Transfer [link](#rest)
+Representational State Transfer
 :   Don't use. To people unfamiliar with REST, this acronym expansion is
     meaningless; it's better to refer to it as REST and not explain what it
     stands for.
 
-reservation, off the [link](#reservation)
+reservation, off the
 :   Don't use.
 
-resource record set [link](#resource-record-set)
+resource record set
 :   Not *resource recordset*.
 
-retarded [link](#retarded)
+retarded
 :   Don't use. If you are referring to a system or component being slowed,
     use the word *slowed*.
 
-retriable, triable [link](#retriable)
+retriable, triable
 :   Don't use *retriable* or *triable*, unless a code item uses that
     spelling. Outside of code font, write around the term.
 
-retryable, tryable [link](#retryable)
+retryable, tryable
 :   Where possible, write around *retryable* and *tryable*. For
     example, write out *you can try it again* or *can be tried
     again*.
 
-review [link](#review)
+review
 :   If you mean "read, potentially for the first time," then use *read*
     instead of *review*.
 :   If you mean "read critically, commenting on problems" (as in *code
@@ -2425,24 +2381,24 @@ review [link](#review)
 :   Avoid using phrasing like "If you've never heard of OAuth, then review the
     OAuth documentation."
 
-RFC [link](#rfc)
+RFC
 :   When referencing an RFC specification, use a space between *RFC* and
     the number (for example, *RFC 2318*).
 
-roll out [link](#roll-out)
+roll out
 :   Don't use to mean a sudden or instantaneous launch. If you use *roll
     out*, define what you mean. When possible, use a more precise,
     non-figurative term like *gradual*, *in stages*, *phases*,
     or *progressive*.
 
-RTFM [link](#rtfm)
+RTFM
 :   Don't use. Instead, use a more precise phrase like "For more information,
     see ...."
 
-runbook [link](#runbook)
+runbook
 :   Not *run book*.
 
-runtime, run time [link](#runtime)
+runtime, run time
 :   Use the noun *runtime* when referring to the environment in which
     software runs, such as a Ruby or Java runtime.
 :   Use the noun phrase *run time* when referring to the time during
@@ -2458,22 +2414,17 @@ runtime, run time [link](#runtime)
 
 ### S
 
-SaaS [link](#saas)
+SaaS
 :   Write out on first mention: *software as a service (SaaS)*.
 
-sane [link](#sane)
+sane
 :   Don't use. Instead use a word like *valid* or *sensible*.
 
-sanity check [link](#sanity-check)
+sanity check
 :   Don't use. Instead, use a term like *quick check*, *confidence
     check*, *preliminary check* or *coherence check*.
 
-SAP [link](#sap)
-:   Pronounced as the individual letters *S*, *A*, *P*, so
-    write *an SAP system*, not *a SAP system*. For more information, see
-    [Indefinite articles before abbreviations](/style/abbreviations#articles).
-
-scale [link](#scale)
+scale
 :   Don't use *scale* alone to say that something is large or increasing.
     Include supporting words to indicate magnitude or direction of change in
     magnitude, whether scaling up or down, such as when you change a machine
@@ -2488,25 +2439,23 @@ scale [link](#scale)
 :   Not recommended: The system scales
     quickly.
 
-screenshot (noun) [link](#screenshot)
+screenshot (noun)
 :   Not *screen shot* or *screensnap*.
 :   Don't use as a verb; instead, use *take a screenshot*.
 
-scroll [link](#scroll)
+scroll
 :   OK to use *scroll* as a verb, but if possible, instead use a term
     that isn't specific to implementation. For example, write *go to the
     section*, instead of *scroll to the section*.
 :   If you use *scroll*, don't use directional language
-    like *scroll up*. For more information, see
-    [Accessibility](/style/accessibility#document-rendering).
+    like *scroll up*.
 
-see [link](#see)
+see
 :   OK as a general term and when referring to links and cross-references. Our
     research indicates that language relating to sight is OK for a wide range
-    of readers. For more information, see
-    [Cross-references and linking](/style/cross-references).
+    of readers.
 
-select [link](#select)
+select
 :   Use to describe choosing an item from among multiple options, selecting
     text, or marking a checkbox.
 :   Recommended: Select **Automatically
@@ -2514,50 +2463,49 @@ select [link](#select)
 :   Not recommended: Check
     **Automatically check for updates**.
 
-sensitive [link](#sensitive)
+sensitive
 :   *Sensitive* data is data for which the release might be harmful. See
     [confidential](#confidential).
 
 
-service level agreement [link](#service-level-agreement)
+service level agreement
 :   Lowercase when referring to service level agreements in general.
 :   It's OK to use title case (*Service Level Agreement*) when referring
     to a specific document.
 :   OK to abbreviate as *SLA* after first use.
 
-service level indicator [link](#service-level-indicator)
+service level indicator
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 :   OK to abbreviate as *SLI* after first use.
 
-service level objective [link](#service-level-objective)
+service level objective
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 :   OK to abbreviate as *SLO* after first use.
 
-setup (noun or adjective), set up (verb) [link](#setup)
+setup (noun or adjective), set up (verb)
 
-sexy [link](#sexy)
+sexy
 :   Don't use. Instead, use precise, positive words, such as *fast*,
     *powerful*, or *elegant*.
 
-SHA-1 [link](#sha-1)
+SHA-1
 :   Not *SHA1*, except in string literals/enums and in hyphenated phrases
     such as *HSA-SHA1*.
 
-shall [link](#shall)
-:   Avoid *shall* except under advice from a lawyer. For more
-    information, see [should](#should).
+shall
+:   Avoid *shall* except under advice from a lawyer.
 
-she, her, hers [link](#she)
+she, her, hers
 :   Don't use a gendered pronoun except for a specific individual of known
     gender. Use *they* and *their* for the general singular pronoun.
 
-sherpa [link](#sherpa)
+sherpa
 :   If possible, use a more precise term. For example, if you mean
     *guide*, use that term.
 
-shift left [link](#shift-left)
+shift left
 :   In general, avoid using this term to mean moving something earlier in
     time. Instead, use a less figurative phrase, such as *shift earlier*
     or *move to an earlier phase*. This figurative term relies on the
@@ -2565,7 +2513,7 @@ shift left [link](#shift-left)
 :   It's OK to use *shift left* and *shift right* in the context of
     binary multiplication and division.
 
-should, should be [link](#should)
+should, should be
 :   Generally avoid.
 :   Because *should* is ambiguous by definition, it can be problematic. For more information
     and alternatives, see
@@ -2574,41 +2522,41 @@ should, should be [link](#should)
     [may](#may), [might](#might),
     [must](#must), and [would](#would).
 
-sign-in (noun or adjective), sign in (verb) [link](#sign-in)
+sign-in (noun or adjective), sign in (verb)
 :   Not *log in* or *signin*.
 
-sign into [link](#sign-into)
+sign into
 :   Don't use. Instead, use *sign in to*.
 
-sign-on, sign on [link](#sign-on)
+sign-on, sign on
 :   Don't use either form on its own. Use the hyphenated version as part of
     *single sign-on*.
 
-sign-out (noun or adjective), sign out (verb) [link](#sign-out)
+sign-out (noun or adjective), sign out (verb)
 :   Not *log out* or *signout*.
 
-simple, simply [link](#simple)
+simple, simply
 :   What might be simple for you might not be simple for others. Try
     eliminating this word from the sentence because usually the same meaning
     can be conveyed without it.
 
-since [link](#since)
+since
 :   If you mean *because*, then use *because* instead of
     *since*. *Since* is ambiguous; it can refer to the passage of
     time. *Because* refers to causation or the reason for something.
 
-single most [link](#single-most)
+single most
 :   Not *singlemost*.
 
-single pane of glass [link](#single-pane-of-glass)
+single pane of glass
 :   Avoid. This term is used to favorably compare a centralized control and
     monitoring interface against the alternative of several disparate
     interfaces. It can almost always be replaced by *single interface* or
     *unified interface*.
 
-single sign-on (noun or adjective) [link](#single-sign-on)
+single sign-on (noun or adjective)
 
-slave [link](#slave)
+slave
 :   Don't use. Instead, use alternative terms appropriate to your domain, such
     as *worker* or *replica*.
 :   If you're replacing the terms *master* and *slave* together,
@@ -2624,21 +2572,21 @@ slave [link](#slave)
     you're referring to, and use the new term thereafter. For example, "Invoke
     the secondary (`slave`) process directly when debugging issues
     between the primary and secondary processes."
-:   See also [master](#master).
 
-slice and dice [link](#slice)
+
+slice and dice
 :   Don't use the phrase *slice and dice*. Instead, use specific terms
     appropriate to the task that you're describing. Some possible options
     include: *segment data for analysis* or *break information into
     smaller parts*.
 
-smartphone, smart phone [link](#smartphone)
+smartphone, smart phone
 :   Don't use. Instead, use [*mobile phone*](#mobile) or
     *phone*. If you're talking about more than phones, then use *mobile
     device*. It's OK to use *phone* (without *mobile*) when the
     context is clear.
 
-soon [link](#soon)
+soon
 :   Avoid in timeless documentation because this word can become outdated. The
     word can also prematurely disclose product or feature strategy or
     inappropriately imply that a product or feature might change.
@@ -2649,20 +2597,18 @@ soon [link](#soon)
 :   Not recommended: This setting is
     optional for existing applications but will soon be required for all
     applications.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
-spin up [link](#spin-up)
+spin up
 :   As in *spin up an instance*. Avoid using *spin up* unless you're
     referring to a hard disk; instead, use a less colloquial term like
     *create* or *start*.
 
-SQL [link](#sql)
+SQL
 :   Refer to *a SQL* (pronounced "a sequel"), not *an SQL*. For more
     information, see
     [Indefinite articles before abbreviations](/style/abbreviations#articles).
 
-ssh and SSH [link](#ssh)
+ssh and SSH
 :   Don't use `ssh` or SSH as a verb. SSH is a secure
     communications protocol; `ssh` is a utility.
 :   Recommended: To establish an SSH
@@ -2671,51 +2617,50 @@ ssh and SSH [link](#ssh)
     by using SSH.:   Not recommended: `ssh` into
         your remote shell.
 
-    ssh'ing [link](#sshing)
-    :   Don't use. See also [ssh and SSH](#ssh).
+    ssh'ing
+    :   Don't use.
     :   Recommended: When you use
         `ssh` to log in ...
 
-    startup (noun or adjective), start up (verb) [link](#startup)
+    startup (noun or adjective), start up (verb)
 
-    static external IP address [link](#static-external-ip-address)
+    static external IP address
     :   Don't use *static IP address* or *external IP address* to refer
         to static external IP addresses.
 
-    status bar [link](#status-bar)
+    status bar
     :   Not *statusbar* or *status-bar*.
     :   Lowercase except at the beginning of a sentence,
         heading, or list item.
 
-    STONITH, STOMITH [link](#stonith)
+    STONITH, STOMITH
     :   Avoid using
         [graphically
         violent terms](/style/inclusive-documentation#features-and-users). This acronym's letters stand for an extremely graphic
         and violent act. Instead, explain the relevant feature, such as *fence
         failed nodes*.
 
-    style sheet [link](#style-sheet)
+    style sheet
     :   Not *stylesheet*. This is the official spelling, per the World Wide
         Web Consortium (W3C).
 
-    sub-command [link](#sub-command)
+    sub-command
     :   Not *subcommand*.
 
-    subnet [link](#subnet)
+    subnet
     :   OK to use as a shortening of *subnetwork*. Use the same term consistently throughout your
-        document. For more
-        information, see [Subnets vs. subnetworks](https://cloud.google.com/compute/docs/vpc/#subnets_vs_subnetworks).
+        document.
 
-    subtree [link](#subtree)
+    subtree
     :   Not *sub-tree*.
 
-    subzone [link](#subzone)
+    subzone
     :   Not *sub-zone* or *sub zone*.
 
-    such as versus like [link](#such-as)
-    :   See [like versus such as](#like).
+    such as versus like
+    
 
-    surface [link](#surface)
+    surface
     :   Avoid as a transitive verb; instead, use a more specific term, such as
         *make people aware of* or *expose*.
     :   Recommended: To make the audit logs
@@ -2725,21 +2670,21 @@ ssh and SSH [link](#ssh)
 
 ### T
 
-tab [link](#tab)
+tab
 :   When referring to the sub-pages of a [console](#console), use
     *page* instead of *tab*.
 
-table name [link](#table-name)
+table name
 :   Two words. Set specific table names in code font.
 
-tablet [link](#tablet)
+tablet
 :   *Tablet* is OK. If you don't know whether it's a tablet or a phone,
     use *device*.
 
-tag [link](#tag)
-:   See [element](#element).
+tag
 
-tap [link](#tap)
+
+tap
 :   In Android documentation, use for on-screen and soft (capacitive)
     buttons.:   Use instead of *click* when the environment is definitely a
         touch device.
@@ -2747,14 +2692,14 @@ tap [link](#tap)
         and hold*) is OK to use.
     :   For mechanical buttons, use [*press*](#press).
 
-    tap & hold, tap and hold [link](#tap-and-hold)
+    tap & hold, tap and hold
     :   In Android documentation, don't use. Instead, use *touch & hold*.
         (Not *touch and hold*.)
 
-    tarball [link](#tarball)
+    tarball
     :   Don't use. Instead, use *tar file*.
 
-    target [link](#target)
+    target
     :   Avoid using as a verb when possible, especially in reference to people.
         For some readers, *target* has aggressive connotations. Instead of
         "targeting" audiences, we try to attract them or appeal to them or make
@@ -2764,7 +2709,7 @@ tap [link](#tap)
         include phrases such as *intended for*, *looking for*,
         *focused on*, and *interacting with*.
 
-    terminate [link](#terminate)
+    terminate
     :   Avoid using as a synonym for *stop*. Instead, use words like
         *stop*, *exit*, *cancel*, or *end*.
     :   For a specific context where you can use *terminate* as a synonym for
@@ -2773,23 +2718,23 @@ tap [link](#tap)
                 specific technical meanings that aren't synonyms for *stop*; in those
                 contexts, you can use *terminate*.
 
-            their (singular) [link](#their)
-            :   See [*they*](#they).
+            their (singular)
+            
 
-            then [link](#then)
+            then
             :   Although it is common in casual usage to omit the word *then* in *if...then*
                 statements, you should include helper words like *then* in technical documentation. For
                 more information, see
                 [Use clear, precise, and unambiguous language](/style/translation#clear-language).
 
-            they (singular) [link](#they)
+            they (singular)
             :   This is our preferred gender-neutral pronoun. Whether used as singular
                 or plural, it always takes the plural verb. For example, "A user
-                authenticates their identity by entering their password." See also [gender-neutral he](#gender).
+                authenticates their identity by entering their password."
 
             third party (noun), third-party (adjective)
 
-            this, that [link](#this-that)
+            this, that
             :   Where possible, put a noun after *this* or *that* for clarity.
                 If doing so results in clunky prose, then don't do it; but even then, try
                 thinking about what the noun would be. If you aren't sure what noun
@@ -2797,39 +2742,39 @@ tap [link](#tap)
                 otherwise, your reader probably won't know what noun you're referring to,
                 either.
 
-            timeframe [link](#time-frame)
+            timeframe
             :   Not *time frame*. Avoid where possible, or use an alternative such as
                 *period*, *schedule*, *deadline*, or *when*. But if
                 you do use it, then write it as one word.
 
-            timeout (noun), time out (verb) [link](#timeout)
+            timeout (noun), time out (verb)
 
-            timestamp [link](#time-stamp)
+            timestamp
             :   Not *time stamp*.
 
-            time to live [link](#ttl)
+            time to live
             :   Not *time-to-live*. Abbreviate as *TTL* after first use.
 
-            time zone (noun), time-zone (adjective) [link](#time-zone)
+            time zone (noun), time-zone (adjective)
 
-            tl;dr [link](#tldr)
+            tl;dr
             :   Don't use. Instead, use something like *To summarize*, or revise the
                 sentence.
 
-            toolkit [link](#toolkit)
+            toolkit
             :   Not *tool-kit* or *tool kit*.
 
-            touch [link](#touch)
+            touch
             :   In Android documentation, don't use. Instead, use *tap*. However,
                 *touch & hold* is OK to use.
 
-            "touch & hold" [link](#touch-and-hold)
+            "touch & hold"
             :   Not *touch and hold*.
 
-            touchscreen [link](#touchscreen)
+            touchscreen
             :   Not *touch screen*
 
-            traditional [link](#traditional)
+            traditional
             :   If possible, use a more precise term.
             :   Recommended: Conventionally, Python
                 function names are lowercase, with words separated by underscores.
@@ -2840,17 +2785,17 @@ tap [link](#tap)
             :   Not recommended: This tutorial
                 explains how to migrate from a traditional data warehouse to BigQuery.
 
-            transpile [link](#transpile)
+            transpile
             :   Not *transcompile*.
 
-            tribal knowledge, tribal wisdom [link](#tribal-knowledge)
+            tribal knowledge, tribal wisdom
             :   Don't use. Instead, use a less figurative term to indicate knowledge held
                 by a group of people.
 
-            trojan [link](#trojan)
+            trojan
             :   Lowercase when referring to malware.
 
-            turn on [link](#turn-on)
+            turn on
             :   In procedures, use the appropriate label and action for the
                 [UI element](/style/ui-elements) that the user interacts with.
             :   For turning on or activating an option or feature, use *turn on* or
@@ -2861,22 +2806,22 @@ tap [link](#tap)
             :   Recommended: In **Settings**, click
                 the **Magic mode** toggle to the on position.
 
-            tutorial [link](#tutorial)
-            :   OK to use. See [documentation](#documentation).
+            tutorial
+            :   OK to use.
 
-            type [link](#type)
+            type
             :   In general, use [enter](#enter) instead of *type* because
                 there is typically more than one way to enter text than typing (such as
                 pasting text or speaking).
 
-            typically [link](#typically)
+            typically
             :   Use to describe what is usual or expected under normal circumstances.
             :   Don't use as the first word in a sentence, as doing so can leave the
                 meaning open to misinterpretation.
 
 ### U
 
-UI [link](#ui)
+UI
 :   Don't use generically to refer to a page or dashboard. Use a more specific
     term like [*page*](#page) or
     [*console*](#console). If a specific term is unavailable,
@@ -2890,10 +2835,10 @@ UI [link](#ui)
 :   Not recommended: In the **Cloud
     Tasks** UI
 
-unarchive [link](#unarchive)
+unarchive
 :   Don't use. Instead, use *extract*.
 
-uncheck [link](#uncheck)
+uncheck
 :   Don't use to refer to clearing a check mark from a checkbox. Instead, use
     *clear*.
 :   Recommended: Clear **Automatically
@@ -2903,10 +2848,10 @@ uncheck [link](#uncheck)
 :   Not recommended: Deselect
     **Automatically check for updates**.
 
-uncompress [link](#uncompress)
+uncompress
 :   Don't use. Instead, use *extract*.
 
-under [link](#under)
+under
 :   Don't use for a range of version numbers. Instead,
     use [*earlier*](#earlier).
 :   Don't use to refer to a position in the UI.
@@ -2917,43 +2862,43 @@ under [link](#under)
 :   Not recommended: Under **Service
     account ID**, enter a name.
 
-Unicode [link](#unicode)
+Unicode
 :   Not *UNICODE*.
 
-Unix-like [link](#unix-like)
+Unix-like
 :   Not *Unixlike* or *Unix like*.
 
-Unix epoch time [link](#unix-epoch-time)
+Unix epoch time
 :   Use instead of *Unix time* or *epoch time* to refer to a
     point in time represented as a number of seconds since the Unix epoch
     (00:00:00 UTC on January 1, 1970), ignoring leap seconds.
 
-unselect [link](#unselect)
+unselect
 :   Don't use. Instead, use *clear* for checkboxes, and *deselect*
-    for other UI elements.:   unsighted [link](#unsighted)
-        :   Don't use. See [blind](#blind).
+    for other UI elements.:   unsighted
+        :   Don't use.
 
-        untar [link](#untar)
+        untar
         :   Don't use. Instead, use *extract*.
 
-        unzip [link](#unzip)
+        unzip
         :   Don't use. Instead, use *extract*.
 
-        US [link](#us)
+        US
         :   OK to use as an abbreviation for *United States*. Don't use
-            *U.S.* or *U.S.A.* For more information, see [Periods with abbreviations](/style/abbreviations#periods).
+            *U.S.* or *U.S.A.*
 
-        user [link](#user)
+        user
         :   Use the word *user* only to refer to the user of the software that
             your reader is developing. Otherwise, address the reader as *you*
             and assume that they will complete the tasks that you're documenting. For
             more information, see [Second person and first
             person](/style/person).
 
-        user base [link](#user-base)
+        user base
         :   Not *userbase*.
 
-        using [link](#using)
+        using
         :   Where *using* might have more than one interpretation, use *by
             using* to help clarify the logic of the sentence.
         :   Recommended: You can filter for data
@@ -2961,9 +2906,9 @@ unselect [link](#unselect)
         :   Not recommended: You can filter for
             data with specific attributes using custom filters.
 
-        UTF [link](#utf)
+        UTF
         :   Include the hyphen in the names of Unicode encodings, such as
-            *UTF-8*, *UTF-16*, and *UTF-32*.:   utilize, utilization [link](#utilize)
+            *UTF-8*, *UTF-16*, and *UTF-32*.:   utilize, utilization
                 :   Use with caution. Don't use *utilize* when you mean *use*. It's
                     OK to use *utilize* or *utilization* when referring to the
                     quantity of a resource being used.
@@ -2976,64 +2921,64 @@ unselect [link](#unselect)
 
 ### V
 
-v (abbreviating *version*) [link](#v)
+v (abbreviating *version*)
 :   Use lowercase.
 
-via [link](#via)
+via
 :   Don't use.
 
-vice versa [link](#vice-versa)
+vice versa
 :   Don't use. Instead, use a phrase like *the other way around*,
     *conversely*, or *otherwise*. In some contexts, vice versa is
     unclear or imprecise because in a complex sentence it's hard to know which
     two things are swapped with each other. In such cases, make it explicitly
     clear what two things are swapped.
 
-virtual machine (VM) instance [link](#virtual-machine-instance)
+virtual machine (VM) instance
 :   Use when first introducing virtual machines on a given page. For
     subsequent mentions, you can use *VM instance* or *VM*. See also
     [GKE node](#gke-node).
 
-visually challenged [link](#visually-challenged)
-:   See [blind](#blind).
+visually challenged
 
-VLAN attachment [link](#vlan)
+
+VLAN attachment
 :   Don't use the following: *interconnect attachment (VLAN)*,
     *Interconnect attachment*, *Cloud Interconnect attachment*, or
     any variation thereof. See also
     [interconnectAttachment](#interconnect-attachment).
 
-voila [link](#voila)
+voila
 :   Don't use.
 
-voodoo [link](#voodoo)
+voodoo
 :   Don't use. Instead, use a term like *mysterious*, *complicated*,
     or *nondeterministic*.
 
-vs. [link](#vs)
+vs.
 :   Don't use *vs.* as an abbreviation for *versus*; instead, use
     the unabbreviated *versus*.
 
 ### W
 
-wake lock (noun), wake-lock (adjective) [link](#wake-lock)
+wake lock (noun), wake-lock (adjective)
 
-walkthrough [link](#walkthrough)
+walkthrough
 :   Not *walk-through*.
 
-war room, warroom, war-room [link](#war-room)
+war room, warroom, war-room
 :   Don't use. Instead, use a more precise term to describe the activity or
     team. Depending on context, possible alternatives include *rapid
     response team*, *situation response team*, *situation room*,
     *incident-management team*, or *media monitoring room*.
 
-warm [link](#warm)
+warm
 :   When possible, avoid [jargon](/style/jargon) like *warm
     failover*, *warm standby*, and *warm spare*. If you use one
     of these phrases, define it on first use and use it consistently
     throughout the document.
 
-we [link](#we)
+we
 :   Don't use *we* (or other first-person plural pronouns such as
     *our* or *us*) to address the reader who is performing the
     tasks that you're documenting. Instead, use *you*.
@@ -3042,23 +2987,23 @@ we [link](#we)
     information, see
     [Second person and first person](/style/person).
 
-web (lowercase) [link](#web)
+web (lowercase)
 
-WebAssembly, Wasm [link](#wasm)
+WebAssembly, Wasm
 :   Use the capitalization established in the
     [WebAssembly specification](https://webassembly.github.io/spec/core/intro/introduction.html#introduction).
 
-web application firewall (lowercase) [link](#web-application-firewall)
+web application firewall (lowercase)
 
-webmaster, web master [link](#webmaster)
+webmaster, web master
 :   Don't use. Instead, use a more precise term to describe the specific role,
     such as *website owner*, *website administrator*, *web content
     manager*, *owner of a site*.
 
-web server [link](#web-server)
+web server
 :   Not *webserver*.
 
-whether [link](#whether)
+whether
 :   * To decide whether it's more appropriate to use *if* or
       *whether*, see [Grammar Girl's
       discussion of *if* and *whether*](http://www.quickanddirtytips.com/education/grammar/if-versus-whether).
@@ -3066,60 +3011,60 @@ whether [link](#whether)
       *whether*, see [the New York
       Times's blog post about whether (or not)](http://afterdeadline.blogs.nytimes.com/2010/03/01/whether-or-not/).
 
-while [link](#while)
+while
 :   Don't use to indicate a contrast. Instead, use a more precise term, such
     as *although*.
 :   OK to use to refer to a period of time.
 
-white-box [link](#white-box)
+white-box
 :   Avoid using *white-box*, *whitebox*, or *white box* to
     describe monitoring and testing. Consider using a more precise term for
     clarity.
 
     * For monitoring, use *introspective monitoring*.* For testing, use *clear-box testing*.
 
-white glove, white-glove, whiteglove [link](#white-glove)
+white glove, white-glove, whiteglove
 :   Avoid using. Instead use terms like *high-touch*, *premium*, or
     *platinum-level*.
 
-whitehat, white hat, white-hat [link](#whitehat)
+whitehat, white hat, white-hat
 :   Don't use. Instead, use precise terms for the kind of compliance, such as
     *legal*, *ethical*, or *following the rules*.
 
-white label, whitelabel, white-label [link](#white-label)
+white label, whitelabel, white-label
 :   Don't use. Instead, use a more precise term for your context, such as
     *unbranded*, *unlabeled*, or *blank label*.
 
-whitelist, white list, white-list [link](#whitelist)
-:   Don't use. See [blacklist](#blacklist).
+whitelist, white list, white-list
+:   Don't use.
 
-whitelisted, white listed, white-listed [link](#whitelisted)
-:   Don't use. See [blacklist](#blacklist).
+whitelisted, white listed, white-listed
+:   Don't use.
 
-whitelisting, white listing, white-listing [link](#whitelisting)
-:   Don't use. See [blacklist](#blacklist).
+whitelisting, white listing, white-listing
+:   Don't use.
 
-whitepaper [link](#whitepaper)
+whitepaper
 :   Not *white paper*.
 :   When possible, use a more precise term. The term *whitepaper* has a variety of
     meanings in various contexts. If you must use the term *whitepaper*, also use descriptive
     terms to provide context.
 
-whitespace [link](#whitespace)
+whitespace
 :   Not *white space*.
 
-wildcard [link](#wildcard)
+wildcard
 :   Not *wild card*.
 
-will [link](#will)
+will
 :   Avoid. Applies equally to its past tense, *would*. See also
     [Present tense](/style/tense) and
     [Documenting future features](/style/future).
 
-wish [link](#wish)
+wish
 :   Don't use. Instead, use a word like *want* or *need*.
 
-with [link](#with)
+with
 :   Don't use *with* when expressing ownership::   Recommended: A handset that has 2 GB
         of RAM.
     :   Not recommended: A handset with 2 GB
@@ -3129,7 +3074,7 @@ with [link](#with)
     :   Not recommended: Debug this tool with
         the debugging tool.
 
-workload [link](#workload)
+workload
 :   The term *workload* might refer to software, like an app or
     a service; to app resources, like data and infrastructure; or to physical
     components that work together.
@@ -3137,10 +3082,10 @@ workload [link](#workload)
     use the term *workload*, define your meaning on first use as you
     normally would with jargon and other ambiguous terms.
 
-World Wide Web [link](#world-wide-web)
+World Wide Web
 :   Don't use. Instead, use *web*.
 
-would [link](#would)
+would
 :   Avoid using. Instead, use *can* where possible.
 :   See also [can](#can), [could](#could),
     [may](#may), [might](#might),
@@ -3152,23 +3097,11 @@ would [link](#would)
 
 ### Y
 
-ymmv [link](#ymmv)
+ymmv
 :   Don't use. Instead, use something like *Your results might vary*.
 
-you [link](#you)
+you
 :   Use *you* instead of [*user*](#user) to address the
-    reader of your document. For more information, see
-    [Second person and first person](/style/person).
+    reader of your document.
 
 ### Z
-
-zippy [link](#zippy)
-:   Don't use to refer to [expander arrows](#expander-arrow),
-    unless you're specifically referring to the [Zippy widget](https://google.github.io/closure-library/api/goog.ui.Zippy.html)
-    in Closure.
-
-
-
-
-
-

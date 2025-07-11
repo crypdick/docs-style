@@ -1,26 +1,4 @@
-
-
-
-
-
-
 # Write inclusive documentation  
-
-
-
-**Note**: This document includes references to terms that
-Google considers disrespectful or offensive. The terms are used here to
-provide usage guidance and alternative terms.
-
-We write our developer documentation with inclusivity and diversity in mind.
-This page is not an exhaustive reference, but provides some general guidelines
-and examples that illustrate some best practices for writing inclusive documentation.
-
-For other writing best practices, see the following resources:
-
-* [Write for a global audience](/style/translation)
-* [Write accessible documentation](/style/accessibility)
-* [Voice and tone](/style/tone)
 
 ## Avoid ableist language
 
@@ -119,8 +97,7 @@ citizen](https://wikipedia.org/wiki/First-class_citizen), even though these term
 This section contains guidance about how to replace or write around a non-inclusive term. If a
 term is well established in the industry and replacing it could cause confusion, see
 [Replace established terms](#replace). If a term occurs in code samples or keywords, see
-[Write around non-inclusive code terms](#write-around). For information about avoiding
-non-inclusive jargon, see [Jargon](/style/jargon).
+[Write around non-inclusive code terms](#write-around).
 
 #### Replace established terms
 
@@ -224,8 +201,7 @@ Some general guidelines in this area include the following:
   [Self-Identification
   in the Deaf Community](https://www.verywellhealth.com/deaf-culture-big-d-small-d-1046233)). Whenever possible, research and choose terms
   that respect the ways that people in the communities identify.
-* Use *see* to refer to links and cross-references. For more information, see
-  [see](/style/word-list#see).
+* Use *see* to refer to links and cross-references.
 * Avoid terms that reflect or project feelings and judgments about a person's disability,
   such as *victim of*, *suffering from*, or *wheelchair-bound*. Instead, use neutral
   terms such as *experiencing*, *living with*, or *uses a wheelchair*.

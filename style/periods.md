@@ -14,10 +14,6 @@ exceptions for working in lists.
 Whether to end a list item with a period depends on several factors, including
 the kind of list that the item appears in.
 
-For details about how to use periods in lists, see the
-[Capitalization and end punctuation](/style/lists#capitalization-and-end-punctuation)
-section of the "Lists" page.
-
 ## Periods with URLs
 
 When a period immediately follows a URL or a file path, it can be hard to
@@ -54,8 +50,7 @@ the URL and the period.
 When a sentence ends with material inside quotation marks, place the period
 inside the quotation marks even if the period isn't part of the material inside
 the quotation marks. An exception to this guideline applies if you're using quotation marks around
-a keyword or other literal string. For more information, see
-[Commas and periods with quotation marks](/style/quotation-marks#commas-and-periods-with-quotation-marks).
+a keyword or other literal string.
 
 Recommended: ... you might say "Fixed typo."
 
@@ -80,36 +75,20 @@ Recommended: App Engine applications are
 easy to create, easy to maintain, and easy to scale. (With App Engine, there are
 no servers for you to maintain.)
 
-For more information, see [Parentheses](/style/parentheses).
-
 ## Periods with headings
 
 Don't end headings with periods.
-
-For more information, see [Headings](/style/headings).
 
 ## Periods with numbers
 
 Use a period to represent a decimal point. (Using a comma to separate the decimal part
 of a number is the editorial custom in some countries, but not in the US.)
 
-For more information, see [Numbers](/style/numbers).
-
-## Periods with captions
-
-See [Figure captions](/style/images#figure-captions).
-
-## Periods with alt text
-
-See [Alt text](/style/images#alt-text).
-
 ## Periods with abbreviations
 
 Put a period after a shortened word.
 
 Don't put periods after the letters of an acronym or initialism.
-
-For more information, see [Abbreviations](/style/abbreviations).
 
 ## Spaces between sentences
 

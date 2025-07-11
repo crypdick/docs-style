@@ -10,7 +10,7 @@ In technical writing, we don't use quotation marks much, aside from instances of
 
 Generally, you can use quotation marks for
 titles of shorter works such as articles or episodes in a web series, unless
-they're part of a link. For more information, see [cross-references](/style/cross-references).
+they're part of a link.
 
 For most titles that are full-length works, we use italics.
 
@@ -23,7 +23,7 @@ For examples of when to use quotation marks in regular text, see the following t
 | Directly citing a person or quoting a slogan or motto. | Martin Fowler has said, "We are still learning the techniques to write software effectively." |
 | Using a term metaphorically, but only if it's not an established usage in the domain. | This configuration forms an "island" within the network that is not connected to the external network. |
 
-For more information, see [Text-formatting summary](/style/text-formatting).
+
 
 ## Commas and periods with quotation marks
 

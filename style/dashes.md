@@ -44,11 +44,7 @@ used in Canada and a few other places. For now, only use the em dash.
 
 ## En dashes
 
-Don't use. Instead, use a hyphen or the word *to*. For more information, see
-the following:
-
-* [Ranges of numbers with units](/style/units-of-measure#ranges)
-* [Range of numbers](/style/hyphens#number-range)
+Don't use. Instead, use a hyphen or the word *to*.
 
 ## Colons instead of dashes in description lists
 

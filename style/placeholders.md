@@ -244,7 +244,7 @@ sample output:
   <li><code><var>INSTANCE_NAME</var></code>: description, such as...</li>
   ```
 
-For more information, see [Output from commands](/style/code-syntax#output).
+
 
 Recommended:
 

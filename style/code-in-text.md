@@ -12,25 +12,6 @@ ways:
 * Shows where the boundaries of the text to enter are.
 * Clearly separates the entity from surrounding text.
 
-To mark text as code font, use the following:
-
-* In HTML, use the `code` element.
-* In Markdown, use backticks (```).
-
-For information about choosing HTML or Markdown, see
-[Markdown versus HTML](/style/markdown).
-
-This page explains how to format code in ordinary text sentences. For more information about
-formatting and explaining placeholders, command-line syntax, and code samples, see the following
-resources:
-
-* [Formatting placeholders](/style/placeholders)
-* [Documenting command-line syntax](/style/code-syntax)
-* [Code samples](/style/code-samples)
-* [Code style guides](/style/code-samples#coding)
-* [Formatting a heading or title](/style/headings#formatting-a-heading-or-title)
-* [Code text preceding colon](/style/colons#code-text-preceding-colon)
-
 ## Some specific items to put in code font
 
 The following table includes items that should be in code font, but it's not an exhaustive
@@ -64,7 +45,7 @@ list:
 | Query parameter names and values | If you want to return all contents under a directory, use the `recursive=true` query parameter with your request. |
 | Strings (such as URLs or domain names) that are used in commands and code | In IAM, a condition can specify a page that only Human Resources admins can access—for example, `https://hr.example.com`.  The `logID` field includes the domain `corpaudits.example.com`. |
 | Text input | In the **Key name** field, enter `config-management`. |
-| [UI elements](/style/ui-elements) that are rendered based on previously entered text (such as a server or instance name) | From the **Server name** list, select **`my-sql-cluster1`**.  Click **`my-instance`**.  If a code-formatted element appears in UI, add bold as well. For more information, see [Code in UI elements](#code-in-ui). |
+| [UI elements](/style/ui-elements) that are rendered based on previously entered text (such as a server or instance name) | From the **Server name** list, select **`my-sql-cluster1`**.  Click **`my-instance`**.  If a code-formatted element appears in UI, add bold as well. |
 
 Generally, don't put quotation marks around code unless the quotation marks
 are part of the code.
@@ -79,7 +60,7 @@ or as a code entity like an attribute or value, then use code font.
 | --- | --- |
 | Domain names | The test environment is designed only for standard application offerings from example.com. |
 | Names of products, services, and organizations | Example Organization has current and former employees who use Google products such as Google Docs and Google Sheets. |
-| URLs that the reader is supposed to follow in a browser | You can find support at https://support.example.com.  It's usually best to format a URL as a link and use descriptive link text instead of exposing the URL itself. For more information, see [Avoid URLs as link text](/style/cross-references#urls). |
+| URLs that the reader is supposed to follow in a browser | You can find support at https://support.example.com.  It's usually best to format a URL as a link and use descriptive link text instead of exposing the URL itself. |
 
 ## Code in UI elements
 
@@ -185,79 +166,3 @@ inflect that noun.
 | To retrieve the data, send a `GET` request. | Retrieve information by `GET`ting the data. |
 | You can't close the file before opening it.  You can't call the `close` method for a file before you call `open`. | `Close`ing the file requires you to have `open`ed it first. |
 | Takes an array of extended ASCII code points (an array of `INT64` values) and returns `BYTES` values.  For `STRING` arguments, returns the original string with all alphabetic characters in uppercase. | Takes an array of extended ASCII code points (ARRAY of INT64) and returns BYTES. |
-
-## Linking API terms in Android
-
-When you're writing code comments that you'll turn into generated reference
-documentation, link to the first instance of each element of Android APIs, such as classes, methods,
-constants, and XML attributes. Use code font and regular HTML
-`a` elements to link to this reference material.
-For later uses of the same API element in the same section, use code font
-but do not link to the reference documentation.
-
-Link `AndroidManifest.xml` elements and attributes to the API
-guide pages. Link the attribute for a particular widget or layout to its Javadoc
-in the widget or layout's API reference entry.
-
-Recommended:
-
-```
-
-<a href="/guide/topics/manifest/data-element.html">data</a>
-
-```
-
-Very common classes such as `Activity` and `Intent`
-don't need to be linked every time. If you use a term as a concept rather than a
-class, then don't put it in code font and don't capitalize it. Here are some
-objects that do not always require Javadoc links or capitalization:
-
-* activity, activities
-* service
-* fragment
-* view
-* loader
-* action bar
-* intent
-* content provider
-* broadcast receiver
-* app widget
-
-If you use one of these terms in the context of referring to an actual
-instance, use the formal class name and link to its reference page. Here are two
-examples:
-
-Recommended: The [`Activity`
-class](https://developer.android.com/reference/android/app/Activity.html) is an important part of an application's overall lifecycle...
-
-Recommended: The user interface for an
-activity is provided by a hierarchy of views—objects derived from the
-[`View` class](https://developer.android.com/reference/android/view/View.html).
-
-To link to a class or method:
-
-* To link to a class, use the class name as link text—for example:
-
-  ```
-  <a href="/reference/android/widget/TextView">TextView</a>
-  ```
-* To link to a method, use the method name as a fragment identifier. If
-  you're linking to a static method, also include the class name in the link
-  text. If you need to distinguish between overloaded versions of a particular
-  method, consider showing the full signature—for example:
-
-  ```
-  <a href="/reference/android/app/Activity.html#onCreate(android.os.Bundle)">onCreate(Bundle)</a>
-  ```
-* To link the attribute for a particular widget or layout to its Javadoc
-  in the widget or layout's API reference entry, use the URL for the page, and
-  then add the fragment identifier
-  `#attr_android:ATTRIBUTE_NAME`. For example, to link to
-  the XML attribute `android:inputType` for the `TextView`
-  widget, add the following:
-
-  ```
-  <a href="/reference/android/widget/TextView.html#attr_android:inputType>inputType</a>
-  ```
-
-

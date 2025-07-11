@@ -72,32 +72,15 @@ other punctuation for clarity.
 A couple of specific places where commas are a good idea:
 
 * In general, put a comma before the word *which* at the start of a
-  nonrestrictive clause. For more information about this topic, see this guide's section on [relative pronouns](/style/pronouns#relative-pronouns) and Grammar
-  Girl's page on
-  [*which* versus *that*](http://www.quickanddirtytips.com/education/grammar/which-versus-that-0?page=all).
+  nonrestrictive clause.
 * In general, put a semicolon or a period or a dash before a conjunctive
   adverb, such as *otherwise*, *however*, or *therefore*, and put a comma after
   the conjunctive adverb.
 
-In general, don't use a comma before the causal conjunction *because* unless it starts a nonrestrictive clause. For more information,
-see the *Chicago Manual of Style* Q&A entry on
-[using
-commas with *because*](https://www.chicagomanualofstyle.org/qanda/data/faq/topics/Commas/faq0018.html).
+In general, don't use a comma before the causal conjunction *because* unless it starts a nonrestrictive clause.
 
 | Recommended | Not recommended |
 | --- | --- |
 | Name of the group, which has a maximum length of 200 characters. | Name of the group which has a maximum length of 200 characters. |
 | The variable must have a value; otherwise, the server returns an error. | The variable must have a value otherwise the server returns an error. |
 | You can use the same key name in multiple backend services and backend buckets, because each set of keys is independent of the others. | You can use the same key name in multiple backend services and backend buckets because each set of keys is independent of the others. |
-
-## Punctuate numbers
-
-For information about punctuating numbers, see [Commas and decimal
-points in numbers](/style/numbers#commas-and-decimal-points-in-numbers).
-
-## Punctuate examples
-
-For information about punctuating examples, see [Format examples](/style/format-examples).
-
-
-

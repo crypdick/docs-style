@@ -52,8 +52,7 @@ think about an abbreviation, it can slow down their reading comprehension.
 ### General dos and don'ts
 
 * Use standard acronyms and initialisms that will save the reader time.
-* Spell out abbreviations on first reference. For more information,
-  see [When to spell out a term](/style/abbreviations#spelling-out).
+* Spell out abbreviations on first reference.
 * Avoid using abbreviations for terms that aren't related to the main topic of the document.
 
 In the following examples, the main topic of the document is the internet of things, so *low Earth orbit* should not be abbreviated.
@@ -63,8 +62,6 @@ service can even be used for connecting to sensors in low Earth orbit.
 
 Not recommended: The IoT (internet of things)
 service can even be used for connecting to sensors in LEO (low Earth orbit).
-
-* Be wary of using specialized abbreviations that your readers might not understand. For more information about when to use such language, see [Jargon](/style/jargon).
 
 ## When to spell out a term
 
@@ -120,14 +117,10 @@ The following abbreviations rarely need to be spelled out:
 ## Abbreviations not to use
 
 Don't use *i.e.* or *e.g.*; instead, use *that is* or
-*for example*, respectively. For more information, see
-[e.g.](/style/word-list#eg) and
-[i.e.](/style/word-list#ie)
+*for example*, respectively.
 
 It's [okay to use *etc.* in
 some circumstances](/style/word-list#etc), but it's best to use different phrasing in most lists.
-For more information, see
-[Comma-separated lists](/style/lists#comma-separated-lists).
 
 Don't use internet slang abbreviations such as
 [*tl;dr*](/style/word-list#tldr),
@@ -187,7 +180,5 @@ for your audience.
 In particular, our word list includes preferences for
 "[a SQL](/style/word-list#sql)", "[a FHIR](/style/word-list#fhir)",
 and "[an SAP](/style/word-list#sap)".
-
-For more information about articles, see [Articles](/style/articles).
 
 
