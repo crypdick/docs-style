@@ -4,8 +4,7 @@
 # requires-python = ">=3.12"
 # dependencies = [
 #   "python-dotenv>=1.0",
-#   "openai>=1.16.0",
-#   "whatthepatch>=1.0.0"
+#   "openai>=1.16.0"
 # ]
 # ///
 """Iteratively apply Google style guide pages to a target markdown document.
@@ -49,6 +48,14 @@ import shutil
 from datetime import datetime
 
 # ---------------------------------------------------------------------------
+# Console colours (ANSI)
+# ---------------------------------------------------------------------------
+
+RAW_DIFF_COLOR = "\033[33m"       # Yellow
+FILTERED_DIFF_COLOR = "\033[32m"  # Green
+RESET_COLOR = "\033[0m"
+
+# ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
 
@@ -68,10 +75,10 @@ DIFF_SYSTEM_PROMPT = (
     "once per edit (do not add attributes, comments, or any other markup):\n\n"
     "<edit>\n"
     "<before>\n"
-    "…PASTE UNCHANGED TEXT EXACTLY AS IT APPEARS (may span multiple lines)…\n"
+    "…PASTE UNCHANGED TEXT EXACTLY AS IT APPEARS (may span multiple lines)\n"
     "</before>\n"
     "<after>\n"
-    "…PASTE REPLACEMENT TEXT EXACTLY AS IT SHOULD APPEAR (may span multiple lines)…\n"
+    "…PASTE REPLACEMENT TEXT EXACTLY AS IT SHOULD APPEAR (may span multiple lines)\n"
     "</after>\n"
     "</edit>\n\n"
     "The STYLE GUIDE will be supplied inside <style_guide>…</style_guide> and the DOCUMENT inside <document>…</document>. "
@@ -80,16 +87,9 @@ DIFF_SYSTEM_PROMPT = (
     "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
     f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
     "Never output an <edit> block whose <before> and <after> content are identical after normalising "
-    "whitespace (including newlines, tabs, and spaces). If no such meaningful edits remain, respond with "
-    f"'{DIFF_END_MARKER}'."
+    "whitespace (including newlines, tabs, and spaces). These are a NO-OP and should be discarded."
 )
 
-APPLY_SYSTEM_PROMPT = (
-    "You are a diff application engine. You will receive the ORIGINAL "
-    "markdown file, followed by a unified diff. Apply the diff faithfully and "
-    "return ONLY the full updated markdown content. Do not output anything "
-    "else."
-)
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -278,20 +278,6 @@ def generate_diff(style_guide: str, document: str) -> str:
     return chat(messages)
 
 
-def apply_diff(original_doc: str, edits_text: str) -> str:
-    """Ask the LLM to apply *edits_text* to *original_doc* and return the new document."""
-
-    messages = [
-        {"role": "system", "content": APPLY_SYSTEM_PROMPT},
-        {
-            "role": "user",
-            "content": (
-                "ORIGINAL DOCUMENT:\n\n" + original_doc + "\n\n" +
-                "EDITS (one per line, <before> -> <after>):\n\n" + edits_text
-            ),
-        },
-    ]
-    return chat(messages)
 
 
 # ---------------------------------------------------------------------------
@@ -342,13 +328,27 @@ def main() -> None:
             print("-> Style guide not relevant or no changes detected. Skipping.\n")
             continue
 
-        # Show diff for manual review before automatic application.
-        print("Generated diff:\n")
-        print(diff)
+        # Show raw diff from the model.
+        print("Generated diff (model output):\n")
+        print(f"{RAW_DIFF_COLOR}{diff}{RESET_COLOR}")
+
+        # Parse edits to identify the effective (non–no-op) changes.
+        parsed_edits = _parse_edits(diff)
+        if parsed_edits:
+            filtered_diff_text = "\n\n".join(
+                f"<edit>\n<before>\n{b}\n</before>\n<after>\n{a}\n</after>\n</edit>"
+                for b, a in parsed_edits
+            )
+        else:
+            filtered_diff_text = DIFF_END_MARKER
+
+        if filtered_diff_text.strip() != diff.strip():
+            print("\nDiff after filtering out no-op edits (will be applied):\n")
+            print(f"{FILTERED_DIFF_COLOR}{filtered_diff_text}{RESET_COLOR}")
 
         # Apply edits locally (deterministic and safer than LLM application).
         with spinner("Applying edits"):
-            updated_doc, missed_snippets = _apply_edits_locally(doc_text, diff)
+            updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
 
         changed = updated_doc != doc_text
 
