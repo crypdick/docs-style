@@ -1,51 +1,4 @@
-
-
-
-
-
-
 # Word list  
-
-
-
-**Note**: This document includes references to terms that Google considers
-disrespectful or offensive. The terms are listed here to provide usage
-guidance and alternative terms.
-
-This word list covers style and usage guidelines that are specific to developer documentation.
-
-If the term that you're looking for isn't on this list, check our other
-[editorial resources](/style#editorial-resources), including our preferred
-dictionary,
-[Merriam-Webster](https://www.merriam-webster.com/). If there are multiple spellings in
-the Merriam-Webster word entry, use the first form listed, which is the most common spelling. For
-example, in the
-[entry for *cancel*](https://www.merriam-webster.com/dictionary/canceled),
-the first form listed for the past tense is *canceled*, indicating that it's more common than
-*cancelled*.
-
-If you're looking for a technical definition, then it's often a good idea to check the
-authoritative documentation on the topic.
-
-Terminology decisions, including how and when to define or contextualize
-terms, often require judgments based on factors like your product area,
-your audience, and prevailing convention. Here are some other pages of this
-guide that can help you make those types of judgments:
-
-* [Jargon](/style/jargon)
-* [Inclusive language](/style/inclusive-documentation)
-* [Write for a global audience](/style/translation)
-* [Hyphens](/style/hyphens)
-* [Capitalization](/style/capitalization)
-
-As always, it's fine to deviate from our guidance if that serves your readers
-better. For more information, see [Break the rules](/style#rules).
-
-## Word list
-
-All word list entries have a link link
-icon next to them. To link directly to an entry, you can right-click and
-copy the link address, or click and copy the URL from your address bar.
 
 Some word list entries include guidance to *avoid* or *don't use* a
 term. Apply this guidance as follows:
@@ -61,9 +14,6 @@ term. Apply this guidance as follows:
   non-inclusive association. If such a term appears in code, we recommend that
   you
   [replace or write around the term](/style/inclusive-documentation#replace-or-write-around-non-inclusive-terms).
-* **Android**. Applies only to Android documentation.
-* **Google Cloud**. Applies only to Google Cloud documentation.
-* **Google Workspace**. Applies only to Google Workspace documentation.
 
 ### Numbers and Symbols
 
@@ -79,13 +29,6 @@ term. Apply this guidance as follows:
     abbreviation.
 :   It's OK to use `&` for technical purposes in code.
 
-2-Step Verification [link](#2-step-verification)
-:   When referring to Google's
-    [2-Step Verification](https://www.google.com/landing/2step/),
-    use initial caps.
-:   When referring to
-    [generic 2-step verification](http://searchsecurity.techtarget.com/definition/two-step-verification),
-    use lowercase.
 
 ### A
 
@@ -262,11 +205,6 @@ API [link](#api)
 :   Don't use *API* when referring to a method or a class. For example,
     don't write *This resource has one API* to mean "This resource has
     one method."
-
-API Console, APIs console, developer console, dev console, or Google API Console [link](#api-console)
-:   Don't use. Instead, refer to the *Google APIs Explorer* or to the
-    *Google Cloud console*. For more information, see
-    [console](#console).
 
 API Console key [link](#api-console-key)
 :   In most contexts, use *API key* instead of *API Console key*.
@@ -538,12 +476,6 @@ boolean [link](#boolean)
 :   If you refer to *Boolean mathematics* or *Boolean logic*, use
     uppercase.
 
-branding information [link](#branding-information)
-:   In the Google Cloud console, the phrase *branding information* refers
-    to the information that Google shows to users when the client asks them to
-    authorize access: specifically, the project's name and logo, and the
-    developer's Google Account. This information is set in the **Consent
-    screen** page.
 
 break-glass [link](#break-glass)
 :   Don't use. Instead, use a more precise term depending on context:
@@ -635,10 +567,6 @@ cell phone, cellphone [link](#cell-phone)
         :   Not recommended: Deselect
             **Automatically check for updates**.
 
-        CLI [link](#cli)
-        :   Don't use *CLI* generically to refer to a command-line interface.
-            Instead, refer to the specific command-line interface, such as the
-            [Google Cloud CLI](#gcloud).
 
         click [link](#click)
         :   When the environment is a desktop with a mouse, use *click* for most
@@ -674,21 +602,6 @@ cell phone, cellphone [link](#cell-phone)
         client secret [link](#client-secret)
         :   Lowercase except at the beginning of a sentence,
             heading, or list item.
-
-        Cloud [link](#cloud)
-        :   Don't use as short for *Google Cloud*.
-        :   For generic references such as *the cloud* or *hybrid cloud*,
-            use lowercase.
-
-        Cloud console [link](#gcp-console)
-        :   Don't use. Instead, refer to the full name *Google Cloud console*.
-        :   If you aren't discussing any other console (such as the Google Admin
-            console), you can abbreviate to *the console* after first mention.
-        :   Use *the* before the tool name. For more information, see
-            [console](#console).
-
-        Cloud SDK [link](#cloud-sdk)
-        :   Not *Google Cloud SDK*.
 
         co\* [link](#co)
         :   See [guidance about hyphens with prefixes](/style/hyphens#prefixes).
@@ -729,19 +642,6 @@ cell phone, cellphone [link](#cell-phone)
 
         cons [link](#cons)
         :   Don't use. Instead, use a more precise term, such as *disadvantages*.
-
-        console [link](#console)
-        :   Don't use in isolation. Instead, use the name of the specific console,
-            such as the [Google Cloud
-            console](https://console.cloud.google.com/) or the Google Admin console.
-        :   Use *the* before the name of a console.
-        :   After giving the full name of a console, you can use a shortened version
-            of the name, such as the *Admin console*.
-        :   If you're only discussing the Google Cloud console, after giving the full
-            name you can refer to *the console*.
-        :   To refer to a sub-page of a console, use the term *page*.
-        :   If a specific term for a browser-based interface is unavailable, use
-            *web interface*.
 
         content type [link](#content-type)
         :   Be as specific as possible when writing about a content type, and use the term only when applicable.
@@ -840,11 +740,6 @@ dash [link](#dash)
     (`-`). The characters are used for different purposes.
     Therefore, don't use the word *dash* to refer to a hyphen.
 
-dashboard [link](#dashboard)
-:   Don't use to refer to the Google Cloud console. For more information, see
-    [console](#console).
-:   Use *dashboard* not *Dashboard* unless it's officially part of a
-    product name.
 
 data [link](#data)
 :   Use *data* as singular, not plural; *the data is*, not
@@ -1017,8 +912,6 @@ does not yet [link](#does-not-yet)
     doesn't support this IAM role.
 :   Not recommended: The Google Cloud
     console does not yet support this IAM role.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
 dojo [link](#dojo)
 :   Don't use. Instead, use a precise term that is accurate for the context,
@@ -1338,9 +1231,6 @@ Gbps [link](#gbps)
 :   Short for *gigabits per second*. By convention, we don't use
     *Gb/s*. For more information, see [Units of measurement](/style/units-of-measure).
 
-`gcloud` CLI [link](#gcloud)
-:   Use the full name *Google Cloud CLI* the first time that you mention
-    the product on a page.
 
 gender-neutral he, him, or his (or she or her) [link](#gender)
 :   Don't use. Instead, use the singular *they* (see [Jane Austen and other famous authors violate what everyone learned in
@@ -1370,44 +1260,6 @@ GKE node [link](#gke-node)
     mentions, you can use *node*. A GKE node is a worker machine that
     runs containerized applications and other workloads. The machine is a
     Compute Engine VM that GKE creates during cluster creation. See also [virtual machine (VM) instance](#virtual-machine-instance).
-
-Google, Googling [link](#google)
-:   Don't use as a verb or gerund. Instead, use *search with Google*.
-
-Google Account, Google Accounts [link](#google-account)
-:   Capitalize *Account*.
-
-Google API Client Library for LANGUAGE (Java, .NET, etc.) [link](#google-api-client-library)
-:   On second and subsequent use, you can abbreviate to
-    *LANGUAGE client library*.
-
-Google API Console, Google APIs Console [link](#google-api-console)
-:   Don't use. For more information, see [console](#console).
-
-Google Cloud [link](#gcp)
-:   Not *GCP*, *Cloud Platform*, or *Cloud*.
-
-Google Cloud console [link](#google-cloud-platform-console)
-:   If you're only discussing the Google Cloud console, it's OK to shorten to
-    *the console* after first use on a given page.
-:   Use *the* before the console name. For more information, see [console](#console).
-
-Google Cloud project ID [link](#gcp-project-id)
-:   Not *Cloud project ID* or *GCP project ID*. You can also
-    shorten to *project ID*, but be aware that that term is ambiguous in
-    some contexts.
-
-Google Developers Console [link](#google-developers-console)
-:   Don't use. For more information, see [console](#console).
-
-Google I/O [link](#google-io)
-:   Not *I-O* or *IO*.
-
-Google Play services [link](#google-play-services)
-:   Write *services* in lowercase.
-
-Google Play services SDK [link](#google-play-services-SDK)
-:   Write *services* in lowercase.
 
 grandfather clause, grand-father clause, grand father clause [link](#grandfather-clause)
 :   Don't use. See [grandfathered](#grandfathered).
@@ -1446,10 +1298,6 @@ graylisted, greylisted, gray listed, grey listed, gray-listed, grey-listed [link
 
 graylisting, greylisting, gray listing, grey listing, gray-listing, grey-listing [link](#graylisting)
 :   Don't use. See [blacklist](#blacklist).
-
-`gsutil` [link](#gsutil)
-:   In the Google Cloud context, use code font for both the name of the
-    command-line utility and the command.
 
 guru [link](#guru)
 :   If possible, use a more precise term. For example, if you mean
@@ -1611,17 +1459,6 @@ HTTPS [link](#https)
 IaaS [link](#iaas)
 :   Write out on first mention: *infrastructure as a service (IaaS)*.
 
-IAM [link](#iam)
-:   When referring to the Google Cloud product, spell it out on first use:
-    *Identity and Access Management (IAM)*.
-:   When referring to UI text, write this term the way it's written in the UI.
-:   When referring to the general practice of identity and access management,
-    spell it out in lowercase on first use and include a parenthetical
-    comment:
-:   Recommended: Identity and access
-    management (generally referred to as *IAM*) is the practice of
-    granting the right individuals access to the right resources for the
-    right reasons.
 
 ID [link](#id)
 :   Not *Id* or *id,* except in string literals or enums.
@@ -1689,33 +1526,6 @@ instance group [link](#instance-group)
 
 intercluster [link](#intercluster)
 :   Use unhyphenated *intercluster*, not *inter-cluster*.
-
-interconnectAttachment [link](#interconnect-attachment)
-:   Use when referring to the API. Otherwise, use [*VLAN attachment*](#vlan).
-
-Interconnect connection [link](#interconnect-connection)
-:   Only use *Interconnect connection* relative to a product as follows:
-
-    * CDN Interconnect connection
-    * Cloud Interconnect connection
-    * Dedicated Interconnect connection
-    * Partner Interconnect connection
-
-    OK to use *connection* on subsequent mentions.
-:   When you're referring to a Google Cloud product, always specify the
-    product name. Don't use *Interconnect* or *interconnect* as
-    standalone terms, and don't use generic terms like *cloud interconnect
-    connection* or *cross-connect*.
-
-Interconnect connection location [link](#interconnect-connection-location)
-:   Only refer to an *Interconnect connection location* in context of a
-    specific product, for example *CDN Interconnect*.
-:   OK to also use *colocation facility*.
-
-interconnect type [link](#interconnect-type)
-:   Don't use. Instead, use *connection type*. Examples of connection
-    types are a *dedicated connection* or a *connection provided by a
-    service provider*.
 
 interface [link](#interface)
 :   OK to use as a noun.
@@ -2455,10 +2265,6 @@ persistent disk [link](#persistent-disk)
         port [link](#port)
         :   Use *listen on* (not *to*).
 
-        portal [link](#portal)
-        :   Don't use to refer to the Google Cloud console. For more information, see
-            [console](#console).
-
         possible [link](#possible)
         :   Don't use *possible* or *impossible* to mean *you can* or
             *you can't*.
@@ -2530,11 +2336,6 @@ persistent disk [link](#persistent-disk)
         primitive [link](#primitive)
         :   Use with caution. Don't use *primitive* in a disparaging sense.
 
-        project [link](#project)
-        :   In Google Cloud documentation, use *Google Cloud project* on first
-            mention and in any context in which there might be ambiguity about what
-            kind of project you're referring to.
-
         pros [link](#pros)
         :   Don't use. Instead, use a more precise term, such as *advantages*.
 
@@ -2549,8 +2350,7 @@ quota [link](#quota)
 :   In API contexts, often refers to API usage limits. Where possible, it's
     best to use a more specific term, such as *usage limit*; the word
     *quota* means many different things to many different people.
-:   In some contexts, such as Google Cloud documentation, the standard term is
-    *quota*, so use that term.
+
 
 ### R
 
@@ -2700,12 +2500,6 @@ scroll [link](#scroll)
     like *scroll up*. For more information, see
     [Accessibility](/style/accessibility#document-rendering).
 
-Search (as part of product name) [link](#search)
-:   Capitalize *Search* when referring to a product like Google Search.
-
-Search Console [link](#search-console)
-:   Capitalize each word in *Search Console*.
-
 see [link](#see)
 :   OK as a general term and when referring to links and cross-references. Our
     research indicates that language relating to sight is OK for a wide range
@@ -2724,10 +2518,6 @@ sensitive [link](#sensitive)
 :   *Sensitive* data is data for which the release might be harmful. See
     [confidential](#confidential).
 
-service [link](#service)
-:   It's OK to refer to Google products, such as Google Kubernetes Engine or
-    Compute Engine, as *services*. However, if the term *services*
-    leads to ambiguity, then use the product names.
 
 service level agreement [link](#service-level-agreement)
 :   Lowercase when referring to service level agreements in general.
@@ -2982,16 +2772,6 @@ tap [link](#tap)
         command-line syntax](/style/code-syntax#linux-signals).:   :   In some contexts, such as telephony and networking, *terminate* has
                 specific technical meanings that aren't synonyms for *stop*; in those
                 contexts, you can use *terminate*.
-
-            text box, textbox [link](#textbox)
-            :   Don't use. Instead, use *box*. For more information, see
-                [Text box](/style/ui-elements#term-textbox).
-            :   In Google Cloud documentation, use
-                *field* instead of *box*. For example, "In the **Instance**
-                field, specify a value less than 64 characters long."
-            :   In Google Workspace documentation, use
-                *field* instead of *box*. For example, "In the **Instance**
-                field, specify a value less than 64 characters long."
 
             their (singular) [link](#their)
             :   See [*they*](#they).
