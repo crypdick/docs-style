@@ -31,12 +31,3 @@ Recommended: When you add or update
 content to an existing project, remember to take these steps: review the style
 guide, use checklists, enlist a fellow writer or an editor to copyedit your
 work, and request a developmental edit if you feel that it's warranted.
-
-## See also
-
-For more information about how to punctuate introductory material, see the
-sections on [list introductions](/style/lists#intros) and [code-sample introductions](/style/code-samples#intros).
-
-For information about when it's better to use colons than dashes, see [Dashes](/style/dashes#colons).
-
-
