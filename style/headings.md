@@ -120,8 +120,6 @@ notebook. Its title starts with a bare infinitive.
 * Use heading tags to structure your content hierarchically—for example,
   `<h1>`, `<h2>`, and `<h3>` in HTML, or
   `#`, `##`, and `###` in Markdown.
-* Use API levels for [Android
-  versions](/style/product-names#android-versions).
 * To change the visual formatting of a heading, use CSS rather than using a heading level that
   doesn't fit the hierarchy. Don't make up your own formatting for headings.
 * Don't put a link in a heading because it can easily be confused as a style applied to a heading
