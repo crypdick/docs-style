@@ -8,12 +8,6 @@ estimates that 15% of the world's population (more than 1 billion people) have a
 need. When documentation is written with accessibility in mind, it improves the overall
 experience for all readers.
 
-For other writing best practices, see the following resources:
-
-* [Write for a global audience](/style/translation)
-* [Write inclusive documentation](/style/inclusive-documentation)
-* [Voice and tone](/style/tone)
-
 ## General dos and don'ts
 
 * Don't use *&* instead of *and* in headings, text, navigation, or
@@ -52,13 +46,12 @@ page. It's easier to jump between pages and sections of a page if the headings a
 unique.
 
 * Use a heading hierarchy.
-* Don't skip levels of the heading hierarchy. For example, put an `h3` element
-  only after an `h2` element.
+* Don't skip levels of the heading hierarchy. For example, put an `###` element
+  only after an `##` element.
 * To change the visual formatting of a heading, use CSS rather than using a heading level that
   doesn't fit the hierarchy.
 * Don't have empty headings or headings with no associated content.
-* Tag headings using heading elements. In HTML: `h1`,
-  `h2`, and so on. In Markdown: `#`, `##`, and so on.
+* Tag headings using heading elements.In Markdown: `#`, `##`, and so on.
 * Use a level-1 heading for the page title or main content heading.
 
 
@@ -95,7 +88,6 @@ unique.
   [`headers`
   attribute](https://www.w3.org/WAI/tutorials/tables/multi-level/) and make sure that the headings have unique IDs.
 * Avoid when possible tables in the middle of a numbered procedure.
-* Don't merge cells. Don't use `colspan` or `rowspan` attributes.
 * Don't use tables unless it's the best method to present your information. Tables are
   challenging for screen readers.
 * Don't present new information in tables through images or symbols alone; always provide a

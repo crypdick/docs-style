@@ -1,6 +1,4 @@
-
-
-# Code in text  
+# Code in text
 
 In ordinary text sentences (as opposed to, say, [code samples](/style/code-samples)),
 use code font to mark up most things that have anything to do with code. Code
@@ -13,7 +11,7 @@ ways:
 * Clearly separates the entity from surrounding text.
 
 However, do NOT add `backticks` into the code samples themselves, in such a way that it changes the code
-behavior.
+behavior. If the code is already in backticks, no changes are required.
 
 ## Some specific items to put in code font
 
@@ -169,3 +167,7 @@ inflect that noun.
 | To retrieve the data, send a `GET` request. | Retrieve information by `GET`ting the data. |
 | You can't close the file before opening it.  You can't call the `close` method for a file before you call `open`. | `Close`ing the file requires you to have `open`ed it first. |
 | Takes an array of extended ASCII code points (an array of `INT64` values) and returns `BYTES` values.  For `STRING` arguments, returns the original string with all alphabetic characters in uppercase. | Takes an array of extended ASCII code points (ARRAY of INT64) and returns BYTES. |
+
+# Conclusion
+
+Do not make any other stylistic changes unrelated to formatting code.

@@ -19,21 +19,11 @@ looking for it and may be in a hurry.
 Consider that readers come from many different cultures and may have varying
 levels of ability reading English. As much as possible, avoid culturally
 specific references. Simple and consistent writing can also make it easier to
-translate documents into other languages. For more information, see
-[Writing for a global audience](/style/translation).
-
-For other writing best practices, see the following resources:
-
-* [Write accessible documentation](/style/accessibility)
-* [Write inclusive documentation](/style/inclusive-documentation)
+translate documents into other languages.
 
 ## Some things to avoid where possible
 
-* Buzzwords or
-  [technical jargon](/style/jargon).
 * Being too cutesy.
-* [Ableist
-  language](/style/inclusive-documentation#ableist-language) or figures of speech.
 * Placeholder phrases like *please note* and *at this time.*
 * Choppy or long-winded sentences.
 * Starting all sentences with the same phrase (such as *You can* or *To
@@ -46,9 +36,6 @@ For other writing best practices, see the following resources:
 * Phrasing in terms of *let's* do something.
 * Using phrases like *simply*, *It's that simple*, *It's easy*, or *quickly* in a
   procedure.
-* Internet slang, or other [internet
-  abbreviations](/style/abbreviations#dont-use) such as *[tl;dr](/style/word-list#tldr)* or
-  *[ymmv](/style/word-list#ymmv)*.
 
 ## Some techniques and approaches to consider
 
@@ -93,5 +80,3 @@ please see [link to other document].
 | Dude! This API is totally awesome! | This API lets you collect data about what your users like. | The API documented by this page may enable the acquisition of information pertaining to user preferences. |
 | Just like a certain pop star, this call gets your *telephone* number. The easy way to ask for someone's digits! | To get the user's phone number, call `user.phoneNumber.get`. | The telephone number can be retrieved by the developer via the simple expedient of using the `get` method on the `user` object's `phoneNumber` property. |
 | Then—BOOM—just garbage-collect, and you're golden. | To clean up, call the `collectGarbage` method. | Please note that completion of the task requires the following prerequisite: executing an automated memory management function. |
-
-
