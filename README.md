@@ -16,6 +16,8 @@ uv run --script iterative_style.py docs/your_article.md
 
 The script pauses in between each set of edits to give you the opportunity to review the changes. When you’re happy with the result you can commit them and resume the script. The script itself never touches git.
 
+Note: this script was tested with "gpt-4.1-mini", but it made too many mistakes. Switching to "o4-mini" improved the results.
+
 ### Skipping ahead
 
 If you’ve already applied some pages you can jump forward:
@@ -30,7 +32,3 @@ This skips every style page **up to and including** `commas.md`.
 ## Incident logs
 
 If an edit fails to apply (e.g. the snippet isn’t found) the script records a log file under `incidents/` so you can inspect what went wrong.
-
-## Cleaning up
-
-

@@ -212,10 +212,7 @@ indicates why you're referring the reader to this information. Make the
 explanation specific, but don't repeat the link text.
 
 If you're introducing a cross-reference with "For more information..."
-phrasing, then you can do this by adding an "about..." phrase. For more
-information, see the
-[Write link introductions](#link-introductions) section
-of this document.
+phrasing, then you can do this by adding an "about..." phrase.
 
 Recommended: For more
 information about authentication and authorization, see
@@ -270,54 +267,6 @@ then provide that context. The following are a few such situations:
   * **Links that open in a new tab.** For more information, see the
     [Open links in the current tab](#current-tab) section of this
     document.
-  * **Links that go to a different domain or server.** For more
-    information, see the
-    [Don't use external link icons](#external-link-icons) section
-    of this document.
-
-## Open links in the current tab
-
-Don't force links to open in a new tab or window. Let the reader decide how
-to open links.
-
-In the rare situation that a link needs to open in a new tab or window, let
-the reader know that the link opens differently than expected.
-
-Recommended:
-
-```
-<a href="/style/accessibility">Accessible content</a>
-```
-
-Recommended:
-
-```
-<a href="/style/accessibility" target="_blank">Accessible content (opens in a new tab)</a>
-```
-
-Not recommended:
-
-```
-<a href="/style/accessibility" target="_blank">Accessible content</a>
-```
-
-## Don't use external link icons
-
-Don't use an external link icon to indicate that the link goes to a different
-domain or server. If you think it's important to inform the reader that they're
-leaving a Google domain, mention it in the text and don't rely on an icon.
-
-Recommended: For
-more information, see
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
-Sometimes OK:
-For more information, see the Wikipedia page about
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
-Not recommended:
-For more information, see
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
 
 ## Punctuation around link text
 
@@ -380,19 +329,3 @@ link in a page within the documentation.
 If you need to link outside of your documentation set from your navigation,
 then make sure it's clear to the reader that they'll be leaving that document
 set.
-
-## Style link text
-
-If you write sitewide CSS for your website, apply standard styling to link
-text. This helps readers find links in your content.
-
-* **Contrast link text color and regular text color.** To
-  help readers see links, link text should be distinguishable from the rest of the
-  text on the page.
-* **Underline link text, and don't underline non-link text.**
-  When readers scan a page, a horizontal line cuts through the vertical line of
-  scanning and helps readers find links.
-* **Make visited links change color.** Use color-blind-friendly
-  color changes to help readers differentiate links that they've followed against
-  links that they haven't followed. This helps readers navigate your site
-  effectively without revisiting content that they've already read.

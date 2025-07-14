@@ -318,9 +318,6 @@ def main() -> None:
     # Prepare incidents directory (fresh each run).
     _clear_incidents_dir()
 
-    # Read the current state of the document once per iteration.
-    doc_text = target_path.read_text(encoding="utf-8")
-
     # Always process style pages in a deterministic order (alphabetical by filename).
     style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
 
@@ -341,6 +338,9 @@ def main() -> None:
         sys.exit(0)
 
     for idx, page_path in enumerate(style_pages, 1):
+        # Re-read the document so that any manual edits the user made after the
+        # previous iteration are taken into account.
+        doc_text = target_path.read_text(encoding="utf-8")
         print("=" * 80)
         print(f"[{idx}/{len(style_pages)}] Processing style guide: {page_path.name}")
         style_text = page_path.read_text(encoding="utf-8")
@@ -382,7 +382,6 @@ def main() -> None:
         if changed:
             # Only write back if something actually changed.
             target_path.write_text(updated_doc, encoding="utf-8")
-            doc_text = updated_doc  # Use updated doc for subsequent iterations.
             print(f"-> Document updated via {page_path.name}.\n")
         else:
             print("-> Patch produced no net changes. Skipping write.\n")
