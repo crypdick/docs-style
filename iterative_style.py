@@ -323,6 +323,14 @@ def main() -> None:
     # style-guide passes cannot revert them (avoiding tug-of-war between
     # conflicting guides).
     applied_edits: set[tuple[str, str]] = set()
+    # -------------------------------------------------------------------
+    # Statistics counters
+    # -------------------------------------------------------------------
+    total_edits_proposed = 0
+    duplicates_dropped = 0
+    reversals_dropped = 0
+    edits_applied_successfully = 0
+    edits_missed = 0
 
     # Prepare incidents directory (fresh each run).
     _clear_incidents_dir()
@@ -370,6 +378,8 @@ def main() -> None:
 
         # Parse edits to identify the effective (non–no-op) changes.
         parsed_edits = _parse_edits(diff)
+        # Update stats – total edits proposed
+        total_edits_proposed += len(parsed_edits)
 
         # -------------------------------------------------------------------
         # Step 1: drop edits we've already *seen* (same before→after pair).
@@ -377,6 +387,8 @@ def main() -> None:
         unseen_edits: list[tuple[str, str]] = [
             (b, a) for (b, a) in parsed_edits if (b, a) not in seen_edits
         ]
+        # Update stats – duplicates that were already seen
+        duplicates_dropped += len(parsed_edits) - len(unseen_edits)
 
         # Record *all* parsed edits (including duplicates) so that any future
         # occurrences are recognised and skipped automatically.
@@ -390,6 +402,8 @@ def main() -> None:
         non_reversing_edits: list[tuple[str, str]] = [
             (b, a) for (b, a) in unseen_edits if (a, b) not in applied_edits
         ]
+        # Update stats – edits that would reverse previous changes
+        reversals_dropped += len(unseen_edits) - len(non_reversing_edits)
 
         if not non_reversing_edits:
             print("-> All suggested edits are duplicates or would undo earlier edits. Skipping.\n")
@@ -408,6 +422,8 @@ def main() -> None:
         # Apply edits locally (deterministic and safer than LLM application).
         with spinner("Applying edits"):
             updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
+            # Update stats – snippets that didn't match the document
+            edits_missed += len(missed_snippets)
 
         changed = updated_doc != doc_text
 
@@ -419,6 +435,8 @@ def main() -> None:
                 (b, a) for (b, a) in non_reversing_edits if b not in missed_snippets
             ]
             applied_edits.update(successful_edits)
+            # Update stats – successfully applied edits
+            edits_applied_successfully += len(successful_edits)
 
         if changed:
             # Only write back if something actually changed.
@@ -426,6 +444,22 @@ def main() -> None:
             print(f"-> Document updated via {page_path.name}.\n")
         else:
             print("-> Patch produced no net changes. Skipping write.\n")
+
+        # -------------------------------------------------------------------
+        # Per-style-guide statistics
+        # -------------------------------------------------------------------
+        page_total = len(parsed_edits)
+        page_duplicates = len(parsed_edits) - len(unseen_edits)
+        page_reversals = len(unseen_edits) - len(non_reversing_edits)
+        page_applied = len(successful_edits) if changed else 0
+        page_missed = len(missed_snippets)
+
+        print("Edit statistics for this style guide:")
+        print(f" • Proposed edits        : {page_total}")
+        print(f" • Duplicates skipped    : {page_duplicates}")
+        print(f" • Reversals dropped     : {page_reversals}")
+        print(f" • Edits applied         : {page_applied}")
+        print(f" • Edits missed/not found: {page_missed}\n")
 
         # Log incident if any edits were missed or nothing changed.
         if missed_snippets or not changed:
@@ -443,6 +477,17 @@ def main() -> None:
                 print("\nAborted by user.")
                 sys.exit(0)
 
+    # -------------------------------------------------------------------
+    # Summary statistics about edit processing
+    # -------------------------------------------------------------------
+    print("=" * 80)
+    print("Edit summary statistics:")
+    print(f"Total edits proposed      : {total_edits_proposed}")
+    print(f" - Already seen (skipped) : {duplicates_dropped}")
+    print(f" - Reversals dropped      : {reversals_dropped}")
+    print(f"Edits applied successfully: {edits_applied_successfully}")
+    print(f"Edits missed (not found)  : {edits_missed}")
+    print("=" * 80)
     print("All style pages processed. Done.")
 
 
