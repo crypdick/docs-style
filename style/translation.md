@@ -7,15 +7,6 @@ English is not their primary language.
 Write with localization, translation, and
 internationalization in mind. The following list defines these terms:
 
-* *Localization:* Adapting a product and its associated documentation for a specific country.
-  This process involves more than translation—for example, using local currencies or units of
-  measurement.
-* *Translation:* Translating one language to another language. This process might involve
-  localization, but the two terms aren't synonymous with one another.
-* *Internationalization:* Designing a product and its associated documentation to minimize
-  the localization effort—for example, placing all UI strings in a separate file to simplify
-  translation.
-  S
 ## Best practices
 
 * Use [present tense](/style/tense).
@@ -132,9 +123,7 @@ review costs.
     using the same word as both a noun and a verb in close proximity. For examples
     of the multiple-meanings issue, see the word list entries for [once](/style/word-list#once) and [since](/style/word-list#since).
   + Use standardized phrases for frequently used sentences, introductory phrases, and other common
-    tasks. For examples, see [introducing links](/style/cross-references#link-introductions),
-    [introducing output](/style/placeholders#placeholders-in-output), and
-    [introducing code samples](/style/code-samples#introductions).
+    tasks.
   + Use standard English word order. Sentences follow the *subject + verb + object* order.
   + Try to keep the main subject and verb as close to the beginning of the sentence as possible.
   + Use the conditional clause first. If you want to tell the audience to do something in a
@@ -152,10 +141,8 @@ review costs.
   + Don't be too culturally specific. In particular, don't refer to specific holidays, cultural
     practices, or sports unless you're certain they're known worldwide.
   + Use a diverse set of example names. If you need to use people's names (for example, as email
-    addresses), use a diverse set of names. For more information, see
-    [Example domains and names](/style/examples).
+    addresses), use a diverse set of names.
   + Avoid colloquialisms, idioms, or slang. Phrases like *ballpark figure*,
     *back burner*, or *hang in there* can be confusing and difficult to translate.
   + Avoid humor. Most humor is difficult to translate, and much humor is culturally specific.
-  + Avoid referring to seasons. For more information, see
-    [Expressing divisions of the year](/style/dates-times#divisions-year).
+  + Avoid referring to seasons.
