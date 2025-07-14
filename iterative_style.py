@@ -319,6 +319,10 @@ def main() -> None:
     # during this run. If the same exact edit appears again in a later round,
     # we silently ignore it to avoid redundant prompts and incident logs.
     seen_edits: set[tuple[str, str]] = set()
+    # Track edits that actually made it into the document so that future
+    # style-guide passes cannot revert them (avoiding tug-of-war between
+    # conflicting guides).
+    applied_edits: set[tuple[str, str]] = set()
 
     # Prepare incidents directory (fresh each run).
     _clear_incidents_dir()
@@ -368,9 +372,9 @@ def main() -> None:
         parsed_edits = _parse_edits(diff)
 
         # -------------------------------------------------------------------
-        # Filter out edits that have already been suggested in previous rounds.
+        # Step 1: drop edits we've already *seen* (same before→after pair).
         # -------------------------------------------------------------------
-        unique_edits: list[tuple[str, str]] = [
+        unseen_edits: list[tuple[str, str]] = [
             (b, a) for (b, a) in parsed_edits if (b, a) not in seen_edits
         ]
 
@@ -378,15 +382,23 @@ def main() -> None:
         # occurrences are recognised and skipped automatically.
         seen_edits.update(parsed_edits)
 
-        # If no new edits remain after filtering, move on to the next guide.
-        if not unique_edits:
-            print("-> All suggested edits have been seen before. Skipping.\n")
+        # -------------------------------------------------------------------
+        # Step 2: drop edits that would *undo* a change already applied.
+        # That is, if we previously applied (x → y) and the current guide
+        # proposes (y → x), we reject it.
+        # -------------------------------------------------------------------
+        non_reversing_edits: list[tuple[str, str]] = [
+            (b, a) for (b, a) in unseen_edits if (a, b) not in applied_edits
+        ]
+
+        if not non_reversing_edits:
+            print("-> All suggested edits are duplicates or would undo earlier edits. Skipping.\n")
             continue
 
-        # Rebuild the diff text using only the unique edits that remain.
+        # Rebuild the diff text using only the edits that are both unseen and non-reversing.
         filtered_diff_text = "\n\n".join(
             f"<edit>\n<before>\n{b}\n</before>\n<after>\n{a}\n</after>\n</edit>"
-            for b, a in unique_edits
+            for b, a in non_reversing_edits
         )
 
         if filtered_diff_text.strip() != diff.strip():
@@ -398,6 +410,15 @@ def main() -> None:
             updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
 
         changed = updated_doc != doc_text
+
+        # Add successfully applied edits to the *applied_edits* memory so that
+        # future passes can detect and avoid reversals. We exclude snippets
+        # that were missed during application (i.e., not found in the doc).
+        if changed:
+            successful_edits = [
+                (b, a) for (b, a) in non_reversing_edits if b not in missed_snippets
+            ]
+            applied_edits.update(successful_edits)
 
         if changed:
             # Only write back if something actually changed.
