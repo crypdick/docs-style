@@ -1,4 +1,3 @@
-
 # Sentence structure  
 
 If you want to tell the reader to do something, try to mention the circumstance, conditions, or

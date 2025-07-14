@@ -1,6 +1,3 @@
-
-
-
 # Third-party content  
 
 Don't copy content from another source because it might violate copyright. Instead, paraphrase
@@ -31,6 +28,5 @@ Unless you are sure that your company owns the assets, avoid copying from these 
 * GitHub content: Different GitHub users might adopt different licenses for their content. It's
   not safe to assume that you can reuse this content freely. When in doubt, don't use their
   content.
-
 
 

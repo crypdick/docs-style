@@ -1,5 +1,3 @@
-
-
 # Headings and titles  
 
 Use sentence case for headings and titles. Use descriptive headings and titles because they help
@@ -135,7 +133,7 @@ notebook. Its title starts with a bare infinitive.
     only under an `<h2>` tag.
 
     Recommended:
-    
+
     ### Markdown
 
     ```
@@ -276,5 +274,4 @@ The following sections describe the views in the data preparation editor.
 ...
 
 ```
-
 

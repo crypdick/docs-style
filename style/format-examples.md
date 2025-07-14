@@ -1,6 +1,3 @@
-
-
-
 # Format examples  
 
 To introduce an example in a sentence, use the guidance in the following table:

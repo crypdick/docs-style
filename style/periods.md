@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Periods and other end punctuation  
 
 End a complete sentence with a period, unless it's a question. There are
@@ -98,8 +92,6 @@ Leave only one space between sentences.
 
 Don't use exclamation points in text except when they're part of a code
 example.
-
-
 
 
 

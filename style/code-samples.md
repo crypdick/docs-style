@@ -1,6 +1,3 @@
-
-
-
 # Code samples  
 
 This page explains how to format code samples.

@@ -28,7 +28,6 @@ The server sends an acknowledgment.
 Not recommended: The service is queried by
 you, and an acknowledgment is sent by the server.
 
-
 ## Exceptions
 
 In certain cases, it's okay to use passive voice. For example, passive can be

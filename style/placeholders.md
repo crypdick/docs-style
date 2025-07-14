@@ -1,6 +1,3 @@
-
-
-
 # Format placeholders  
 
 This page explains how to format placeholders in commands, code samples, and text
@@ -66,7 +63,6 @@ If your placeholder does not represent a code sample or command, use the followi
 
 If your placeholders are in a block of code, use the following formatting:
 
-
 * In Markdown, wrap the code block in a code fence (```). Inside a
   code fence, you can't apply formatting like bold or italic.
 
@@ -80,7 +76,6 @@ If your placeholders are in a block of code, use the following formatting:
 ### Placeholder text
 
 **Use uppercase characters with underscore delimiters.**
-
 
 In Markdown:
 
@@ -245,7 +240,6 @@ sample output:
   ```
 
 
-
 Recommended:
 
 #### Response
@@ -303,6 +297,5 @@ This output includes the following values:
   Storage—for example, `gs://my-bucket/my-image.vmdk`
 * `PROJECT_NUMBER`: the number for the import
   project
-
 
 

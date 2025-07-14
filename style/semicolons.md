@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Semicolons  
 
 If possible, avoid using semicolons. In a few cases, a semicolon is preferred:
@@ -35,8 +29,6 @@ If possible, avoid using semicolons. In a few cases, a semicolon is preferred:
   punctuation, and grammar; and whether you can shorten anything.
 
   Notice that in the final example, the second item in the list is itself a list.
-
-
 
 
 

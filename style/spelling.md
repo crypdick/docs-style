@@ -1,11 +1,4 @@
-
-
-
-
-
-
 # Word list  
-
 
 
 **Note**: This document includes references to terms that Google considers
@@ -751,7 +744,6 @@ dash
     (`-`). The characters are used for different purposes.
     Therefore, don't use the word *dash* to refer to a hyphen.
 
-
 data
 :   Use *data* as singular, not plural; *the data is*, not
     *the data are*.
@@ -1238,7 +1230,6 @@ Gbps
 :   Short for *gigabits per second*. By convention, we don't use
     *Gb/s*.
 
-
 gender-neutral he, him, or his (or she or her)
 :   Don't use. Instead, use the singular *they* (see [Jane Austen and other famous authors violate what everyone learned in
     their English class](http://www.pemberley.com/janeinfo/austheir.html)). Don't use *he/she* or *(s)he* or other
@@ -1339,7 +1330,6 @@ happiness and satisfaction
     a "need" to watch a show on TV. If the show is available, the customer's
     need is satisfied. But if playback is slow or choppy, the customer might
     not be happy.
-
 
 hardcode (verb), hardcoded (adjective)
 
@@ -1725,7 +1715,6 @@ lifecycle
 
 lift and shift
 
-
     like versus such as
     :   It's OK to use either *like* or *such as* for comparisons or
         examples.
@@ -1826,7 +1815,6 @@ master
     item ([formatted as code](/style/code-in-text)), make it clear
     what you're referring to, and use the new term thereafter.
 
-
 Material Design
 :   Capitalize each word in *Material Design*.
 
@@ -1862,7 +1850,6 @@ media type
     confusion. Don't use *MIME type*.
 
 meta\*
-
 
 metafeed
 :   Not *meta-feed*.
@@ -1929,7 +1916,6 @@ monkey, monkey test
     to the specific function. For example: *automated, random tests*.
 
 multi\*
-
 
 multi-cluster
 :   Hyphenate. We generally prefer to close prefixed words, but this is an
@@ -2011,14 +1997,12 @@ new, newer
 :   Not recommended: Network analysis, a
     new feature in the service, reports on network health.
 
-
 ninja
 :   Don't use to refer to a person. Instead, use a term such as *expert*.
     OK to use in reference to companies, tools, software packages, and other
     entities that use the term in their names.
 
 non\*
-
 
 nonce
 :   Use with caution: this term has a secondary slang meaning that can cause
@@ -2059,7 +2043,6 @@ now
 :   Not recommended: This feature now lets
     you use combinations of user properties.
 
-
 nuke
 :   Don't use. Instead use *remove* or *attack*. For example, a
     *denial-of-service attack*.
@@ -2084,7 +2067,6 @@ old, older
     doesn't work in versions earlier than 1.17.0.
 :   Not recommended: This functionality
     doesn't work in older versions.
-
 
 omnibox
 :   Don't use. Instead, use *address bar*.
@@ -2272,7 +2254,6 @@ persistent disk
         port
         :   Use *listen on* (not *to*).
 
-
         possible
         :   Don't use *possible* or *impossible* to mean *you can* or
             *you can't*.
@@ -2329,7 +2310,6 @@ persistent disk
         :   Not recommended: At present, this
             setting is required.
 
-
         press
         :   Use when referring to pressing a key or a key combination to cause an
             action to occur. Also use for mechanical buttons.
@@ -2359,7 +2339,6 @@ quota
     *quota* means many different things to many different people.
 
 ### R
-
 
 read-only
 :   Not *read only*. Always hyphenate *read-only*.
@@ -2561,7 +2540,6 @@ slave
     the secondary (`slave`) process directly when debugging issues
     between the primary and secondary processes."
 
-
 slice and dice
 :   Don't use the phrase *slice and dice*. Instead, use specific terms
     appropriate to the task that you're describing. Some possible options
@@ -2670,7 +2648,6 @@ tablet
     use *device*.
 
 tag
-
 
 tap
 :   In Android documentation, use for on-screen and soft (capacitive)
@@ -2934,7 +2911,6 @@ virtual machine (VM) instance
     [GKE node](#gke-node).
 
 visually challenged
-
 
 VLAN attachment
 :   Don't use the following: *interconnect attachment (VLAN)*,

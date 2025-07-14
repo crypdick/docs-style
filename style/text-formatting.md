@@ -1,4 +1,3 @@
-
 # Text-formatting summary  
 
 The page summarizes, and provides a quick reference for, many of the general text-formatting

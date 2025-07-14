@@ -1,4 +1,3 @@
-
 # Document command-line syntax  
 
 ## Best practices
@@ -33,7 +32,6 @@ following best practices:
   braces (`{}`), and ellipses (`...`). These characters can break
   commands if they're not first removed. For that reason, avoid using these
   arguments in click-to-copy examples.
-
 
 ## Format a command
 

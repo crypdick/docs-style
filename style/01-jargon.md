@@ -1,4 +1,3 @@
-
 # Jargon  
 
 Jargon is the specialized and often figurative terminology of a specific group to represent a

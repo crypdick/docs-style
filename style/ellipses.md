@@ -1,6 +1,3 @@
-
-
-
 # Ellipses  
 
 In general, don't use ellipses. An ellipsis is made up of
@@ -63,6 +60,5 @@ understand all the other Python code in there ...; we'll explain it all in class
 
 Not recommended: You don't need to
 understand all the other Python code in there...we'll explain it all in class.
-
 
 

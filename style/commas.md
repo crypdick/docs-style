@@ -1,6 +1,3 @@
-
-
-
 # Commas  
 
 Use commas to separate items in a series, and use commas to separate certain kinds of

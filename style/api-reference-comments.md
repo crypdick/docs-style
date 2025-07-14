@@ -1,4 +1,3 @@
-
 # API reference code comments  
 
 When you're documenting an API, provide a complete API reference, typically

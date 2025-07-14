@@ -54,7 +54,6 @@ unique.
 * Tag headings using heading elements.In Markdown: `#`, `##`, and so on.
 * Use a level-1 heading for the page title or main content heading.
 
-
 ## Links
 
 * Use [meaningful link text](/style/cross-references#descriptive-link-text).

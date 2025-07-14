@@ -1,11 +1,4 @@
-
-
-
-
-
-
 # Lists  
-
 
 
 ## List or table?

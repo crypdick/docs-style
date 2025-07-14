@@ -1,7 +1,6 @@
 # Second person and first person  
 
 
-
 ## Address the reader as *you*
 
 In general, address the reader of your documents

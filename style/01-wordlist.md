@@ -29,7 +29,6 @@ term. Apply this guidance as follows:
     abbreviation.
 :   It's OK to use `&` for technical purposes in code.
 
-
 ### A
 
 a and an
@@ -165,7 +164,6 @@ America, American
 
 among
 
-
 AM, PM
 :   To be consistent with [Material Design](https://material.io/design/communication/data-formats.html#date-and-time),
     use all caps, no periods, and a space before.
@@ -217,7 +215,6 @@ appendix
 
 application
 
-
 as
 :   If you mean *because*, then use *because* instead of
     *as*. *As* is ambiguous; it can refer to the passage of time.
@@ -249,7 +246,6 @@ authN, authZ
 :   Don't use. Instead, use *authentication* or *authorization*.
 
 auto\*
-
 
 autohealing
 :   Not *auto-healing*.
@@ -457,7 +453,6 @@ boolean
 :   If you refer to *Boolean mathematics* or *Boolean logic*, use
     uppercase.
 
-
 break-glass
 :   Don't use. Instead, use a more precise term depending on context:
 
@@ -547,7 +542,6 @@ cell phone, cellphone
             **Automatically check for updates**.
         :   Not recommended: Deselect
             **Automatically check for updates**.
-
 
         click
         :   When the environment is a desktop with a mouse, use *click* for most
@@ -718,7 +712,6 @@ dash
 :   A dash (`—`) isn't the same character as a hyphen
     (`-`). The characters are used for different purposes.
     Therefore, don't use the word *dash* to refer to a hyphen.
-
 
 data
 :   Use *data* as singular, not plural; *the data is*, not
@@ -1194,7 +1187,6 @@ fill in; fill out
         :   Avoid in timeless documentation because this word or phrase can become
             outdated.
 
-
 ### G
 
 GBps
@@ -1204,7 +1196,6 @@ GBps
 Gbps
 :   Short for *gigabits per second*. By convention, we don't use
     *Gb/s*.
-
 
 gender-neutral he, him, or his (or she or her)
 :   Don't use. Instead, use the singular *they* (see [Jane Austen and other famous authors violate what everyone learned in
@@ -1325,7 +1316,6 @@ happiness and satisfaction
     need is satisfied. But if playback is slow or choppy, the customer might
     not be happy.
 
-
 hardcode (verb), hardcoded (adjective)
 
 he, him, his
@@ -1432,7 +1422,6 @@ HTTPS
 
 IaaS
 :   Write out on first mention: *infrastructure as a service (IaaS)*.
-
 
 ID
 :   Not *Id* or *id,* except in string literals or enums.
@@ -1684,7 +1673,6 @@ lifecycle
 
 lift and shift
 
-
     like versus such as
     :   It's OK to use either *like* or *such as* for comparisons or
         examples.
@@ -1785,7 +1773,6 @@ master
     item ([formatted as code](/style/code-in-text)), make it clear
     what you're referring to, and use the new term thereafter.
 
-
 Material Design
 :   Capitalize each word in *Material Design*.
 
@@ -1821,7 +1808,6 @@ media type
     confusion. Don't use *MIME type*.
 
 meta\*
-
 
 metafeed
 :   Not *meta-feed*.
@@ -1888,7 +1874,6 @@ monkey, monkey test
     to the specific function. For example: *automated, random tests*.
 
 multi\*
-
 
 multi-cluster
 :   Hyphenate. We generally prefer to close prefixed words, but this is an
@@ -1967,7 +1952,6 @@ new, newer
     analysis feature reports on network health.
 :   Not recommended: Network analysis, a
     new feature in the service, reports on network health.
-
 
 ninja
 :   Don't use to refer to a person. Instead, use a term such as *expert*.
@@ -2302,7 +2286,6 @@ quota
     best to use a more specific term, such as *usage limit*; the word
     *quota* means many different things to many different people.
 
-
 ### R
 
 RDP
@@ -2310,7 +2293,6 @@ RDP
     clear from context that they're using RDP, it's OK to use *connect*.
 
 re\*
-
 
 read-only
 :   Not *read only*. Always hyphenate *read-only*.
@@ -2461,7 +2443,6 @@ sensitive
 :   *Sensitive* data is data for which the release might be harmful. See
     [confidential](#confidential).
 
-
 service level agreement
 :   Lowercase when referring to service level agreements in general.
 :   It's OK to use title case (*Service Level Agreement*) when referring
@@ -2566,7 +2547,6 @@ slave
     you're referring to, and use the new term thereafter. For example, "Invoke
     the secondary (`slave`) process directly when debugging issues
     between the primary and secondary processes."
-
 
 slice and dice
 :   Don't use the phrase *slice and dice*. Instead, use specific terms
@@ -2676,7 +2656,6 @@ tablet
     use *device*.
 
 tag
-
 
 tap
 :   In Android documentation, use for on-screen and soft (capacitive)
@@ -2934,7 +2913,6 @@ virtual machine (VM) instance
     [GKE node](#gke-node).
 
 visually challenged
-
 
 VLAN attachment
 :   Don't use the following: *interconnect attachment (VLAN)*,

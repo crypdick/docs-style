@@ -1,6 +1,3 @@
-
-
-
 # Anthropomorphism  
 
 Don't attribute human qualities to software or hardware.
@@ -19,6 +16,5 @@ device.
 
 Not recommended: The PC sees a new
 device.
-
 
 

@@ -1,5 +1,3 @@
-
-
 # Prepositions  
 
 There's no rule against placing a preposition at the end of a sentence.
@@ -21,5 +19,4 @@ displayed shortly after.
 
 For information about which preposition to use when referring to UI elements, see
 [UI elements and interaction](/style/ui-elements#prepositions).
-
 

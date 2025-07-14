@@ -1,4 +1,3 @@
-
 # Procedures  
 
 A procedure is a sequence of numbered steps for accomplishing a task. For information about
@@ -31,7 +30,6 @@ Not recommended: To customize the
 buttons:
 
 
-
 ## Single-step procedures
 
 When a procedure consists of only one step, write the step in one sentence and format it as a
@@ -60,7 +58,6 @@ sub-sub-steps get lowercase Roman numerals.
 
 When a step has sub-steps, treat the step like an [introductory sentence](#introductory-sentences): put a colon or a
 period at the end of the step, as appropriate.
-
 
 
 Recommended:

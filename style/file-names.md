@@ -1,11 +1,4 @@
-
-
-
-
-
-
 # Filenames and file types  
-
 
 
 ## Guidelines for names
@@ -122,8 +115,6 @@ corresponding file type names to use.
 | `.txt` | text file |
 | `.yaml` | YAML file |
 | `.zip` | zip file |
-
-
 
 
 

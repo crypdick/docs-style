@@ -1,6 +1,3 @@
-
-
-
 # Notes, cautions, warnings, and other notices  
 
 To give the reader important or useful information that isn't part of the flow of the text, you
@@ -89,6 +86,5 @@ route.
 **Warning**: Do not manually edit or delete generated
 table entries.
 **Success**: You've successfully created a Compute Engine instance.
-
 
 

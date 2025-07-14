@@ -1,5 +1,3 @@
-
-
 # Use italics to discuss terms  
 
 This page describes two circumstances when we italicize terms that we're
@@ -24,5 +22,4 @@ Recommended: Don't use
 
 Recommended: To form a
 possessive of a singular noun, add *'s* to the end of the word.
-
 

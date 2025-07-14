@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Tables  
 
 In many contexts, tables are the best way to represent sets of related pieces of data. However,
@@ -127,8 +121,6 @@ Where possible, use table CSS that adapts to different viewport sizes.
 ## Link to tables
 
 Where possible, avoid linking to tables; instead, refer to them by table number.
-
-
 
 
 

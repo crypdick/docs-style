@@ -1,4 +1,3 @@
-
 # Timeless documentation  
 
 Timeless documentation is documentation that avoids words and phrases that anchor the

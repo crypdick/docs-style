@@ -1,4 +1,3 @@
-
 # Hyphens  
 
 Use a hyphen (-) when needed for clarity. A hyphen can separate parts of words to avoid

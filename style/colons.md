@@ -1,5 +1,3 @@
-
-
 # Colons  
 
 A colon indicates that closely-related information follows.
