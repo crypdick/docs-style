@@ -315,6 +315,11 @@ def main() -> None:
 
     openai.api_key = os.environ["OPENAI_API_KEY"]
 
+    # Maintain a memory of all (before, after) tuples ever suggested by the LLM
+    # during this run. If the same exact edit appears again in a later round,
+    # we silently ignore it to avoid redundant prompts and incident logs.
+    seen_edits: set[tuple[str, str]] = set()
+
     # Prepare incidents directory (fresh each run).
     _clear_incidents_dir()
 
@@ -361,13 +366,28 @@ def main() -> None:
 
         # Parse edits to identify the effective (non–no-op) changes.
         parsed_edits = _parse_edits(diff)
-        if parsed_edits:
-            filtered_diff_text = "\n\n".join(
-                f"<edit>\n<before>\n{b}\n</before>\n<after>\n{a}\n</after>\n</edit>"
-                for b, a in parsed_edits
-            )
-        else:
-            filtered_diff_text = DIFF_END_MARKER
+
+        # -------------------------------------------------------------------
+        # Filter out edits that have already been suggested in previous rounds.
+        # -------------------------------------------------------------------
+        unique_edits: list[tuple[str, str]] = [
+            (b, a) for (b, a) in parsed_edits if (b, a) not in seen_edits
+        ]
+
+        # Record *all* parsed edits (including duplicates) so that any future
+        # occurrences are recognised and skipped automatically.
+        seen_edits.update(parsed_edits)
+
+        # If no new edits remain after filtering, move on to the next guide.
+        if not unique_edits:
+            print("-> All suggested edits have been seen before. Skipping.\n")
+            continue
+
+        # Rebuild the diff text using only the unique edits that remain.
+        filtered_diff_text = "\n\n".join(
+            f"<edit>\n<before>\n{b}\n</before>\n<after>\n{a}\n</after>\n</edit>"
+            for b, a in unique_edits
+        )
 
         if filtered_diff_text.strip() != diff.strip():
             print("\nDiff after filtering out no-op edits (will be applied):\n")
