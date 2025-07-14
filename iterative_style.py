@@ -130,8 +130,11 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
 
     for match in xml_pattern.finditer(edits_text):
         before_raw, after_raw = match.group(1), match.group(2)
-        before = before_raw.strip("\n")
-        after = after_raw.strip("\n")
+        # Trim *all* leading and trailing whitespace (including spaces, tabs, and newlines)
+        # so that mismatched indentation or accidental trailing spaces in the diff do not
+        # prevent us from locating the snippet in the document.
+        before = before_raw.strip()
+        after = after_raw.strip()
 
         # Skip any edit that merely moves or modifies the sentinel value indicating
         # "no changes". The model occasionally (wrongly) embeds the sentinel
@@ -157,16 +160,12 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
 
 
 def _diff_has_changes(diff_text: str) -> bool:  # noqa: E302 – redefine with new semantics
-    """Return ``True`` if *diff_text* has at least one **meaningful** edit.
-
-    This version operates on the custom ``<before> -> <after>`` diff format
-    rather than on unified diffs.
-    """
+    """Return True if *diff_text* contains at least one **meaningful** edit."""
     return bool(_parse_edits(diff_text))
 
 
 def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[str]]:
-    """Apply *edits_text* (``<before> -> <after>``) to *original_doc*.
+    """Apply *edits_text* to *original_doc*.
 
     We perform **literal** (non-regex) replacements. All occurrences of each
     *before* snippet are replaced with the *after* snippet. If any *before*
