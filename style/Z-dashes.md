@@ -1,10 +1,6 @@
 # Dashes  
 
-This page explains when to use em dashes. For information about hyphens, see the following:
-
-* [Hyphens](/style/hyphens)
-* [Ranges of numbers](/style/numbers#ranges-of-numbers)
-* [Ranges of numbers with units](/style/units-of-measure#ranges)
+This page explains when to use em dashes.
 
 ## Em dashes
 
