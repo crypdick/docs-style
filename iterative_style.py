@@ -10,7 +10,7 @@
 """Iteratively apply Google style guide pages to a target markdown document.
 
 Usage:
-    uv run --script iterative_style.py <path-to-doc>
+    uv run --script iterative_style.py [--skip-through STYLE_FILE] <path-to-doc>
 
 The script will iterate over every ``*.md`` file inside ``style/`` (each
 scraped Google dev style-guide page). For each page it:
@@ -33,6 +33,7 @@ Environment:
 
 from __future__ import annotations
 
+import argparse
 import itertools
 import os
 import re
@@ -286,11 +287,21 @@ def generate_diff(style_guide: str, document: str) -> str:
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
-        print("Usage: python iterative_style.py <path-to-markdown-document>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Iteratively apply Google style guide pages to a markdown document.",
+    )
+    parser.add_argument(
+        "markdown_document",
+        help="Path to the markdown document to process.",
+    )
+    parser.add_argument(
+        "--skip-through",
+        metavar="STYLE_FILE",
+        help="Skip all style guide pages up to and including the specified filename.",
+    )
+    args = parser.parse_args()
 
-    target_path = Path(sys.argv[1]).expanduser().resolve()
+    target_path = Path(args.markdown_document).expanduser().resolve()
     if not target_path.is_file():
         print(f"Error: {target_path} is not a file.")
         sys.exit(1)
@@ -309,10 +320,23 @@ def main() -> None:
     # Read the current state of the document once per iteration.
     doc_text = target_path.read_text(encoding="utf-8")
 
-    style_pages = sorted(STYLE_DIR.glob("*.md"))
+    # Always process style pages in a deterministic order (alphabetical by filename).
+    style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
+
+    # Optionally skip pages up to and including the requested filename.
+    if args.skip_through:
+        skip_name = Path(args.skip_through).name
+        try:
+            skip_idx = next(i for i, p in enumerate(style_pages) if p.name == skip_name)
+            style_pages = style_pages[skip_idx + 1 :]
+        except StopIteration:
+            print(
+                f"[warn] --skip-through: '{skip_name}' not found among style pages. Processing all pages."
+            )
+
     if not style_pages:
-        print(f"No style guide pages found in {STYLE_DIR}")
-        sys.exit(1)
+        print("No style guide pages left to process.")
+        sys.exit(0)
 
     for idx, page_path in enumerate(style_pages, 1):
         print("=" * 80)
