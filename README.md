@@ -1,6 +1,6 @@
 # Automatic Google Style Formatter
 
-`iterative_style.py` is a script that walks a Markdown document through every page of Google’s developer style guide (stored locally in the `style/` directory) and lets an LLM propose minimal edits until all the style edits have been made.
+`iterative_style.py` is a script that walks a Markdown document through every page of [Google’s developer style guide](https://developers.google.com/style) (stored locally in the `style/` directory) and lets an LLM propose minimal edits until all the style edits have been made.
 
 This makes the process of hand-checking a long document against dozens of individual style pages less tedious.
 
@@ -32,3 +32,10 @@ This skips every style page **up to and including** `commas.md`.
 ## Incident logs
 
 If an edit fails to apply (e.g. the snippet isn’t found) the script records a log file under `incidents/` so you can inspect what went wrong.
+
+## Differences to the official style guide
+
+- I moved some guides that are irrlevant for my use-case to `archive/`.
+- I deleted Google-specific directions.
+- I simplified some style guides to make them more "atomic" so that they are less monolithic.
+- Made a few small edits to prevent common LLM mistakes, e.g. "Do not apply this style guide to code blocks."

@@ -5,6 +5,8 @@ three contiguous periods. Ellipses indicate the omission of part of a sentence, 
 block of text where the omission is not pertinent to the understanding of the subject at
 hand.
 
+Note: do not apply this style guide to code blocks.
+
 ## Ellipses as suspension points
 
 When ellipses are used to indicate hesitation, they are called *suspension
