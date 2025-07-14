@@ -257,8 +257,6 @@ as of this writing
     that function.
 :   Not recommended: As of this writing,
     BigQuery doesn't support that function.
-:   For more information, see [Timeless
-    documentation](/style/timeless-documentation).
 
 authentication and authorization
 :   In general, use the word *authenticated* only to refer to users,
@@ -328,8 +326,7 @@ below
 :   Don't use to refer to a position in a document. Instead, use *later*
     or *following*.
 :   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language. For more information, see
-    [Writing accessible documentation](/style/accessibility).
+    that avoid directional language.
 :   It's OK to use *below* in set phrases such as *below (the)
     average*, *below the mean*, *below zero*.
 :   It's OK to use *below* in a non-directional way, such as when describing a hierarchy.
@@ -443,8 +440,6 @@ blacklist, black list, black-list
 :   Not recommended: Add a user to the
     whitelist by entering the following: `whitelist adduser
     EMAIL_ADDRESS`.
-:   For more information, see the
-    [inclusive documentation](/style/inclusive-documentation) page.
 
 blacklisted, black listed, black-listed
 :   Don't use.
@@ -606,10 +601,6 @@ cell phone, cellphone
         codebase
         :   Not *code base*.
 
-        codelab
-        :   Not *code lab* or *code-lab*. For more information, see
-            [documentation](#documentation).
-
         cold
         :   When possible, avoid [jargon](/style/jargon) like *cold
             failover*, *cold standby*, and *cold spare*. If you use one
@@ -721,16 +712,12 @@ cell phone, cellphone
         :   Recommended: Windows isn't supported.
         :   Not recommended: Windows isn't
             currently supported.
-        :   For more information, see
-            [Timeless documentation](/style/timeless-documentation).
 
         custom mode VPC network
         :   Not *custom mode network*.
 
         curl
         :   Not *cURL*.
-        :   For information about when to use code format, see
-            [Items that are sometimes in code font](https://developers.google.com/style/code-in-text#items-that-are-sometimes-in-code-font).
 
         Cyber Monday
         :   Avoid unless explicitly referring to an event in the US. Instead use
@@ -914,8 +901,6 @@ does not yet
     doesn't support this IAM role.
 :   Not recommended: The Google Cloud
     console does not yet support this IAM role.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
 dojo
 :   Don't use. Instead, use a precise term that is accurate for the context,
@@ -1107,8 +1092,6 @@ eventually
     is deprecated.
 :   Not recommended: This version of the
     SDK is deprecated and eventually will be no longer supported.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
 execute
 :   Verb commonly used to refer to function calls, SQL queries, and other processes. When the meaning
@@ -1151,8 +1134,6 @@ female adapter
 
 Fast Healthcare Interoperability Resources (FHIR)
 :   Refer to *a FHIR* (pronounced "a fire," as in "a FHIR store"), not *an FHIR*.
-    For more information, see
-    [Indefinite articles before abbreviations](/style/abbreviations#articles).
 
 filename
 :   Not *file name*
@@ -1296,8 +1277,6 @@ gypsy
 hamburger, hamburger menu
 :   Don't use. Instead use the `aria-label` for that particular
     icon. For example, menu **Menu**.
-    For more information, see
-    [Buttons and icons](/style/ui-elements#buttons).
 
 hands off, hands-off
 :   Use a less figurative phrase, such as *automated*. If you're
@@ -1310,9 +1289,7 @@ hands on, hands-on
 
 hang, hung
 :   Don't use to refer to a computer or system that is not responding.
-    Instead, use *stop responding* or *not responding*. For more
-    information, see [Avoid unnecessarily
-    violent language](/style/inclusive-documentation#violent-language).
+    Instead, use *stop responding* or *not responding*.
 
 happiness and satisfaction
 :   Use *happiness* when referring to a customer's perception of a
@@ -1613,8 +1590,7 @@ Kbps
 kebab, kabob, kebab menu, kabob menu
 :   Don't use. Instead use the `aria-label` for that particular
     icon. For example, more\_vert
-    **More**. For more information, see
-    [Buttons and icons](/style/ui-elements#buttons).
+    **More**.
 
 kebab case, kabob case, kebab-case, kabob-case
 :   Don't use. Instead, use *dash-case*.
@@ -1676,16 +1652,13 @@ latest
     includes the latest tools that help secure your system.
 :   Not recommended: The product includes
     the latest tools that help secure your system.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
 learnings
 :   Don't use. Instead, refer to *knowledge* or *things that you
     learned*.
 
 left-nav, right-nav
-:   Don't use directional language. For more information, see
-    [Writing accessible documentation](/style/accessibility).
+:   Don't use directional language.
 :   If referring to applications, use *[navigation menu](/style/ui-elements#term-navigation-menu)*.
 :   If referring to navigational elements for documentation, use *content
     navigation menu*.
@@ -1834,13 +1807,11 @@ may
 
 MBps
 :   Short for *megabytes per second*. By convention, we don't use
-    *MB/s*. For more information, see
-    [Units of measurement](/style/units-of-measure).
+    *MB/s*.
 
 Mbps
 :   Short for *megabits per second*. By convention, we don't use
-    *Mb/s*. For more information, see
-    [Units of measurement](/style/units-of-measure).
+    *Mb/s*.
 
 media type
 :   In general, use the term [*media type*](https://www.iana.org/assignments/media-types/media-types.xhtml).
@@ -1970,8 +1941,7 @@ native
     *cloud-born*.
 
 navigation bar
-:   Don't use to refer to a *navigation menu*. For more information, see
-    [Navigation menu](/style/ui-elements#term-navigation-menu).
+:   Don't use to refer to a *navigation menu*.
 
 neither
 :   Write *neither A nor B*, not *neither A or B*.
@@ -2144,9 +2114,7 @@ peering zone
 
 per
 :   To express a rate, use *per* instead of the division slash (/),
-    unless space constraints require the use of the slash. For more
-    information, see [Units of
-    measurement](/style/units-of-measure#rates).
+    unless space constraints require the use of the slash.
 :   Avoid *per* in contexts other than rate units.
 :   Recommended: requests per day
 :   Recommended: create a policy for each
@@ -2189,10 +2157,7 @@ persistent disk
 
     pets versus cattle, pets vs. cattle, pets v. cattle
     :   Don't use. Instead, use more precise terms like *persistent versus
-        dynamic* or *manually configured versus automated*. For more
-        information, see
-        [Avoid
-        unnecessarily violent language](/style/inclusive-documentation#violent-language).
+        dynamic* or *manually configured versus automated*.
 
     plain text
     :   In most contexts, use *plain text*, but use *plaintext* in a
@@ -2569,9 +2534,7 @@ spin up
     *create* or *start*.
 
 SQL
-:   Refer to *a SQL* (pronounced "a sequel"), not *an SQL*. For more
-    information, see
-    [Indefinite articles before abbreviations](/style/abbreviations#articles).
+:   Refer to *a SQL* (pronounced "a sequel"), not *an SQL*.
 
 ssh and SSH
 :   Don't use `ssh` or SSH as a verb. SSH is a secure
@@ -2952,9 +2915,7 @@ we
     *our* or *us*) to address the reader who is performing the
     tasks that you're documenting. Instead, use *you*.
 :   It's OK to use *we* to refer to the organization that's represented
-    as the author of the document as long as the antecedent is clear. For more
-    information, see
-    [Second person and first person](/style/person).
+    as the author of the document as long as the antecedent is clear.
 
 web (lowercase)
 

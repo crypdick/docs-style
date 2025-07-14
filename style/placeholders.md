@@ -5,13 +5,6 @@ strings. This page doesn't explain how to implement visual styling for placehold
 show examples of how Google developer documentation style renders placeholders as visually
 distinct from other text.
 
-For more information about formatting code, command-line syntax, and code samples, see the
-following links:
-
-* [Code in text](/style/code-in-text)
-* [Documenting command-line syntax](/style/code-syntax)
-* [Code samples](/style/code-samples)
-
 Placeholders in sample code and commands represent values that the reader must replace when they use
 the sample input. Placeholders in example output can also represent other values that vary. In
 general, a placeholder has a descriptive name as a default value.
@@ -67,10 +60,7 @@ If your placeholders are in a block of code, use the following formatting:
   code fence, you can't apply formatting like bold or italic.
 
   ```
-
-  ```
   PLACEHOLDER_NAME
-  ```
   ```
 
 ### Placeholder text
