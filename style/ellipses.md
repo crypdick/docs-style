@@ -60,5 +60,3 @@ understand all the other Python code in there ...; we'll explain it all in class
 
 Not recommended: You don't need to
 understand all the other Python code in there...we'll explain it all in class.
-
-

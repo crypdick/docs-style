@@ -239,7 +239,6 @@ sample output:
   <li><code><var>INSTANCE_NAME</var></code>: description, such as...</li>
   ```
 
-
 Recommended:
 
 #### Response
@@ -297,5 +296,3 @@ This output includes the following values:
   Storage—for example, `gs://my-bucket/my-image.vmdk`
 * `PROJECT_NUMBER`: the number for the import
   project
-
-

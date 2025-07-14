@@ -58,4 +58,3 @@ readers search for those terms. If you're going to use jargon, consider the foll
   Not recommended: Add a user to the
   whitelist by entering the following: `whitelist adduser
   EMAIL_ADDRESS`.
-

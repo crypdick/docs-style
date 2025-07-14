@@ -1,6 +1,5 @@
 # Word list  
 
-
 **Note**: This document includes references to terms that Google considers
 disrespectful or offensive. The terms are listed here to provide usage
 guidance and alternative terms.

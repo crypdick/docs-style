@@ -27,4 +27,3 @@ Not recommended: Enter a name for the instance (for example, `my-instance-99`).
 
 Not recommended: Enter a six-digit hex number (for example, if you want the color forest green, enter
 `228B22`), and then click **OK**.
-

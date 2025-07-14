@@ -34,4 +34,3 @@ message, the server removes you from the mailing list.
 
 Not recommended: You can send an
 unsubscribe message. The server would then remove you from the mailing list.
-

@@ -274,4 +274,3 @@ The following sections describe the views in the data preparation editor.
 ...
 
 ```
-

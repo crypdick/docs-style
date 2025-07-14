@@ -121,7 +121,3 @@ Where possible, use table CSS that adapts to different viewport sizes.
 ## Link to tables
 
 Where possible, avoid linking to tables; instead, refer to them by table number.
-
-
-
-

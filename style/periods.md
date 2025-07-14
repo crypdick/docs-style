@@ -92,7 +92,3 @@ Leave only one space between sentences.
 
 Don't use exclamation points in text except when they're part of a code
 example.
-
-
-
-

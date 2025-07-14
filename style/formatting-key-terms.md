@@ -22,7 +22,3 @@ Recommended: Don't use
 
 Recommended: To form a
 possessive of a singular noun, add *'s* to the end of the word.
-
-
-
-

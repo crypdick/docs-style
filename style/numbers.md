@@ -262,4 +262,3 @@ Accompany math concepts and numerals with
 [diagrams or other images](/style/images)
 to support comprehension. For example, if comparing statistics, consider illustrating percentages in
 a pie chart or a bar graph.
-

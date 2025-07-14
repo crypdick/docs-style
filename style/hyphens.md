@@ -247,4 +247,3 @@ scan for new files at one- or two-hour intervals.
 
 Recommended: You can set up the system to
 scan for new files at one-, two-, or three-hour intervals.
-

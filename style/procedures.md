@@ -29,7 +29,6 @@ Also recommended: To customize the buttons, do the following:
 Not recommended: To customize the
 buttons:
 
-
 ## Single-step procedures
 
 When a procedure consists of only one step, write the step in one sentence and format it as a
@@ -58,7 +57,6 @@ sub-sub-steps get lowercase Roman numerals.
 
 When a step has sub-steps, treat the step like an [introductory sentence](#introductory-sentences): put a colon or a
 period at the end of the step, as appropriate.
-
 
 Recommended:
 
@@ -292,4 +290,3 @@ Recommended:
 | Ensure that the reader has the information that they need in order to prepare for the task ahead of time. Having information in advance supports task management, executive functioning, memory, and emotional regulation. | The following hardware and software are required:... |  |
 | Include as few steps as possible to complete the task. Limit interruptions in the path. |  |  |
 | Focus on one reader decision at a time. Separate each instruction by making each instruction a separate list item. |  |  |
-

@@ -197,4 +197,3 @@ If a method is deprecated, tell the reader what to do to make their code work.
 > *Deprecated. Use #CameraPose instead.*
 
 > *Deprecated. Access this field using the `getField` method.*
-

@@ -86,5 +86,3 @@ route.
 **Warning**: Do not manually edit or delete generated
 table entries.
 **Success**: You've successfully created a Compute Engine instance.
-
-

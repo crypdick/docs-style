@@ -1,6 +1,5 @@
 # Lists  
 
-
 ## List or table?
 
 Tables and lists are both ways to present a set of similarly structured

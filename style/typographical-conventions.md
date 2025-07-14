@@ -75,7 +75,3 @@ Other punctuation conventions
     the [Punctuation around link text](/style/cross-references#punctuation)
     and [Quotation marks and italics](/style/cross-references#quotation-marks-italics)
     sections of the "Cross-references and linking" page.
-
-
-
-

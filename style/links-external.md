@@ -400,4 +400,3 @@ text. This helps readers find links in your content.
   color changes to help readers differentiate links that they've followed against
   links that they haven't followed. This helps readers navigate your site
   effectively without revisiting content that they've already read.
-

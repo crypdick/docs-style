@@ -65,4 +65,3 @@ the following words and phrases:
 * old, older
 * presently, at present
 * soon
-

@@ -16,5 +16,3 @@ device.
 
 Not recommended: The PC sees a new
 device.
-
-

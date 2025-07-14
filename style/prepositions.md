@@ -19,4 +19,3 @@ displayed shortly after.
 
 For information about which preposition to use when referring to UI elements, see
 [UI elements and interaction](/style/ui-elements#prepositions).
-

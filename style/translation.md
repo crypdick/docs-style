@@ -159,7 +159,3 @@ review costs.
   + Avoid humor. Most humor is difficult to translate, and much humor is culturally specific.
   + Avoid referring to seasons. For more information, see
     [Expressing divisions of the year](/style/dates-times#divisions-year).
-
-
-
-

@@ -81,6 +81,3 @@ In general, don't use a comma before the causal conjunction *because* unless it 
 | Name of the group, which has a maximum length of 200 characters. | Name of the group which has a maximum length of 200 characters. |
 | The variable must have a value; otherwise, the server returns an error. | The variable must have a value otherwise the server returns an error. |
 | You can use the same key name in multiple backend services and backend buckets, because each set of keys is independent of the others. | You can use the same key name in multiple backend services and backend buckets because each set of keys is independent of the others. |
-
-
-
