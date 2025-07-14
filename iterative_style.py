@@ -329,6 +329,7 @@ def main() -> None:
         try:
             skip_idx = next(i for i, p in enumerate(style_pages) if p.name == skip_name)
             style_pages = style_pages[skip_idx + 1 :]
+            print(f"Skipped {skip_idx} style pages.")
         except StopIteration:
             print(
                 f"[warn] --skip-through: '{skip_name}' not found among style pages. Processing all pages."
