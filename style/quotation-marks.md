@@ -1,5 +1,3 @@
-
-
 # Quotation marks  
 
 Use straight double quotation marks and apostrophes.
@@ -95,8 +93,3 @@ him shout 'Help,' and saw him floundering in the water."
 
 Not recommended: She said, 'I heard him shout
 "Help", and saw him floundering in the water'.
-
-**Note**: For information about how to use quotation marks with links, see
-[Quotation marks and italics](/style/cross-references#quotation-marks-italics).
-
-

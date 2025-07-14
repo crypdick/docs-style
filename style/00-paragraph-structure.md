@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Paragraph structure  
 
 Break up your paragraphs to aid in the scannability of the page and to avoid

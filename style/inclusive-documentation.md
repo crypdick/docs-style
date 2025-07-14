@@ -193,23 +193,9 @@ Some general guidelines in this area include the following:
   example, avoid terms such as *the disabled* or *a quadriplegic*.
   Instead, use terms such as *people with disabilities* or *a quadriplegic person*.
 
-  However, many members of some communities prefer *identity-first language*—for
-  example, that preference is common in autistic, blind, and Deaf communities. Capitalization of
-  identities also can vary (for some perspectives, visit
-  [Identity-First Language](https://autisticadvocacy.org/about-asan/identity-first-language/)
-  and
-  [Self-Identification
-  in the Deaf Community](https://www.verywellhealth.com/deaf-culture-big-d-small-d-1046233)). Whenever possible, research and choose terms
-  that respect the ways that people in the communities identify.
 * Use *see* to refer to links and cross-references.
 * Avoid terms that reflect or project feelings and judgments about a person's disability,
   such as *victim of*, *suffering from*, or *wheelchair-bound*. Instead, use neutral
   terms such as *experiencing*, *living with*, or *uses a wheelchair*.
 * Avoid euphemisms or patronizing terms such as *physically challenged*, *special*,
   *differently abled*, or *handi-capable*.
-
-
-
-
-
-

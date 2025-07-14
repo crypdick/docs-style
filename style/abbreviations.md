@@ -1,5 +1,3 @@
-
-
 # Abbreviations  
 
 Abbreviations include acronyms, initialisms, shortened words, and
@@ -38,8 +36,6 @@ Some words have a long version and a short version—for example:
 The short versions of the words are not abbreviations, and
 if you use them, you don't need to put a period after them.
 
-If you're not sure whether a word is an abbreviation or just a short version
-of a longer word, look in our list of [resources](/style#editorial-resources).
 If that doesn't settle the issue, use the speaking test: if you speak the short
 version as a word (*This is a demo version of the product*), you can usually
 treat it as a word and not an abbreviation.
@@ -180,5 +176,3 @@ for your audience.
 In particular, our word list includes preferences for
 "[a SQL](/style/word-list#sql)", "[a FHIR](/style/word-list#fhir)",
 and "[an SAP](/style/word-list#sap)".
-
-

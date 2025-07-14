@@ -1,6 +1,3 @@
-
-
-
 # Possessives  
 
 In general, to form a possessive, follow these guidelines.
@@ -56,9 +53,6 @@ nearby.
 
 Not recommended: The capabilities of
 Google's Search are vast.
-
-For information about using trademarks as adjectives, not nouns, see
-[Trademarks](/style/trademarks#use-trademarks-as-adjectives).
 
 ## Code items
 

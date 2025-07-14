@@ -1,6 +1,3 @@
-
-
-
 # Prescriptive documentation  
 
 Write prescriptive documentation.
@@ -17,12 +14,7 @@ Prescriptive writing affects several aspects of documentation:
 * **Example scenarios and procedures**. Scenarios and procedures reflect the use cases that
   are most likely relevant to the readers.
 * **Sample commands**. Prescriptive documentation provides commands and arguments that
-  accomplish the task for the most common use case. For more information about documenting
-  command-line options, see
-  [Optional arguments in click-to-copy commands](/style/code-syntax#click-to-copy-commands).
-
-For instance, best practice documents are typically prescriptive documents. For an example, see
-[Operations best practices](https://cloud.google.com/architecture/security-foundations/operation-best-practices).
+  accomplish the task for the most common use case.
 
 ## Word choice for recommendations and requirements
 
@@ -58,9 +50,6 @@ outcome is *expected* versus *possible*, or a state is *actual* versus
   + "The server sets the value to true."
   + "If the value is false, follow these steps to change it to true."
 
-  For information about clarifying who's performing an action, see
-  [Active voice](/style/voice).
-
 Recommended: Ensure that the
 Classroom Share Button conforms to our min-max size guidelines and related
 color/button templates.
@@ -80,13 +69,3 @@ data table that the filter should operate on.
 
 Not recommended: Whether it's a brand
 new project or an existing one, here's what you should do.
-
-## More resources
-
-* See also [can](/style/word-list#can), [could](/style/word-list#could),
-  [may](/style/word-list#may), [might](/style/word-list#might),
-  [must](/style/word-list#must), and [would](/style/word-list#would) in the
-  word list.
-
-
-

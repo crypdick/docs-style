@@ -1,5 +1,3 @@
-
-
 # Present tense  
 
 Use present tense for statements that describe general behavior that's not associated with

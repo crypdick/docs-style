@@ -1,5 +1,3 @@
-
-
 # Pronouns  
 
 Ensure that a pronoun clearly refers
@@ -62,9 +60,6 @@ To avoid ambiguity and clarify meaning in sentences, use optional pronouns such 
 | Right-click the link that you want to open. | Right-click the link you want to open. |
 | You can use other option parameters, which are described in the following section. | You can use other option parameters, described in the following section. |
 
-For more information, see
-[Relative pronouns](#relative-pronouns).
-
 ## Personal pronouns
 
 Avoid first-person pronouns (*I*, *we*, *us*, *our*, and *ours*) except
@@ -115,5 +110,3 @@ form of both *who* and *which*.
 
 Recommended: Examine the variables whose
 values are set at compile time.
-
-

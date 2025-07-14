@@ -1,13 +1,7 @@
-
-
 # Use italics to discuss terms  
 
 This page describes two circumstances when we italicize terms that we're
 introducing or discussing.
-
-For more information about italics and other formatting, including HTML and
-Markdown formatting for italics, see
-[Text-formatting summary](/style/text-formatting).
 
 ## New terms
 

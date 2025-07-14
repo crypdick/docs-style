@@ -222,8 +222,6 @@ an experience that's game-like.
 Use a hyphen, not an en dash (`&ndash;`),
 to indicate a range of numbers. If a hyphen introduces ambiguity, use words such as
 *from*, *to*, and *through* for clarity. Don't mix hyphens with words.
-For information about how to represent a range of numbers that includes units, see
-[Ranges of numbers with units](/style/units-of-measure#ranges).
 
 Recommended: 8-20 files
 

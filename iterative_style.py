@@ -59,7 +59,7 @@ RESET_COLOR = "\033[0m"
 # Configuration
 # ---------------------------------------------------------------------------
 
-MODEL_NAME = "gpt-4.1-mini"
+MODEL_NAME = "o4-mini"  # "gpt-4.1-mini"
 STYLE_DIR = Path(__file__).parent / "style"
 INCIDENTS_DIR = Path(__file__).parent / "incidents"
 DIFF_END_MARKER = "NO_CHANGES"
@@ -95,7 +95,7 @@ DIFF_SYSTEM_PROMPT = (
     " Preserve the existing wording, tone, and sentence structure unless the STYLE GUIDE explicitly requires a change or the text contains an unequivocal error (spelling, grammar, punctuation). "
     "Avoid making subjective rephrasings or stylistic rewrites not mandated by the STYLE GUIDE. "
     "Example 1: if the style guide is about correct usage of parenthesis, do not make edits that change usage of capitalization, punctuation, or other style rules."
-    "Example 2: if the style guide is about tone, do not make edits that are purely about punctuation."
+    "Example 2: if the style guide is about tone, do not make edits that change how contractions are used."
     "Inside fenced (```\n...\n```) or indented code blocks, only make edits that are guaranteed to keep the code syntactically valid for its language. "
     "If applying a grammar or style rule could break, invalidate, or change the meaning of the code, skip that edit entirely. "
     "When several corrections are possible, prefer the one that achieves compliance with the least amount of change."
@@ -258,7 +258,7 @@ def chat(messages: list[dict[str, str]]) -> str:
     response = openai.chat.completions.create(
         model=MODEL_NAME,
         messages=messages,
-        temperature=0.0,
+        # temperature=0.0,
     )
     return response.choices[0].message.content.strip()
 

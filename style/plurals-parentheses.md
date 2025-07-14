@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Plurals in parentheses  
 
 Don't put optional plurals in parentheses. Instead, use either plural or

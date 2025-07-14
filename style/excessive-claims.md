@@ -1,6 +1,3 @@
-
-
-
 # Avoid excessive claims  
 
 In documentation, don't make excessive claims. An *excessive claim* is an assertion
@@ -48,6 +45,3 @@ is part of an overall strategy that helps prevent account takeovers from phishin
 
 Not recommended: Our security product
 prevents account takeovers from phishing attacks.
-
-
-

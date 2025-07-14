@@ -1,6 +1,3 @@
-
-
-
 # Pluralize a single letter  
 
 To form the plural of a single letter, italicize the letter and add an
@@ -17,6 +14,3 @@ When the capitalization is irrelevant, use uppercase.
 
 Recommended: Mind your *P*'s
 and *Q*'s.
-
-
-

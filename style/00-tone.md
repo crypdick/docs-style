@@ -1,5 +1,3 @@
-
-
 # Voice and tone  
 
 In your documents, aim for a voice and tone that's conversational, friendly,

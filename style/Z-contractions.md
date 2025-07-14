@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Contractions  
 
 In general, we write our documentation in an [informal tone](/style/tone), so we
@@ -26,9 +20,3 @@ Don't make up nonstandard contractions such as *guides're* or *browser's* (where
 *'s* means *is*).
 
 Don't use three-word contractions such as *mightn't've*.
-
-
-
-
-
-

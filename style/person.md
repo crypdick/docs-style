@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Second person and first person  
 
 
@@ -67,9 +61,3 @@ It's important to identify who the *you* is that you're addressing
 (a developer? a sysadmin? someone else?) and to be consistent
 about that. Make it clear to the reader who you expect them to be (sometimes
 with an explicit *audience* sentence near the beginning of the document).
-
-
-
-
-
-
