@@ -4,25 +4,20 @@
 
 A colon indicates that closely-related information follows.
 
-For information about using colons with run-in headings, see
-[Description lists that use
-run-in headings](/style/lists#description-lists-that-use-run-in-headings).
-
 ## Introductory phrase preceding colon
 
 When a colon introduces a list, the text that precedes the colon must be able
 to stand alone as a complete sentence.
 
 Recommended: The fields are defined as
-follows:
+follows: undercase words follow...
 
-Not recommended: The fields are:
+Not recommended: The fields are: Uppercase words follow...
 
 ## Colons within sentences
 
 In general, the first word in the text that follows a colon should be in
-lowercase. For exceptions, see
-[Capitalization and colons](/style/capitalization#capitalization-and-colons).
+lowercase.
 
 Recommended: Tone: concise,
 conversational, friendly, respectful

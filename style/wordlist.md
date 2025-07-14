@@ -1997,10 +1997,6 @@ NoOps
 NoSQL
 :   Not *No-SQL* or *No SQL*.
 
-notification drawer
-:   In Android contexts, don't hyphenate. Lowercase except at the beginning of a sentence,
-    heading, or list item.
-
 now
 :   Avoid when describing features of products or services because this word
     is implied.
@@ -2031,8 +2027,6 @@ old, older
     [*earlier*](#earlier).
 :   Make sure that you provide a version number by which to understand
     *earlier*.
-:   In Android documentation, use
-    [*lower*](#lower) instead of *earlier*.
 :   Recommended: This functionality
     doesn't work in versions earlier than 1.17.0.
 :   Not recommended: This functionality
