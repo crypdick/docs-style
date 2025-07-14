@@ -94,6 +94,8 @@ DIFF_SYSTEM_PROMPT = (
     "This is because if there are any mistake in the diff, it will fail to apply."
     " Preserve the existing wording, tone, and sentence structure unless the STYLE GUIDE explicitly requires a change or the text contains an unequivocal error (spelling, grammar, punctuation). "
     "Avoid making subjective rephrasings or stylistic rewrites not mandated by the STYLE GUIDE. "
+    "Example 1: if the style guide is about correct usage of parenthesis, do not make edits that change usage of capitalization, punctuation, or other style rules."
+    "Example 2: if the style guide is about tone, do not make edits that are purely about punctuation."
     "Inside fenced (```\n...\n```) or indented code blocks, only make edits that are guaranteed to keep the code syntactically valid for its language. "
     "If applying a grammar or style rule could break, invalidate, or change the meaning of the code, skip that edit entirely. "
     "When several corrections are possible, prefer the one that achieves compliance with the least amount of change."
