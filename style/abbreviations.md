@@ -95,11 +95,10 @@ In some cases, spelling out a term doesn't help the reader
 understand the term. For example, writing out *portable document format* doesn't help the
 reader understand what a *PDF* document is. In those cases, don't spell out the term.
 
-The following abbreviations rarely need to be spelled out:
+The following are examples of widely understood abbreviations that rarely need to be spelled out:
 
 * AI
 * API
-* DVD
 * File formats such as PDF or XML
 * HTML
 * PC
@@ -109,6 +108,7 @@ The following abbreviations rarely need to be spelled out:
   MB, MiB, GB, or GiB
 * URL
 * USB
+* GPU
 
 ## Abbreviations not to use
 

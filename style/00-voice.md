@@ -1,9 +1,3 @@
-
-
-
-
-
-
 # Active voice  
 
 In general, use active voice (in which the grammatical subject of the
@@ -56,9 +50,3 @@ conflicts in the file.
 
 Recommended: The database was purged
 in January.
-
-
-
-
-
-
