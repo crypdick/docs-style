@@ -12,6 +12,9 @@ ways:
 * Shows where the boundaries of the text to enter are.
 * Clearly separates the entity from surrounding text.
 
+However, do NOT add `backticks` into the code samples themselves, in such a way that it changes the code
+behavior.
+
 ## Some specific items to put in code font
 
 The following table includes items that should be in code font, but it's not an exhaustive
