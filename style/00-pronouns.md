@@ -46,10 +46,6 @@ Singular *they* has been in use for a long time; for example, [Jane Austen used 
 and in 2015 the Washington Post [adopted
 it as part of their official style](https://www.washingtonpost.com/opinions/the-post-drops-the-mike--and-the-hyphen-in-e-mail/2015/12/04/ccd6e33a-98fa-11e5-8917-653b65c809eb_story.html).
 
-For more suggestions, see
-The Chicago Manual of Style, 16th edition, section 5.225,
-"Nine techniques for achieving gender neutrality."
-
 ## Optional pronouns
 
 To avoid ambiguity and clarify meaning in sentences, use optional pronouns such as

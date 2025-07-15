@@ -817,9 +817,6 @@ documentation or document or documents
 
     Always spell out *documentation* except in cases where space is limited, such as in
     tabs and URLs.
-
-    See also
-    [page](#page).
 :   Recommended: You can find many
     examples in this document.
 :   Not recommended: You can find many
@@ -908,8 +905,6 @@ earlier
     earlier.
 :   Not recommended: Use version 2.2 or
     lower.
-:   In Android documentation, don't use
-    *earlier* for a range of version numbers. Instead, use *lower*.
 :   When referring to a position in a document, use *earlier* or
     *preceding*, not *higher*.
 
@@ -992,8 +987,7 @@ endpoint
 
 enter
 :   Use *enter* to refer to the user entering text. If it's important to
-    not press `Enter`, explicitly say so. See also
-    [*type*](#type).
+    not press `Enter`, explicitly say so.
 :   Recommended: In the **Owner** box,
     enter your name.
 :   Recommended: In the **Size** box,
@@ -1294,8 +1288,6 @@ higher
     *preceding*.
 :   Don't use to refer to a position in the UI. Instead, write instructions
     that avoid directional language.
-:   In Android documentation, use
-    *higher* for a range of version numbers, not *later*.
 :   A release with the highest version number might not be the latest version.
     For example, if version 2.0 of an operating system receives a bug-fix
     update after version 3.0 has been released, then version 2.0.1 might be
@@ -1327,10 +1319,6 @@ hold the pointer over
 holiday, the holidays
 :   Don't use to refer to the end of the year. Instead, refer to specific
     quarters or months.
-
-home screen
-:   Two words in Android contexts; not *homescreen* or
-    *home-screen*.
 
 hostname
 :   Not *host name*.
@@ -1429,10 +1417,6 @@ in order to
 inline
 :   One word as an adjective, *inline*, not *in line* or
     *in-line*.
-
-instance group
-:   Don't abbreviate to *IG*. See also [managed instance
-    group](#mig).
 
 intercluster
 :   Use unhyphenated *intercluster*, not *inter-cluster*.
@@ -1562,8 +1546,6 @@ later
     For example, if version 2.0 of an operating system receives a bug-fix
     update after version 3.0 has been released, then version 2.0.1 might be
     the latest version, even though its version number is lower than 3.0.
-:   In Android documentation, don't use
-    *later* for a range of version numbers. Instead, use *higher*.
 :   When referring to a position in a document, use *later* or
     *following*, not *below*.
 
@@ -1640,18 +1622,13 @@ lift and shift
 
     load balancing (noun), load-balancing (adjective)
 
-    lock screen
-:   Two words in Android contexts; not *lockscreen* or
-        *lock-screen*.
-
     login (noun or adjective), log in (verb)
 :   For the verb form, *sign in* is generally better.
 :   If you're documenting a tool that uses the term *log in*, then use
         that term.
 
     long press
-:   In Android documentation, don't use. Instead, use *touch & hold*.
-        (Not *touch and hold*.)
+:   Do not use. Instead, use *touch & hold*. (Not *touch and hold*.)
 
     long-running operation
 :   Not *long running operation*.
@@ -1968,9 +1945,6 @@ outpost
 outside the box, out of the box, out-of-the-box
 :   Avoid using in a figurative way. OK to use literally.
 
-overview screen
-:   In Android documentation, don't use. Instead, use *recents screen*.
-
 ### P
 
 PaaS
@@ -1982,9 +1956,6 @@ page
     * A whole web page, which can include text, images, links, banners, navigational panes,
       and other features.
     * A sub-page of a [console](#console) in particular.
-
-    See also
-    [documentation or document or documents](#documentation).
 :   Recommended: To refresh the page, press `F5`.
 
 parameter
@@ -2217,9 +2188,6 @@ re\*
 
 read-only
 :   Not *read only*. Always hyphenate *read-only*.
-
-recents screen
-:   In Android contexts, use instead of *overview screen*.
 
 redline
 :   Don't use as a verb. Instead, use precise terms appropriate to the
@@ -2645,10 +2613,6 @@ tag
             toolkit
 :   Not *tool-kit* or *tool kit*.
 
-            touch
-:   In Android documentation, don't use. Instead, use *tap*. However,
-                *touch & hold* is OK to use.
-
             "touch & hold"
 :   Not *touch and hold*.
 
@@ -2819,16 +2783,11 @@ vice versa
 
 virtual machine (VM) instance
 :   Use when first introducing virtual machines on a given page. For
-    subsequent mentions, you can use *VM instance* or *VM*. See also
-    [GKE node](#gke-node).
+    subsequent mentions, you can use *VM instance* or *VM*.
 
 visually challenged
+:   Don't use.
 
-VLAN attachment
-:   Don't use the following: *interconnect attachment (VLAN)*,
-    *Interconnect attachment*, *Cloud Interconnect attachment*, or
-    any variation thereof. See also
-    [interconnectAttachment](#interconnect-attachment).
 
 voila
 :   Don't use.
@@ -2939,9 +2898,7 @@ wildcard
 :   Not *wild card*.
 
 will
-:   Avoid. Applies equally to its past tense, *would*. See also
-    [Present tense](/style/tense) and
-    [Documenting future features](/style/future).
+:   Avoid. Applies equally to its past tense, *would*.
 
 wish
 :   Don't use. Instead, use a word like *want* or *need*.

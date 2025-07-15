@@ -61,7 +61,7 @@ advice in mind:
 * Follow our [gender-neutral
   pronoun](/style/pronouns#gender-neutral-pronouns) guidance.
 * Avoid being too culturally specific to the US. Be mindful when referring
-  to specific holidays (see also the word list entry for [*the holidays*](/style/word-list#holiday)), cultural practices,
+  to specific holidays, cultural practices,
   sports, and figures of speech. Being sensitive here also supports
   [writing for a global
   audience](/style/translation#culturally-specific).

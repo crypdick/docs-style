@@ -50,9 +50,7 @@ program crashes.
 ## Straight and curly quotation marks
 
 Most typefaces support two forms of quotation marks and apostrophes:
-straight marks and curly, or typographic, marks. Some tools, like
-Google Docs, automatically convert straight quotation marks and
-apostrophes to the curly versions as you type. However, our guidance is
+straight marks and curly, or typographic, marks. Our guidance is
 to always use straight quotation marks and straight apostrophes in developer documentation, for
 the following reasons:
 

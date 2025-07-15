@@ -295,23 +295,6 @@ Not recommended:
 ```
 <a href="/style/accessibility" target="_blank">Accessible content</a>
 ```
-
-## Don't use external link icons
-
-Don't use an external link icon to indicate that the link goes to a different
-domain or server. If you think it's important to inform the reader that they're
-leaving a Google domain, mention it in the text and don't rely on an icon.
-
-Recommended: For
-more information, see
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
-Sometimes OK: For more information, see the Wikipedia page about
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
-Not recommended: For more information, see
-[OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
-
 ## Punctuation around link text
 
 If you have punctuation immediately before or after a link, put the

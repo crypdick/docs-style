@@ -61,9 +61,6 @@ To format a command with multiple elements, do the following:
   sentences. Don't use end punctuation for single words or noun phrases, unless there is a mix of
   sentences and noun phrases. This guidance is similar to [end punctuation in lists](/style/lists#capitalization-and-end-punctuation).
 
-When you're documenting a `bash` or `sh` command, follow the
-[quotation mark style](https://google.github.io/styleguide/shellguide.html#s5.7-quoting)
-in Google's shell style guide.
 
 ## Command prompt
 
@@ -364,9 +361,7 @@ For the sake of accurate classification, the `gcloud` CLI's
 syntax distinguishes between a *command* and a *command group*. In
 docs, however, command-line contents are generally referred to as commands.
 
-You can use commands (and groups) alone or with one or more flags. A
-*flag* is a Google Cloud-specific term for any element
-other than the command or group name itself. A command or flag might also
+You can use commands (and groups) alone or with one or more flags. A command or flag might also
 take an *argument*, for example, a region value.
 
 #### Example command

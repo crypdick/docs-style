@@ -252,9 +252,6 @@ Not recommended:
 1. Click **Enter**. The **New file** dialog appears.
 2. In the **New file** dialog, click **Next**.
 
-For information about describing output, see
-[Output from commands](/style/code-syntax#output).
-
 Other steps benefit from including a justification for why the step is
 important. State the action first and the justification second.
 

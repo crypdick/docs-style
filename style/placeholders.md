@@ -1,9 +1,7 @@
 # Format placeholders  
 
 This page explains how to format placeholders in commands, code samples, and text
-strings. This page doesn't explain how to implement visual styling for placeholders, but it does
-show examples of how Google developer documentation style renders placeholders as visually
-distinct from other text.
+strings.
 
 Placeholders in sample code and commands represent values that the reader must replace when they use
 the sample input. Placeholders in example output can also represent other values that vary. In
@@ -33,24 +31,12 @@ paragraph.
 
 If your sample code and command placeholders occur in a sentence, use the following formatting:
 
-* In HTML, wrap variable placeholders by using the `var`
-  element, like this:
-
-  ```
-  <code><var>PLACEHOLDER_NAME</var></code>
-  ```
 * In Markdown, wrap inline placeholders in backticks (`), and use an
   asterisk (\*) before the first backtick and after the second one
   (`*`PLACEHOLDER_NAME`*`).
 
 If your placeholder does not represent a code sample or command, use the following formatting:
 
-* In HTML, wrap placeholders by using the `var`
-  element, like this:
-
-  ```
-  <var>PLACEHOLDER_NAME</var>
-  ```
 
 ### Placeholders in code blocks
 

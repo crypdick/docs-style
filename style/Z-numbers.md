@@ -1,8 +1,5 @@
 # Numbers  
 
-For information about formatting quantities like 10 MB, see
-[Units of measurement](/style/units-of-measure).
-
 ## Ordinal numbers
 
 Spell out all ordinal numbers in text.

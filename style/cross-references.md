@@ -114,15 +114,11 @@ Not recommended: See
 Write link text that makes sense without the surrounding text.
 Don't use phrases such as *this document*, *this article*, or *click here*.
 
-Recommended:
-For more information, see
-[Make headings into link targets](/style/headings-targets).
+Recommended: For more information, see [Make headings into link targets](/style/headings-targets).
 
-Not recommended:
-Want more? [Click here!](/style/headings-targets)
+Not recommended: Want more? [Click here!](/style/headings-targets)
 
-Not recommended:
-For more information,
+Not recommended: For more information,
 see [this document](/style/headings-targets).
 
 ### Avoid URLs as link text

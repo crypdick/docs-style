@@ -7,29 +7,6 @@ This page explains when to use em dashes.
 To indicate a break in the flow of a sentence—or an interruption—use an em
 dash, also known as a long dash. Don't put a space before or after it.
 
-You can type the em dash character in various ways:
-
-HTML
-:   &mdash;
-
-macOS
-:   Press `Option+Shift+hyphen`.
-
-Linux desktop environment
-:   Enable the Compose key (instructions for doing that vary depending on
-    your flavor of Linux—for examples, see [Linux Keyboard Shortcuts For
-    Text Symbols](http://fsymbols.com/keyboard/linux/compose/)). After the Compose key is enabled, you can create an em dash
-    by typing the Compose key followed by three hyphens.
-:   Alternatively, press `Control+Shift+U`. Let go of those keys, and then type
-    `2014`. Then press `Return`.
-:   **Note**: These Linux options don't work if
-    you're signed in to the Linux command line from a remote system using `ssh` or the
-    like; you have to be in a Linux desktop environment.
-
-Windows
-:   Turn num lock on, and then hold down the left `Alt` key and type `0151`
-    on the numeric keypad.
-
 Don't use an en dash (the shorter dash) or a hyphen in place of an em dash.
 The use of an en dash with spaces around it in place of
 an em dash is gradually becoming more common, but it's still not very widespread

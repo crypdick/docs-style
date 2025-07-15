@@ -21,7 +21,7 @@ lists in our documentation:
 | Numbered list | A set of items where the sequence is significant, such as ordered steps, phases, or priorities. The following is an example of a numbered list:  Here's a sequence of steps to follow:   1. Open the box. 2. Remove the bobcat from the box. 3. Feed the bobcat.  Nested sequential lists are labeled with lowercase letters or lowercase Roman numerals. The following is an example of a nested sequential list:  Here's a list of things to do after breakfast, in order:   1. Go shopping.    1. Buy groceries:       * Flour       * Eggs       * Sugar       * Butter    2. Go to mall:       1. Buy dress.       2. Buy shoes. 2. Make cake. 3. Build birthday present out of spare parts. 4. Clean house.  | `ol`, `li` |
 | Bulleted list | A set of items that's not a sequence, such as a set of nonsequential options or examples. Make sure it's clear whether or not every item is required. The following is an example of a bulleted list:  Here's a list of things that can go wrong, in no particular order:   * Your bicycle might explode. * The sun might go out. * An ant might break its leg and require a tiny splint. | `ul`, `li` |
 | Description list | A set of terms, each with a description, definition, or explanation. Use this type of list if you want to draw attention to two or more terms (such as a glossary). The following is an example of a description list:  Here are some descriptions of types of birds:  Emu  The best kind of bird.  Crow  The other best kind of bird.  Peacock  Also the best kind of bird.  Phoenix  An even better kind of bird. | `dl`, `dt`, `dd` |
-| Description list that uses bulleted run-in headings | A set of introductory terms or phrases, each followed by a description, definition, or explanation. Use this type of list if you want to highlight and explain several concepts or save space. For information about how to format and punctuate run-in headings and their descriptions, see [Description lists that use run-in headings](#description-lists-that-use-run-in-headings) in this document.  The following is an example of a description list that uses bulleted run-in headings:  Here are some descriptions of types of birds:   * **Emu**: the best kind of bird * **Crow**: the other best kind of bird * **Peacock**: also the best kind of bird * **Phoenix**: an even better kind of bird | `ul`, `li` |
+| Description list that uses bulleted run-in headings | A set of introductory terms or phrases, each followed by a description, definition, or explanation. Use this type of list if you want to highlight and explain several concepts or save space. The following is an example of a description list that uses bulleted run-in headings:  Here are some descriptions of types of birds:   * **Emu**: the best kind of bird * **Crow**: the other best kind of bird * **Peacock**: also the best kind of bird * **Phoenix**: an even better kind of bird | `ul`, `li` |
 
 ## Multiple paragraph list items
 
@@ -71,11 +71,6 @@ Use nonstandard numbering in the following situations:
   value manually can be convenient. However, in most cases, it isn't a good idea to manually
   number a list item in a numbered list, because if the number of items changes later, you'll
   have to manually change the value.
-
-## Sub-steps in a numbered procedure
-
-For information about sub-steps in a numbered procedure, see
-[Procedures](/style/procedures#sublists).
 
 ## Parallel syntax
 

@@ -15,9 +15,7 @@ Bold
 Italic
 :   In general, use italics sparingly.
 :   When you're discussing or introducing terms, such as when defining terms or using
-    *words as words*, use italics formatting, `<i>` or `_`. For more
-    information, see
-    [Use italics to discuss terms](/style/italics-terms).
+    *words as words*, use italics formatting, `<i>` or `_`.
 :   When you need to add emphasis to indicate importance, use italics, not bold or underline. But
     usually, your words can carry the emphasis without adding italics. To indicate
     [semantic emphasis](/style/semantic-tagging) in HTML, use the `em` element,

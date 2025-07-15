@@ -1,13 +1,10 @@
 # Slashes  
 
-Avoid using slashes, except in code.
+Avoid using forward slashes, except in code.
 
 ## Slashes with dates
 
 Don't use date formats that rely on slashes.
-
-For information about how to write dates, see
-[Dates and times](/style/dates-times).
 
 ## Slashes with alternatives
 
@@ -66,9 +63,7 @@ Where very long URLs extend beyond a line, add a line break immediately after
 a slash. Don't ever insert an extraneous hyphen into a URL to break it between two lines.
 
 Recommended:
-https://developers.google.com/
-  
-cardboard/
+https://developers.google.com/cardboard/
 
 ## Slashes with fractions
 

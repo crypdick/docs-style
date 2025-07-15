@@ -16,6 +16,3 @@ and don't clutter the sentence with too many prepositions.
 Recommended: The icon for the connector
 manager turns green within a few minutes, and the connector instance is
 displayed shortly after.
-
-For information about which preposition to use when referring to UI elements, see
-[UI elements and interaction](/style/ui-elements#prepositions).

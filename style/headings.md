@@ -59,28 +59,7 @@ heading and a task-based heading.
 
 Recommended:
 
-### HTML
 
-```
-
-<h1>Log serving requests by using AI Platform Prediction</h1>
-
-<p>This task-based document shows how to monitor machine learning models. The
-document title starts with a bare infinitive.</p>
-
-<h2>ML model monitoring overview</h2>
-
-<p>This section provides a conceptual overview of ML model monitoring. Its title is
-a noun phrase.</p>
-
-<h2>Configure notebook settings<h2>
-
-<p>This task-based section provides a series of steps to set variables in a
-notebook. Its title starts with a bare infinitive.</p>
-
-```
-
-### Markdown
 
 ```
 
@@ -146,19 +125,6 @@ notebook. Its title starts with a bare infinitive.
 
     Not recommended:
 
-    ### HTML
-
-    ```
-
-    <h1>Transfer data sets</h1>
-
-    <p>This document provides a high-level overview of ways to transfer your data to Google
-    Cloud.</p>
-
-    <h3>Estimate costs</h3>
-
-    ```
-
     ### Markdown
 
     ```
@@ -174,20 +140,6 @@ notebook. Its title starts with a bare infinitive.
 
     Recommended:
 
-    ### HTML
-
-    ```
-
-    <h2>Migrate VMs to Compute Engine</h2>
-
-    <p>Migration is not just a single step. The following sections describe the recommended
-    steps.</p>
-
-    <h3>Design the migration</h3>
-
-    ```
-
-    ### Markdown
 
     ```
 
@@ -201,17 +153,7 @@ notebook. Its title starts with a bare infinitive.
 
     Not recommended:
 
-    ### HTML
-
-    ```
-
-    <h2>Migrate VMs to Compute Engine</h2>
-
-    <h3>Design the migration</h3>
-
-    ```
-
-    ### Markdown
+    
 
     ```
 
@@ -229,29 +171,7 @@ phrase *the following sections*. Don't refer to the group of sections using the 
 
 Recommended:
 
-### HTML
 
-```
-
-<h2>Views in the data preparation editor</h2>
-
-<p>The following sections describe the views in the data preparation editor.</p>
-
-<h3>Data view</h3>
-
-<p>...</p>
-
-<h3>Graph view</h3>
-
-<p>...</p>
-
-<h3>Schema view</h3>
-
-<p>...</p>
-
-```
-
-### Markdown
 
 ```
 
