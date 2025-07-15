@@ -82,6 +82,7 @@ DIFF_SYSTEM_PROMPT = (
     "it must match the document text *character-for-character*, including whitespace and newlines. "
     "It is not necessary to wrap the contents of <before> or <after> with quotation marks or other wrapping characters in order to match the source text."
     "If it is not an exact match, applying the diff will fail with an error.\n"
+    "You do NOT need to pad the snippet with surrounding context; matching the smallest distinctive substring is sufficient, as long as it uniquely identifies the text to change.\n"
     "The STYLE GUIDE will be supplied inside <style_guide>…</style_guide> and the DOCUMENT inside <document>…</document>. "
     "Only modify the DOCUMENT—never the STYLE GUIDE. "
     "Do NOT remove or alter Markdown anchor tags or link identifiers such as '[](){ #anchor-id }' (and similar inline anchor syntaxes). "
