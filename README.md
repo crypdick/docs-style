@@ -39,3 +39,7 @@ If an edit fails to apply (e.g. the snippet isn’t found) the script records a 
 - I deleted Google-specific directions.
 - I simplified some style guides to make them more "atomic" so that they are less monolithic.
 - Made a few small edits to prevent common LLM mistakes, e.g. "Do not apply this style guide to code blocks."
+
+## Style precidence
+
+The order in which the style guides are applied is important, because future edits may revert previous edits. The default order is alphabetic. Therefore, in order to enforce an ordering, you can add prefixes to the style guide names. The prefixes `00-`, `01-`, `02-`, will be applied in that order, before non-numeric style guides. Conversely, `z-` will be applied last.
