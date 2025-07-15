@@ -114,15 +114,12 @@ Not recommended: See
 Write link text that makes sense without the surrounding text.
 Don't use phrases such as *this document*, *this article*, or *click here*.
 
-Recommended:
-For more information, see
+Recommended: For more information, see
 [Make headings into link targets](/style/headings-targets).
 
-Not recommended:
-Want more? [Click here!](/style/headings-targets)
+Not recommended: Want more? [Click here!](/style/headings-targets)
 
-Not recommended:
-For more information,
+Not recommended: For more information,
 see [this document](/style/headings-targets).
 
 ### Avoid URLs as link text
@@ -139,9 +136,7 @@ For more information about protocols, see <a href="http://www.w3.org/Protocols/r
 Not recommended:
 
 ```
-
   See the HTTP/1.1 RFC at <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">http://www.w3.org/Protocols/rfc2616/rfc2616.html</a>.
-
 ```
 
 **Exception**: In some legal documents (such as some Terms of Service documents), it's
@@ -190,14 +185,10 @@ information, see..." or "For more information about..., see... ."
 
 Include the "about..." clause when the link text or surrounding context
 doesn't clearly indicate why you're referring the reader to this information.
-For more information, see the
-[Clarify the purpose of a link](#clarify-purpose)
-section of this document.
 
 Don't use *on* instead of *about*.
 
-Use *see* to refer to links and cross-references. For more information, see
-[see](/style/word-list#see).
+Use *see* to refer to links and cross-references.
 
 Recommended: For more information, see
 [Load balancing and scaling](https://cloud.google.com/compute/docs/load-balancing-and-autoscaling).
@@ -315,12 +306,10 @@ Recommended: For
 more information, see
 [OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
 
-Sometimes OK:
-For more information, see the Wikipedia page about
+Sometimes OK: For more information, see the Wikipedia page about
 [OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
 
-Not recommended:
-For more information, see
+Not recommended: For more information, see
 [OS-level virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization).
 
 ## Punctuation around link text

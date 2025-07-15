@@ -83,14 +83,6 @@ actionable
 :   Don't use *actionable* in the legal sense without consulting a
     lawyer.
 
-action bar
-:   In Android documentation, don't use. Instead, use
-    [*app bar*](#app-bar).
-
-ad tech
-:   Write out on first mention: *advertising technology (ad tech)*.
-:   Don't use *adtech* or *ad-tech*.
-
 address bar
 :   Use to refer to the URL bar or the combined URL bar and search box in a
     browser.
@@ -106,11 +98,6 @@ ad hoc
 admin
 :   Write out *administrator* unless it's the name of a UI label or other
     element.
-:   It's OK to use *admin* in Android
-    documentation.
-
-administrator
-:   In Android documentation, don't use. Instead, use *admin*.
 
 advertised route priority
 :   OK to also use *base advertised route priority* when discussing
@@ -137,9 +124,6 @@ aka
 :   Recommended: Geographic data, or
     geospatial data, is ...
 
-all apps screen
-:   In Android documentation: Lowercase except at the beginning of a sentence,
-    heading, or list item.
 
 allowlist (verb), allowlisted, allowlisting
 :   Don't use as a verb. Instead, rewrite to improve clarity.
@@ -206,9 +190,6 @@ app
     *application* to convey a sense of greater complexity.
 :   Use *application* in standard phrases such as *application
     programming interface*.
-
-app bar
-:   In Android contexts, formerly *action bar*.
 
 appendix
 :   Use the plural *appendixes*, not *appendices*.
@@ -300,8 +281,7 @@ below
 :   Don't use to refer to a position in a document. Instead, use *later*
     or *following*.
 :   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language. For more information, see
-    [Writing accessible documentation](/style/accessibility).
+    that avoid directional language. 
 :   It's OK to use *below* in set phrases such as *below (the)
     average*, *below the mean*, *below zero*.
 :   It's OK to use *below* in a non-directional way, such as when describing a hierarchy.
@@ -342,8 +322,6 @@ between versus among
     among multiple clients.
 :   Not recommended: You can share
     services between multiple clients.
-:   See also [Grammar Girl's
-    discussion of *between* and *among*](http://www.quickanddirtytips.com/education/grammar/between-versus-among).
 
 big-endian
 :   Hyphenate. Lowercase except at the beginning of a sentence,
@@ -415,8 +393,7 @@ blacklist, black list, black-list
 :   Not recommended: Add a user to the
     whitelist by entering the following: `whitelist adduser
     EMAIL_ADDRESS`.
-:   For more information, see the
-    [inclusive documentation](/style/inclusive-documentation) page.
+
 
 blacklisted, black listed, black-listed
 :   Don't use.
@@ -488,11 +465,8 @@ can
       logs with the Log Viewer").
     * To describe a possible outcome (for example, "The process can
       take 30 minutes").
-:   See also [could](#could), [may](#may),
-    [might](#might), [must](#must),
-    [should](#should), and [would](#would).
-:   For information about clarifying who's performing an action, see
-    [Active voice](/style/voice).
+
+
 
 canary
 :   Don't use *canary* as a verb, and don't use *canarying*.
@@ -505,171 +479,160 @@ cell phone, cellphone
 :   Don't use. Instead, use *mobile phone*, or if you're talking about
     more than phones, then use *mobile device*.
 :   It's OK to use *phone* (without *mobile*) when the context is
-    clear.:   cellular data
-        :   Don't use. Instead, use *mobile data*.
+    clear.
+
+   cellular data
+:   Don't use. Instead, use *mobile data*.
 
         cellular network
-        :   Don't use. Instead, use *mobile network*.
+:   Don't use. Instead, use *mobile network*.
 
         chapter
-        :   When referring to documentation that isn't in the form of a book, don't
+:   When referring to documentation that isn't in the form of a book, don't
             use the term *chapter*. Instead, refer to documents, pages, or
             sections.
 
         check
-        :   Don't use to refer to marking a checkbox. Instead, use *select*.
-        :   Recommended: Select **Automatically
+:   Don't use to refer to marking a checkbox. Instead, use *select*.
+:   Recommended: Select **Automatically
             check for updates**.
-        :   Not recommended: Check **Automatically
+:   Not recommended: Check **Automatically
             check for updates**.
 
         checkbox
-        :   Not *check box*.
+:   Not *check box*.
 
         choose
-        :   *Choose* is fine to use for generic contexts. For UI elements, use
+:   *Choose* is fine to use for generic contexts. For UI elements, use
             [select](#select).
 
         chubby
-        :   Don't use. Instead, use a word that clearly explains what you mean, such
+:   Don't use. Instead, use a word that clearly explains what you mean, such
             as *unused* or *overextended*.
 
         clear
-        :   Use (as a verb) to refer to clearing a check mark from a checkbox.
-        :   Recommended: Clear **Automatically
+:   Use (as a verb) to refer to clearing a check mark from a checkbox.
+:   Recommended: Clear **Automatically
             check for updates**.
-        :   Not recommended: Uncheck
+:   Not recommended: Uncheck
             **Automatically check for updates**.
-        :   Not recommended: Deselect
+:   Not recommended: Deselect
             **Automatically check for updates**.
 
         click
-        :   When the environment is a desktop with a mouse, use *click* for most
+:   When the environment is a desktop with a mouse, use *click* for most
             targets, such as buttons, links, list items, and radio buttons. Don't use
             *click on*.
-        :   Recommended: Click **OK**.
-        :   Not recommended: Click on **OK**.
-        :   Hyphenate *right-click*, *left-click*, and *double-click*.
-        :   When a click or tap action reveals a collapsed list, you can write
+:   Recommended: Click **OK**.
+:   Not recommended: Click on **OK**.
+:   Hyphenate *right-click*, *left-click*, and *double-click*.
+:   When a click or tap action reveals a collapsed list, you can write
             *click to expand* or simply *expand*.
-        :   It's OK to write *click in* when referring to a region that needs
+:   It's OK to write *click in* when referring to a region that needs
             focus (for example: *click in the window*), but not when referring to
             a control or a link.
-        :   For Android apps, don't use
-            *click*. Instead, use [tap](/style/word-list#tap).
 
         click here
-        :   Don't use. For information and alternatives, see
+:   Don't use. For information and alternatives, see
             [Avoid vague link text](/style/cross-references#vague-link-text).
 
         clickthrough (noun), click through (verb)
 
         client
-        :   In REST and RPC API documentation, *client* is short for *client
+:   In REST and RPC API documentation, *client* is short for *client
             app*—that is, the app that the developer is writing.
-        :   Don't use *client* as an abbreviation for *client library*;
+:   Don't use *client* as an abbreviation for *client library*;
             instead, use *library*.
 
         client ID
-        :   Lowercase except at the beginning of a sentence,
+:   Lowercase except at the beginning of a sentence,
             heading, or list item.
 
         client secret
-        :   Lowercase except at the beginning of a sentence,
+:   Lowercase except at the beginning of a sentence,
             heading, or list item.
 
-        co\*
-        
-
         codebase
-        :   Not *code base*.
-
-        codelab
-        :   Not *code lab* or *code-lab*. For more information, see
-            [documentation](#documentation).
+:   Not *code base*.
 
         cold
-        :   When possible, avoid [jargon](/style/jargon) like *cold
+:   When possible, avoid [jargon](/style/jargon) like *cold
             failover*, *cold standby*, and *cold spare*. If you use one
             of these phrases, define it on first use and use it consistently
             throughout the document.
 
         colocate
-        :   Not *co-locate* or *colo*.
+:   Not *co-locate* or *colo*.
 
         compliant, compliance
-        :   Use with caution. A claim that a product or its output is *compliant*
+:   Use with caution. A claim that a product or its output is *compliant*
             with a standard is a strong statement.
 
         comprise
-        :   Don't use. Instead, use *consist of*, *contain*, or
+:   Don't use. Instead, use *consist of*, *contain*, or
             *include*.
 
         config
-        :   Avoid when possible. Instead, spell out the full word when it's used in a
+:   Avoid when possible. Instead, spell out the full word when it's used in a
             non-code sense: *configuration* or *configuring*. Use the
             verbatim code item name when referring to, for example, a data structure
             or a file with that name.
 
         confidential
-        :   *Confidential* data is data that is protected to prevent unauthorized access. See
+:   *Confidential* data is data that is protected to prevent unauthorized access. See
             [sensitive](#sensitive).
 
         cons
-        :   Don't use. Instead, use a more precise term, such as *disadvantages*.
+:   Don't use. Instead, use a more precise term, such as *disadvantages*.
 
         content type
-        :   Be as specific as possible when writing about a content type, and use the term only when applicable.
+:   Be as specific as possible when writing about a content type, and use the term only when applicable.
             For example, you can use this term if you're referring to the value of the `Content-Type` HTTP header.
            
 
         Control+S, Command+S, and other keyboard commands
-        :   To refer to a `Control` character, use
+:   To refer to a `Control` character, use
             `Control`+CHARACTER.
-        :   Don't use *Ctl-S*, *Cmd-S*, or *Cloverleaf-S*.
-        :   In most cases, use an uppercase letter for CHARACTER.
-        :   In macOS, many keyboard commands use the `Command` key instead of
+:   Don't use *Ctl-S*, *Cmd-S*, or *Cloverleaf-S*.
+:   In most cases, use an uppercase letter for CHARACTER.
+:   In macOS, many keyboard commands use the `Command` key instead of
             the `Control` key, and there's an `Option` key instead
             of an `Alt` key. If your audience includes macOS users and
             Windows or Linux users, then mention both keyboard commands.
-        :   Recommended: `Control+S`
+:   Recommended: `Control+S`
             (`Command+S` on macOS)
 
         Copy and paste
-        :   Avoid using. Instead, explain what to enter into a field and not how.
-        :   Recommended: In the
+:   Avoid using. Instead, explain what to enter into a field and not how.
+:   Recommended: In the
             **Query** field, enter the output from the previous step.
-        :   Not recommended: Copy the output from
+:   Not recommended: Copy the output from
             the previous step and paste into the **Query** field.
 
         could
-        :   Avoid using. Instead, use *can* where possible.
-        :   See also [can](#can), [may](#may),
-            [might](#might), [must](#must),
-            [should](#should) and [would](#would).
-        :   For information about clarifying who's performing an action, see
-            [Active voice](/style/voice).
-        :   For information about tenses, see [Present
-            tense](/style/tense).
+:   Avoid using. Instead, use *can* where possible.
+        
+        
+        
 
         CPU
-        :   All caps. No need to expand the abbreviation on first mention.
+:   All caps. No need to expand the abbreviation on first mention.
 
         crazy, bonkers, mad, lunatic, insane, loony
-        :   Don't use. Instead, use *complicated*, *complex*,
+:   Don't use. Instead, use *complicated*, *complex*,
             *baffling*, *strange*, or *unexpected*, and only for
             inanimate objects.
 
         Create a new ...
-        :   Avoid using unless you need to distinguish the item from another recently
+:   Avoid using unless you need to distinguish the item from another recently
             created item. Instead, use *Create a ...*
-        :   Recommended: Create a project.
-        :   Not recommended: Create a new project.
+:   Recommended: Create a project.
+:   Not recommended: Create a new project.
 
         cripple
-        :   Don't use. Instead, use more precise language. For example, instead of
+:   Don't use. Instead, use more precise language. For example, instead of
             *it crippled the server*, write *it slowed the server down*.
-        :   When referring to people, use terms that specifically describe a physical
+:   When referring to people, use terms that specifically describe a physical
             impairment, such as *person with a motor disability*; *person with
             a mobility impairment* (refers to walking or moving about); *person
             with dexterity impairment* (refers to using a standard mouse or
@@ -677,33 +640,26 @@ cell phone, cellphone
             *wheelchair user*; *person with restricted or limited mobility*.
 
         cross-site request forgery
-        :   Lowercase except at the beginning of a sentence,
+:   Lowercase except at the beginning of a sentence,
             heading, or list item.
 
         curated roles
-        :   Don't use. Instead, use *predefined roles*.
+:   Don't use. Instead, use *predefined roles*.
 
         currently
-        :   Avoid because this word is implied. The word can also prematurely disclose
+:   Avoid because this word is implied. The word can also prematurely disclose
             product or feature strategy or inappropriately imply that a product or
             feature might change.
-        :   See also
-            [as of this writing](#as-of-this-writing) and
-            [presently](#presently).
-        :   Recommended: Windows isn't supported.
-        :   Not recommended: Windows isn't
-            currently supported.
-        :   For more information, see
-            [Timeless documentation](/style/timeless-documentation).
-
-        custom mode VPC network
-        :   Not *custom mode network*.
+        
+:   Recommended: Windows isn't supported.
+:   Not recommended: Windows isn't
+            currently supported.        
 
         curl
-        :   Not *cURL*.
+:   Not *cURL*.
 
         Cyber Monday
-        :   Avoid unless explicitly referring to an event in the US. Instead use
+:   Avoid unless explicitly referring to an event in the US. Instead use
             *peak scale event*.
 
 ### D
@@ -904,32 +860,33 @@ double-tap
 downscope
 :   Consider using a more descriptive term like *constrain scope* or
     *reduce scope*. Because *downscope* might not be broadly
-    understood, if you use the term, make sure to define it on first use.:   :   Don't use *down scope* or *down-scope*
-        :   Recommended: Reducing the scope of a
+    understood, if you use the term, make sure to define it on first use.
+   :   Don't use *down scope* or *down-scope*
+:   Recommended: Reducing the scope of a
             token helps you follow the principle of least privilege.
-        :   Recommended (first use): The IAM
+:   Recommended (first use): The IAM
             recommender helps you *downscope* (reduce) the permissions that are
             available to your users.
 
         drag
-        :   Use *drag*, not *click and drag* and not *drag and drop*.
-        :   OK to use *drag-and-drop* as an adjective.
-        :   Recommended: Drag the USER
+:   Use *drag*, not *click and drag* and not *drag and drop*.
+:   OK to use *drag-and-drop* as an adjective.
+:   Recommended: Drag the USER
             to the **Authorized** box.
 
         drop-down
-        :   In most cases, you can omit *drop-down* from phrases like *drop-down list* or
+:   In most cases, you can omit *drop-down* from phrases like *drop-down list* or
             *drop-down menu*, and just use *list* or *menu*. Include *drop-down* as a
             modifier only if the omission would cause ambiguity. Don't use *drop-down* as a
             standalone noun.
 
         dumb down
-        :   Don't use. Instead, use a word or phrase what's happening, such as
+:   Don't use. Instead, use a word or phrase what's happening, such as
             *simplify* or *remove technical jargon*.
 
         dummy variable
-        :   Don't use to refer to placeholders. Instead, use *placeholder*.
-        :   Also don't use if referring to the concept in statistics known as a
+:   Don't use to refer to placeholders. Instead, use *placeholder*.
+:   Also don't use if referring to the concept in statistics known as a
             [dummy variable](https://en.wikipedia.org/wiki/Dummy_variable_(statistics)).
             Instead, use alternate terms such as
             *indicator variable*, *design variable*, *one-hot
@@ -1069,14 +1026,11 @@ eventually
 :   Avoid in timeless documentation because this word can become outdated. The
     word can also prematurely disclose product or feature strategy or
     inappropriately imply that a product or feature might change.
-:   See also
-    [future](#future) and [soon](#soon).
+
 :   Recommended: This version of the SDK
     is deprecated.
 :   Not recommended: This version of the
     SDK is deprecated and eventually will be no longer supported.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
 execute
 :   Verb commonly used to refer to function calls, SQL queries, and other processes. When the meaning
@@ -1117,11 +1071,6 @@ fat
 female adapter
 :   Don't use. Instead, use a genderless word like *socket*.
 
-Fast Healthcare Interoperability Resources (FHIR)
-:   Refer to *a FHIR* (pronounced "a fire," as in "a FHIR store"), not *an FHIR*.
-    For more information, see
-    [Indefinite articles before abbreviations](/style/abbreviations#articles).
-
 filename
 :   Not *file name*
 
@@ -1131,60 +1080,61 @@ file system
 fill in; fill out
 :   Use *fill in* when referring to entering information in individual
     fields.
-:   Use *fill out* when referring to completing an entire form.:   :   Recommended: Fill out the
+:   Use *fill out* when referring to completing an entire form.
+   :   Recommended: Fill out the
             questionnaire. Be sure to fill in the required fields.
 
         final solution
-        :   Don't use. Instead, use *solution* as a standalone term or, depending
+:   Don't use. Instead, use *solution* as a standalone term or, depending
             on the context, *definitive*, *optimal*, *best*, or *last
             solution*.
 
         fintech
-        :   Write out on first mention: *financial technology (fintech)*. Don't
+:   Write out on first mention: *financial technology (fintech)*. Don't
             use *FinTech* or *fin-tech*.
 
         firewalls
-        :   Don't use in Compute Engine or networking documentation. Instead, use
+:   Don't use in Compute Engine or networking documentation. Instead, use
             *firewall rules*.
-        :   Exception: If you're explaining how firewall rules work, you can explain
+:   Exception: If you're explaining how firewall rules work, you can explain
             that every network has an implied virtual distributed firewall.
-        :   Outside of Compute Engine or networking documentation, the term
+:   Outside of Compute Engine or networking documentation, the term
             *firewalls* is acceptable.
 
         first-class, first-class citizen, first class
-        :   Don't use socially-charged terms for technical concepts where possible.
+:   Don't use socially-charged terms for technical concepts where possible.
             Instead, consider terms such as *core feature*, *built-in*,
             *top-level*.
 
         following
-        :   It's not necessary to use a noun after *following* unless it helps
+:   It's not necessary to use a noun after *following* unless it helps
             provide clarity and enables accessibility.
-        :   Recommended: ... in the following
+:   Recommended: ... in the following
             code sample ...
-        :   Recommended: ... in the following
+:   Recommended: ... in the following
             table ...
-        :   Recommended: ... do the following:
+:   Recommended: ... do the following:
             ...
 
         foo
-        :   Avoid when possible even though it's a common term in the developer
+:   Avoid when possible even though it's a common term in the developer
             community. Instead, use a clearer and more meaningful placeholder name.
 
         for instance
-        :   Avoid when possible. Instead, use *for example* or *such as*.
+:   Avoid when possible. Instead, use *for example* or *such as*.
 
         frontend
-        :   Not *front-end* or *front end*.
+:   Not *front-end* or *front end*.
 
         functionality
-        :   Use with caution. With respect to hardware or software,
+:   Use with caution. With respect to hardware or software,
             *functionality* refers to a set of associated functions or
             capabilities and how they work. However, the word is sometimes overused,
             especially when the intended meaning is *capabilities* or
             *features*.
 
         future, in the future
-        :   Avoid in timeless documentation because this word or phrase can become
+:   Avoid in timeless documentation because this word or phrase can become
             outdated.
 
 ### G
@@ -1200,8 +1150,7 @@ Gbps
 gender-neutral he, him, or his (or she or her)
 :   Don't use. Instead, use the singular *they* (see [Jane Austen and other famous authors violate what everyone learned in
     their English class](http://www.pemberley.com/janeinfo/austheir.html)). Don't use *he/she* or *(s)he* or other
-    such punctuational approaches. For more information, see
-    [Pronouns](/style/pronouns).
+    such punctuational approaches.
 
 generative AI
 :   Spell out *generative*. Use sentence case.
@@ -1282,8 +1231,6 @@ gypsy
 hamburger, hamburger menu
 :   Don't use. Instead use the `aria-label` for that particular
     icon. For example, menu **Menu**.
-    For more information, see
-    [Buttons and icons](/style/ui-elements#buttons).
 
 hands off, hands-off
 :   Use a less figurative phrase, such as *automated*. If you're
@@ -1511,7 +1458,7 @@ Internet Key Exchange (IKE)
 :   Write out and capitalize each word on first use. OK to abbreviate
     *IKE* after first use.
 
-I/O (see also [Google I/O](#google-io))
+I/O
 :   Not *I-O* or *IO*.
 
 IoT
@@ -1569,12 +1516,6 @@ KBps
 Kbps
 :   Short for *kilobits per second*. By convention, we don't use
     *Kb/s*.
-
-kebab, kabob, kebab menu, kabob menu
-:   Don't use. Instead use the `aria-label` for that particular
-    icon. For example, more\_vert
-    **More**. For more information, see
-    [Buttons and icons](/style/ui-elements#buttons).
 
 kebab case, kabob case, kebab-case, kabob-case
 :   Don't use. Instead, use *dash-case*.
@@ -1636,8 +1577,6 @@ latest
     includes the latest tools that help secure your system.
 :   Not recommended: The product includes
     the latest tools that help secure your system.
-:   For more information, see
-    [Timeless documentation](/style/timeless-documentation).
 
 learnings
 :   Don't use. Instead, refer to *knowledge* or *things that you
@@ -1660,10 +1599,6 @@ let's (as a contraction of *let us*)
 :   Not recommended: Let's click the
     **OK** button now.
 
-Letter of Authorization and Connecting Facility Assignment (LOA-CFA)
-:   Write out and capitalize each word on first use. OK to abbreviate as
-    *LOA-CFA* after first use.
-
 leverage
 :   Avoid using if you mean *use*. If possible, use a more precise term.
     For example, *use*, *build on*, or *take advantage of*.
@@ -1674,62 +1609,60 @@ lifecycle
 lift and shift
 
     like versus such as
-    :   It's OK to use either *like* or *such as* for comparisons or
+:   It's OK to use either *like* or *such as* for comparisons or
         examples.
 
     limits
-    :   In an API context, *limit* often refers to usage limits (number of
+:   In an API context, *limit* often refers to usage limits (number of
         queries allowed per second or per day). Where possible, specify the kind
         of limit that you mean, such as *usage limit* or *service
         limit*; the word *limit* can refer to many different kinds of
         limits, including rules about acceptable use.
 
     lint
-    :   Write both command-line tool name and command in lowercase. Use code font
+:   Write both command-line tool name and command in lowercase. Use code font
         except where inappropriate.
 
     little-endian
-    :   Hyphenate. Lowercase except at the beginning of a sentence,
+:   Hyphenate. Lowercase except at the beginning of a sentence,
         heading, or list item.
-    :   Recommended: The codebase assumes
+:   Recommended: The codebase assumes
         little-endian byte ordering.
-    :   Not recommended: The codebase assumes
+:   Not recommended: The codebase assumes
         Little Endian byte ordering.
-    :   Not recommended: The codebase assumes
+:   Not recommended: The codebase assumes
         Little-endian byte ordering.
-    :   Not recommended: The codebase assumes
+:   Not recommended: The codebase assumes
         little endian byte ordering.
 
     livestream
-    :   Not *live stream*.
+:   Not *live stream*.
 
     load balancing (noun), load-balancing (adjective)
 
     lock screen
-    :   Two words in Android contexts; not *lockscreen* or
+:   Two words in Android contexts; not *lockscreen* or
         *lock-screen*.
 
     login (noun or adjective), log in (verb)
-    :   For the verb form, *sign in* is generally better.
-    :   If you're documenting a tool that uses the term *log in*, then use
+:   For the verb form, *sign in* is generally better.
+:   If you're documenting a tool that uses the term *log in*, then use
         that term.
 
     long press
-    :   In Android documentation, don't use. Instead, use *touch & hold*.
+:   In Android documentation, don't use. Instead, use *touch & hold*.
         (Not *touch and hold*.)
 
     long-running operation
-    :   Not *long running operation*.
-    :   OK to abbreviate as *LRO* after the first use.
+:   Not *long running operation*.
+:   OK to abbreviate as *LRO* after the first use.
 
     lower
-    :   Don't use for a range of version numbers. Instead, use [*earlier*](#earlier).
-    :   Don't use to refer to a position in a document. Instead, use *later*
+:   Don't use for a range of version numbers. Instead, use [*earlier*](#earlier).
+:   Don't use to refer to a position in a document. Instead, use *later*
         or *following*.
-    :   Don't use to refer to a position in the UI. Instead, write instructions
+:   Don't use to refer to a position in the UI. Instead, write instructions
         that avoid directional language.
-    :   In Android documentation, use
-        *lower* for a range of version numbers, not *earlier*.
 
 ### M
 
@@ -1785,21 +1718,16 @@ may
 :   To convey *possibility*, use *can* or *might*
     instead.
 :   To convey *permission*, use *can* instead.
-:   See also [can](#can), [could](#could),
-    [might](#might), [must](#must),
-    [should](#should), and [would](#would).
-:   For information about clarifying who's performing an action, see
-    [Active voice](/style/voice).
+
+
 
 MBps
 :   Short for *megabytes per second*. By convention, we don't use
-    *MB/s*. For more information, see
-    [Units of measurement](/style/units-of-measure).
+    *MB/s*.
 
 Mbps
 :   Short for *megabits per second*. By convention, we don't use
-    *Mb/s*. For more information, see
-    [Units of measurement](/style/units-of-measure).
+    *Mb/s*.
 
 media type
 :   In general, use the term [*media type*](https://www.iana.org/assignments/media-types/media-types.xhtml).
@@ -1830,11 +1758,8 @@ microservices
 might
 :   Use to convey possibility or an uncertain outcome (for example, "You
     might be prompted to enter your credentials").
-:   See also [can](#can), [could](#could),
-    [may](#may), [must](#must),
-    [should](#should), and [would](#would).
-:   For information about clarifying who's performing an action, see
-    [Active voice](/style/voice).
+
+
 
 MIME type
 :   *MIME* stands for "Multipurpose Internet Mail Extensions," and was originally used to
@@ -1897,11 +1822,8 @@ must
 :   Use to describe a required action or state (for example, "You must have
     the Editor role"). You can also write *you need* in order to convey a
     requirement.
-:   See also [can](#can), [could](#could),
-    [may](#may), [might](#might),
-    [should](#should), and [would](#would).
-:   For information about clarifying who's performing an action, see
-    [Active voice](/style/voice).
+
+
 
 ### N
 
@@ -1929,8 +1851,7 @@ native
     *cloud-born*.
 
 navigation bar
-:   Don't use to refer to a *navigation menu*. For more information, see
-    [Navigation menu](/style/ui-elements#term-navigation-menu).
+:   Don't use to refer to a *navigation menu*.
 
 neither
 :   Write *neither A nor B*, not *neither A or B*.
@@ -2129,32 +2050,33 @@ persist
     ...
 
 persistent disk
-:   Not *PD*.:   Lowercase except at the start of a sentence.
+:   Not *PD*.
+   Lowercase except at the start of a sentence.
 
     personally identifiable information (PII)
-    :   Some government agencies use the less common term *personally
+:   Some government agencies use the less common term *personally
         identifying information*; use this alternate term only in contexts
         where you're referring to a document that uses this term.
 
     pets versus cattle, pets vs. cattle, pets v. cattle
-    :   Don't use. Instead, use more precise terms like *persistent versus
+:   Don't use. Instead, use more precise terms like *persistent versus
         dynamic* or *manually configured versus automated*. For more
         information, see
         [Avoid
         unnecessarily violent language](/style/inclusive-documentation#violent-language).
 
     plain text
-    :   In most contexts, use *plain text*, but use *plaintext* in a
+:   In most contexts, use *plain text*, but use *plaintext* in a
         cryptography context.
 
     please
-    :   Don't use *please* in the normal course of explaining how to use a
+:   Don't use *please* in the normal course of explaining how to use a
         product, even if you're explaining a difficult task.
-    :   Don't use the phrase *please note*.
-    :   Use *please* only when you're asking for permission or
+:   Don't use the phrase *please note*.
+:   Use *please* only when you're asking for permission or
         forgiveness—for example, when what you're asking for benefits you,
         inconveniences a reader, or suggests a potential issue with a product.
-    :   Recommended: If the issue persists,
+:   Recommended: If the issue persists,
         please contact your account representative.
 
         plugin (noun), plug-in (adjective), plug in (verb)
@@ -2163,116 +2085,115 @@ persistent disk
         
 
         point to
-        :   Use to refer to the action of pointing the mouse pointer (focus). This
+:   Use to refer to the action of pointing the mouse pointer (focus). This
             action doesn't imply a length of time waiting for the UI to react to user
             action.
-        :   This is similar to the action [hold the
+:   This is similar to the action [hold the
             pointer over (hover)](#hold-the-pointer-over). In most cases, it's better to use the verb
             phrase *hold the pointer over* if you want the user to wait for the
             UI to react.
 
         POJO
-        :   If you're not actually writing about a Plain Old Java Object for a Java
+:   If you're not actually writing about a Plain Old Java Object for a Java
             audience, use *simple object*. You can write *a simple object,
             similar to a POJO in Java* if that helps your audience.
 
         PoP
-        :   Acronym for *point of presence*.
-        :   Recommended: point of presence (PoP)
-        :   Not recommended: point of presence
+:   Acronym for *point of presence*.
+:   Recommended: point of presence (PoP)
+:   Not recommended: point of presence
             (POP)
 
         pop-up, popup
-        :   Don't use.
-        :   To describe a window that appears and asks for, or presents, additional
+:   Don't use.
+:   To describe a window that appears and asks for, or presents, additional
             information, use [*dialog*](#dialog).
-        :   To describe a menu that rises from an interface (such as a right-click
+:   To describe a menu that rises from an interface (such as a right-click
             context menu), use *menu*.
 
         populate
-        :   OK to use if you're writing about a process populating a table or other
+:   OK to use if you're writing about a process populating a table or other
             entity. If you're writing about a person, use *fill in*.
-        :   Recommended: The SQL command
+:   Recommended: The SQL command
             populates the table with sample data.
-        :   Recommended: When you have finished
+:   Recommended: When you have finished
             filling in the form ...
-        :   Not recommended: When you have
+:   Not recommended: When you have
             finished populating the form ...
 
         port
-        :   Use *listen on* (not *to*).
+:   Use *listen on* (not *to*).
 
         possible
-        :   Don't use *possible* or *impossible* to mean *you can* or
+:   Don't use *possible* or *impossible* to mean *you can* or
             *you can't*.
 
         PostgreSQL
-        :   If the UI uses the name *Postgres*, it's OK to match the UI. Don't
+:   If the UI uses the name *Postgres*, it's OK to match the UI. Don't
             use *PostgreSQL*.
 
         postmortem
-        :   Avoid in general usage. Instead, use *retrospective*.
-        :   In disaster recovery (DR) and DevOps contexts, use *blameless
+:   Avoid in general usage. Instead, use *retrospective*.
+:   In disaster recovery (DR) and DevOps contexts, use *blameless
             postmortem*.
 
         practitioner
-        :   Avoid using without any supporting information to define the roles that
+:   Avoid using without any supporting information to define the roles that
             you're referring to.
-        :   Recommended: The framework describes
+:   Recommended: The framework describes
             best practices for architects, developers, administrators, and other cloud
             practitioners.
-        :   Not recommended: The framework
+:   Not recommended: The framework
             describes best practices for cloud practitioners.
 
         pre\*
         
 
         prebuilt
-        :   Not *pre-built*.
+:   Not *pre-built*.
 
         precapture
-        :   Not *pre-capture*.
+:   Not *pre-capture*.
 
         preemptible
-        :   Not *pre-emptible* or *pre-emptive*.
+:   Not *pre-emptible* or *pre-emptive*.
 
         pre-existing
-        :   Not *preexisting*.
+:   Not *preexisting*.
 
         preferred pronouns
-        :   Don't use. Instead, use *pronouns*.
+:   Don't use. Instead, use *pronouns*.
 
         prerecorded
-        :   Not *pre-recorded*.
+:   Not *pre-recorded*.
 
         pre-shared key
-        :   Not *preshared key*.
+:   Not *preshared key*.
 
         presently, at present
-        :   Avoid because this word or phrase is implied. The word or phrase can also
+:   Avoid because this word or phrase is implied. The word or phrase can also
             prematurely disclose product or feature strategy or inappropriately imply
             that a product or feature might change.
-        :   See also [as of this writing](#as-of-this-writing) and
-            [currently](#currently).
-        :   Recommended: This setting is required.
-        :   Not recommended: At present, this
+        
+:   Recommended: This setting is required.
+:   Not recommended: At present, this
             setting is required.
 
         press
-        :   Use when referring to pressing a key or a key combination to cause an
+:   Use when referring to pressing a key or a key combination to cause an
             action to occur. Also use for mechanical buttons.
-        :   For on-screen and soft (capacitive) buttons, use *tap*.
-        :   Recommended: Press
+:   For on-screen and soft (capacitive) buttons, use *tap*.
+:   Recommended: Press
             `Control+C` (or `Command+C` on macOS).
 
         presubmit
-        :   Not *pre-submit*.
+:   Not *pre-submit*.
 
         primitive
-        :   Use with caution. Don't use *primitive* in a disparaging sense.
+:   Use with caution. Don't use *primitive* in a disparaging sense.
 
         pros
-        :   Don't use. Instead, use a more precise term, such as *advantages*.
+:   Don't use. Instead, use a more precise term, such as *advantages*.
 
 ### Q
 
@@ -2490,12 +2411,8 @@ shift left
 
 should, should be
 :   Generally avoid.
-:   Because *should* is ambiguous by definition, it can be problematic. For more information
-    and alternatives, see
-    [Word choice for recommendations and requirements](/style/prescriptive-documentation#word-choice).
-:   See also [can](#can), [could](#could),
-    [may](#may), [might](#might),
-    [must](#must), and [would](#would).
+:   Because *should* is ambiguous by definition, it can be problematic.
+
 
 sign-in (noun or adjective), sign in (verb)
 :   Not *log in* or *signin*.
@@ -2564,8 +2481,7 @@ soon
 :   Avoid in timeless documentation because this word can become outdated. The
     word can also prematurely disclose product or feature strategy or
     inappropriately imply that a product or feature might change.
-:   See also [eventually](#eventually) and
-    [future](#future).
+
 :   Recommended: This setting is
     optional.
 :   Not recommended: This setting is
@@ -2588,58 +2504,59 @@ ssh and SSH
 :   Recommended: To establish an SSH
     connection, use the `ssh` command.
 :   Recommended: Connect to the instance
-    by using SSH.:   Not recommended: `ssh` into
+    by using SSH.
+   Not recommended: `ssh` into
         your remote shell.
 
     ssh'ing
-    :   Don't use.
-    :   Recommended: When you use
+:   Don't use.
+:   Recommended: When you use
         `ssh` to log in ...
 
     startup (noun or adjective), start up (verb)
 
     static external IP address
-    :   Don't use *static IP address* or *external IP address* to refer
+:   Don't use *static IP address* or *external IP address* to refer
         to static external IP addresses.
 
     status bar
-    :   Not *statusbar* or *status-bar*.
-    :   Lowercase except at the beginning of a sentence,
+:   Not *statusbar* or *status-bar*.
+:   Lowercase except at the beginning of a sentence,
         heading, or list item.
 
     STONITH, STOMITH
-    :   Avoid using
+:   Avoid using
         [graphically
         violent terms](/style/inclusive-documentation#features-and-users). This acronym's letters stand for an extremely graphic
         and violent act. Instead, explain the relevant feature, such as *fence
         failed nodes*.
 
     style sheet
-    :   Not *stylesheet*. This is the official spelling, per the World Wide
+:   Not *stylesheet*. This is the official spelling, per the World Wide
         Web Consortium (W3C).
 
     sub-command
-    :   Not *subcommand*.
+:   Not *subcommand*.
 
     subnet
-    :   OK to use as a shortening of *subnetwork*. Use the same term consistently throughout your
+:   OK to use as a shortening of *subnetwork*. Use the same term consistently throughout your
         document.
 
     subtree
-    :   Not *sub-tree*.
+:   Not *sub-tree*.
 
     subzone
-    :   Not *sub-zone* or *sub zone*.
+:   Not *sub-zone* or *sub zone*.
 
     such as versus like
     
 
     surface
-    :   Avoid as a transitive verb; instead, use a more specific term, such as
+:   Avoid as a transitive verb; instead, use a more specific term, such as
         *make people aware of* or *expose*.
-    :   Recommended: To make the audit logs
+:   Recommended: To make the audit logs
         available, you must configure the monitoring system.
-    :   Not recommended: To surface audit
+:   Not recommended: To surface audit
         logs, you must configure the monitoring system.
 
 ### T
@@ -2657,37 +2574,28 @@ tablet
 
 tag
 
-tap
-:   In Android documentation, use for on-screen and soft (capacitive)
-    buttons.:   Use instead of *click* when the environment is definitely a
-        touch device.
-    :   Use instead of *touch*. However, *touch & hold* (not *touch
-        and hold*) is OK to use.
-    :   For mechanical buttons, use [*press*](#press).
-
-    tap & hold, tap and hold
-    :   In Android documentation, don't use. Instead, use *touch & hold*.
-        (Not *touch and hold*.)
 
     tarball
-    :   Don't use. Instead, use *tar file*.
+:   Don't use. Instead, use *tar file*.
 
     target
-    :   Avoid using as a verb when possible, especially in reference to people.
+:   Avoid using as a verb when possible, especially in reference to people.
         For some readers, *target* has aggressive connotations. Instead of
         "targeting" audiences, we try to attract them or appeal to them or make
         their lives easier.
-    :   It's OK to use *target* as an adjective, as in *target
+:   It's OK to use *target* as an adjective, as in *target
         audience*, but consider rephrasing for clarity. Alternatives
         include phrases such as *intended for*, *looking for*,
         *focused on*, and *interacting with*.
 
     terminate
-    :   Avoid using as a synonym for *stop*. Instead, use words like
+:   Avoid using as a synonym for *stop*. Instead, use words like
         *stop*, *exit*, *cancel*, or *end*.
-    :   For a specific context where you can use *terminate* as a synonym for
+:   For a specific context where you can use *terminate* as a synonym for
         *stop*, see [Documenting
-        command-line syntax](/style/code-syntax#linux-signals).:   :   In some contexts, such as telephony and networking, *terminate* has
+        command-line syntax](/style/code-syntax#linux-signals).
+   
+:   In some contexts, such as telephony and networking, *terminate* has
                 specific technical meanings that aren't synonyms for *stop*; in those
                 contexts, you can use *terminate*.
 
@@ -2695,20 +2603,20 @@ tap
             
 
             then
-            :   Although it is common in casual usage to omit the word *then* in *if...then*
+:   Although it is common in casual usage to omit the word *then* in *if...then*
                 statements, you should include helper words like *then* in technical documentation. For
                 more information, see
                 [Use clear, precise, and unambiguous language](/style/translation#clear-language).
 
             they (singular)
-            :   This is our preferred gender-neutral pronoun. Whether used as singular
+:   This is our preferred gender-neutral pronoun. Whether used as singular
                 or plural, it always takes the plural verb. For example, "A user
                 authenticates their identity by entering their password."
 
             third party (noun), third-party (adjective)
 
             this, that
-            :   Where possible, put a noun after *this* or *that* for clarity.
+:   Where possible, put a noun after *this* or *that* for clarity.
                 If doing so results in clunky prose, then don't do it; but even then, try
                 thinking about what the noun would be. If you aren't sure what noun
                 *this* or *that* refers to, then consider rephrasing—
@@ -2716,80 +2624,80 @@ tap
                 either.
 
             timeframe
-            :   Not *time frame*. Avoid where possible, or use an alternative such as
+:   Not *time frame*. Avoid where possible, or use an alternative such as
                 *period*, *schedule*, *deadline*, or *when*. But if
                 you do use it, then write it as one word.
 
             timeout (noun), time out (verb)
 
             timestamp
-            :   Not *time stamp*.
+:   Not *time stamp*.
 
             time to live
-            :   Not *time-to-live*. Abbreviate as *TTL* after first use.
+:   Not *time-to-live*. Abbreviate as *TTL* after first use.
 
             time zone (noun), time-zone (adjective)
 
             tl;dr
-            :   Don't use. Instead, use something like *To summarize*, or revise the
+:   Don't use. Instead, use something like *To summarize*, or revise the
                 sentence.
 
             toolkit
-            :   Not *tool-kit* or *tool kit*.
+:   Not *tool-kit* or *tool kit*.
 
             touch
-            :   In Android documentation, don't use. Instead, use *tap*. However,
+:   In Android documentation, don't use. Instead, use *tap*. However,
                 *touch & hold* is OK to use.
 
             "touch & hold"
-            :   Not *touch and hold*.
+:   Not *touch and hold*.
 
             touchscreen
-            :   Not *touch screen*
+:   Not *touch screen*
 
             traditional
-            :   If possible, use a more precise term.
-            :   Recommended: Conventionally, Python
+:   If possible, use a more precise term.
+:   Recommended: Conventionally, Python
                 function names are lowercase, with words separated by underscores.
-            :   Not recommended: Traditionally, Python
+:   Not recommended: Traditionally, Python
                 function names are lowercase, with words separated by underscores.
-            :   Recommended: This tutorial explains
+:   Recommended: This tutorial explains
                 how to migrate from an on-premises data warehouse to BigQuery.
-            :   Not recommended: This tutorial
+:   Not recommended: This tutorial
                 explains how to migrate from a traditional data warehouse to BigQuery.
 
             transpile
-            :   Not *transcompile*.
+:   Not *transcompile*.
 
             tribal knowledge, tribal wisdom
-            :   Don't use. Instead, use a less figurative term to indicate knowledge held
+:   Don't use. Instead, use a less figurative term to indicate knowledge held
                 by a group of people.
 
             trojan
-            :   Lowercase when referring to malware.
+:   Lowercase when referring to malware.
 
             turn on
-            :   In procedures, use the appropriate label and action for the
+:   In procedures, use the appropriate label and action for the
                 [UI element](/style/ui-elements) that the user interacts with.
-            :   For turning on or activating an option or feature, use *turn on* or
+:   For turning on or activating an option or feature, use *turn on* or
                 [enable](#enable) consistently. Use the same term consistently throughout your
                 document.
-            :   Recommended: To turn on Magic Mode,
+:   Recommended: To turn on Magic Mode,
                 follow these steps.
-            :   Recommended: In **Settings**, click
+:   Recommended: In **Settings**, click
                 the **Magic mode** toggle to the on position.
 
             tutorial
-            :   OK to use.
+:   OK to use.
 
             type
-            :   In general, use [enter](#enter) instead of *type* because
+:   In general, use [enter](#enter) instead of *type* because
                 there is typically more than one way to enter text than typing (such as
                 pasting text or speaking).
 
             typically
-            :   Use to describe what is usual or expected under normal circumstances.
-            :   Don't use as the first word in a sentence, as doing so can leave the
+:   Use to describe what is usual or expected under normal circumstances.
+:   Don't use as the first word in a sentence, as doing so can leave the
                 meaning open to misinterpretation.
 
 ### U
@@ -2848,48 +2756,50 @@ Unix epoch time
 
 unselect
 :   Don't use. Instead, use *clear* for checkboxes, and *deselect*
-    for other UI elements.:   unsighted
-        :   Don't use.
+    for other UI elements.
+   unsighted
+:   Don't use.
 
         untar
-        :   Don't use. Instead, use *extract*.
+:   Don't use. Instead, use *extract*.
 
         unzip
-        :   Don't use. Instead, use *extract*.
+:   Don't use. Instead, use *extract*.
 
         US
-        :   OK to use as an abbreviation for *United States*. Don't use
+:   OK to use as an abbreviation for *United States*. Don't use
             *U.S.* or *U.S.A.*
 
         user
-        :   Use the word *user* only to refer to the user of the software that
+:   Use the word *user* only to refer to the user of the software that
             your reader is developing. Otherwise, address the reader as *you*
             and assume that they will complete the tasks that you're documenting. For
             more information, see [Second person and first
             person](/style/person).
 
         user base
-        :   Not *userbase*.
+:   Not *userbase*.
 
         using
-        :   Where *using* might have more than one interpretation, use *by
+:   Where *using* might have more than one interpretation, use *by
             using* to help clarify the logic of the sentence.
-        :   Recommended: You can filter for data
+:   Recommended: You can filter for data
             with specific attributes by using custom filters.
-        :   Not recommended: You can filter for
+:   Not recommended: You can filter for
             data with specific attributes using custom filters.
 
         UTF
-        :   Include the hyphen in the names of Unicode encodings, such as
-            *UTF-8*, *UTF-16*, and *UTF-32*.:   utilize, utilization
-                :   Use with caution. Don't use *utilize* when you mean *use*. It's
+:   Include the hyphen in the names of Unicode encodings, such as
+            *UTF-8*, *UTF-16*, and *UTF-32*.
+   utilize, utilization
+:   Use with caution. Don't use *utilize* when you mean *use*. It's
                     OK to use *utilize* or *utilization* when referring to the
                     quantity of a resource being used.
-                :   Recommended: When CPU utilization
+:   Recommended: When CPU utilization
                     exceeds 75%, the autoscaler adds more CPU resources.
-                :   Recommended: To distribute network
+:   Recommended: To distribute network
                     traffic, use a load balancer.
-                :   Not recommended: To distribute network
+:   Not recommended: To distribute network
                     traffic, utilize a load balancer.
 
 ### V
@@ -3039,11 +2949,11 @@ wish
 with
 :   Don't use *with* when expressing ownership::   Recommended: A handset that has 2 GB
         of RAM.
-    :   Not recommended: A handset with 2 GB
+:   Not recommended: A handset with 2 GB
         of RAM.
 :   Don't use *with* when expressing use::   Recommended: Use the debugging tool
         to debug.
-    :   Not recommended: Debug this tool with
+:   Not recommended: Debug this tool with
         the debugging tool.
 
 workload
@@ -3059,13 +2969,9 @@ World Wide Web
 
 would
 :   Avoid using. Instead, use *can* where possible.
-:   See also [can](#can), [could](#could),
-    [may](#may), [might](#might),
-    [must](#must), and [should](#should).
-:   For information about clarifying who's performing an action, see
-    [Active voice](/style/voice).
-:   For information about tenses, see [Present
-    tense](/style/tense).
+
+
+
 
 ### Y
 

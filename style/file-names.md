@@ -1,6 +1,6 @@
 # Filenames and file types
 
-DO NOT APPLY THIS GUIDE TO LINKS. For example, do not change "For more information, see the page on [Data Parallel Deployment](data_parallel_deployment.md)" to "For more information, see the [`data_parallel_deployment.md` file](data_parallel_deployment.md)".
+DO NOT APPLY THIS GUIDE TO LINKS. For example, do not change "For more information, see the page on [Data Parallel Deployment](data_parallel_deployment.md)" into "For more information, see the [`data_parallel_deployment.md` file](data_parallel_deployment.md)".
 
 ## Guidelines for names
 

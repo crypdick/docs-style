@@ -114,15 +114,12 @@ Not recommended: See
 Write link text that makes sense without the surrounding text.
 Don't use phrases such as *this document*, *this article*, or *click here*.
 
-Recommended:
-For more information, see
+Recommended: For more information, see
 [Make headings into link targets](/style/headings-targets).
 
-Not recommended:
-Want more? [Click here!](/style/headings-targets)
+Not recommended: Want more? [Click here!](/style/headings-targets)
 
-Not recommended:
-For more information,
+Not recommended: For more information,
 see [this document](/style/headings-targets).
 
 ### Avoid URLs as link text
@@ -212,10 +209,7 @@ indicates why you're referring the reader to this information. Make the
 explanation specific, but don't repeat the link text.
 
 If you're introducing a cross-reference with "For more information..."
-phrasing, then you can do this by adding an "about..." phrase. For more
-information, see the
-[Write link introductions](#link-introductions) section
-of this document.
+phrasing, then you can do this by adding an "about..." phrase.
 
 Recommended: For more
 information about authentication and authorization, see
@@ -307,17 +301,13 @@ punctuation outside of the link tags where possible.
 Recommended:
 
 ```
-
 For more information, see <a href="#Test">Test your code</a>.
-
 ```
 
 Not recommended:
 
 ```
-
 For more information, see <a href="#Test">Test your code.</a>
-
 ```
 
 ## Quotation marks and italics

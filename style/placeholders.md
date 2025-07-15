@@ -27,7 +27,7 @@ When you create placeholders follow this general guidance around using the lette
 
 There are several ways to format placeholders, depending on whether you're
 working in HTML or Markdown, or whether the placeholder is inline, in a code block, or in a
-paragraph. For details, see the following sections.
+paragraph.
 
 ### Placeholders in inline text
 

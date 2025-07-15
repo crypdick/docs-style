@@ -41,9 +41,7 @@ Code font
     [code samples](/style/code-samples) or other blocks of code.
 :   Do not override or modify font styles inline.
 :   Use code font to mark up code, such as filenames, class names, method names, HTTP status codes,
-    console output, and placeholders. For more information, see
-    [Some specific items to put
-    in code font](/style/code-in-text#some-specific-items-to-put-in-code-font).
+    console output, and placeholders.
 
 Capitalization
 :   Use American English style for
@@ -71,7 +69,4 @@ Other punctuation conventions
     shorthand for *and*. Use *and* instead. That includes headings and navigation.
     **Exception**: It's okay to use *&* in cases where you need to refer to a UI
     element or the name of a menu that uses *&*.
-:   Put quotation marks and end punctuation outside of link text. For more information, see
-    the [Punctuation around link text](/style/cross-references#punctuation)
-    and [Quotation marks and italics](/style/cross-references#quotation-marks-italics)
-    sections of the "Cross-references and linking" page.
+:   Put quotation marks and end punctuation outside of link text.

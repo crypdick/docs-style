@@ -75,14 +75,8 @@ To document a complex procedural step, use the following order:
 1. Describe the action to take.
 2. List a command, if necessary.
 3. Explain any placeholders that are used in the command.
-
-   For more information, see
-   [Formatting placeholders](/style/placeholders).
 4. Explain the command in more detail, if necessary.
 5. List the output of the command, if necessary.
-
-   For more information, see
-   [Output from commands](/style/code-syntax#output).
 6. In a separate paragraph, explain
    [the result of an
    action](/style/procedures#steps-with-results-or-justifications), or any output, if necessary.

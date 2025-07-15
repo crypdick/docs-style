@@ -97,11 +97,6 @@ for the other:
   This sentence describes all echidnas, and mentions in passing that they
   all have long snouts.
 
-For more information about restrictive and nonrestrictive clauses and whether
-to use *that* or *which*, read
-[what
-Grammar Girl has to say on the subject](https://www.quickanddirtytips.com/articles/which-versus-that/).
-
 When you're referring to a person, you can use *who* instead of *that*. If you're not
 sure which pronoun is appropriate in your context, then it's generally OK to use *that*.
 
