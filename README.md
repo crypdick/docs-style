@@ -36,9 +36,12 @@ If an edit fails to apply (e.g. the snippet isn’t found) the script records a 
 ## Differences to the official style guide
 
 - I moved some guides that are irrlevant for my use-case to `archive/`.
-- I deleted Google-specific directions.
-- I simplified some style guides to make them more "atomic" so that they are less monolithic.
-- Made a few small edits to prevent common LLM mistakes, e.g. "Do not apply this style guide to code blocks."
+- I deleted Google- and Android-specific style guides.
+- I simplified some style guides to make them more "atomic" and less monolithic.
+- Added a few LLM hints to prevent common LLM mistakes while applying the style guides, e.g. "Do not apply this style guide to code blocks."
+- Added a few style precidence rules to enforce an ordering of the style guides.
+- Dropped preference for `_` over `*` for italics.
+- Added some personal style guides. These are prefixed with `PERSONAL-`.
 
 ## Style precidence
 
