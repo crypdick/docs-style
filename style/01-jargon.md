@@ -8,7 +8,7 @@ vaguely defined or overloaded terms like *solution*, *support*, or
 
 Typically, the meaning of jargon isn't understood except by the specific group. For this reason,
 jargon can hamper our efforts to publish content that's clear, that reaches a
-[global audience](/style/translation)
+global audience
 in multiple languages, that serves readers at various levels of product knowledge, and that's
 inclusive of different groups and cultures.
 
@@ -21,13 +21,6 @@ readers search for those terms. If you're going to use jargon, consider the foll
   post-mortem*, write *When the project is finished, review what processes worked or didn't
   work*. Instead of writing *Create a back-of-the-envelope design*, write *Use an informal
   design process*.
-* **Can you replace the term with a different, more specific term?** For example, the
-  [word list](/style/word-list)
-  for this style guide offers several replacement terms: *affected area* or *spatial
-  impact* (for *blast radius*), *import* or *load* (for *ingest*), and
-  *ready-made* or *pre-built* (for *off-the-shelf*). When a term on the word list is
-  marked as "Don't use" (some jargon can be considered offensive, violent, or not inclusive),
-  replace that term or write around it.
 * **Are you using the term only once in your document?** If so, describe the term in plain
   language and refer to it in parentheses, or link to a trusted definition.
 

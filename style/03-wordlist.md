@@ -7,8 +7,7 @@ term. Apply this guidance as follows:
   possible*, or to use the term with caution. The term might be ambiguous
   or obscure, so we provide alternative term suggestions or suggest that you
   use a more specific term. However, you can use the term if needed. Where
-  appropriate, define the term or use it only once, as explained on the
-  [Jargon](/style/jargon) page.
+  appropriate, define the term or use it only once
 * **Don't use**. In all cases, we prefer to *not use the term*. The
   term might be particularly ambiguous or it might have an offensive or
   non-inclusive association. If such a term appears in code, we recommend that

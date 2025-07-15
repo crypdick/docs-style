@@ -96,8 +96,7 @@ citizen](https://wikipedia.org/wiki/First-class_citizen), even though these term
 
 This section contains guidance about how to replace or write around a non-inclusive term. If a
 term is well established in the industry and replacing it could cause confusion, see
-[Replace established terms](#replace). If a term occurs in code samples or keywords, see
-[Write around non-inclusive code terms](#write-around).
+[Replace established terms](#replace).
 
 #### Replace established terms
 

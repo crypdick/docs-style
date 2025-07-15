@@ -23,7 +23,7 @@ list:
 | Attribute names and values | The `imageURL` attribute contains the path for the image file that you can open in a browser—for example, `https://www.example.com/images/product.jpg`.  You can create a VM instance using the `e2-highcpu-16` machine type in the `us-central1-a` region. |
 | Class names | The `SnapshotDiskOperator` class includes the `generate_snapshot_name` method. |
 | Command output | The output is similar to the following:     ```          Found sysprep-specialize-script-ps1 in metadata.         ...         Finished running specialize scripts.          ``` |
-| [Command-line utility names](#tool-names), such as `gcloud`, `gsutil`, `kubectl`, and `bq` | You can use the `kubectl` tool to define a network policy. |
+| Command-line utility names, such as `gcloud`, `gsutil`, `kubectl`, and `bq` | You can use the `kubectl` tool to define a network policy. |
 | Data types | Nested data is represented as a `STRUCT` type. |
 | Database elements (such as row and column names) | The query extracts the `month`, `julianday`, and `dayofweek` values from the `datetime` and `timestamp` columns. |
 | Defined (constant) values for an element or attribute | The constant `city` has the value `"San Francisco"`. |
@@ -34,12 +34,12 @@ list:
 | Filenames, [filename extensions](/style/filenames#file-type-names) (if used), and paths | Open the `pg_hba.conf` file, which is typically in the `/etc/postgresql/13/main` directory. |
 | Folders and directories | The configuration information for the reader deployment is in the `opentsdb-read.yaml.tpl` file in the `deployments` folder of the guide repository. |
 | [HTTP content-type](https://www.w3.org/Protocols/rfc1341/4_Content-Type.html) values | The value of the `Content-Type` header value is required and must be set to `application/fhir+json` as defined in the FHIR specification. |
-| [HTTP status codes](#statuscodes) | The HTTP `500 Internal Server Error` status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request. |
+| HTTP status codes | The HTTP `500 Internal Server Error` status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request. |
 | HTTP verbs | To specify image content directly using a local image file, you can use a `POST` request. |
 | IAM role names | Grant the new service account the `roles/cloudfunctions.invoker` IAM role for the `trace` function. |
 | IP addresses | The other nodes of the cluster should contact this host on IP address `10.10.10.10.` |
 | Language keywords | The SQL statement contains the dataset table name after the `FROM` keyword in the format of `PROJECT_NAME.DATASET.TABLE_NAME`. |
-| [Method and function names](#methods) | The `ST_GEOPOINT` function uses the longitude and latitude of the Colosseum in Rome.  To fetch the status of the job, call the `get_job_status` method. |
+| Method and function names | The `ST_GEOPOINT` function uses the longitude and latitude of the Colosseum in Rome.  To fetch the status of the job, call the `get_job_status` method. |
 | Namespace aliases | Use Config Sync to apply the package only to the `default` namespace. |
 | [Placeholder variables](/style/placeholders) | Replace `SUBNETWORK_NAME` with the resource ID of the private subnet that you want the blueprint to use. |
 | Port numbers | Each member Pod must have a container that's listening on TCP port `50000`. |
@@ -68,7 +68,7 @@ or as a code entity like an attribute or value, then use code font.
 If a
 [UI element](/style/ui-elements#formatting)
 meets the
-[requirements for code font](#code),
+requirements for code font,
 then use both code font and bold for that element.
 
 Recommended: In the **Network** list, select
