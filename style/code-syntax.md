@@ -54,7 +54,7 @@ To format a command with multiple elements, do the following:
   + Linux or Cloud Shell: A backslash typically preceded with a space
     ( `\`)
   + Windows: A caret preceded with a space ( `^`)
-* Format placeholder text with [placeholders](/style/placeholders).
+* Format placeholder text with placeholders.
 * Follow the command line with a descriptive list of the placeholders
   used in the command line.
 * When documenting a command-line option or argument, use end puctuation for complete

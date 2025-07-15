@@ -9,8 +9,8 @@ internationalization in mind. The following list defines these terms:
 
 ## Best practices
 
-* Use [present tense](/style/tense).
-* Write [dates and times](/style/dates-times) in unambiguous and
+* Use present tense.
+* Write dates and times in unambiguous and
   clear ways.
 * Use qualifying nouns for technical keywords. For example, when referring to a file called
   `example.yaml`, call it the *`example.yaml` file* and not
@@ -121,7 +121,7 @@ review costs.
 
   + Don't use the same word to mean different things. In particular, avoid
     using the same word as both a noun and a verb in close proximity. For examples
-    of the multiple-meanings issue, see the word list entries for [once](/style/word-list#once) and [since](/style/word-list#since).
+    of the multiple-meanings issue, see the word list entries for once and since.
   + Use standardized phrases for frequently used sentences, introductory phrases, and other common
     tasks.
   + Use standard English word order. Sentences follow the *subject + verb + object* order.

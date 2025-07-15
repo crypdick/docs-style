@@ -93,7 +93,7 @@ notebook. Its title starts with a bare infinitive.
   length adds value.
   For SEO, use the more prominent version of the term in headings.
 * In general, guidance that applies to text also applies to headings—for example,
-  [contractions](/style/contractions) and [articles](/style/articles).
+  contractions and articles.
 * Avoid using code items in headings when possible. If you must mention a code item in a heading,
   add a descriptive noun to the item in code font.
 * Use heading tags to structure your content hierarchically—for example,

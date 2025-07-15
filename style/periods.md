@@ -16,7 +16,7 @@ tell whether the period is part of the URL.
 To indicate that the punctuating period isn't part of the URL, try one of the
 following techniques:
 
-* Whenever possible, avoid putting [URLs in text](/style/cross-references#urls).
+* Whenever possible, avoid putting URLs in text.
 * Rewrite the sentence so that the URL isn't at the end of the sentence.
 * Put the URL on a separate line from the text, omitting the final period.
 

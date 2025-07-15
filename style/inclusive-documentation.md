@@ -15,12 +15,12 @@ words depending on the context.
 | Before launch, give everything a final check for completeness and clarity. | Before launch, give everything a final sanity-check. |
 | There are some baffling outliers in the data. | There are some crazy outliers in the data. |
 | It slows down the service, causing a poor user experience until the queue clears. | It cripples the service, causing a poor user experience until the queue clears. |
-| Replace the placeholder in this example with the appropriate value. | Replace the [dummy variable](/style/word-list#dummy-variable) in this example with the appropriate value. |
+| Replace the placeholder in this example with the appropriate value. | Replace the dummy variable in this example with the appropriate value. |
 
 ## Avoid unnecessarily gendered language
 
 In addition to being mindful of the
-[pronouns](/style/pronouns#gender-neutral-pronouns) used in narrative
+pronouns used in narrative
 examples, be sensitive to other possible sources of gendered language.
 
 | Recommended | Not recommended |
@@ -31,7 +31,7 @@ examples, be sensitive to other possible sources of gendered language.
 ## Avoid unnecessarily violent language
 
 Avoid graphically violent or harmful terms. For example, avoid using the
-term *[STONITH](/style/word-list#stonith)*; instead, describe
+term *STONITH*; instead, describe
 the process used to stop an errant node in context by using more specific terms.
 
 If it's unavoidable and you must mention a violent or harmful term such as
@@ -85,8 +85,8 @@ to discuss the feature in terms that are relevant to anyone regardless of what
 languages they know.
 
 Avoid using socially-charged terms for technical concepts where possible. For
-example, avoid terms such as [blacklist](/style/word-list#blacklist),
-[native](/style/word-list#native) feature, and
+example, avoid terms such as blacklist,
+native feature, and
 [first-class
 citizen](https://wikipedia.org/wiki/First-class_citizen), even though these terms might still be widely used. Instead of
 *first-class*, consider other terms such as *core feature*,

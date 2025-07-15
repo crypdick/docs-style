@@ -21,9 +21,9 @@ Don't use. Instead, use a hyphen or the word *to*.
 
 Another common but nonstandard construction is to use an em dash, an en dash, or a hyphen
 surrounded by spaces to separate an item and its description. Instead, use
-[a colon or a period](/style/lists#description-lists-that-use-run-in-headings).
+a colon or a period.
 For a series of items, use
-[an HTML description list](/style/lists#description-lists) (`<dl>`).
+an HTML description list (`<dl>`).
 
 Recommended: Example: This is an
 example.

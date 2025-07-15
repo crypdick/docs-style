@@ -71,7 +71,7 @@ Not recommended:
 * `.../<var>MY_API_NAME</var>`
 * `.../<var>YOUR_API_NAME</var>`
 
-**Note**: You can mark up command-line syntax with [brackets](/style/code-syntax#optional-arguments), [braces](/style/code-syntax#set-of-two-arguments), and [ellipses](/style/code-syntax#arguments-that-can-repeat). Don't put the
+**Note**: You can mark up command-line syntax with brackets, braces, and ellipses. Don't put the
 brackets, braces, or ellipses in the `var` element.
 
 ## Explain placeholders
@@ -127,7 +127,7 @@ Use the following format for two or more placeholders:
 * List the placeholders in the order in which they appear in the command line.
 * Tag each placeholder in a code sample or command with `code` and
   `var` elements, followed by a
-  [colon and a description that starts with a lowercase letter](/style/colons).
+  colon and a description that starts with a lowercase letter.
   For
   non-code samples, remove the `code` elements—for example:
 
@@ -144,7 +144,6 @@ Use the following format for two or more placeholders:
   ```
   <li><code><var>INSTANCE_NAME</var></code>: description, such as...</li>
   ```
-* Each item in the list follows our [list style](/style/lists).
 
 Recommended:
 

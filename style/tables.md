@@ -11,8 +11,8 @@ other. To decide which presentation to use, consult the following table:
 
 | Item type | Example | How to present |
 | --- | --- | --- |
-| Each item is a single unit. | A list of programming language names, or a list of steps to follow. | Use a [numbered list, lettered list, or bulleted list](/style/lists#numbered-lettered-bulleted-lists). |
-| Each item is a pair of pieces of related data. | A list of term/definition pairs. | Use a [description list](/style/lists#description-lists) (or, in some contexts, a table). |
+| Each item is a single unit. | A list of programming language names, or a list of steps to follow. | Use a numbered list, lettered list, or bulleted list. |
+| Each item is a pair of pieces of related data. | A list of term/definition pairs. | Use a description list (or, in some contexts, a table). |
 | Each item is three or more pieces of related data. | A set of parameters, where each parameter has a name, a data type, and a description. | Use a table. |
 
 ### Places not to use tables

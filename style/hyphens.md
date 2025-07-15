@@ -15,16 +15,7 @@ the following circumstances:
 * **Convention**. For some terms, our guidance tells us to always hyphenate or
   never hyphenate, even if the convention seems to contradict other guidance.
 
-In addition, there are many exceptions to general hyphenation guidance. If you're not
-sure whether to hyphenate a term, in addition to reviewing the guidelines on this page, check the
-following sources (in this order):
-
-1. The documentation that you're working with. If there's an established
-   convention for hyphenating a term in a particular documentation set, follow that
-   convention.
-2. The [word list](/style/word-list) in this style guide.
-3. The [Merriam-Webster
-   dictionary](https://www.merriam-webster.com/).
+In addition, there are many exceptions to general hyphenation guidance.
 
 As always, deviate from our guidance when it serves your readers.
 
@@ -98,7 +89,7 @@ Recommended: workaround
 
 #### Exceptions
 
-Our [word list](/style/word-list) includes exceptions for
+There are some common exceptions for
 well-established terms that commonly use a hyphen or a space, such as
 *multi-region* and *style sheet*. In some cases, we note that noun,
 verb, and adjective versions of a word are treated differently.
@@ -153,9 +144,7 @@ implementations
 Not recommended: Publicly-available
 implementations
 
-Don't use hyphens in compounds that are conventionally not hyphenated. Follow the
-guidance in the [word list](/style/word-list)
-or check the convention in the documentation that you're working with.
+Don't use hyphens in compounds that are conventionally not hyphenated.
 
 Recommended: A managed
 instance group (MIG)
@@ -193,9 +182,7 @@ for the currently authorized user.
 
 #### Exceptions
 
-Some compound terms are always hyphenated, even if they follow a verb. To
-check, look the term up in the [word list](/style/word-list). If it isn't in the
-list, check the [Merriam-Webster dictionary](https://www.merriam-webster.com/).
+Some compound terms are always hyphenated, even if they follow a verb.
 As always, follow the convention in the documentation that you're working with.
 
 Recommended: You can deploy the app

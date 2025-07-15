@@ -1,6 +1,6 @@
 # Contractions  
 
-In general, we write our documentation in an [informal tone](/style/tone), so we
+In general, we write our documentation in an informal tone, so we
 recommend using common two-word contractions such as *you're*, *don't*, and
 *there's*.
 

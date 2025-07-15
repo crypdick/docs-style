@@ -22,7 +22,7 @@ isn't relevant; it's fine to use the word *acronym* to refer to both.
   + *etc.* for *et cetera*
   + *min* for *minutes*
   + *CA* for *California*
-* [Contractions](/style/contractions) are discussed in a
+* Contractions are discussed in a
   separate page of this style guide.
 
 ## Long and short versions of a word
@@ -79,7 +79,7 @@ abbreviation only if the long form is a proper noun or is conventionally capital
 capitalize it only because the abbreviation includes capital letters.
 
 If the first mention of
-a term occurs in a [heading or title](/style/headings), you can use the abbreviation and
+a term occurs in a heading or title, you can use the abbreviation and
 then spell out the abbreviation in the first paragraph that follows the heading or title.
 
 When deciding to spell out a term, consider your audience. If your document is going to be
@@ -104,7 +104,7 @@ The following are examples of widely understood abbreviations that rarely need t
 * PC
 * RAM
 * REST
-* [Units of measurement](/style/units-of-measure#byte-units) such as
+* Units of measurement such as
   MB, MiB, GB, or GiB
 * URL
 * USB
@@ -119,9 +119,9 @@ It's [okay to use *etc.* in
 some circumstances](/style/word-list#etc), but it's best to use different phrasing in most lists.
 
 Don't use internet slang abbreviations such as
-[*tl;dr*](/style/word-list#tldr),
-[*ymmv*](/style/word-list#ymmv),
-[*RTFM*](/style/word-list#rtfm), or others. Write out what you
+*tl;dr*,
+*ymmv*,
+*RTFM*, or others. Write out what you
 mean in a non-figurative way.
 
 Use the most common form of a word. If the spelled-out word is common
@@ -142,7 +142,7 @@ Follow these guidelines:
 
 * Don't use periods with acronyms or initialisms.
 * Put a period at the end of a shortened word, except for
-  [date and time](/style/dates) abbreviations.
+  date and time abbreviations.
 * If you write or say an abbreviation as a word (for example, *app* or
   *sync*), don't put a period after it.
 * Don't use a period with an abbreviation for the name of a country, US
@@ -172,7 +172,3 @@ Whether to use *a* or *an* before a term depends on the pronunciation of the ter
 use *a* before any consonant sound and *an* before any vowel sound. Pronunciation of
 abbreviations can vary, so in general, base your decision on the pronunciation that's most common
 for your audience.
-
-In particular, our word list includes preferences for
-"[a SQL](/style/word-list#sql)", "[a FHIR](/style/word-list#fhir)",
-and "[an SAP](/style/word-list#sap)".

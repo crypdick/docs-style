@@ -54,12 +54,11 @@ To format a command with multiple elements, do the following:
   + Linux or Cloud Shell: A backslash typically preceded with a space
     ( `\`)
   + Windows: A caret preceded with a space ( `^`)
-* Format placeholder text with [placeholders](/style/placeholders).
 * Follow the command line with a descriptive list of the placeholders
   used in the command line.
 * When documenting a command-line option or argument, use end puctuation for complete
   sentences. Don't use end punctuation for single words or noun phrases, unless there is a mix of
-  sentences and noun phrases. This guidance is similar to [end punctuation in lists](/style/lists#capitalization-and-end-punctuation).
+  sentences and noun phrases.
 
 
 ## Command prompt

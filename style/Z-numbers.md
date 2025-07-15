@@ -142,7 +142,7 @@ In general, avoid using Roman numerals when possible. Instead, use Arabic numera
 are easier to scan.
 
 You can use Roman numerals for
-[sub-steps in numbered procedures](/style/procedures#sub-steps-in-numbered-procedures).
+sub-steps in numbered procedures.
 
 ## Fractions
 
@@ -178,7 +178,7 @@ Recommended:
 ## Suspended hyphens
 
 When two or more hyphenated compounds that start with numbers modify the same
-word, use [suspended hyphens](/style/hyphens#suspended-hyphens).
+word, use suspended hyphens.
 
 Recommended: You can set up the system to
 scan for new files at one-, two-, or three-hour intervals.
@@ -256,6 +256,6 @@ For example, if using a feature incurs additional fees, add a link to pricing ca
 ## Provide visuals for math concepts
 
 Accompany math concepts and numerals with
-[diagrams or other images](/style/images)
+diagrams or other images
 to support comprehension. For example, if comparing statistics, consider illustrating percentages in
 a pie chart or a bar graph.

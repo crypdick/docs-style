@@ -19,11 +19,11 @@ experience for all readers.
 ## Ease of reading
 
 * Break up walls of text to aid in scannability. For example, separate
-  [paragraphs](/style/paragraph-structure),
+  paragraphs,
   create
-  [headings](/style/headings),
+  headings,
   and use
-  [lists](/style/lists).
+  lists.
 * Use shorter sentences. Try to use fewer than 26 words per sentence.
 * Define acronyms and abbreviations on first usage and if they're used infrequently.
 * Use parallel writing structures for similar things. For example, start each list in the same
@@ -56,7 +56,7 @@ unique.
 
 ## Links
 
-* Use [meaningful link text](/style/cross-references#descriptive-link-text).
+* Use meaningful link text.
   Links should make sense when read out of context.
 * Don't use *click here* or *read this document*. Some people who use screen readers
   jump from link to link to scan a page and need to understand what a link contains.
@@ -69,9 +69,9 @@ unique.
 ## Lists
 
 * In a
-  [procedure](/style/procedures),
+  procedure,
   make each instruction a
-  [list item](/style/lists).
+  list item.
 * Use lists to make it easier for the reader to follow the steps.
 
 ## Tables

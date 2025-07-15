@@ -41,7 +41,7 @@ readers search for those terms. If you're going to use jargon, consider the foll
   a pattern called a
   [*dead letter queue*](https://en.wikipedia.org/wiki/Dead_letter_queue).
 * **Is the term used in a command or code sample?** If so, use the words only in direct reference to the code items
-  ([formatted as code](/style/code-in-text)), and make it clear
+  (formatted as code), and make it clear
   what you're referring to.
 
   Recommended: Add a user to the

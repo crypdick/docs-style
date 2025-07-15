@@ -1,8 +1,6 @@
 # Procedures  
 
-A procedure is a sequence of numbered steps for accomplishing a task. For information about
-lists of items that aren't part of a procedure, see the
-[Lists](/style/lists) page.
+A procedure is a sequence of numbered steps for accomplishing a task.
 
 ## Introductory sentences
 
@@ -32,7 +30,7 @@ buttons:
 ## Single-step procedures
 
 When a procedure consists of only one step, write the step in one sentence and format it as a
-[bulleted list](/style/lists#numbered-lettered-bulleted-lists).
+bulleted list.
 
 Recommended:
 
@@ -276,8 +274,8 @@ Recommended:
 | If the reader must press **Enter** after a step, then include that instruction as part of the step. | Click the search box, type `custom function`, and then press **Enter**. | 1. Click the search box and type `custom function`. 2. Press **Enter**. |
 | Don't include keyboard shortcuts. | Copy the command, and then paste it... | Press Ctrl+C, and then press Ctrl+V... |
 | When there's more than one way to do something, give only the best way. Giving alternate ways can confuse readers. |  |  |
-| If your procedure includes code samples, see how to format  [code samples](/style/code-samples). |  |  |
-| If your procedure includes commands, see how to format  [commands](/style/code-syntax#formatting-a-command). |  |  |
+| If your procedure includes code samples, see how to format  code samples. |  |  |
+| If your procedure includes commands, see how to format  commands. |  |  |
 | Ensure that the reader has the information that they need in order to prepare for the task ahead of time. Having information in advance supports task management, executive functioning, memory, and emotional regulation. | The following hardware and software are required:... |  |
 | Include as few steps as possible to complete the task. Limit interruptions in the path. |  |  |
 | Focus on one reader decision at a time. Separate each instruction by making each instruction a separate list item. |  |  |

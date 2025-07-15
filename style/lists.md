@@ -4,8 +4,7 @@
 
 Tables and lists are both ways to present a set of similarly structured
 items. Sometimes it's not obvious when to choose one presentation over the
-other. To decide which presentation to use, see
-[List or table?](/style/tables#list-or-table)
+other.
 
 **Note**: Don't use a list to show only one item; a single
 item isn't really a list. If you want to set a single item off from surrounding
@@ -51,8 +50,7 @@ If the list doesn't need any additional context other than the heading that imme
 the list, it's OK to not introduce a list with an introductory sentence.
 
 Introduce a list with a complete sentence, not a partial one that's
-completed by the list items. You can also use *the following* as a noun phrase (see
-[following](/style/word-list#following) in the word list).
+completed by the list items. You can also use *the following* as a noun phrase.
 
 | Recommended | Not recommended |
 | --- | --- |
@@ -208,7 +206,7 @@ documentation, then follow the Material Design guidelines.
 ## Comma-separated lists
 
 When you write a list in a paragraph, use
-[serial commas](/style/commas#serial-commas) to separate the items.
+serial commas to separate the items.
 
 Avoid ending a list with *etc.* or phrases like *and so on*.
 Instead, introduce the list in a way that makes it clear that the list isn't

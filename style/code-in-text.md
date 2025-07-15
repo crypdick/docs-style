@@ -1,6 +1,6 @@
 # Code in text
 
-In ordinary text sentences (as opposed to, say, [code samples](/style/code-samples)),
+In ordinary text sentences (as opposed to, say, code samples),
 use code font to mark up most things that have anything to do with code. Code
 font helps to clarify for your reader which text refers to an entity in these
 ways:
@@ -31,7 +31,7 @@ list:
 | Element names (HTML and XML) | The `script` and `df-messenger` HTML elements should be in the `body` element of your page.  A C-CDA document contains a header and a body enclosed within a `ClinicalDocument` XML element.  When you refer to an element name, don't put angle brackets (`<>`) around the element name. |
 | Enum (enumerator) names | Generated from the protobuf enum `BOOL = 1;`. |
 | Environment variable names | Set the `CHROME_REMOTE_DESKTOP_DEFAULT_DESKTOP_SIZES` environment variable to include the resolution of your monitor. |
-| Filenames, [filename extensions](/style/filenames#file-type-names) (if used), and paths | Open the `pg_hba.conf` file, which is typically in the `/etc/postgresql/13/main` directory. |
+| Filenames, filename extensions (if used), and paths | Open the `pg_hba.conf` file, which is typically in the `/etc/postgresql/13/main` directory. |
 | Folders and directories | The configuration information for the reader deployment is in the `opentsdb-read.yaml.tpl` file in the `deployments` folder of the guide repository. |
 | [HTTP content-type](https://www.w3.org/Protocols/rfc1341/4_Content-Type.html) values | The value of the `Content-Type` header value is required and must be set to `application/fhir+json` as defined in the FHIR specification. |
 | HTTP status codes | The HTTP `500 Internal Server Error` status code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request. |
@@ -41,12 +41,12 @@ list:
 | Language keywords | The SQL statement contains the dataset table name after the `FROM` keyword in the format of `PROJECT_NAME.DATASET.TABLE_NAME`. |
 | Method and function names | The `ST_GEOPOINT` function uses the longitude and latitude of the Colosseum in Rome.  To fetch the status of the job, call the `get_job_status` method. |
 | Namespace aliases | Use Config Sync to apply the package only to the `default` namespace. |
-| [Placeholder variables](/style/placeholders) | Replace `SUBNETWORK_NAME` with the resource ID of the private subnet that you want the blueprint to use. |
+| Placeholder variables | Replace `SUBNETWORK_NAME` with the resource ID of the private subnet that you want the blueprint to use. |
 | Port numbers | Each member Pod must have a container that's listening on TCP port `50000`. |
 | Query parameter names and values | If you want to return all contents under a directory, use the `recursive=true` query parameter with your request. |
 | Strings (such as URLs or domain names) that are used in commands and code | In IAM, a condition can specify a page that only Human Resources admins can access—for example, `https://hr.example.com`.  The `logID` field includes the domain `corpaudits.example.com`. |
 | Text input | In the **Key name** field, enter `config-management`. |
-| [UI elements](/style/ui-elements) that are rendered based on previously entered text (such as a server or instance name) | From the **Server name** list, select **`my-sql-cluster1`**.  Click **`my-instance`**.  If a code-formatted element appears in UI, add bold as well. |
+| UI elements that are rendered based on previously entered text (such as a server or instance name) | From the **Server name** list, select **`my-sql-cluster1`**.  Click **`my-instance`**.  If a code-formatted element appears in UI, add bold as well. |
 
 Generally, don't put quotation marks around code unless the quotation marks
 are part of the code.
@@ -66,7 +66,7 @@ or as a code entity like an attribute or value, then use code font.
 ## Code in UI elements
 
 If a
-[UI element](/style/ui-elements#formatting)
+UI element
 meets the
 requirements for code font,
 then use both code font and bold for that element.
