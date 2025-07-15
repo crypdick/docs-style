@@ -19,10 +19,7 @@ Italic
 :   When you need to add emphasis to indicate importance, use italics, not bold or underline. But
     usually, your words can carry the emphasis without adding italics. To indicate
     semantic emphasis in HTML, use the `em` element,
-    which renders as italics in most contexts. To indicate emphasis in Markdown, use underscores
-    (`_`), which render as italics; you can't do semantic tagging in Markdown.
-:   Although an asterisk, `*`, can also indicate italics in Markdown, we recommend
-    underscores to make it easier for humans to distinguish italics from bold in the Markdown file.
+    which renders as italics in most contexts.
 :   Italicize titles of books, movies, web series, and other full-length works, unless they're part
     of a link.
 :   Italicize mathematical variables and version variables. For example, *x* + *y* = 3,
