@@ -34,14 +34,13 @@ Environment:
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import itertools
 import os
 import re
 import shutil
 import sys
-import threading
 import time
-from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -225,47 +224,87 @@ def _log_incident(
 
 
 # ---------------------------------------------------------------------------
-# User-facing progress feedback
+# Spinner & ESC support
 # ---------------------------------------------------------------------------
 
 
-@contextmanager
-def spinner(message: str = "Processing…"):
-    """Display a simple spinner while the enclosed block is running."""
-    stop_event = threading.Event()
+def run_with_spinner(fn, message: str):
+    """Run *fn* in a worker thread while displaying a spinner.
 
-    def _spin() -> None:
-        for ch in itertools.cycle("|/-\\"):
-            if stop_event.is_set():
-                break
-            sys.stdout.write(f"\r{message} {ch}")
+    If the user presses ESC (\x1b) while the task is running, return *None*.
+    """
+
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    future = executor.submit(fn)
+
+    # Raw-mode keyboard setup (POSIX only).
+    fd = None
+    old_termios = None
+    if os.name != "nt" and sys.stdin.isatty():
+        import termios
+        import tty
+
+        fd = sys.stdin.fileno()
+        old_termios = termios.tcgetattr(fd)
+        tty.setcbreak(fd)
+
+    try:
+        spinner_chars = itertools.cycle("|/-\\")
+        while True:
+            if future.done():
+                return future.result()
+
+            # Draw spinner frame.
+            sys.stdout.write(f"\r{message} {next(spinner_chars)}")
             sys.stdout.flush()
+
+            # Poll for ESC.
+            if os.name == "nt":
+                import msvcrt  # type: ignore
+
+                if msvcrt.kbhit() and msvcrt.getch() in (b"\x1b",):
+                    return None
+            elif fd is not None:
+                import os as _os
+                import select
+
+                ready, _, _ = select.select([fd], [], [], 0)
+                if ready and _os.read(fd, 1) == b"\x1b":
+                    return None
+
             time.sleep(0.1)
-        # Clear the spinner line.
+    finally:
+        # Clear spinner line.
         sys.stdout.write("\r" + " " * (len(message) + 2) + "\r")
         sys.stdout.flush()
 
-    t = threading.Thread(target=_spin, daemon=True)
-    t.start()
-    try:
-        yield
-    finally:
-        stop_event.set()
-        t.join()
+        # Restore terminal settings.
+        if fd is not None and old_termios is not None:
+            import termios
+
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_termios)
+
+        executor.shutdown(wait=False)
+
+
+# ---------------------------------------------------------------------------
+# OpenAI chat helpers
+# ---------------------------------------------------------------------------
 
 
 def chat(messages: list[dict[str, str]]) -> str:
-    """Thin wrapper around the OpenAI chat completion API."""
+    """Thin wrapper around the OpenAI chat completion API (temperature fixed)."""
+
     response = openai.chat.completions.create(
         model=MODEL_NAME,
         messages=messages,
-        # temperature=0.0,
     )
     return response.choices[0].message.content.strip()
 
 
 def generate_diff(style_guide: str, document: str) -> str:
     """Ask the LLM for a diff applying *style_guide* to *document*."""
+
     messages = [
         {"role": "system", "content": DIFF_SYSTEM_PROMPT},
         {
@@ -365,8 +404,15 @@ def main() -> None:
 
         # Ask the LLM to create a diff while showing a spinner so that
         # the user knows the process is still ongoing.
-        with spinner("Generating diff via LLM"):
-            diff = generate_diff(style_text, doc_text)
+        diff = run_with_spinner(
+            lambda s=style_text, d=doc_text: generate_diff(s, d),
+            "Generating diff via LLM",
+        )
+
+        # If *None* was returned, the user hit ESC during diff generation.
+        if diff is None:
+            print("\n↷ Skip requested via ESC – moving to next style guide.\n")
+            continue
 
         # Reject obviously malformed diffs up-front.
         if diff.strip() == DIFF_END_MARKER or not _diff_has_changes(diff):
@@ -421,10 +467,10 @@ def main() -> None:
             print(f"{FILTERED_DIFF_COLOR}{filtered_diff_text}{RESET_COLOR}")
 
         # Apply edits locally (deterministic and safer than LLM application).
-        with spinner("Applying edits"):
-            updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
-            # Update stats – snippets that didn't match the document
-            edits_missed += len(missed_snippets)
+        updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
+
+        # Update stats – snippets that didn't match the document
+        edits_missed += len(missed_snippets)
 
         changed = updated_doc != doc_text
 

@@ -29,6 +29,8 @@ uv run --script iterative_style.py \
 
 This skips every style page **up to and including** `commas.md`.
 
+You can also press the `ESC` key to skip the current style page.
+
 ## Incident logs
 
 If an edit fails to apply (e.g. the snippet isn’t found) the script records a log file under `incidents/` so you can inspect what went wrong.
