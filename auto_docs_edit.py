@@ -62,6 +62,10 @@ MODEL_NAME = "o4-mini"  # "gpt-4.1-mini"
 STYLE_DIR = Path(__file__).parent / "style"
 INCIDENTS_DIR = Path(__file__).parent / "incidents"
 DIFF_END_MARKER = "NO_CHANGES"
+# Symbol that marks a style-guide Markdown file as relevant for the
+# "final pass" mode (see --final-pass CLI flag). Any file whose **stem**
+# ends with this character will be included when --final-pass is used.
+FINAL_PASS_MARKER = "+"
 
 # ---------------------------------------------------------------------------
 # Prompt templates
@@ -400,6 +404,15 @@ def main() -> None:
         metavar="STYLE_FILE",
         help="Skip all style guide pages up to and including the specified filename.",
     )
+    parser.add_argument(
+        "--final-pass",
+        action="store_true",
+        help=(
+            "Process only the subset of style-guide pages whose filenames are marked "
+            f"with the '{FINAL_PASS_MARKER}' symbol. Use this as a quick final check "
+            "after manual edits to catch rules that are easy to violate."
+        ),
+    )
     args = parser.parse_args()
 
     target_path = Path(args.markdown_document).expanduser().resolve()
@@ -437,6 +450,11 @@ def main() -> None:
 
     # Always process style pages in a deterministic order (alphabetical by filename).
     style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
+
+    # If --final-pass is active, restrict to pages whose stem ends with the marker.
+    if args.final_pass:
+        print("Processing final pass style rules only.")
+        style_pages = [p for p in style_pages if p.stem.endswith(FINAL_PASS_MARKER)]
 
     # Optionally skip pages up to and including the requested filename.
     if args.skip_through:

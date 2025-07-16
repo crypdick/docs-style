@@ -1,6 +1,6 @@
 # AutoDocsEditor
 
-`AutoDocsEditor` makes your documentation conform to the [Google Developer Documentation Style Guide](https://developers.google.com/style) by using large language models (*LLMs*). This is a large style guide, so the `AutoDocsEditor` breaks up the job into stages, proposing incremental edits to a document. This makes the process of hand-checking a long document against dozens of individual style rules less tedious.
+`AutoDocsEditor` makes your documentation conform to the [Google Developer Documentation Style Guide](https://developers.google.com/style) by using *large language models* (*LLMs*). This is a large style guide, so the `AutoDocsEditor` breaks up the job into stages, proposing incremental edits to a document. This makes the process of hand-checking a long document against dozens of individual style rules less tedious.
 
 ## Quick start
 
@@ -33,6 +33,16 @@ uv run --script auto_docs_edit.py \
 This example skips every style rule **up to and including** `commas.md`.
 
 You can also press the `ESC` key to interrupt the current task and skip to the next task.
+
+### Final pass sweep
+
+After you have iterated through the full style-guide once and made additional manual edits, you can run a **quick compliance sweep** over only the most error-prone rules:
+
+```bash
+uv run --script auto_docs_edit.py --final-pass docs/your_article.md
+```
+
+The script will process **only** those style-guide pages whose filenames end with a `+` (for example `01-lists+.md` or `commas-serial+.md`).
 
 ## Incident logs
 
