@@ -23,9 +23,6 @@ a paragraph at the end of the paragraph. Readers don't read every word.
 
 ## Format paragraphs
 
-Left-align text for readability. Don't center, full-justify, or right-align
-text.
-
 Don't force line breaks (hard returns) within sentences and paragraphs. Line
 breaks might not work well in resized windows, across different devices, or with
 enlarged text.
