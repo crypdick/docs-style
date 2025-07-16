@@ -83,8 +83,8 @@ The following example demonstrates the preceding order:
 
 1. Plan the Terraform deployment:
 
-   ```
-   terraform plan -out=NAME
+   ```bash
+       terraform plan -out=NAME
    ```
 
    Replace `NAME` with the name of your Terraform plan.
@@ -99,10 +99,9 @@ The following example demonstrates the preceding order:
    The output is similar to the following:
 
    ```
-
-     Plan: 26 to add, 0 to change, 0 to destroy.
-     ------------------------------------------------------------
-     This plan was saved to: NAME
+       Plan: 26 to add, 0 to change, 0 to destroy.
+       ------------------------------------------------------------
+       This plan was saved to: NAME
    ```
 
    The output shows what resources to add, change, or destroy.

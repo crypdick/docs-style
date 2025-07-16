@@ -7,7 +7,7 @@
 
 ## Quick start
 
-Export your OpenAI key (or put it in a `.env` file):
+To get started, export your OpenAI key (or put it in a `.env` file):
 
 ```bash
     export OPENAI_API_KEY="YOUR_API_KEY"
@@ -15,12 +15,11 @@ Export your OpenAI key (or put it in a `.env` file):
 
 Run the `auto_docs_edit.py` script against a target Markdown document:
 
-
 ```bash
     uv run --script auto_docs_edit.py docs/your_article.md
 ```
 
-This script processes the Markdown file against every page of the style guide (stored locally in the `style/` directory). The script pauses between each set of edits, giving you the opportunity to review the proposed edits and commit the incremental changes before moving on to the next set of style rules. The script itself does not touch Git.
+This script processes the Markdown file against every page of the style guide (stored locally in the `style/` directory). The script pauses between each set of edits, giving you the opportunity to review the proposed edits and commit the incremental changes before moving on to the next set of style rules. The script itself doesn't touch Git.
 
 Note: we recommend using `o4-mini` for better results.
 
@@ -45,15 +44,15 @@ After you have iterated through the full style guide once and made additional ma
     uv run --script auto_docs_edit.py --final-pass docs/your_article.md
 ```
 
-The script will process **only** those style guide pages whose filenames end with a `+` (for example, the `01-lists+.md` file or the `commas-serial+.md` file).
+The script will process **only** those style guide pages whose filenames end with a `+`, for example `00-tone+.md`.
 
 ## Incident logs
 
-If an edit fails to apply (for example, the script cannot find the snippet), the script records a log file under `incidents/`, so you can inspect what went wrong.
+If an edit fails to apply (for example, the script can't find the snippet), the script records a log file under `incidents/`, so you can inspect what went wrong.
 
 ## Differences to the official style guide
 
-- Moved some guides that are irrelevant for my use-case to `archive/`.
+- Moved some guides that are irrelevant for my use case to `archive/`.
 - Deleted Google- and Android-specific style rules.
 - Simplified some style rules to make them more "atomic" and less monolithic.
 - Added a few LLM hints to prevent common LLM mistakes while applying the style guides (for example, "Do not apply this style guide to code blocks.").
