@@ -51,14 +51,6 @@ Quotation marks
 :   For titles of shorter works—such as articles or episodes in a web series—put titles in quotation marks, unless
     they're part of a link.
 
-Font type, size, and color
-:   Do not override global styles for [font type, size, or
-    color](/style/fonts).
-:   Use semantic HTML or Markdown to
-    control the style of text on a page—for example, code tags in HTML (`<code>`)
-    or backticks in Markdown (```)—instead of manually styling text with a monospace
-    font.
-
 Other punctuation conventions
 :   Don't use ampersands (&) as conjunctions or
     shorthand for *and*. Use *and* instead. That includes headings and navigation.
