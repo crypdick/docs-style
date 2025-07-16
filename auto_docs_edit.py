@@ -10,7 +10,7 @@
 """Iteratively apply Google style guide pages to a target markdown document.
 
 Usage:
-    uv run --script iterative_style.py [--skip-through STYLE_FILE] <path-to-doc>
+    uv run --script auto_docs_edit.py [--skip-through STYLE_FILE] <path-to-doc>
 
 The script will iterate over every ``*.md`` file inside ``style/`` (each
 scraped Google dev style-guide page). For each page it:

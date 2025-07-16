@@ -1,7 +1,7 @@
 [project]
-name = "google-style"
+name = "auto_docs_editor"
 version = "0.1.0"
-description = "Add your description here"
+description = "AutoDocsEditor makes documentation conform to the Google Docs Style Guide"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
