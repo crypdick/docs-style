@@ -83,7 +83,8 @@ DIFF_SYSTEM_PROMPT = (
     "</edit>\n\n"
     "IMPORTANT: Be extremely careful when authoring the <before> snippet—"
     "it must match the document text *character-for-character*, including whitespace and newlines. "
-    "It is not necessary to wrap the contents of <before> or <after> with quotation marks or other wrapping characters in order to match the source text."
+    "It is not necessary to wrap the contents of <before> or <after> with quotation marks or other wrapping characters in order to match the source text. "
+    "For example, to match the text 'Hello, world!', use <before>Hello, world!</before> not <before>'\nHello, world!\n'</before>."
     "If it is not an exact match, applying the diff will fail with an error.\n"
     "You do NOT need to pad the snippet with surrounding context; matching the smallest distinctive substring is sufficient, as long as it uniquely identifies the text to change.\n"
     "The STYLE GUIDE will be supplied inside <style_guide>…</style_guide> and the DOCUMENT inside <document>…</document>. "
@@ -118,12 +119,9 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
     The function parses **XML blocks** of the form:
 
            <edit>
-           <before>
-           [...any text...]
-           </before>
-           <after>
-           [...any text...]
-           </after>
+           <before>[...any text...]</before>
+           <after>[...any text...]</after>
+           <reason>[...any text...]</reason>
            </edit>
 
     """
@@ -452,8 +450,12 @@ def main() -> None:
             style_pages = style_pages[skip_idx + 1 :]
             print(f"Skipped {skip_idx} style pages.")
         except StopIteration:
-            print(
-                f"[warn] --skip-through: '{skip_name}' not found among style pages. Processing all pages."
+            # If the requested *skip-through* filename is not found, abort with an
+            # explicit error rather than silently continuing. This prevents
+            # accidental typos from going unnoticed and ensures the user
+            # understands why the script did not behave as expected.
+            parser.error(
+                f"--skip-through: '{skip_name}' not found among style pages."  # noqa: E501
             )
 
     if not style_pages:
@@ -521,7 +523,7 @@ def main() -> None:
 
         # Rebuild the diff text using only the edits that are both unseen and non-reversing.
         filtered_diff_text = "\n\n".join(
-            f"<edit>\n<before>\n{b}\n</before>\n<after>\n{a}\n</after>\n</edit>"
+            f"<edit>\n<before>{b}</before>\n<after>{a}</after>\n</edit>"
             for b, a in non_reversing_edits
         )
 
