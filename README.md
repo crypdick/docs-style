@@ -1,50 +1,58 @@
-# Automatic Google Style Formatter
+# AutoDocsEditor
 
-`iterative_style.py` is a script that walks a Markdown document through every page of [Google’s developer style guide](https://developers.google.com/style) (stored locally in the `style/` directory) and lets an LLM propose minimal edits until all the style edits have been made.
-
-This makes the process of hand-checking a long document against dozens of individual style pages less tedious.
+`AutoDocsEditor` is a tool that uses large language models (LLMs) to help you make your documentation conform to the [Google Developer Documentation Style Guide](https://developers.google.com/style). This is a large style guide, so the script breaks up the task into stages, proposing incremental edits to a document. This makes the process of hand-checking a long document against dozens of individual style rules less tedious.
 
 ## Quick start
 
-```bash
-# Export your OpenAI key (or put it in a .env file)
-export OPENAI_API_KEY="sk-..."
+Export your OpenAI key (or put it in a `.env` file):
 
-# Run against a Markdown doc
-uv run --script iterative_style.py docs/your_article.md
+```bash
+export OPENAI_API_KEY="sk-..."
 ```
 
-The script pauses in between each set of edits to give you the opportunity to review the changes. When you’re happy with the result you can commit them and resume the script. The script itself never touches git.
+Run `auto_docs_edit.py` against a target Markdown document:
 
-Note: this script was tested with "gpt-4.1-mini", but it made too many mistakes. Switching to "o4-mini" improved the results.
-
-### Skipping ahead
-
-If you’ve already applied some pages you can jump forward:
 
 ```bash
-uv run --script iterative_style.py \
+uv run --script auto_docs_edit.py docs/your_article.md
+```
+
+This script processes the Markdown file against every page of the style guide (stored locally in the `style/` directory). The script pauses in between each set of edits, giving you the opportunity to review the proposed edits and commit the incremental changes before moving on to the next set of style rules. The script itself never touches Git.
+
+Note: for best results, use `o4-mini`.
+
+### Skip style rules
+
+If you are resuming a run, you can skip style rules you have already processed:
+
+```bash
+uv run --script auto_docs_edit.py \
     --skip-through commas.md docs/your_article.md
 ```
 
-This skips every style page **up to and including** `commas.md`.
+This example skips every style rule **up to and including** `commas.md`.
 
-You can also press the `ESC` key to skip the current style page.
+You can also press the `ESC` key to interrupt the current task and skip to the next task.
 
 ## Incident logs
 
-If an edit fails to apply (e.g. the snippet isn’t found) the script records a log file under `incidents/` so you can inspect what went wrong.
+If an edit fails to apply (e.g. the script cannot find the snippet) the script records a log file under `incidents/` so you can inspect what went wrong.
 
 ## Differences to the official style guide
 
-- I moved some guides that are irrlevant for my use-case to `archive/`.
-- I deleted Google- and Android-specific style guides.
-- I simplified some style guides to make them more "atomic" and less monolithic.
+- Moved some guides that are irrelevant for my use-case to `archive/`.
+- Deleted Google- and Android-specific style guides.
+- Simplified some style rules to make them more "atomic" and less monolithic.
 - Added a few LLM hints to prevent common LLM mistakes while applying the style guides, e.g. "Do not apply this style guide to code blocks."
-- Added a few style precidence rules to enforce an ordering of the style guides.
+- Added a few style precedence rules to enforce an ordering of the style guides.
 - Dropped preference for `_` over `*` for italics.
-- Added some personal style guides. These are prefixed with `PERSONAL-`.
+- Removed internal links between style rule pages, since the LLM applies one set of style rules at a time and also can't follow the links.
+- Added some personal style rules. These personal style rules are prefixed with `PERSONAL-`.
 
-## Style precidence
+## Set style rule precedence
 
-The order in which the style guides are applied is important, because future edits may revert previous edits. The default order is alphabetic. Therefore, in order to enforce an ordering, you can add prefixes to the style guide names. The prefixes `00-`, `01-`, `02-`, will be applied in that order, before non-numeric style guides. Conversely, `z-` will be applied last.
+The order in which the style rules are applied is important, because subsequent edits may revert previous edits. The default order is alphabetic. Therefore, in order to enforce an ordering, you can add prefixes to the style guide names. The script applies the prefixes `00-`, `01-`, `02-` in that order, before non-numeric style guides. Conversely, the script applies `z-` last.
+
+# Planned features
+
+- [ ] Support for applying the script to Jupyter notebooks.
