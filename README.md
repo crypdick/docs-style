@@ -46,6 +46,16 @@ After you have iterated through the full style guide once and made additional ma
 
 The script will process **only** those style guide pages whose filenames end with a `+`, for example `00-tone+.md`.
 
+### YOLO mode (non-interactive)
+
+Run the script with `--yolo` to automatically accept every proposed edit and skip the manual review pauses:
+
+```bash
+    uv run --script auto_docs_edit.py --yolo docs/your_article.md
+```
+
+YOLO mode is not recommended because mistakes will compound.
+
 ## Incident logs
 
 If an edit fails to apply (for example, the script can't find the snippet), the script records a log file under `incidents/`, so you can inspect what went wrong.

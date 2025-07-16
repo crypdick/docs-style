@@ -399,6 +399,11 @@ def main() -> None:
             "after manual edits to catch rules that are easy to violate."
         ),
     )
+    parser.add_argument(
+        "--yolo",
+        action="store_true",
+        help="Enables YOLO MODE. Automatically accept and apply all edits.",
+    )
     args = parser.parse_args()
 
     target_path = Path(args.markdown_document).expanduser().resolve()
@@ -578,7 +583,7 @@ def main() -> None:
             _log_incident(page_path, target_path, diff, missed_snippets)
 
         # Only pause for user review if the document actually changed.
-        if changed:
+        if changed and not args.yolo:
             print(
                 "Please review the changes and commit them in git if desired.\n"
                 "Press <ENTER> to continue to the next style guide, or Ctrl+C to abort."
@@ -588,6 +593,8 @@ def main() -> None:
             except KeyboardInterrupt:
                 print("\nAborted by user.")
                 sys.exit(0)
+        elif changed and args.yolo:
+            print("Memento mori")
 
     # -------------------------------------------------------------------
     # Summary statistics about edit processing
