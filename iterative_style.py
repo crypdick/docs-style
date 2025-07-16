@@ -15,16 +15,15 @@ Usage:
 The script will iterate over every ``*.md`` file inside ``style/`` (each
 scraped Google dev style-guide page). For each page it:
 
-1. Sends the style-guide page and the target document to the LLM and requests a
-   unified diff that, when applied, transforms the target document so that it
-   conforms to the style guide.  If the style page is not relevant, the LLM
-   must return the literal string ``NO_CHANGES``.
-2. Displays the diff to the user and asks whether to apply it.
-3. If accepted, performs a second LLM call asking the model to apply the diff
-   and output the new full document text.
-4. Writes the updated document back to disk so that the user can review &
-   commit the change.
-5. Waits for the user to either continue to the next style page or abort.
+1. Sends the style-guide page and the current document to the LLM and requests edits.
+If the style page is not relevant, we skip the step and move on to the next style page.
+2. Filters out duplicate, reversing, or
+   no-op edits.
+3. Applies the remaining edits locally via plain string replacement.
+4. Writes the updated document back to disk (if anything changed).
+5. Pauses so you can review the result. Press <ENTER> to continue to the next guide or
+   Ctrl+C to abort the run.
+6. Records statistics and incident logs, then moves on to the next style page.
 
 Environment:
     OPENAI_API_KEY must be set and is preferably loaded from a ``.env`` file in
