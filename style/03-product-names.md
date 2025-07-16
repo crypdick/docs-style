@@ -24,6 +24,7 @@ terms defined by companies and open source communities.
 
   Recommended: The Cloud Scheduler
   job publishes a message to a Pub/Sub topic at one-minute intervals.
+  
 * If an official name begins with a lowercase letter, then put it in
   lowercase even at the start of a sentence. But it's better to revise
   the sentence to avoid putting a lowercase word at the start, if
