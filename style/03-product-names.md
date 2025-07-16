@@ -5,10 +5,10 @@ This page describes how to use product names.
 
 ## Capitalize product names
 
-In general, Google product names are in *title case*, sometimes called
+In general, product names are in *title case*, sometimes called
 *init-capped*, which means that every word is capitalized except for
 prepositions like *of* or *on* and articles like *a* or
-*the*. When you refer to a Google product, use title case except
+*the*. When you refer to product, use title case except
 when you're matching a UI label.
 
 When you write about any product, follow the official capitalization for the
@@ -16,8 +16,8 @@ names of brands, companies, software, products, services, features, and
 terms defined by companies and open source communities.
 
 * For example, if you're using Kubernetes-related terms, then follow
-  the capitalization that's shown in the Kubernetes [Concepts
-  documentation](https://kubernetes.io/docs/concepts/).
+  the capitalization that's shown in the Kubernetes Concepts
+  documentation.
 
   Recommended in a Kubernetes
   context: A Job creates one or more Pods.
@@ -76,4 +76,3 @@ Recommended: A Service Mesh environment
 ## Don't use product names as verbs
 
 Don't use product names or feature names as verbs.
-
