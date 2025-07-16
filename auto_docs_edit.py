@@ -92,8 +92,8 @@ DIFF_SYSTEM_PROMPT = (
     "Separate <edit> blocks only by whitespace/newlines—no other text. If several identical snippets require the same "
     "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
     f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
-    "Never output an <edit> block whose <before> and <after> content are identical after normalising "
-    "whitespace (including newlines, tabs, and spaces). These are a NO-OP and should be discarded. "
+    "Never output an <edit> block whose <before> and <after> content are identical. "
+    "These are a NO-OP and should be discarded. "
     "Each <edit> MUST remain small and local: the <before> snippet should not exceed 10 lines of text or ~300 characters. "
     "If the required change spans more than this limit, break it into multiple <edit> blocks, one per contiguous section. "
     "This is because if there are any mistake in the diff, it will fail to apply."
@@ -135,26 +135,13 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
     edits: list[tuple[str, str]] = []
 
     for match in xml_pattern.finditer(edits_text):
-        before_raw, after_raw = match.group(1), match.group(2)
-        # Trim *all* leading and trailing whitespace (including spaces, tabs, and newlines)
-        # so that mismatched indentation or accidental trailing spaces in the diff do not
-        # prevent us from locating the snippet in the document.
-        before = before_raw.strip()
-        after = after_raw.strip()
+        before, after = match.group(1), match.group(2)
 
         # Skip any edit that merely moves or modifies the sentinel value indicating
         # "no changes". The model occasionally (wrongly) embeds the sentinel
         # string inside an <edit> block which should be treated as a no-op.
         if before.strip() == DIFF_END_MARKER or after.strip() == DIFF_END_MARKER:
             continue  # Ignore this bogus edit outright.
-
-        # Skip no-op edits: identical text or differences consisting only of whitespace.
-        if not before or not after:
-            continue
-
-        if re.sub(r"\s+", "", before) == re.sub(r"\s+", "", after):
-            # The change is purely whitespace – ignore it.
-            continue
 
         if before != after:
             edits.append((before, after))

@@ -10,10 +10,25 @@ Follow these guidelines when formatting code samples:
 
   If you expect readers to have a relatively narrow browser window or to print out your
   document, consider wrapping at a smaller number of characters for readability.
-* **Mark code blocks as preformatted text**. In Markdown, indent every line of the code block by four spaces.
 * **Indicate omitted code by using a comment** in the syntax of the language of your code
   sample. Don't use three dots or the ellipsis character (`…`). If a code
   block contains an omission, don't format the block as click-to-copy.
+* If a multiline code block is surrounded by a triple backtick code-fence, do not remove the code-fence. If it is missing the code-fence, make sure to add it.
+* Code inside a code-fence should be indented by 4 spaces.
+* Multiline bash scripts should indent the subsequent lines by 4 spaces.
+
+Recommended:
+```bash
+    python run.py --flag1 \
+        --flag2 \
+        --flag3
+```
+
+Not recommended:
+
+```bash
+    python run.py --flag1 --flag2 --flag3
+```
 
 Recommended:
 
