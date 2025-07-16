@@ -224,20 +224,21 @@ def _log_incident(
 
 
 # ---------------------------------------------------------------------------
-# Spinner & ESC support
+# Spinner helper for long-running operations (e.g. network calls)
 # ---------------------------------------------------------------------------
 
 
 def run_with_spinner(fn, message: str):
-    """Run *fn* in a worker thread while displaying a spinner.
+    """Execute *fn* in a worker thread while showing a spinner.
 
-    If the user presses ESC (\x1b) while the task is running, return *None*.
+    Returns the function's result, or ``None`` if the user presses ESC to
+    cancel while waiting. The worker thread continues running in the
+    background, but its result is discarded.
     """
 
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
     future = executor.submit(fn)
 
-    # Raw-mode keyboard setup (POSIX only).
     fd = None
     old_termios = None
     if os.name != "nt" and sys.stdin.isatty():
@@ -249,16 +250,12 @@ def run_with_spinner(fn, message: str):
         tty.setcbreak(fd)
 
     try:
-        spinner_chars = itertools.cycle("|/-\\")
-        while True:
-            if future.done():
-                return future.result()
-
-            # Draw spinner frame.
-            sys.stdout.write(f"\r{message} {next(spinner_chars)}")
+        spinner = itertools.cycle("|/-\\")
+        while not future.done():
+            sys.stdout.write(f"\r{message} {next(spinner)}")
             sys.stdout.flush()
 
-            # Poll for ESC.
+            # ESC detection
             if os.name == "nt":
                 import msvcrt  # type: ignore
 
@@ -273,6 +270,8 @@ def run_with_spinner(fn, message: str):
                     return None
 
             time.sleep(0.1)
+
+        return future.result()
     finally:
         # Clear spinner line.
         sys.stdout.write("\r" + " " * (len(message) + 2) + "\r")
@@ -288,22 +287,19 @@ def run_with_spinner(fn, message: str):
 
 
 # ---------------------------------------------------------------------------
-# OpenAI chat helpers
+# Diff generation (streaming with in-loop ESC cancellation)
 # ---------------------------------------------------------------------------
 
 
-def chat(messages: list[dict[str, str]]) -> str:
-    """Thin wrapper around the OpenAI chat completion API (temperature fixed)."""
+def generate_diff(style_guide: str, document: str) -> str | None:
+    """Request a streaming diff from the model with full ESC cancellation.
 
-    response = openai.chat.completions.create(
-        model=MODEL_NAME,
-        messages=messages,
-    )
-    return response.choices[0].message.content.strip()
-
-
-def generate_diff(style_guide: str, document: str) -> str:
-    """Ask the LLM for a diff applying *style_guide* to *document*."""
+    The call proceeds in two phases:
+    1. Waiting for the network request to reach the OpenAI servers and the
+       first token to arrive (wrapped in ``run_with_spinner``).
+    2. Streaming tokens; we print a tiny spinner and still honour ESC to abort
+       mid-stream (only the tokens already generated are billed).
+    """
 
     messages = [
         {"role": "system", "content": DIFF_SYSTEM_PROMPT},
@@ -319,7 +315,72 @@ def generate_diff(style_guide: str, document: str) -> str:
             ),
         },
     ]
-    return chat(messages)
+
+    def _start_stream():
+        return openai.chat.completions.create(
+            model=MODEL_NAME,
+            messages=messages,
+            stream=True,
+        )
+
+    stream = run_with_spinner(_start_stream, "Waiting for model response")
+    if stream is None:
+        return None  # User cancelled before the stream started.
+
+    diff_chunks: list[str] = []
+
+    fd = None
+    old_termios = None
+    if os.name != "nt" and sys.stdin.isatty():
+        import termios
+        import tty
+
+        fd = sys.stdin.fileno()
+        old_termios = termios.tcgetattr(fd)
+        tty.setcbreak(fd)
+
+    try:
+        spinner = itertools.cycle("|/-\\")
+        last = 0.0
+        for chunk in stream:
+            if chunk.choices:
+                delta = chunk.choices[0].delta
+                content = getattr(delta, "content", None)
+                if content:
+                    diff_chunks.append(content)
+
+            now = time.time()
+            if now - last >= 0.1:
+                sys.stdout.write(f"\rGenerating diff via LLM {next(spinner)}")
+                sys.stdout.flush()
+                last = now
+
+            # ESC to cancel mid-generation
+            if os.name == "nt":
+                import msvcrt  # type: ignore
+
+                if msvcrt.kbhit() and msvcrt.getch() in (b"\x1b",):
+                    stream.close()
+                    return None
+            elif fd is not None:
+                import os as _os
+                import select
+
+                ready, _, _ = select.select([fd], [], [], 0)
+                if ready and _os.read(fd, 1) == b"\x1b":
+                    stream.close()
+                    return None
+
+    finally:
+        sys.stdout.write("\r" + " " * 40 + "\r")
+        sys.stdout.flush()
+
+        if fd is not None and old_termios is not None:
+            import termios
+
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_termios)
+
+    return "".join(diff_chunks).strip()
 
 
 # ---------------------------------------------------------------------------
@@ -404,10 +465,7 @@ def main() -> None:
 
         # Ask the LLM to create a diff while showing a spinner so that
         # the user knows the process is still ongoing.
-        diff = run_with_spinner(
-            lambda s=style_text, d=doc_text: generate_diff(s, d),
-            "Generating diff via LLM",
-        )
+        diff = generate_diff(style_text, doc_text)
 
         # If *None* was returned, the user hit ESC during diff generation.
         if diff is None:
