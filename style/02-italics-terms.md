@@ -3,7 +3,8 @@
 This page describes two circumstances when we italicize terms that we're
 introducing or discussing.
 
-Note that this style rule does not apply to code blocks, product names, or product feature names.
+Note that this style rule does not apply to code, product names, or product feature names.
+It may apply to code comments if the code is a tutorial.
 
 ## New terms
 
