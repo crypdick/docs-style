@@ -13,9 +13,23 @@ following best practices:
   To connect to the instance, use the
   [`gcloud compute ssh` command](https://cloud.google.com/sdk/gcloud/reference/compute/ssh):
 
-  ```
-  gcloud compute ssh
-  ```
+```bash
+    gcloud compute ssh
+```
+
+* Code inside a code-fence should be indented by 4 spaces.
+* Multiline bash scripts should indent the subsequent lines by 4 spaces.
+
+  Recommended:
+
+```bash
+    python run.py --flag1 \
+        --flag2 \
+        --flag3
+```
+
+* Use language-specific syntax highlighting for code blocks, e.g. `python` for Python scripts.
+
 * **Determine which arguments are needed to complete each task in the recommended way**.
   To minimize the number of options that you need to document in non-reference content, use as
   few optional arguments as possible. Rely on the command reference for the complete list of
@@ -78,55 +92,43 @@ Recommended:
 
 Enter the following code into the terminal:
 
-```
-
-$ adb devices
-
+```bash
+    $ adb devices
 ```
 
 The output is the following:
 
-```
-
+```bash
 List of devices attached
 emulator-5554  device
 emulator-5556  device
-
 ```
 
 Recommended:
 
-```
-
-$ adb shell
-shell@ $ screencap /sdcard/screen.png
-shell@ $ exit
-$ adb pull /sdcard/screen.png
-
+```bash
+    $ adb shell
+    shell@ $ screencap /sdcard/screen.png
+    shell@ $ exit
+    $ adb pull /sdcard/screen.png
 ```
 
 When you're showing a one-line command, the command prompt
-(the `$` symbol) is optional. However, if your document includes both
-multi-line and one-line commands, then we recommend using the command prompt
-for all of the commands in the document for consistency.
+(the `$` symbol) is optional.
 
 If your command-line instructions include a combination of input and output
 lines, we recommend using separate code blocks for input and output.
 
 Recommended:
 
-```
-
-$ cat ~/.ssh/my-ssh-key.pub
-
+```bash
+    cat ~/.ssh/my-ssh-key.pub
 ```
 
 The output is similar to the following:
 
-```
-
-ssh-rsa KEY_VALUE USERNAME
-
+```bash
+    ssh-rsa KEY_VALUE USERNAME
 ```
 
 ## Optional arguments
@@ -134,17 +136,13 @@ ssh-rsa KEY_VALUE USERNAME
 Use square brackets around an argument to indicate that it's optional. If there's more than one
 optional argument, enclose each item in its own set of square brackets.
 
-Avoid using optional arguments in click-to-copy code examples. For best practices on documenting
-optional arguments with click-to-copy commands, see the
-[Best practices](#best-practices) and
-[Optional arguments in click-to-copy commands](#click-to-copy-commands)
-sections of this document.
+Avoid using optional arguments in click-to-copy code examples.
 
 In the following example, `GROUP` is required, but
 `GLOBAL_FLAG` and `FILENAME` are optional:
 
-```
-gcloud dns GROUP [GLOBAL_FLAG] [FILENAME]
+```bash
+    gcloud dns GROUP [GLOBAL_FLAG] [FILENAME]
 ```
 
 ## Mutually exclusive arguments
@@ -153,16 +151,12 @@ Use curly braces to indicate that the reader must choose one—and only one—of
 items inside the braces. There can be more than two mutually exclusive choices. To separate each
 choice, use a pipe (`|`).
 
-Avoid using mutually exclusive arguments in click-to-copy code examples. For best practices on
-documenting mutually exclusive arguments with click-to-copy commands, see the
-[Best practices](#best-practices) and
-[Optional arguments in click-to-copy commands](#click-to-copy-commands)
-sections of this document.
+Avoid using mutually exclusive arguments in click-to-copy code examples.
 
 In the following example, choose either `FILE_1` or `FILE_2`:
 
-```
-{FILE_1|FILE_2}
+```bash
+    {FILE_1|FILE_2}
 ```
 
 In the following example, there are also two options:
@@ -175,8 +169,8 @@ In the following example, there are also two options:
   + `--source=LOCAL_SOURCE` is optional, as specified by the square
     brackets.
 
-```
-{--source=CLOUD_SOURCE --source-url=SOURCE_URL | --bucket=BUCKET [--source=LOCAL_SOURCE]}
+```bash
+    {--source=CLOUD_SOURCE --source-url=SOURCE_URL | --bucket=BUCKET [--source=LOCAL_SOURCE]}
 ```
 
 ## Arguments that can repeat
@@ -184,17 +178,13 @@ In the following example, there are also two options:
 Use three dots and no spaces (`...`) to indicate that the reader can specify multiple
 values for the argument.
 
-Avoid using an ellipsis in click-to-copy code examples. For best practices on documenting optional
-arguments with click-to-copy commands, see the
-[Best practices](#best-practices) and
-[Optional arguments in click-to-copy commands](#click-to-copy-commands)
-sections of this document.
+Avoid using an ellipsis in click-to-copy code examples.
 
 In this example, the reader can specify multiple instances of the optional
 parameter `GLOBAL_FLAG`:
 
-```
-gcloud dns GROUP [GLOBAL_FLAG ...]
+```bash
+    gcloud dns GROUP [GLOBAL_FLAG ...]
 ```
 
 ## Optional arguments in click-to-copy commands
@@ -218,9 +208,9 @@ commands. Instead, choose one of the following approaches:
   use the
   [`gcloud compute instances list` command](https://cloud.google.com/sdk/gcloud/reference/compute/instances/list):
 
-  ```
-  gcloud compute instances list
-  ```
+```bash
+    gcloud compute instances list
+```
 
   If you want to narrow the list of VMs to a specific zone, use the previous command with the
   `--zones` flag.
@@ -232,19 +222,19 @@ commands. Instead, choose one of the following approaches:
   To create a bootable Compute Engine image, use the
   [`gcloud compute images import` command](https://cloud.google.com/sdk/gcloud/reference/compute/images/import):
 
-  ```
-  gcloud compute images import IMAGE_NAME \
-      --source-file=SOURCE_FILE
-  ```
+```bash
+    gcloud compute images import IMAGE_NAME \
+        --source-file=SOURCE_FILE
+```
 
   If you're importing an image with an existing license, specify the
   `--byol` flag:
 
-  ```
-  gcloud compute images import IMAGE_NAME \
-      --source-file=SOURCE_FILE \
-      --byol
-  ```
+```bash
+    gcloud compute images import IMAGE_NAME \
+        --source-file=SOURCE_FILE \
+        --byol
+```
 * **Document optional arguments in separate tasks**. In some cases, it might be best to
   treat different options in separate sections.
 
@@ -269,11 +259,11 @@ commands. Instead, choose one of the following approaches:
   If your virtual disk doesn't have a bootable operating system installed on it, include the
   `--data-disk` flag:
 
-  ```
-  gcloud compute images import IMAGE_NAME \
-      --source-file=SOURCE_FILE \
-      --data-disk
-  ```
+```bash
+    gcloud compute images import IMAGE_NAME \
+        --source-file=SOURCE_FILE \
+        --data-disk
+```
 * **Let the reader know that the command contains optional arguments**. If you must
   include special characters to indicate optional arguments, indicate that fact when you
   introduce the command.
@@ -287,21 +277,21 @@ commands. Instead, choose one of the following approaches:
   optionally specify the `auto-delete` subflag to keep or discard each disk when the
   VM is permanently deleted:
 
-  ```
-  gcloud compute instance-groups managed create-instance NAME \
-      --instance=VM_NAME \
-      --stateful-disk=device-name=DEVICE_NAME,source=DISK[,auto-delete=DELETE_RULE]
+  ```bash
+    gcloud compute instance-groups managed create-instance NAME \
+        --instance=VM_NAME \
+        --stateful-disk=device-name=DEVICE_NAME,source=DISK[,auto-delete=DELETE_RULE]
   ```
 
   For example, the following command creates a managed instance that's named
   `db-instance` and attaches the persistent disk `db-data-disk-1` as a
   stateful disk that is detached and preserved if its VM is deleted:
 
-  ```
-  gcloud compute instance-groups managed create-instance example-database-mig \
-      --instance=db-instance \
-      --stateful-disk=device-name=data-disk,source=projects/example-project/zones/us-east1-c/disks/db-data-disk-1,auto-delete=never
-  ```
+```bash
+    gcloud compute instance-groups managed create-instance example-database-mig \
+        --instance=db-instance \
+        --stateful-disk=device-name=data-disk,source=projects/example-project/zones/us-east1-c/disks/db-data-disk-1,auto-delete=never
+```
 
 ## Output from commands
 
@@ -327,7 +317,6 @@ no spaces (`...`) on a separate line. Do not use the ellipsis character (`…`).
 For example:
 
 ```
-
 Reading file status
 Upload done, resetting board...
 ...

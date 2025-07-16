@@ -14,21 +14,7 @@ Follow these guidelines when formatting code samples:
   sample. Don't use three dots or the ellipsis character (`…`). If a code
   block contains an omission, don't format the block as click-to-copy.
 * If a multiline code block is surrounded by a triple backtick code-fence, do not remove the code-fence. If it is missing the code-fence, make sure to add it.
-* Code inside a code-fence should be indented by 4 spaces.
-* Multiline bash scripts should indent the subsequent lines by 4 spaces.
 
-Recommended:
-```bash
-    python run.py --flag1 \
-        --flag2 \
-        --flag3
-```
-
-Not recommended:
-
-```bash
-    python run.py --flag1 --flag2 --flag3
-```
 
 Recommended:
 

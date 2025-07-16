@@ -55,7 +55,7 @@ To format a command with multiple elements, do the following:
     ( `\`)
   + Windows: A caret preceded with a space ( `^`)
 * Follow the command line with a descriptive list of the placeholders
-  used in the command line.
+  used in the command line, unless the placeholders are obvious from the command line.
 * When documenting a command-line option or argument, use end puctuation for complete
   sentences. Don't use end punctuation for single words or noun phrases, unless there is a mix of
   sentences and noun phrases.
