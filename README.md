@@ -32,7 +32,7 @@ uv run --script auto_docs_edit.py \
 
 This example skips every style rule **up to and including** `commas.md`.
 
-You can also press the `ESC` key to interrupt the current task and skip to the next task.
+You can also press the **`ESC`** key to interrupt the current task and skip to the next task.
 
 ### Final pass sweep
 
@@ -58,12 +58,12 @@ If an edit fails to apply (for example, the script cannot find the snippet), the
 - Dropped preference for `_` over `*` for italics.
 - Removed internal links between style rule pages, since the LLM applies one set of style rules at a time and also can't follow the links.
 - Added some personal style rules. These personal style rules are prefixed with `PERSONAL-`.
+- Removed HTML-specific style rules.
 
 ## Set style rule precedence
 
 The order in which the style rules are applied is important, because subsequent edits may revert previous edits. The default order is alphabetic. Therefore, to enforce an ordering, you can add prefixes to the style guide names. The script applies the prefixes `00-`, `01-`, `02-` in that order, before non-numeric style guides. Conversely, the script applies `z-` last.
 
-# Planned features
+## Planned features
 
 - [ ] Support for applying the script to Jupyter notebooks.
-- [ ] Expose reasoning for each edit.

@@ -79,6 +79,7 @@ DIFF_SYSTEM_PROMPT = (
     "<edit>\n"
     "<before>PASTE UNCHANGED TEXT EXACTLY AS IT APPEARS (may span multiple lines)</before>\n"
     "<after>REPLACEMENT TEXT EXACTLY AS IT SHOULD APPEAR (may span multiple lines)</after>\n"
+    "<reason>BRIEF (~25 words) SUMMARY OF THE RELEVANT STYLE-GUIDE RULE</reason>\n"
     "</edit>\n\n"
     "IMPORTANT: Be extremely careful when authoring the <before> snippet—"
     "it must match the document text *character-for-character*, including whitespace and newlines. "
@@ -127,7 +128,7 @@ def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
 
     """
     xml_pattern = re.compile(
-        r"<edit>\s*<before>(.*?)</before>\s*<after>(.*?)</after>\s*</edit>",
+        r"<edit>\s*<before>(.*?)</before>\s*<after>(.*?)</after>\s*(?:<reason>(.*?)</reason>)?\s*</edit>",
         re.DOTALL | re.IGNORECASE,
     )
 
