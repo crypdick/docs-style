@@ -3,6 +3,8 @@
 This page describes two circumstances when we italicize terms that we're
 introducing or discussing.
 
+Note that this style rule does not apply to code blocks, product names, or product feature names.
+
 ## New terms
 
 When you introduce a new term that you're defining immediately, use italics on
