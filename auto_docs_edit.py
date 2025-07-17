@@ -104,6 +104,7 @@ DIFF_SYSTEM_PROMPT = (
     "Inside fenced (```\n...\n```) or indented code blocks, only make edits that are guaranteed to keep the code syntactically valid for its language. "
     "If applying a grammar or style rule could break, invalidate, or change the meaning of the code, skip that edit entirely. "
     "When several corrections are possible, prefer the one that achieves compliance with the least amount of change."
+    " If a literal application of the STYLE GUIDE produces text that reads awkwardly, stilted, or unclear, exercise editorial judgment and rephrase the passage so it remains natural, readable, and faithful to the original meaning while still honoring the spirit of the guideline. Prioritize clarity and smooth prose over mechanical adherence when necessary."
 )
 
 
