@@ -4,7 +4,8 @@
 # requires-python = ">=3.12"
 # dependencies = [
 #   "python-dotenv>=1.0",
-#   "openai>=1.16.0"
+#   "openai>=1.16.0",
+#   "loguru>=0.7.0"
 # ]
 # ///
 """Iteratively apply Google style guide pages to a target markdown document.
@@ -37,7 +38,6 @@ import concurrent.futures
 import itertools
 import os
 import re
-import shutil
 import sys
 import time
 from datetime import datetime, timezone
@@ -45,14 +45,11 @@ from pathlib import Path
 
 import openai
 from dotenv import load_dotenv
+from loguru import logger
 
 # ---------------------------------------------------------------------------
 # Console colours (ANSI)
 # ---------------------------------------------------------------------------
-
-RAW_DIFF_COLOR = "\033[33m"  # Yellow
-FILTERED_DIFF_COLOR = "\033[32m"  # Green
-RESET_COLOR = "\033[0m"
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -60,7 +57,9 @@ RESET_COLOR = "\033[0m"
 
 MODEL_NAME = "o4-mini"  # "gpt-4.1-mini"
 STYLE_DIR = Path(__file__).parent / "style"
-INCIDENTS_DIR = Path(__file__).parent / "incidents"
+LOGS_DIR = Path(__file__).parent / "logs"
+# Directory specific to the current run; initialised in _setup_logging()
+CURRENT_RUN_DIR: Path | None = None
 DIFF_END_MARKER = "NO_CHANGES"
 # Symbol that marks a style-guide Markdown file as relevant for the
 # "final pass" mode (see --final-pass CLI flag). Any file whose **stem**
@@ -169,7 +168,7 @@ def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[
         if before not in updated:
             missed.append(before)
             # Emit warning and continue.
-            print(f"[warn] Skipping edit – snippet not found: {before!r}", file=sys.stderr)
+            logger.warning(f"[warn] Skipping edit – snippet not found: {before!r}")
             continue
         updated = updated.replace(before, after)
     return updated, missed
@@ -178,13 +177,6 @@ def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[
 # ---------------------------------------------------------------------------
 # Incident logging
 # ---------------------------------------------------------------------------
-
-
-def _clear_incidents_dir() -> None:
-    """Remove all previous incident logs (fresh run)."""
-    if INCIDENTS_DIR.exists():
-        shutil.rmtree(INCIDENTS_DIR)
-    INCIDENTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def _log_incident(
@@ -198,7 +190,8 @@ def _log_incident(
     # Use timezone-aware datetime to avoid DeprecationWarning (Python 3.12+)
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     fname = f"{timestamp}_{guide_path.stem}.log"
-    incident_path = INCIDENTS_DIR / fname
+    run_dir = CURRENT_RUN_DIR if CURRENT_RUN_DIR is not None else LOGS_DIR
+    incident_path = run_dir / fname
 
     missed_section = "\n".join(f"- {s}" for s in missed_snippets) if missed_snippets else "<none>"
 
@@ -373,6 +366,39 @@ def generate_diff(style_guide: str, document: str) -> str | None:
 
 
 # ---------------------------------------------------------------------------
+# Logging setup
+# ---------------------------------------------------------------------------
+
+
+def _setup_logging() -> Path:
+    """Configure logging with Loguru to write *all* console output to a file in logs/."""
+
+    global CURRENT_RUN_DIR
+
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+    run_timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    CURRENT_RUN_DIR = LOGS_DIR / run_timestamp
+    CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
+
+    log_path = CURRENT_RUN_DIR / "session.log"
+
+    # Configure Loguru sinks: console + file.
+    logger.remove()
+    logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}")
+    logger.add(
+        log_path,
+        level="INFO",
+        encoding="utf-8",
+        format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}",
+    )
+
+    # No additional stdlib logging interception required; use Loguru directly.
+
+    return log_path
+
+
+# ---------------------------------------------------------------------------
 # Main flow
 # ---------------------------------------------------------------------------
 
@@ -406,15 +432,19 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    # Prepare logging (creates per-run directory and log file).
+    log_file = _setup_logging()
+    logger.info(f"Logging configured. Full session log: {log_file}")
+
     target_path = Path(args.markdown_document).expanduser().resolve()
     if not target_path.is_file():
-        print(f"Error: {target_path} is not a file.")
+        logger.error(f"Error: {target_path} is not a file.")
         sys.exit(1)
 
     # Load API key.
     load_dotenv()
     if not os.getenv("OPENAI_API_KEY"):
-        print("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
+        logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
         sys.exit(1)
 
     openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -436,15 +466,12 @@ def main() -> None:
     edits_applied_successfully = 0
     edits_missed = 0
 
-    # Prepare incidents directory (fresh each run).
-    _clear_incidents_dir()
-
     # Always process style pages in a deterministic order (alphabetical by filename).
     style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
 
     # If --final-pass is active, restrict to pages whose stem ends with the marker.
     if args.final_pass:
-        print("Processing final pass style rules only.")
+        logger.info("Processing final pass style rules only.")
         style_pages = [p for p in style_pages if p.stem.endswith(FINAL_PASS_MARKER)]
 
     # Optionally skip pages up to and including the requested filename.
@@ -453,26 +480,25 @@ def main() -> None:
         try:
             skip_idx = next(i for i, p in enumerate(style_pages) if p.name == skip_name)
             style_pages = style_pages[skip_idx + 1 :]
-            print(f"Skipped {skip_idx} style pages.")
+            logger.info(f"Skipped {skip_idx} style pages.")
         except StopIteration:
             # If the requested *skip-through* filename is not found, abort with an
             # explicit error rather than silently continuing. This prevents
             # accidental typos from going unnoticed and ensures the user
             # understands why the script did not behave as expected.
-            parser.error(
-                f"--skip-through: '{skip_name}' not found among style pages."  # noqa: E501
-            )
+            logger.error(f"--skip-through: '{skip_name}' not found among style pages.")
+            sys.exit(1)
 
     if not style_pages:
-        print("No style guide pages left to process.")
+        logger.info("No style guide pages left to process.")
         sys.exit(0)
 
     for idx, page_path in enumerate(style_pages, 1):
         # Re-read the document so that any manual edits the user made after the
         # previous iteration are taken into account.
         doc_text = target_path.read_text(encoding="utf-8")
-        print("=" * 80)
-        print(f"[{idx}/{len(style_pages)}] Processing style guide: {page_path.name}")
+        logger.info("=" * 80)
+        logger.info(f"[{idx}/{len(style_pages)}] Processing style guide: {page_path.name}")
         style_text = page_path.read_text(encoding="utf-8")
 
         # Ask the LLM to create a diff while showing a spinner so that
@@ -481,17 +507,17 @@ def main() -> None:
 
         # If *None* was returned, the user hit ESC during diff generation.
         if diff is None:
-            print("\n↷ Skip requested via ESC – moving to next style guide.\n")
+            logger.info("\n↷ Skip requested via ESC – moving to next style guide.\n")
             continue
 
         # Reject obviously malformed diffs up-front.
         if diff.strip() == DIFF_END_MARKER or not _diff_has_changes(diff):
-            print("-> Style guide not relevant or no changes detected. Skipping.\n")
+            logger.info("-> Style guide not relevant or no changes detected. Skipping.\n")
             continue
 
         # Show raw diff from the model.
-        print("Generated diff (model output):\n")
-        print(f"{RAW_DIFF_COLOR}{diff}{RESET_COLOR}")
+        logger.info("Generated diff (model output):\n")
+        logger.info(f"<yellow>{diff}</>")
 
         # Parse edits to identify the effective (non–no-op) changes.
         parsed_edits = _parse_edits(diff)
@@ -523,7 +549,9 @@ def main() -> None:
         reversals_dropped += len(unseen_edits) - len(non_reversing_edits)
 
         if not non_reversing_edits:
-            print("-> All suggested edits are duplicates or would undo earlier edits. Skipping.\n")
+            logger.info(
+                "-> All suggested edits are duplicates or would undo earlier edits. Skipping.\n"
+            )
             continue
 
         # Rebuild the diff text using only the edits that are both unseen and non-reversing.
@@ -533,8 +561,8 @@ def main() -> None:
         )
 
         if filtered_diff_text.strip() != diff.strip():
-            print("\nDiff after filtering out no-op edits (will be applied):\n")
-            print(f"{FILTERED_DIFF_COLOR}{filtered_diff_text}{RESET_COLOR}")
+            logger.info("\nDiff after filtering out no-op edits (will be applied):\n")
+            logger.info(f"<green>{filtered_diff_text}</>")
 
         # Apply edits locally (deterministic and safer than LLM application).
         updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
@@ -558,9 +586,9 @@ def main() -> None:
         if changed:
             # Only write back if something actually changed.
             target_path.write_text(updated_doc, encoding="utf-8")
-            print(f"-> Document updated via {page_path.name}.\n")
+            logger.success(f"-> Document updated via {page_path.name}.\n")
         else:
-            print("-> Patch produced no net changes. Skipping write.\n")
+            logger.info("-> Patch produced no net changes. Skipping write.\n")
 
         # -------------------------------------------------------------------
         # Per-style-guide statistics
@@ -571,12 +599,12 @@ def main() -> None:
         page_applied = len(successful_edits) if changed else 0
         page_missed = len(missed_snippets)
 
-        print("Edit statistics for this style guide:")
-        print(f" • Proposed edits        : {page_total}")
-        print(f" • Duplicates skipped    : {page_duplicates}")
-        print(f" • Reversals dropped     : {page_reversals}")
-        print(f" • Edits applied         : {page_applied}")
-        print(f" • Edits missed/not found: {page_missed}\n")
+        logger.info("Edit statistics for this style guide:")
+        logger.info(f" • Proposed edits        : {page_total}")
+        logger.info(f" • Duplicates skipped    : {page_duplicates}")
+        logger.info(f" • Reversals dropped     : {page_reversals}")
+        logger.info(f" • Edits applied         : {page_applied}")
+        logger.info(f" • Edits missed/not found: {page_missed}\n")
 
         # Log incident if any edits were missed or nothing changed.
         if missed_snippets or not changed:
@@ -584,30 +612,30 @@ def main() -> None:
 
         # Only pause for user review if the document actually changed.
         if changed and not args.yolo:
-            print(
+            logger.info(
                 "Please review the changes and commit them in git if desired.\n"
                 "Press <ENTER> to continue to the next style guide, or Ctrl+C to abort."
             )
             try:
                 input()
             except KeyboardInterrupt:
-                print("\nAborted by user.")
+                logger.warning("\nAborted by user.")
                 sys.exit(0)
         elif changed and args.yolo:
-            print("Memento mori")
+            logger.warning("Memento mori")
 
     # -------------------------------------------------------------------
     # Summary statistics about edit processing
     # -------------------------------------------------------------------
-    print("=" * 80)
-    print("Edit summary statistics:")
-    print(f"Total edits proposed      : {total_edits_proposed}")
-    print(f" - Already seen (skipped) : {duplicates_dropped}")
-    print(f" - Reversals dropped      : {reversals_dropped}")
-    print(f"Edits applied successfully: {edits_applied_successfully}")
-    print(f"Edits missed (not found)  : {edits_missed}")
-    print("=" * 80)
-    print("All style pages processed. Done.")
+    logger.info("=" * 80)
+    logger.info("Edit summary statistics:")
+    logger.info(f"Total edits proposed      : {total_edits_proposed}")
+    logger.info(f" - Already seen (skipped) : {duplicates_dropped}")
+    logger.info(f" - Reversals dropped      : {reversals_dropped}")
+    logger.info(f"Edits applied successfully: {edits_applied_successfully}")
+    logger.info(f"Edits missed (not found)  : {edits_missed}")
+    logger.info("=" * 80)
+    logger.info("All style pages processed. Done.")
 
 
 if __name__ == "__main__":
