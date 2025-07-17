@@ -65,3 +65,6 @@ the following words and phrases:
 * old, older
 * presently, at present
 * soon
+
+There are some exceptions for this rule. For example, if you are writing release notes, you can use words like *new* and *currently*.
+Or, if you are writing an installation guide, it could make sense to use *latest* as in "Install the latest version of Python".

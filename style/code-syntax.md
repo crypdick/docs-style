@@ -29,6 +29,8 @@ following best practices:
 ```
 
 * Use language-specific syntax highlighting for code blocks, e.g. `python` for Python scripts.
+  Use `shell` for console commands, and `bash` when you are showing an actual bash script.
+  Do not change the language of the code block if one has already been specified.
 
 * **Determine which arguments are needed to complete each task in the recommended way**.
   To minimize the number of options that you need to document in non-reference content, use as
