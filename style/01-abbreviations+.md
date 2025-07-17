@@ -48,8 +48,8 @@ think about an abbreviation, it can slow down their reading comprehension.
 ### General dos and don'ts
 
 * Use standard acronyms and initialisms that will save the reader time.
-* Spell out abbreviations on first reference.
-* Avoid using abbreviations for terms that aren't related to the main topic of the document.
+* Spell out abbreviations on first reference. (This is a general rule, but it's not always appropriate.)
+* Avoid using abbreviations for terms that aren't related to the main topic of the document. If the term is only used once, spelling it out may be distracting. Use your best judgement.
 
 In the following examples, the main topic of the document is the internet of things, so *low Earth orbit* should not be abbreviated.
 
@@ -98,17 +98,14 @@ reader understand what a *PDF* document is. In those cases, don't spell out the 
 The following are examples of widely understood abbreviations that rarely need to be spelled out:
 
 * AI
-* API
-* File formats such as PDF or XML
-* HTML
-* PC
-* RAM
-* REST
+* API, REST, RPC, etc.
+* File formats such as PDF, XML, HTML, CSV, etc.
+* PC, CPU, GPU, RAM, SSD, HDD, USB, etc.
 * Units of measurement such as
   MB, MiB, GB, or GiB
 * URL
-* USB
-* GPU
+* CI/CD
+* IDE
 
 ## Abbreviations not to use
 
