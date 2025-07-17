@@ -2,7 +2,7 @@
 
 This directory contains a script to crawl the style guide and save the pages to the `style/` directory.
 
-```bash
+```shell
 uv run crawl_to_markdown.py --base-url https://developers.google.com/style \
                             --output-dir ./out
 ```

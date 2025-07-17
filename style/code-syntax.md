@@ -13,16 +13,16 @@ following best practices:
   To connect to the instance, use the
   [`gcloud compute ssh` command](https://cloud.google.com/sdk/gcloud/reference/compute/ssh):
 
-```bash
+```shell
     gcloud compute ssh
 ```
 
 * Code inside a code-fence should be indented by 4 spaces.
-* Multiline bash scripts should indent the subsequent lines by 4 spaces.
+* Multiline shell scripts should indent the subsequent lines by 4 spaces.
 
   Recommended:
 
-```bash
+```shell
     python run.py --flag1 \
         --flag2 \
         --flag3
@@ -92,13 +92,13 @@ Recommended:
 
 Enter the following code into the terminal:
 
-```bash
+```shell
     $ adb devices
 ```
 
 The output is the following:
 
-```bash
+```shell
 List of devices attached
 emulator-5554  device
 emulator-5556  device
@@ -106,7 +106,7 @@ emulator-5556  device
 
 Recommended:
 
-```bash
+```shell
     $ adb shell
     shell@ $ screencap /sdcard/screen.png
     shell@ $ exit
@@ -121,13 +121,13 @@ lines, we recommend using separate code blocks for input and output.
 
 Recommended:
 
-```bash
+```shell
     cat ~/.ssh/my-ssh-key.pub
 ```
 
 The output is similar to the following:
 
-```bash
+```shell
     ssh-rsa KEY_VALUE USERNAME
 ```
 
@@ -141,7 +141,7 @@ Avoid using optional arguments in click-to-copy code examples.
 In the following example, `GROUP` is required, but
 `GLOBAL_FLAG` and `FILENAME` are optional:
 
-```bash
+```shell
     gcloud dns GROUP [GLOBAL_FLAG] [FILENAME]
 ```
 
@@ -155,7 +155,7 @@ Avoid using mutually exclusive arguments in click-to-copy code examples.
 
 In the following example, choose either `FILE_1` or `FILE_2`:
 
-```bash
+```shell
     {FILE_1|FILE_2}
 ```
 
@@ -169,7 +169,7 @@ In the following example, there are also two options:
   + `--source=LOCAL_SOURCE` is optional, as specified by the square
     brackets.
 
-```bash
+```shell
     {--source=CLOUD_SOURCE --source-url=SOURCE_URL | --bucket=BUCKET [--source=LOCAL_SOURCE]}
 ```
 
@@ -183,7 +183,7 @@ Avoid using an ellipsis in click-to-copy code examples.
 In this example, the reader can specify multiple instances of the optional
 parameter `GLOBAL_FLAG`:
 
-```bash
+```shell
     gcloud dns GROUP [GLOBAL_FLAG ...]
 ```
 
@@ -208,7 +208,7 @@ commands. Instead, choose one of the following approaches:
   use the
   [`gcloud compute instances list` command](https://cloud.google.com/sdk/gcloud/reference/compute/instances/list):
 
-```bash
+```shell
     gcloud compute instances list
 ```
 
@@ -222,7 +222,7 @@ commands. Instead, choose one of the following approaches:
   To create a bootable Compute Engine image, use the
   [`gcloud compute images import` command](https://cloud.google.com/sdk/gcloud/reference/compute/images/import):
 
-```bash
+```shell
     gcloud compute images import IMAGE_NAME \
         --source-file=SOURCE_FILE
 ```
@@ -230,7 +230,7 @@ commands. Instead, choose one of the following approaches:
   If you're importing an image with an existing license, specify the
   `--byol` flag:
 
-```bash
+```shell
     gcloud compute images import IMAGE_NAME \
         --source-file=SOURCE_FILE \
         --byol
@@ -259,7 +259,7 @@ commands. Instead, choose one of the following approaches:
   If your virtual disk doesn't have a bootable operating system installed on it, include the
   `--data-disk` flag:
 
-```bash
+```shell
     gcloud compute images import IMAGE_NAME \
         --source-file=SOURCE_FILE \
         --data-disk
@@ -277,7 +277,7 @@ commands. Instead, choose one of the following approaches:
   optionally specify the `auto-delete` subflag to keep or discard each disk when the
   VM is permanently deleted:
 
-  ```bash
+  ```shell
     gcloud compute instance-groups managed create-instance NAME \
         --instance=VM_NAME \
         --stateful-disk=device-name=DEVICE_NAME,source=DISK[,auto-delete=DELETE_RULE]
@@ -287,7 +287,7 @@ commands. Instead, choose one of the following approaches:
   `db-instance` and attaches the persistent disk `db-data-disk-1` as a
   stateful disk that is detached and preserved if its VM is deleted:
 
-```bash
+```shell
     gcloud compute instance-groups managed create-instance example-database-mig \
         --instance=db-instance \
         --stateful-disk=device-name=data-disk,source=projects/example-project/zones/us-east1-c/disks/db-data-disk-1,auto-delete=never

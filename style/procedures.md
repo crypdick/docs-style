@@ -83,7 +83,7 @@ The following example demonstrates the preceding order:
 
 1. Plan the Terraform deployment:
 
-   ```bash
+   ```shell
        terraform plan -out=NAME
    ```
 

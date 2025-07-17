@@ -9,13 +9,13 @@
 
 To get started, export your OpenAI key (or put it in a `.env` file):
 
-```bash
+```shell
     export OPENAI_API_KEY="YOUR_API_KEY"
 ```
 
 Run the `auto_docs_edit.py` script against a target Markdown document:
 
-```bash
+```shell
     uv run --script auto_docs_edit.py docs/your_article.md
 ```
 
@@ -27,7 +27,7 @@ Note: we recommend using `o4-mini` for better results.
 
 If you are resuming a run, you can skip style rules you have already processed:
 
-```bash
+```shell
     uv run --script auto_docs_edit.py \
         --skip-through commas.md docs/your_article.md
 ```
@@ -40,7 +40,7 @@ You can also press the **`ESC`** key to interrupt the current task and skip to t
 
 After you have iterated through the full style guide once and made additional manual edits, you can run a **quick compliance sweep** over only the most error-prone rules:
 
-```bash
+```shell
     uv run --script auto_docs_edit.py --final-pass docs/your_article.md
 ```
 
@@ -50,7 +50,7 @@ The script will process **only** those style guide pages whose filenames end wit
 
 Run the script with `--yolo` to automatically accept every proposed edit and skip the manual review pauses:
 
-```bash
+```shell
     uv run --script auto_docs_edit.py --yolo docs/your_article.md
 ```
 
