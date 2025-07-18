@@ -52,6 +52,14 @@ For example, if you're documenting how to create a virtual machine and how to st
 machine on the same task-based page, the page title could be *Create and start VM instances*,
 with section headings *Create a VM* and *Start a VM*.
 
+It's important to note that sometimes, dropping the *-ing* makes the heading inappropriately sound like a directive.
+For example:
+
+- *Troubleshooting errors* lets a user know that the section is a troubleshooting guide, whereas 
+  *Troubleshoot errors* sounds like a directive.
+- *Selecting a distributed inference strategy for a single model replica* lets a user know that section is relevant for a single model replica, whereas 
+  *Select a distributed inference strategy for a single model replica* sounds like a directive. In this case, it's better to rephrase as *Strategies for single-replica deployments*.
+
 ### Example headings
 
 The following example is a task-based document that includes a conceptual
@@ -59,10 +67,7 @@ heading and a task-based heading.
 
 Recommended:
 
-
-
 ```
-
 # Log serving requests by using AI Platform Prediction
 
 This task-based document shows how to monitor machine learning models. The
@@ -77,7 +82,6 @@ a noun phrase.
 
 This task-based section provides a series of steps to set variables in a
 notebook. Its title starts with a bare infinitive.
-
 ```
 
 ## Heading and title format
@@ -90,78 +94,20 @@ notebook. Its title starts with a bare infinitive.
   version of the word. If you do use an abbreviation in the page title or heading, the first
   instance of the word in a paragraph needs to be defined.
   You can define the abbreviation in the page title or heading, but consider if the additional
-  length adds value.
-  For SEO, use the more prominent version of the term in headings.
+  length adds value. For SEO, use the more prominent version of the term in headings.
 * In general, guidance that applies to text also applies to headings—for example,
   contractions and articles.
 * Avoid using code items in headings when possible. If you must mention a code item in a heading,
   add a descriptive noun to the item in code font.
-* Use heading tags to structure your content hierarchically—for example,
-  `<h1>`, `<h2>`, and `<h3>` in HTML, or
-  `#`, `##`, and `###` in Markdown.
-* To change the visual formatting of a heading, use CSS rather than using a heading level that
-  doesn't fit the hierarchy. Don't make up your own formatting for headings.
 * Don't put a link in a heading because it can easily be confused as a style applied to a heading
   instead of a link.
 * Use a heading hierarchy and take the following items under consideration:
   + Ensure that each page in your project includes a unique level-1 heading. In some publishing systems, a
     level-1 heading might be generated automatically based on a page title that you supply.
-  + Don't skip levels of the heading hierarchy. For example, put an `<h3>` tag
-    only under an `<h2>` tag.
+  + Don't skip levels of the heading hierarchy. For example, put an `###` tag
+    only under an `##` tag.
+* Don't use empty headings or headings with no associated content.
 
-    Recommended:
-
-    ### Markdown
-
-    ```
-
-    # Transfer data sets
-
-    This document provides a high-level overview of ways to transfer your data to Google Cloud.
-
-    ## Estimate costs
-
-    ```
-
-    Not recommended:
-
-    ### Markdown
-
-    ```
-
-    # Transfer data sets
-
-    This document provides a high-level overview of ways to transfer your data to Google Cloud.
-
-    ### Estimate costs
-
-    ```
-  + Don't use empty headings or headings with no associated content.
-
-    Recommended:
-
-
-    ```
-
-    ## Migrate VMs to Compute Engine
-
-    Migration is not just a single step. The following sections describe the recommended steps.
-
-    ### Design the migration
-
-    ```
-
-    Not recommended:
-
-    
-
-    ```
-
-    ## Migrate VMs to Compute Engine
-
-    ### Design the migration
-
-    ```
 
 ## Refer to a group of sections
 
@@ -174,7 +120,6 @@ Recommended:
 
 
 ```
-
 ## Views in the data preparation editor
 
 The following sections describe the views in the data preparation editor.
