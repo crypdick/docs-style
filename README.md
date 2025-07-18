@@ -56,6 +56,51 @@ Run the script with `--yolo` to automatically accept every proposed edit and ski
 
 YOLO mode is not recommended because mistakes will compound.
 
+### Bulk PR automation
+
+If you want to **batch-apply** the style rules and open one draft pull-request per document, use `bulk_pr_autodocs.py`.
+
+1. Ensure you have a local clone of the GitHub repository you want to patch.
+2. Export a **personal access token** with `repo` and `gist` scopes (required to push branches and create secret gists):
+
+```shell
+export GITHUB_TOKEN="YOUR_GITHUB_PAT"
+```
+
+or put it in a `.env` file:
+```text
+GITHUB_TOKEN=YOUR_GITHUB_PAT
+```
+
+3. Create a *greenlist* text file that lists the Markdown paths (relative to the repo root) you want to process, for example:
+
+```text
+# greenlist.txt=
+docs/getting-started.md
+docs/advanced/configuration.md
+```
+
+4. Run the bulk script:
+
+```shell
+uv run --script bulk_pr_autodocs.py \
+  --repo /path/to/local/clone \
+  --greenlist greenlist.txt
+```
+
+Flags:
+* `--dry-run` – print actions without touching GitHub.
+* `--continue-on-error` – keep processing even if one document fails.
+* `--base-branch` and `--remote` – customise the target branch/remote.
+
+For every listed file the script will:
+
+1. Create a branch `docs/auto-edit-<slug>` inside your clone.
+2. Run `auto_docs_edit.py` in YOLO mode.
+3. Push the branch and open a **draft** PR against `<base-branch>`.
+4. Upload the LLM session log to a **secret gist** and link to it from the PR description.
+5. Archive a copy of the log under `logs/bulk_pr_logs/`.
+
 ## Incident logs
 
 If an edit fails to apply (for example, the script can't find the snippet), the script records a log file under `incidents/`, so you can inspect what went wrong.
