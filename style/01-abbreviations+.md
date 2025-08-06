@@ -99,7 +99,7 @@ The following are examples of widely understood abbreviations that rarely need t
 
 * AI
 * API, REST, RPC, etc.
-* File formats such as PDF, XML, HTML, CSV, etc.
+* File formats such as PDF, XML, HTML, CSV, JSON, YAML, etc.
 * PC, CPU, GPU, RAM, SSD, HDD, USB, etc.
 * Units of measurement such as
   MB, MiB, GB, or GiB
