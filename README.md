@@ -1,6 +1,6 @@
 # AutoDocsEditor
 
-`AutoDocsEditor` helps your documentation conform to the [Google Developer Documentation Style Guide](https://developers.google.com/style) by using *large language models* (*LLMs*). This is a large style guide, so the `AutoDocsEditor` breaks up the job into stages, proposing incremental edits to a document. This makes the process of hand-checking a long document against dozens of individual style rules less tedious.
+`AutoDocsEditor` helps your documentation conform to the [Google Developer Documentation Style Guide](https://developers.google.com/style) by using *large language models* (*LLMs*). This is a large style guide (71 pages!), so the `AutoDocsEditor` breaks up the job into stages, proposing incremental edits to a document. This makes the process of hand-checking a long document against 71 individual style rules less tedious.
 
 ![Screenshot of AutoDocsEditor in action](assets/screenshot.png)
 
