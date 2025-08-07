@@ -386,12 +386,13 @@ def _setup_logging() -> Path:
 
     # Configure Loguru sinks: console + file.
     logger.remove()
-    logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}")
+    logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}", colorize=True)
     logger.add(
         log_path,
         level="INFO",
         encoding="utf-8",
         format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}",
+        colorize=False,  # Don't colorize file output
     )
 
     # No additional stdlib logging interception required; use Loguru directly.
