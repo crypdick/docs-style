@@ -624,7 +624,7 @@ def main() -> None:
                 logger.warning("\nAborted by user.")
                 sys.exit(0)
         elif changed and args.yolo:
-            logger.warning("Memento mori")
+            logger.warning("YOLO mode enabled. Memento mori 💀")
 
     # -------------------------------------------------------------------
     # Summary statistics about edit processing
