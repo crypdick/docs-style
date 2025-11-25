@@ -5,7 +5,10 @@
 # dependencies = [
 #   "python-dotenv>=1.0",
 #   "openai>=1.16.0",
-#   "loguru>=0.7.0"
+#   "loguru>=0.7.0",
+#   "langchain>=0.1.0",
+#   "langchain-openai>=0.0.5",
+#   "pydantic>=2.0.0"
 # ]
 # ///
 """Iteratively apply Google style guide pages to a target markdown document.
@@ -35,28 +38,25 @@ from __future__ import annotations
 
 import argparse
 import os
-import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
-import openai
 from dotenv import load_dotenv
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
 from loguru import logger
+from pydantic import BaseModel, Field
 
 from settings import (
-    DIFF_END_MARKER,
-    DIFF_SYSTEM_PROMPT,
     FINAL_PASS_MARKER,
     MODEL_NAME,
     STYLE_DIR,
 )
 from utils import (
-    Spinner,
-    check_cancellation,
     log_incident,
-    restore_input_mode,
-    run_with_spinner,
-    setup_input_mode,
     setup_logging,
 )
 
@@ -65,66 +65,55 @@ from utils import (
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
+# Pydantic Models for Structured Output
+# ---------------------------------------------------------------------------
+
+
+class StyleEdit(BaseModel):
+    """A single edit to the document."""
+
+    before: str = Field(
+        ...,
+        description="The exact text to be replaced, matching character-for-character including whitespace.",
+    )
+    after: str = Field(..., description="The replacement text.")
+    reason: str | None = Field(
+        None, description="A brief explanation of the style rule being applied."
+    )
+
+
+class StyleEditList(BaseModel):
+    """A list of style edits."""
+
+    edits: list[StyleEdit] = Field(..., description="List of edits to apply to the document.")
+
+
+# ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
 
 
-def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
-    """Parse *edits_text* produced by the LLM into a list of ``(before, after)`` tuples.
-
-    The function parses **XML blocks** of the form:
-
-           <edit>
-           <before>[...any text...]</before>
-           <after>[...any text...]</after>
-           <reason>[...any text...]</reason>
-           </edit>
-
-    """
-    xml_pattern = re.compile(
-        r"<edit>\s*<before>(.*?)</before>\s*<after>(.*?)</after>\s*(?:<reason>(.*?)</reason>)?\s*</edit>",
-        re.DOTALL | re.IGNORECASE,
-    )
-
-    edits: list[tuple[str, str]] = []
-
-    for match in xml_pattern.finditer(edits_text):
-        before, after = match.group(1), match.group(2)
-
-        # Skip any edit that merely moves or modifies the sentinel value indicating
-        # "no changes". The model occasionally (wrongly) embeds the sentinel
-        # string inside an <edit> block which should be treated as a no-op.
-        if before.strip() == DIFF_END_MARKER or after.strip() == DIFF_END_MARKER:
-            continue  # Ignore this bogus edit outright.
-
-        if before != after:
-            edits.append((before, after))
-
-    if edits:
-        return edits  # Successfully parsed XML edits.
-
-    return edits
+def _parse_edits(edits_output: StyleEditList | str) -> list[tuple[str, str]]:
+    """Convert StyleEditList or legacy XML string into a list of (before, after) tuples."""
+    if isinstance(edits_output, StyleEditList):
+        return [
+            (edit.before, edit.after) for edit in edits_output.edits if edit.before != edit.after
+        ]
+    return []
 
 
-def _diff_has_changes(diff_text: str) -> bool:  # noqa: E302 – redefine with new semantics
-    """Return True if *diff_text* contains at least one **meaningful** edit."""
-    return bool(_parse_edits(diff_text))
+def _apply_edits_locally(original_doc: str, edits: list[tuple[str, str]]) -> tuple[str, list[str]]:
+    """Apply edits to *original_doc*.
 
-
-def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[str]]:
-    """Apply *edits_text* to *original_doc*.
-
-    We perform **literal** (non-regex) replacements. All occurrences of each
-    *before* snippet are replaced with the *after* snippet. If any *before*
-    snippet is **not** found in the document, we leave the document unchanged
-    and emit a warning to stderr.
+    Args:
+        original_doc: The source text.
+        edits: List of (before, after) tuples.
     """
     updated = original_doc
     missed: list[str] = []
-    for before, after in _parse_edits(edits_text):
+    for before, after in edits:
         if before not in updated:
             missed.append(before)
-            # Emit warning and continue.
             logger.warning(f"[warn] Skipping edit – snippet not found: {before!r}")
             continue
         updated = updated.replace(before, after)
@@ -132,68 +121,141 @@ def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[
 
 
 # ---------------------------------------------------------------------------
-# Diff generation (streaming with in-loop ESC cancellation)
+# Diff generation
 # ---------------------------------------------------------------------------
 
 
-def generate_diff(style_guide: str, document: str) -> str | None:
-    """Request a streaming diff from the model with full ESC cancellation.
+def generate_diff(style_guide: str, document: str) -> StyleEditList | None:
+    """Request structured edits from the model."""
+    logger.info("Generating diff via LLM...")
+    llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
+    structured_llm = llm.with_structured_output(StyleEditList)
 
-    The call proceeds in two phases:
-    1. Waiting for the network request to reach the OpenAI servers and the
-       first token to arrive (wrapped in ``run_with_spinner``).
-    2. Streaming tokens; we print a tiny spinner and still honour ESC to abort
-       mid-stream (only the tokens already generated are billed).
-    """
-    messages = [
-        {"role": "system", "content": DIFF_SYSTEM_PROMPT},
-        {
-            "role": "user",
-            "content": (
-                "<style_guide>\n"
-                + style_guide
-                + "\n</style_guide>\n\n"
-                + "<document>\n"
-                + document
-                + "\n</document>"
-            ),
-        },
-    ]
+    system_prompt = (
+        "You are an expert technical editor. "
+        "Given a STYLE GUIDE and a MARKDOWN DOCUMENT, propose the MINIMAL set of textual edits needed "
+        "for the document to follow the guide. "
+        "IMPORTANT: The 'before' text must match the document text *character-for-character*, including whitespace. "
+        "Do NOT pad 'before' or 'after' text with quotation marks. "
+        "If the style guide does NOT apply or no changes are needed, return an empty list of edits. "
+        "Avoid purely stylistic rewrites unless mandated by the guide. "
+        "Ensure code blocks remain syntactically valid."
+    )
 
-    def _start_stream():
-        return openai.chat.completions.create(
-            model=MODEL_NAME,
-            messages=messages,  # type: ignore
-            stream=True,
-        )
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", system_prompt),
+            ("user", "Style Guide:\n{style_guide}\n\nDocument:\n{document}"),
+        ]
+    )
 
-    stream = run_with_spinner(_start_stream, "Waiting for model response")
-    if stream is None:
-        return None  # User cancelled before the stream started.
-
-    diff_chunks: list[str] = []
-    fd, old_termios = setup_input_mode()
-    spinner = Spinner("Generating diff via LLM")
+    chain = prompt | structured_llm
 
     try:
-        for chunk in stream:
-            if chunk.choices:
-                delta = chunk.choices[0].delta
-                content = getattr(delta, "content", None)
-                if content:
-                    diff_chunks.append(content)
+        return chain.invoke({"style_guide": style_guide, "document": document})
+    except KeyboardInterrupt:
+        return None
 
-            spinner.tick()
 
-            if check_cancellation(fd):
-                stream.close()
-                return None
+# ---------------------------------------------------------------------------
+# Vale Enforcement (LangChain Loop)
+# ---------------------------------------------------------------------------
 
-    finally:
-        spinner.clear()
-        restore_input_mode(fd, old_termios)
 
-    return "".join(diff_chunks).strip()
+def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
+    """Iteratively run Vale and use an LLM to fix the errors."""
+    if not shutil.which("vale"):
+        logger.error("Vale is not installed or not in PATH. Skipping Vale enforcement.")
+        return
+
+    llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
+
+    prompt_template = ChatPromptTemplate.from_template(
+        "You are a technical editor. I will provide you with a markdown document and a list of style errors found by Vale (Google Style Guide).\n"
+        "Your task is to fix the style errors in the document. \n"
+        "If a Vale error is too pedantic, false positive, or makes the text worse/awkward, you may ignore it.\n"
+        "If you determine that ALL remaining errors are pedantic or should be ignored, strictly output the single word: PEDANTIC\n"
+        "Otherwise, output the FULL corrected markdown document. Do not include any markdown fences (like ```markdown) or conversational text.\n\n"
+        "Errors:\n{errors}\n\n"
+        "Document:\n{document}"
+    )
+    chain = prompt_template | llm | StrOutputParser()
+
+    for attempt in range(1, max_retries + 1):
+        logger.info(f"[Vale] Enforcement attempt {attempt}/{max_retries}...")
+
+        # Run Vale
+        try:
+            # JSON output is crashing in some environments, using line output as fallback
+            result = subprocess.run(
+                ["vale", "--output=line", str(document_path)],
+                capture_output=True,
+                text=True,
+                check=False,  # Vale returns exit code 1 on errors
+            )
+        except Exception as e:
+            logger.error(f"[Vale] Failed to run vale: {e}")
+            return
+
+        # Parse line output
+        # Format: file:line:col:Check:Message
+        # e.g. test.md:10:5:Google.We:Avoid using 'we'.
+        output_lines = result.stdout.strip().splitlines()
+
+        file_errors = []
+        for line in output_lines:
+            parts = line.split(":", 4)
+            if len(parts) >= 5:
+                # path = parts[0] # unused, we know it's the document
+                line_num = parts[1]
+                # col = parts[2] # unused
+                check = parts[3]
+                message = parts[4]
+                file_errors.append(
+                    {"Line": line_num, "Message": message.strip(), "Check": check, "Match": "N/A"}
+                )  # Match is not available in line output easily
+
+        if not file_errors:
+            logger.success("[Vale] No errors found!")
+            break
+
+        # Filter/Format errors for the LLM
+        error_list = []
+        for err in file_errors:
+            line = err.get("Line")
+            msg = err.get("Message")
+            rule = err.get("Check")
+            # Match is N/A in line output, so we rely on line number and message
+            error_list.append(f"- Line {line}: {msg} (Rule: {rule})")
+
+        formatted_errors = "\n".join(error_list)
+        logger.info(f"[Vale] Found {len(error_list)} errors:\n{formatted_errors}")
+
+        current_text = document_path.read_text(encoding="utf-8")
+
+        # Ask LLM to fix
+        response = chain.invoke({"errors": formatted_errors, "document": current_text})
+
+        if response.strip() == "PEDANTIC":
+            logger.info("[Vale] LLM determined remaining errors are pedantic. Stopping.")
+            break
+
+        # Heuristic check: if response is drastically shorter, something might be wrong
+        if len(response) < len(current_text) * 0.5:
+            logger.warning(
+                "[Vale] LLM response seems too short. Aborting this step to prevent data loss."
+            )
+            break
+
+        # Apply changes
+        if response != current_text:
+            document_path.write_text(response, encoding="utf-8")
+            logger.success("[Vale] Applied fixes from LLM.")
+        else:
+            logger.info("[Vale] LLM proposed no changes. Stopping.")
+            break
+    else:
+        logger.warning("[Vale] Max retries reached. Some errors may remain.")
 
 
 # ---------------------------------------------------------------------------
@@ -245,7 +307,7 @@ def main() -> None:
         logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
         sys.exit(1)
 
-    openai.api_key = os.environ["OPENAI_API_KEY"]
+    # openai.api_key = os.environ["OPENAI_API_KEY"] # Not needed for LangChain
 
     # Maintain a memory of all (before, after) tuples ever suggested by the LLM
     # during this run. If the same exact edit appears again in a later round,
@@ -309,13 +371,20 @@ def main() -> None:
             continue
 
         # Reject obviously malformed diffs up-front.
-        if diff.strip() == DIFF_END_MARKER or not _diff_has_changes(diff):
+        if not diff.edits:  # diff is a StyleEditList object
             logger.info("-> Style guide not relevant or no changes detected. Skipping.\n")
             continue
 
         # Show raw diff from the model.
         logger.info("Generated diff (model output):\n")
-        logger.info(f"<yellow>{diff}</>")
+        # Create a debug representation of the edits
+        diff_debug = "\n".join(
+            [
+                f"<edit>\n<before>{e.before}</before>\n<after>{e.after}</after>\n<reason>{e.reason}</reason>\n</edit>"
+                for e in diff.edits
+            ]
+        )
+        logger.info(f"<yellow>{diff_debug}</>")
 
         # Parse edits to identify the effective (non–no-op) changes.
         parsed_edits = _parse_edits(diff)
@@ -433,7 +502,14 @@ def main() -> None:
     logger.info(f"Edits applied successfully: {edits_applied_successfully}")
     logger.info(f"Edits missed (not found)  : {edits_missed}")
     logger.info("=" * 80)
-    logger.info("All style pages processed. Done.")
+
+    # -------------------------------------------------------------------
+    # Vale Enforcement
+    # -------------------------------------------------------------------
+    logger.info("Starting Vale style enforcement...")
+    enforce_vale_style(target_path)
+
+    logger.info("All style pages and Vale checks processed. Done.")
 
 
 if __name__ == "__main__":
