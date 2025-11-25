@@ -1,5 +1,5 @@
 .DS_Store
 .env
 logs/
-style/00-PERSONAL-technical-implementation.md
+style/00-PERSONAL-*
 __pycache__/
