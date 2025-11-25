@@ -1,13 +1,22 @@
 # Notices
 
-*   **Types:**
-    *   **Note:** Useful but not critical info.
-    *   **Caution:** Proceed carefully (potential minor issue).
-    *   **Warning:** Critical (data loss, security risk).
-    *   **Success:** Valid confirmation (interactive only).
-*   **Usage:** Don't use notices for prerequisites or procedural steps. Avoid stacking notices.
+Use notices sparingly. Readers often skip them.
 
-Use notices for important or useful information that does not flow naturally into the main text. Assume that the reader will
-skip the notice, so do not include critical information in a notice. Do not use too many notices. Avoid grouping two or more notices together.
+## Types of notices
 
+* **Note:** Helpful information that is not critical.
+* **Caution:** Advises the reader to act carefully to avoid a minor issue or annoyance.
+* **Warning:** Critical information about risks of data loss, security breaches, or irreversible acts. Means "Don't do this."
+* **Success:** Confirms a successful action (use only in interactive UIs).
 
+## When NOT to use a notice
+
+* **Prerequisites:** Put these in the main text before the procedure.
+* **Procedural steps:** Do not hide steps inside notes.
+* **Cross-references:** Use standard links, not notes.
+* **Expected results:** Describe these in the main text.
+
+## Guidelines
+
+* **Don't stack notices:** Avoid putting two notices in a row. Reorganize content instead.
+* **Don't overuse:** Too many notices cause "banner blindness."
