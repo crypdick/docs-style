@@ -12,9 +12,11 @@
 ## Formatting
 
 * **Headers:** Use `th` elements with `scope="col"` or `scope="row"`. Use sentence case. Do not end headers with punctuation.
-* **Cells:** Avoid empty cells. Do not use `colspan` or `rowspan`.
+* **Cells:**
+* Avoid empty cells.
 * **Captions:** If using multiple tables, number them (**Table 1.** Description) and refer to them by number.
 
-## Introduction
+## Placement
 
-Introduce the table with a complete sentence that describes its purpose.
+* Introduce the table with a complete sentence that describes its purpose.
+* Do not place a table in the middle of a sentence.

@@ -1,11 +1,17 @@
 # Active voice
 
-Use active voice. Make clear who is performing the action.
+Use active voice. The grammatical subject should perform the action.
 
-Passive voice obscures the actor and makes sentences harder to understand (e.g., "The server is queried" vs "The client queries the server").
+**Why?** Passive voice often obscures the actor, making it hard for the reader to know *who* or *what* is responsible (the user? the system? a background process?).
 
-**Exceptions (passive voice allowed):**
+* **Active:** "The client queries the server." (Clear: Client -> Server)
+* **Passive:** "The server is queried." (Unclear: By whom?)
+* **Clumsy Passive:** "The server is queried by the client." (Wordy. Just use active.)
 
-* **To emphasize the object:** "The file is saved."
-* **To de-emphasize the subject:** "Over 50 conflicts were found."
-* **When the actor is unknown or irrelevant:** "The database was purged."
+## Exceptions (When passive is okay)
+
+Passive voice is acceptable when the actor is unknown, irrelevant, or you want to emphasize the object.
+
+* **Emphasis on object:** "The file is saved." (The saving is more important than who clicked the button).
+* **De-emphasizing the subject:** "Over 50 conflicts were found." (Better than "You created over 50 conflicts").
+* **Unknown actor:** "The database was purged." (It doesn't matter which specific process did it).

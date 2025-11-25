@@ -2,6 +2,10 @@
 
 Use hyphens for clarity and to combine terms.
 
+## General Usage
+
+* **No spaces:** Never place a space around a hyphen (except for [suspended hyphens](#numbers)).
+
 ## Compounds
 
 * **Modifiers:** Hyphenate compound modifiers before a noun (*well-designed app*).

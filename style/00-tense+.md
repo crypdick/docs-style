@@ -1,17 +1,25 @@
 # Present tense
 
-Use present tense for general behavior.
+Use present tense for statements that describe general behavior that is not associated with a particular time.
 
 * **Recommended:** "The server sends an acknowledgment."
 * **Not recommended:** "The server will send an acknowledgment."
 
-**Future tense exceptions:**
+## Future tense
 
-* Use *will* only for actions that occur in the future (e.g., "The file will be archived the next time backup runs").
-* Do not use *will* for product behavior that happens immediately or asynchronously (unless strictly future).
+Use future tense (*will*) only to distinguish an action that will occur in the future, distinct from the immediate action being described.
 
-**Hypotheticals:**
+* **Correct:** "Add the filename to the backup list. The file **will be archived** the next time the backup process runs." (The archiving happens later).
+* **Incorrect:** "A message is sent that **will notify** subscribers." (If the notification is part of the sending process, use present: "that *notifies* subscribers").
 
-* Avoid hypothetical *would*.
-* **Recommended:** "If you send a message, the server removes you."
-* **Not recommended:** "The server would then remove you."
+**Do not use future tense for:**
+
+* Product behavior that happens immediately or asynchronously (unless strictly a future event).
+* Describing how a feature *will* work after a future update (document the current version).
+
+## Hypotheticals
+
+Avoid the hypothetical future *would*. It often implies uncertainty.
+
+* **Recommended:** "If you send an unsubscribe message, the server **removes** you from the mailing list."
+* **Not recommended:** "You can send an unsubscribe message. The server **would then remove** you from the mailing list."

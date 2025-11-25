@@ -25,3 +25,5 @@ A procedure is a sequence of numbered steps to accomplish a task.
 * **Sub-steps:** Use lowercase letters (a, b).
 * **Optional steps:** Start with "Optional:" (no parentheses).
 * **Results:** Place the result of an action in the same paragraph as the step.
+* **Menu paths:** Use `>` to combine short menu selections.
+  * *Recommended:* "Click **File > New > Document**."

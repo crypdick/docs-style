@@ -8,6 +8,8 @@ Ensure pronouns clearly refer to their antecedent.
   * **Recommended:** "Set *this value* to true."
   * **Not recommended:** "Set *this* to true."
 * **Vague antecedents:** Rewrite if the pronoun's target is unclear.
+  * **Ambiguous:** "If you type text in the field, it doesn't change." (Does "it" refer to the text or the field?)
+  * **Clear:** "If you type text in the field, the text doesn't change."
 
 ## Gender-neutral pronouns
 

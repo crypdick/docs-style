@@ -4,7 +4,9 @@
 
 ## Guidelines for names
 
-* **Format:** Use lowercase with hyphens (`query-data.html`). Avoid underscores (unless matching existing pattern).
+* **Format:** Use lowercase with hyphens (`query-data.html`).
+  * **Why?** Search engines interpret hyphens as spaces (good for SEO). Underscores are often treated as joining characters.
+* **Consistency Exception:** If a directory already uses underscores (e.g. `lesson_1.md`), match the existing pattern (`lesson_2.md`) rather than mixing styles.
 * **Characters:** Use only ASCII alphanumeric characters.
 * **Clarity:** Avoid generic names (`document1.html`).
 
