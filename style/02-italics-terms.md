@@ -1,27 +1,8 @@
-# Use italics to discuss terms  
+# Italics for terms
 
-This page describes two circumstances when we italicize terms that we're
-introducing or discussing.
+Use italics in two specific cases:
 
-Note that this style rule does not apply to code, product names, or product feature names.
-It may apply to code comments if the code is a tutorial.
+1.  **New terms:** Italicize a new technical term upon its first definition (e.g., "A *Clos network* is a kind of...").
+2.  **Words as words:** Italicize when referring to a word or letter itself (e.g., "Use the word *and*").
 
-## New terms
-
-When you introduce a new term that you're defining immediately, use italics on
-the first mention of the term. Don't use bold or quotation marks.
-
-Recommended: A
-*Clos network* is a kind of multistage circuit switching network.
-
-## Words as words
-
-When you refer to a word, phrase, or letter in reference to the word, phrase,
-or letter itself (sometimes called *words as words*) use italics. Don't use bold
-or quotation marks.
-
-Recommended: Don't use
-*&* (ampersand) as a conjunction. Use the word *and* instead.
-
-Recommended: To form a
-possessive of a singular noun, add *'s* to the end of the word.
+**Note:** Do not use bold or quotation marks for these cases.

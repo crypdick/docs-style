@@ -1,15 +1,5 @@
-# Verb forms in reference documentation  
+# Verb forms in reference documentation
 
-When you're writing reference documentation for a method, phrase the main
-method description in terms of what the method does (*gets*, *lists*, *creates*,
-*searches*), rather than what the developer would use it to do (*get*, *list*,
-*create*, *search*).
-
-It's a subtle distinction that manifests mostly in whether the initial verb
-in the description has an *-s* at the end or not.
-
-Recommended: tasks.insert: Creates a new
-task on the specified task list.
-
-Not recommended: tasks.insert: Create a
-new task on the specified task list.
+For API/reference documentation descriptions:
+*   **Use third-person singular:** Describes what the method does (*Creates*, *Lists*, *Gets*).
+*   **Avoid imperative:** Do not use *Create*, *List*, *Get*.

@@ -1,53 +1,8 @@
-# Jargon  
+# Jargon
 
-Jargon is the specialized and often figurative terminology of a specific group to represent a
-larger concept—for example, *camel case*, *swim lane*,
-*break-glass procedure*, or *out-of-the-box*. Jargon can also include
-vaguely defined or overloaded terms like *solution*, *support*, or
-*workload*.
+Avoid jargon (specialized/figurative terminology like *swim lane*, *out-of-the-box*) unless necessary for the audience/SEO.
 
-Typically, the meaning of jargon isn't understood except by the specific group. For this reason,
-jargon can hamper our efforts to publish content that's clear, that reaches a
-global audience
-in multiple languages, that serves readers at various levels of product knowledge, and that's
-inclusive of different groups and cultures.
-
-However, some jargon is widely understood and accepted by our industry or by the intended
-audience of a document. It can be valuable to include jargon in a document when you know that
-readers search for those terms. If you're going to use jargon, consider the following questions:
-
-* **Can you write around the term?** If you don't need the term for search engine
-  optimization (SEO), try writing around it. For example, instead of writing *Hold a
-  post-mortem*, write *When the project is finished, review what processes worked or didn't
-  work*. Instead of writing *Create a back-of-the-envelope design*, write *Use an informal
-  design process*.
-* **Are you using the term only once in your document?** If so, describe the term in plain
-  language and refer to it in parentheses, or link to a trusted definition.
-
-  Recommended: You then move the task to an
-  earlier part of the process (also known as *shifting left*).
-
-  Recommended: A
-  [split-brain](https://en.wikipedia.org/wiki/Split-brain_(computing))
-  situation can develop.
-* **Are you using the term throughout your document?** If so, briefly describe the term in
-  parentheses on first reference, or link to a trusted definition.
-
-  Recommended: The application is in the
-  same state as a *cold standby* (a backup or redundant system that's identical to a primary
-  system).
-
-  Recommended: A better approach is to use
-  a pattern called a
-  [*dead letter queue*](https://en.wikipedia.org/wiki/Dead_letter_queue).
-* **Is the term used in a command or code sample?** If so, use the words only in direct reference to the code items
-  (formatted as code), and make it clear
-  what you're referring to.
-
-  Recommended: Add a user to the
-  allowlist (`whitelist`) by entering the following:
-  `whitelist adduser EMAIL_ADDRESS`.
-
-  Not recommended: Add a user to the
-  whitelist by entering the following: `whitelist adduser
-  EMAIL_ADDRESS`.
+**Guidelines:**
+*   **Write around it:** Use plain language ("informal design" instead of "back-of-the-envelope").
+*   **Define it:** If you must use it, define it in parentheses or link to a definition on first use.
+*   **Code:** If jargon appears in code (e.g., `whitelist`), keep it in code font but explain with plain language.

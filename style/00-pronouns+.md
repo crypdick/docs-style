@@ -1,103 +1,27 @@
-# Pronouns  
+# Pronouns
 
-Ensure that a pronoun clearly refers
-to its antecedent (the noun that it's replacing).
+Ensure pronouns clearly refer to their antecedent.
 
-## Ambiguous pronoun references
+## Ambiguous references
 
-Avoid vague and confusing references between a pronoun and its antecedent.
-
-Recommended: If you type text in the
-field, the text doesn't change.
-
-Not recommended: If you type text in the
-field, it doesn't change.
-
-Recommended: The name of the function to
-execute in the given script. The name does not include parentheses or
-parameters.
-
-Not recommended: The name of the function
-to execute in the given script. It does not include parentheses or
-parameters.
-
-In many cases, it's best to follow a demonstrative pronoun (like *this* and *these*)
-with a noun.
-
-Recommended: Set this value to true.
-
-Not recommended: Set this to true.
-
-Recommended: These approaches are your
-best options.
-
-Not recommended: These are your best options.
+* **Clarify 'it/this/that':** Follow demonstrative pronouns with a noun.
+  * **Recommended:** "Set *this value* to true."
+  * **Not recommended:** "Set *this* to true."
+* **Vague antecedents:** Rewrite if the pronoun's target is unclear.
 
 ## Gender-neutral pronouns
 
-Don't use gender-specific pronouns unless the person you're referring to is
-actually that gender.
-
-In particular, don't use *he*, *him*, *his*, *she*, or *her* as
-gender-neutral pronouns, and don't use *he/she* or *(s)he* or other such
-punctuational approaches. Instead, use the singular *they*.
-
-Singular *they* has been in use for a long time; for example, [Jane Austen used it](http://www.pemberley.com/janeinfo/austheir.html),
-and in 2015 the Washington Post [adopted
-it as part of their official style](https://www.washingtonpost.com/opinions/the-post-drops-the-mike--and-the-hyphen-in-e-mail/2015/12/04/ccd6e33a-98fa-11e5-8917-653b65c809eb_story.html).
-
-## Optional pronouns
-
-To avoid ambiguity and clarify meaning in sentences, use optional pronouns such as
-*that* and *which*.
-
-| Recommended | Not recommended |
-| --- | --- |
-| Right-click the link that you want to open. | Right-click the link you want to open. |
-| You can use other option parameters, which are described in the following section. | You can use other option parameters, described in the following section. |
+* Use singular *they* instead of *he*, *she*, or *he/she*.
 
 ## Personal pronouns
 
-Avoid first-person pronouns (*I*, *we*, *us*, *our*, and *ours*) except
-in the following contexts:
-
-* The questions in FAQs.
-* A document whose author makes comments in the first person.
-* Using *we* to refer to your organization, after using your organization's
-  name. For example, "Example Pet Store recommends that you feed your aardvark
-  Standardized Aardvark Treats. We cannot guarantee the happiness of your aardvark
-  otherwise."
-
-Use the second-person pronoun (*you*) whenever possible.
+* **Second person:** Use *you* whenever possible.
+* **First person:** Avoid *I*, *we*, *us* except in FAQs or when referring to the organization (e.g., "We recommend...").
 
 ## Relative pronouns
 
-There are several relative pronouns. This section concerns only three of
-them: *that*, *which*, and *who*.
-
-*That* and *which* don't mean exactly the same thing, so don't substitute one
-for the other:
-
-* *That* introduces a restrictive clause. It isn't preceded by a comma.
-
-  Recommended: The echidna that has a
-  long snout is furry.
-
-  This sentence describes a particular echidna, the one that has a long
-  snout.
-* *Which* introduces a nonrestrictive clause and is preceded by a comma.
-
-  Recommended: The echidna, which has a
-  long snout, is furry.
-
-  This sentence describes all echidnas, and mentions in passing that they
-  all have long snouts.
-
-When you're referring to a person, you can use *who* instead of *that*. If you're not
-sure which pronoun is appropriate in your context, then it's generally OK to use *that*.
-
-You can use *whose* to refer to people, animals, and things. *Whose* is the possessive
-form of both *who* and *which*.
-
-Recommended: Examine the variables whose
-values are set at compile time.
+* **That vs. Which:**
+  * Use *that* for restrictive clauses (no comma): "The echidna *that has a long snout* is furry." (Specifies which one).
+  * Use *which* for non-restrictive clauses (comma): "The echidna, *which has a long snout*, is furry." (Adds extra info).
+* **Who:** Use *who* for people.
+* **Optional pronouns:** Use *that* and *which* to prevent ambiguity (e.g., "The link *that* you want to open").
