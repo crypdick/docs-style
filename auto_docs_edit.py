@@ -34,79 +34,35 @@ Environment:
 from __future__ import annotations
 
 import argparse
-import concurrent.futures
-import itertools
 import os
 import re
 import sys
-import time
-from datetime import datetime, timezone
 from pathlib import Path
 
 import openai
 from dotenv import load_dotenv
 from loguru import logger
 
+from settings import (
+    DIFF_END_MARKER,
+    DIFF_SYSTEM_PROMPT,
+    FINAL_PASS_MARKER,
+    MODEL_NAME,
+    STYLE_DIR,
+)
+from utils import (
+    Spinner,
+    check_cancellation,
+    log_incident,
+    restore_input_mode,
+    run_with_spinner,
+    setup_input_mode,
+    setup_logging,
+)
+
 # ---------------------------------------------------------------------------
 # Console colours (ANSI)
 # ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# Configuration
-# ---------------------------------------------------------------------------
-
-MODEL_NAME = "o4-mini"  # "gpt-4.1-mini"
-STYLE_DIR = Path(__file__).parent / "style"
-LOGS_DIR = Path(__file__).parent / "logs"
-# Directory specific to the current run; initialised in _setup_logging()
-CURRENT_RUN_DIR: Path | None = None
-DIFF_END_MARKER = "NO_CHANGES"
-# Symbol that marks a style-guide Markdown file as relevant for the
-# "final pass" mode (see --final-pass CLI flag). Any file whose **stem**
-# ends with this character will be included when --final-pass is used.
-FINAL_PASS_MARKER = "+"
-
-# ---------------------------------------------------------------------------
-# Prompt templates
-# ---------------------------------------------------------------------------
-
-DIFF_SYSTEM_PROMPT = (
-    "You are an expert technical editor. "
-    "Given a STYLE GUIDE and a MARKDOWN DOCUMENT (each provided inside their own XML tags), propose the MINIMAL set of textual edits needed "
-    "for the document to follow the guide. Output the edits in STRICT XML using the following template *repeated* "
-    "once per edit (do not add attributes, comments, or any other markup):\n\n"
-    "<edit>\n"
-    "<before>PASTE UNCHANGED TEXT EXACTLY AS IT APPEARS (may span multiple lines)</before>\n"
-    "<after>REPLACEMENT TEXT EXACTLY AS IT SHOULD APPEAR (may span multiple lines)</after>\n"
-    "<reason>BRIEF (~25 words) SUMMARY OF THE RELEVANT STYLE-GUIDE RULE</reason>\n"
-    "</edit>\n\n"
-    "IMPORTANT: Be extremely careful when authoring the <before> snippet—"
-    "it must match the document text *character-for-character*, including whitespace and newlines. "
-    "It is not necessary to wrap the contents of <before> or <after> with quotation marks or other wrapping characters in order to match the source text. "
-    "For example, to match the text 'Hello, world!', use <before>Hello, world!</before> not <before>'\nHello, world!\n'</before>."
-    "If it is not an exact match, applying the diff will fail with an error.\n"
-    "You do NOT need to pad the snippet with surrounding context; matching the smallest distinctive substring is sufficient, as long as it uniquely identifies the text to change.\n"
-    "The STYLE GUIDE will be supplied inside <style_guide>…</style_guide> and the DOCUMENT inside <document>…</document>. "
-    "Only modify the DOCUMENT—never the STYLE GUIDE. "
-    "Do NOT remove or alter Markdown anchor tags or link identifiers such as '[](){ #anchor-id }' (and similar inline anchor syntaxes). "
-    "Separate <edit> blocks only by whitespace/newlines—no other text. If several identical snippets require the same "
-    "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
-    f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
-    "Never output an <edit> block whose <before> and <after> content are identical. "
-    "These are a NO-OP and should be discarded. "
-    "Each <edit> MUST remain small and local: the <before> snippet should not exceed 10 lines of text or ~300 characters. "
-    "If the required change spans more than this limit, break it into multiple <edit> blocks, one per contiguous section. "
-    "This is because if there are any mistake in the diff, it will fail to apply."
-    " Preserve the existing wording, tone, and sentence structure unless the STYLE GUIDE explicitly requires a change or the text contains an unequivocal error (spelling, grammar, punctuation). "
-    "Avoid making subjective rephrasings or stylistic rewrites not mandated by the STYLE GUIDE. "
-    "Example 1: if the style guide is about correct usage of parenthesis, do not make edits that change usage of capitalization, punctuation, or other style rules."
-    "Example 2: if the style guide is about tone, do not make edits that change how contractions are used."
-    "Inside fenced (```\n...\n```) or indented code blocks, only make edits that are guaranteed to keep the code syntactically valid for its language. "
-    "If applying a grammar or style rule could break, invalidate, or change the meaning of the code, skip that edit entirely. "
-    "When several corrections are possible, prefer the one that achieves compliance with the least amount of change."
-    " If a literal application of the STYLE GUIDE produces text that reads awkwardly, stilted, or unclear, exercise editorial judgment and rephrase the passage so it remains natural, readable, and faithful to the original meaning while still honoring the spirit of the guideline. Prioritize clarity and smooth prose over mechanical adherence when necessary."
-)
-
 
 # ---------------------------------------------------------------------------
 # Helper functions
@@ -176,100 +132,6 @@ def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[
 
 
 # ---------------------------------------------------------------------------
-# Incident logging
-# ---------------------------------------------------------------------------
-
-
-def _log_incident(
-    guide_path: Path,
-    target_doc: Path,
-    diff_text: str,
-    missed_snippets: list[str],
-) -> None:
-    """Write an incident log file containing the problematic diff and context."""
-
-    # Use timezone-aware datetime to avoid DeprecationWarning (Python 3.12+)
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    fname = f"{timestamp}_{guide_path.stem}.log"
-    run_dir = CURRENT_RUN_DIR if CURRENT_RUN_DIR is not None else LOGS_DIR
-    incident_path = run_dir / fname
-
-    missed_section = "\n".join(f"- {s}" for s in missed_snippets) if missed_snippets else "<none>"
-
-    content = (
-        f"Guide: {guide_path.name}\n"
-        f"Target doc: {target_doc}\n"
-        f"Missed snippets: {missed_section}\n"
-        f"--- DIFF START ---\n{diff_text}\n--- DIFF END ---\n"
-    )
-
-    incident_path.write_text(content, encoding="utf-8")
-
-
-# ---------------------------------------------------------------------------
-# Spinner helper for long-running operations (e.g. network calls)
-# ---------------------------------------------------------------------------
-
-
-def run_with_spinner(fn, message: str):
-    """Execute *fn* in a worker thread while showing a spinner.
-
-    Returns the function's result, or ``None`` if the user presses ESC to
-    cancel while waiting. The worker thread continues running in the
-    background, but its result is discarded.
-    """
-
-    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-    future = executor.submit(fn)
-
-    fd = None
-    old_termios = None
-    if os.name != "nt" and sys.stdin.isatty():
-        import termios
-        import tty
-
-        fd = sys.stdin.fileno()
-        old_termios = termios.tcgetattr(fd)
-        tty.setcbreak(fd)
-
-    try:
-        spinner = itertools.cycle("|/-\\")
-        while not future.done():
-            sys.stdout.write(f"\r{message} {next(spinner)}")
-            sys.stdout.flush()
-
-            # ESC detection
-            if os.name == "nt":
-                import msvcrt  # type: ignore
-
-                if msvcrt.kbhit() and msvcrt.getch() in (b"\x1b",):
-                    return None
-            elif fd is not None:
-                import os as _os
-                import select
-
-                ready, _, _ = select.select([fd], [], [], 0)
-                if ready and _os.read(fd, 1) == b"\x1b":
-                    return None
-
-            time.sleep(0.1)
-
-        return future.result()
-    finally:
-        # Clear spinner line.
-        sys.stdout.write("\r" + " " * (len(message) + 2) + "\r")
-        sys.stdout.flush()
-
-        # Restore terminal settings.
-        if fd is not None and old_termios is not None:
-            import termios
-
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_termios)
-
-        executor.shutdown(wait=False)
-
-
-# ---------------------------------------------------------------------------
 # Diff generation (streaming with in-loop ESC cancellation)
 # ---------------------------------------------------------------------------
 
@@ -283,7 +145,6 @@ def generate_diff(style_guide: str, document: str) -> str | None:
     2. Streaming tokens; we print a tiny spinner and still honour ESC to abort
        mid-stream (only the tokens already generated are billed).
     """
-
     messages = [
         {"role": "system", "content": DIFF_SYSTEM_PROMPT},
         {
@@ -302,7 +163,7 @@ def generate_diff(style_guide: str, document: str) -> str | None:
     def _start_stream():
         return openai.chat.completions.create(
             model=MODEL_NAME,
-            messages=messages,
+            messages=messages,  # type: ignore
             stream=True,
         )
 
@@ -311,20 +172,10 @@ def generate_diff(style_guide: str, document: str) -> str | None:
         return None  # User cancelled before the stream started.
 
     diff_chunks: list[str] = []
-
-    fd = None
-    old_termios = None
-    if os.name != "nt" and sys.stdin.isatty():
-        import termios
-        import tty
-
-        fd = sys.stdin.fileno()
-        old_termios = termios.tcgetattr(fd)
-        tty.setcbreak(fd)
+    fd, old_termios = setup_input_mode()
+    spinner = Spinner("Generating diff via LLM")
 
     try:
-        spinner = itertools.cycle("|/-\\")
-        last = 0.0
         for chunk in stream:
             if chunk.choices:
                 delta = chunk.choices[0].delta
@@ -332,72 +183,17 @@ def generate_diff(style_guide: str, document: str) -> str | None:
                 if content:
                     diff_chunks.append(content)
 
-            now = time.time()
-            if now - last >= 0.1:
-                sys.stdout.write(f"\rGenerating diff via LLM {next(spinner)}")
-                sys.stdout.flush()
-                last = now
+            spinner.tick()
 
-            # ESC to cancel mid-generation
-            if os.name == "nt":
-                import msvcrt  # type: ignore
-
-                if msvcrt.kbhit() and msvcrt.getch() in (b"\x1b",):
-                    stream.close()
-                    return None
-            elif fd is not None:
-                import os as _os
-                import select
-
-                ready, _, _ = select.select([fd], [], [], 0)
-                if ready and _os.read(fd, 1) == b"\x1b":
-                    stream.close()
-                    return None
+            if check_cancellation(fd):
+                stream.close()
+                return None
 
     finally:
-        sys.stdout.write("\r" + " " * 40 + "\r")
-        sys.stdout.flush()
-
-        if fd is not None and old_termios is not None:
-            import termios
-
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_termios)
+        spinner.clear()
+        restore_input_mode(fd, old_termios)
 
     return "".join(diff_chunks).strip()
-
-
-# ---------------------------------------------------------------------------
-# Logging setup
-# ---------------------------------------------------------------------------
-
-
-def _setup_logging() -> Path:
-    """Configure logging with Loguru to write *all* console output to a file in logs/."""
-
-    global CURRENT_RUN_DIR
-
-    LOGS_DIR.mkdir(parents=True, exist_ok=True)
-
-    run_timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    CURRENT_RUN_DIR = LOGS_DIR / run_timestamp
-    CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
-
-    log_path = CURRENT_RUN_DIR / "session.log"
-
-    # Configure Loguru sinks: console + file.
-    logger.remove()
-    logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}", colorize=True)
-    logger.add(
-        log_path,
-        level="INFO",
-        encoding="utf-8",
-        format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}",
-        colorize=False,  # Don't colorize file output
-    )
-
-    # No additional stdlib logging interception required; use Loguru directly.
-
-    return log_path
 
 
 # ---------------------------------------------------------------------------
@@ -435,7 +231,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # Prepare logging (creates per-run directory and log file).
-    log_file = _setup_logging()
+    log_file = setup_logging()
     logger.info(f"Logging configured. Full session log: {log_file}")
 
     target_path = Path(args.markdown_document).expanduser().resolve()
@@ -610,7 +406,7 @@ def main() -> None:
 
         # Log incident if any edits were missed or nothing changed.
         if missed_snippets or not changed:
-            _log_incident(page_path, target_path, diff, missed_snippets)
+            log_incident(page_path, target_path, diff, missed_snippets)
 
         # Only pause for user review if the document actually changed.
         if changed and not args.yolo:

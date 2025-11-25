@@ -28,7 +28,6 @@ import re
 import shutil
 import subprocess
 import sys
-import textwrap
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -36,17 +35,22 @@ from dotenv import load_dotenv
 from github import Github, InputFileContent
 from loguru import logger
 
+from settings import (
+    AUTO_DOCS_EDIT_SCRIPT,
+    BULK_LOGS_DIR,
+    DEFAULT_BASE_BRANCH,
+    DEFAULT_REMOTE,
+    LOGS_DIR,
+    PR_BODY_TEMPLATE,
+    ROOT_DIR,
+)
+
 # ---------------------------------------------------------------------------
 # Constants & configuration
 # ---------------------------------------------------------------------------
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-AUTO_DOCS_EDIT = SCRIPT_DIR / "auto_docs_edit.py"
-LOGS_DIR = SCRIPT_DIR / "logs"  # auto_docs_edit default
-BULK_LOGS_DIR = LOGS_DIR / "bulk_pr_logs"
+SCRIPT_DIR = ROOT_DIR
 
-DEFAULT_BASE_BRANCH = "main"
-DEFAULT_REMOTE = "origin"
 
 # ---------------------------------------------------------------------------
 # Helper utilities
@@ -62,10 +66,12 @@ def run(cmd: list[str], *, cwd: Path | None = None, capture: bool = True, dry: b
         return ""
 
     logger.debug(f"$ {cmd_display}{loc}")
-    result = subprocess.run(cmd, cwd=cwd, capture_output=capture, text=True)
-    if result.returncode != 0:
-        logger.error(result.stderr)
-        raise RuntimeError(f"Command failed: {cmd_display}")
+    try:
+        result = subprocess.run(cmd, cwd=cwd, capture_output=capture, text=True, check=True)
+    except subprocess.CalledProcessError as exc:
+        logger.error(exc.stderr)
+        raise RuntimeError(f"Command failed: {cmd_display}") from exc
+
     return result.stdout.strip()
 
 
@@ -133,7 +139,7 @@ def process_document(
     run(["git", "checkout", "-B", branch], cwd=repo_path, dry=dry_run)
 
     # 3. Run AutoDocsEditor twice
-    cmd_common = ["uv", "run", "--script", str(AUTO_DOCS_EDIT)]
+    cmd_common = ["uv", "run", "--script", str(AUTO_DOCS_EDIT_SCRIPT)]
     run(cmd_common + ["--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
     run(cmd_common + ["--final-pass", "--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
 
@@ -176,13 +182,7 @@ def process_document(
         remote_url = run(["git", "remote", "get-url", remote_name], cwd=repo_path)
         repo_full = repo_full_name_from_remote_url(remote_url)
         gh_repo = github_client.get_repo(repo_full)
-        body = textwrap.dedent(
-            f"""Testing Auto Docs Editor in YOLO mode for Douglas.
-            The diff was automatically generated and needs to be reviewed by Douglas.
-
-            Session log: {gist_url}
-            """
-        ).strip()
+        body = PR_BODY_TEMPLATE.format(gist_url=gist_url).strip()
         pr = gh_repo.create_pull(
             title=commit_msg,
             body=body,

@@ -28,6 +28,7 @@ extract content while ignoring sidebars and other page furniture.
 from __future__ import annotations
 
 import argparse
+import logging
 import sys
 from collections import deque
 from pathlib import Path
@@ -37,11 +38,23 @@ import requests
 from bs4 import BeautifulSoup, Tag
 from markdownify import markdownify as md
 
+# Add root to sys.path to allow importing settings
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+from settings import CRAWLER_HEADERS
+
 # Type alias for stored page info: (url, title, saved_path)
 PageInfo = tuple[str, str, Path]
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%H:%M:%S",
+)
+logger = logging.getLogger(__name__)
 
-HEADERS = {"User-Agent": "markdown-crawler/1.0 (+https://github.com/ray-project)"}
+
+HEADERS = CRAWLER_HEADERS
 
 
 def sanitize_path(url: str, base_netloc: str) -> Path:
@@ -65,6 +78,44 @@ def extract_main_content(soup: BeautifulSoup) -> Tag | None:
         if tag:
             return tag
     return soup.body  # Fallback
+
+
+def process_page(
+    session: requests.Session,
+    url: str,
+    output_dir: Path,
+    base_netloc: str,
+) -> tuple[PageInfo | None, list[str]]:
+    """
+    Download and process a single URL.
+    Returns (PageInfo, list_of_links_found).
+    """
+    try:
+        resp = session.get(url, timeout=10)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        logger.warning(f"Skipping {url}: {exc}")
+        return None, []
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+    main_tag = extract_main_content(soup)
+    if not main_tag:
+        logger.info(f"No main content found for {url}")
+        return None, []
+
+    markdown = md(str(main_tag), heading_style="ATX")
+    out_path = output_dir / sanitize_path(url, base_netloc)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(markdown, encoding="utf-8")
+
+    title = soup.title.string.strip() if soup.title and soup.title.string else url
+    logger.info(f"Saved {url} -> {out_path.relative_to(output_dir)}")
+
+    links = []
+    for a in soup.find_all("a", href=True):
+        links.append(a["href"].strip())
+
+    return (url, title, out_path), links
 
 
 def crawl(base_url: str, output_dir: Path) -> list[PageInfo]:
@@ -96,37 +147,12 @@ def crawl(base_url: str, output_dir: Path) -> list[PageInfo]:
             continue
         visited.add(url)
 
-        try:
-            resp = session.get(url, timeout=10)
-            resp.raise_for_status()
-        except requests.RequestException as exc:
-            print(f"[WARN] Skipping {url}: {exc}", file=sys.stderr)
-            continue
+        page_info, raw_links = process_page(session, url, output_dir, base_netloc)
+        if page_info:
+            saved_pages.append(page_info)
 
-        soup = BeautifulSoup(resp.text, "html.parser")
-
-        # Extract and save Markdown
-        main_tag = extract_main_content(soup)
-        if not main_tag:
-            print(f"[INFO] No main content found for {url}", file=sys.stderr)
-            continue
-
-        markdown = md(str(main_tag), heading_style="ATX")
-
-        out_path = output_dir / sanitize_path(url, base_netloc)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(markdown, encoding="utf-8")
-
-        # Determine a human-readable title for later concatenation.
-        title_tag = soup.title.string.strip() if soup.title and soup.title.string else url
-        saved_pages.append((url, title_tag, out_path))
-
-        print(f"[SAVED] {url} -> {out_path.relative_to(output_dir)}")
-
-        # Enqueue internal links
-        for a in soup.find_all("a", href=True):
-            href = a["href"].strip()
-            if href.startswith("mailto:") or href.startswith("javascript:"):
+        for href in raw_links:
+            if href.startswith(("mailto:", "javascript:")):
                 continue
             next_url = urljoin(url, href)
             parsed_next = urlparse(next_url)
@@ -179,7 +205,7 @@ def main() -> None:
     if args.combined_file:
         combined_path = Path(args.combined_file)
         write_concatenated_markdown(pages, combined_path)
-        print(f"[COMBINED] Wrote concatenated markdown to {combined_path}")
+        logger.info(f"Wrote concatenated markdown to {combined_path}")
 
 
 if __name__ == "__main__":
