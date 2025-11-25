@@ -9,8 +9,8 @@
   * **Members (fields/constants):** Be brief. Link to relevant methods that use them.
   * **Methods:** Start with a third-person singular verb. Document prerequisites, dependencies (e.g., permissions), and behavior when dependencies are missing.
     * *Operations that return data:* Start with the operation verb (*Adds a bird and returns its ID*).
-    * *Getters (Boolean):* "Checks whether..." 
-    * *Getters (Other):* "Gets the..." 
+    * *Getters (Boolean):* "Checks whether..."
+    * *Getters (Other):* "Gets the..."
     * *Setters:* "Sets the..."
     * *Updates:* "Updates the..."
     * *Deletions:* "Deletes the..."
