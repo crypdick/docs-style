@@ -15,21 +15,9 @@
 :   OK to use *+* with numbers in text, such as *customer records with
     300+ demographic attributes*, except in formal contexts.
 
-**& (ampersand)**
-:   Don't use *&* instead of *and* in headings, text, navigation, or
-    tables of contents.
-:   It's OK to use *&* when referencing UI elements that use *&*, or
-    in table headings and diagram labels where space constraints require
-    abbreviation.
-:   It's OK to use `&` for technical purposes in code.
-
 ---
 
 ### A
-
-**a and an**
-:   Use *a* when the next word starts with a consonant *sound*,
-    regardless of what letter it starts with.
 
 **A/B testing**
 :   Capitalize and use slash notation for *A/B*.
@@ -42,18 +30,6 @@
 :   Avoid in general usage. Instead, use words like *stop*, *exit*,
     *cancel*, or *end*. In Linux, *abort* refers to a type of
     signal that terminates an abnormal process.
-
-**about versus on**
-:   When a cross-reference includes information that describes what the
-    cross-reference links to, use *about* instead of *on*.
-
-**above**
-:   Don't use for a range of version numbers. Instead, use *later*.
-:   Don't use to refer to a position in a document. Instead, use
-    *earlier* or *preceding*.
-:   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language.
-:   It's OK to use *above* in a non-directional way, such as when describing a hierarchy.
 
 **access token**
 :   Lowercase except at the beginning of a sentence,
@@ -72,10 +48,6 @@
     chart*). For other contexts, try to find a more specific English
     equivalent.
 :   Don't hyphenate or italicize the term.
-
-**admin**
-:   Write out *administrator* unless it's the name of a UI label or other
-    element.
 
 **advertised route priority**
 :   OK to also use *base advertised route priority* when discussing
@@ -96,9 +68,6 @@
 :   Recommended: PRODUCT\_NAME Alpha
 :   Recommended: PRODUCT\_NAME is in alpha.
 
-**among**
-:   See [between versus among](#between-versus-among).
-
 **API**
 :   Use *API* to refer to either a web API or a language-specific API.
 :   Don't use *API* when referring to a method or a class. For example,
@@ -117,11 +86,6 @@
 **appendix**
 :   Use the plural *appendixes*, not *appendices*.
 
-**as**
-:   If you mean *because*, then use *because* instead of
-    *as*. *As* is ambiguous; it can refer to the passage of time.
-    *Because* refers to causation or the reason for something.
-
 **authentication and authorization**
 :   In general, use the word *authenticated* only to refer to users,
     and use *authorized* only to refer to requests that are sent by a
@@ -131,8 +95,6 @@
     (or giving some other proof of identity). The *authenticated
     user* then *authorizes* the client app to send an
     *authorized request* to the server on the user's behalf.
-:   When you want to use a preposition with *authenticate*, use
-    *against*.
 
 **-aware**
 :   Avoid using as a compound modifier, as in *healthcare-aware*.
@@ -156,16 +118,6 @@
 :   Write *base64* in code font *only* if it's a string literal or
     otherwise quoted from code.
 
-**below**
-:   Don't use for a range of version numbers. Instead, use *earlier*.
-:   Don't use to refer to a position in a document. Instead, use *later*
-    or *following*.
-:   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language.
-:   It's OK to use *below* in set phrases such as *below (the)
-    average*, *below the mean*, *below zero*.
-:   It's OK to use *below* in a non-directional way, such as when describing a hierarchy.
-
 **best effort**
 :   Avoid where possible. Instead, use more specific wording. After providing
     a description, you can add a phrase like "sometimes referred to as *best
@@ -175,18 +127,6 @@
 :   Lowercase except when part of a product name.
 :   Recommended: PRODUCT\_NAME Beta
 :   Recommended: PRODUCT\_NAME is currently in beta.
-
-**between versus among**
-:   It's fine to use *between* when talking about more than two things;
-    however, *between* isn't interchangeable with *among*.
-:   Use *between* when you're talking about two or more distinct
-    things:
-:   Recommended: JavaScript introduces
-    dependencies between the DOM, the CSSOM, and JavaScript execution.
-:   Use *among* when you're talking about things that are part of a group
-    or things that aren't distinct:
-:   Recommended: ... a conventional SQL
-    database that can be shared among multiple apps.
 
 **big-endian**
 :   Hyphenate. Lowercase except at the beginning of a sentence,
@@ -205,27 +145,9 @@
 :   If you refer to *Boolean mathematics* or *Boolean logic*, use
     uppercase.
 
-**button**
-:   In a UI, a link isn't the same as a button; don't use the term
-    *button* to refer to a link.
-:   Use *button* to refer to mechanical buttons (like the volume control
-    buttons on the side of a phone) and capacitive touch buttons on a phone
-    (like the Home button). You *press* mechanical buttons, and
-    *tap* capacitive and on-screen buttons.
-
 ---
 
 ### C
-
-**can**
-:   Use *can* in the following ways:
-
-    * To convey permission or ability (for example, "You can access the
-      server").
-    * To refer to an optional action (for example, "You can also view
-      logs with the Log Viewer").
-    * To describe a possible outcome (for example, "The process can
-      take 30 minutes").
 
 **canary**
 :   Don't use *canary* as a verb, and don't use *canarying*.
@@ -233,34 +155,6 @@
     *canary testing*. If you use one of these phrases, define it on first
     use or provide a link to the definition, and use it consistently
     throughout the document.
-
-**chapter**
-:   When referring to documentation that isn't in the form of a book, don't
-    use the term *chapter*. Instead, refer to documents, pages, or
-    sections.
-
-**check**
-:   Don't use to refer to marking a checkbox. Instead, use *select*.
-
-**choose**
-:   *Choose* is fine to use for generic contexts. For UI elements, use
-    *select*.
-
-**clear**
-:   Use (as a verb) to refer to clearing a check mark from a checkbox.
-
-**click**
-:   When the environment is a desktop with a mouse, use *click* for most
-    targets, such as buttons, links, list items, and radio buttons. Don't use
-    *click on*.
-:   Recommended: Click **OK**.
-:   Not recommended: Click on **OK**.
-:   Hyphenate *right-click*, *left-click*, and *double-click*.
-:   When a click or tap action reveals a collapsed list, you can write
-    *click to expand* or simply *expand*.
-:   It's OK to write *click in* when referring to a region that needs
-    focus (for example: *click in the window*), but not when referring to
-    a control or a link.
 
 **client**
 :   In REST and RPC API documentation, *client* is short for *client
@@ -306,19 +200,8 @@
 :   Recommended: `Control+S`
     (`Command+S` on macOS)
 
-**Copy and paste**
-:   Avoid using. Instead, explain what to enter into a field and not how.
-:   Recommended: In the
-    **Query** field, enter the output from the previous step.
-:   Not recommended: Copy the output from
-    the previous step and paste into the **Query** field.
-
 **CPU**
 :   All caps. No need to expand the abbreviation on first mention.
-
-**Create a new ...**
-:   Avoid using unless you need to distinguish the item from another recently
-    created item. Instead, use *Create a ...*
 
 **cross-site request forgery**
 :   Lowercase except at the beginning of a sentence,
@@ -327,17 +210,6 @@
 ---
 
 ### D
-
-**dash**
-:   A dash (`—`) isn't the same character as a hyphen
-    (`-`). The characters are used for different purposes.
-    Therefore, don't use the word *dash* to refer to a hyphen.
-
-**data**
-:   Use *data* as singular, not plural; *the data is*, not
-    *the data are*.
-:   Use data as a mass noun, not a count noun; *less data*, not
-    *fewer data*.
 
 **data center campus**
 :   Use when referring to an entire physical location, which can encompass one
@@ -377,16 +249,6 @@
 :   Short for *development operations*. No need to spell out on first
     mention unless the audience requires it.
 
-**dialog**
-:   Use *dialog* for the UI element sometimes called a dialog box.
-:   Use *dialogue* only for verbal interaction between people.
-
-**directory, folder**
-:   If the context that you're documenting (such as an IDE's GUI) uses one
-    term or the other, use that term. If not, then use *directory* in a
-    command-line context, and *folder* in a GUI context. When in doubt,
-    default to *directory*.
-
 **disable**
 :   Don't use *disable* or *disabled* to describe something that's
     broken.
@@ -396,17 +258,6 @@
     *deselect*, depending on the context. Use the same term consistently throughout your
     document.
 
-**display (verb)**
-:   Don't use as an intransitive verb. *Display* is a transitive verb;
-    therefore, it requires an object. It is often misused in technical
-    documentation, as demonstrated by the following example:
-:   Recommended: The Output Directories
-    area appears.
-:   Recommended: The Output Directories
-    area is displayed.
-:   Not recommended: The Output
-    Directories area displays.
-
 **distributed denial-of-service (DDoS)**
 :   Hyphenate as shown. On subsequent mention, use *DDoS*.
 
@@ -415,15 +266,6 @@
 
 **DNSKEY**
 :   One word, all capital letters.
-
-**documentation or document or documents**
-:   To refer specifically to the text on a page that explains a product, feature, or service,
-    use *this document*, and not *this article*, *this topic*, *this doc*, or
-    *this page*. It's OK to use *this tutorial*, *this quickstart*, or *this
-    codelab* for those specific documentation types.
-
-    Always spell out *documentation* except in cases where space is limited, such as in
-    tabs and URLs.
 
 **domain name registrar**
 :   Lowercase except at the beginning of a sentence,
@@ -443,10 +285,6 @@
     understood, if you use the term, make sure to define it on first use.
 :   Don't use *down scope* or *down-scope*
 
-**drag**
-:   Use *drag*, not *click and drag* and not *drag and drop*.
-:   OK to use *drag-and-drop* as an adjective.
-
 **drop-down**
 :   In most cases, you can omit *drop-down* from phrases like *drop-down list* or
     *drop-down menu*, and just use *list* or *menu*. Include *drop-down* as a
@@ -457,41 +295,12 @@
 
 ### E
 
-**each**
-:   *Each* refers to every individual item taken individually, not to a
-    group of items taken collectively. In other words, *each* isn't a
-    synonym for *all*. For example, *a list of each item* is
-    ambiguous; *a list of all the items* or *a list of the items* is
-    generally clearer.
-
-**earlier**
-:   Use for a range of version numbers, not *lower*.
-:   When referring to a position in a document, use *earlier* or
-    *preceding*, not *higher*.
-
 **edge availability domain**
 :   Don't use *edge availability zone*, *metro availability domain*,
     or *metro availability zone*. Don't shorten to *EAD*.
 
 **egress**
 :   When referring to the networking term, use lowercase.
-
-**either**
-:   When using *either*, use parallel syntax.
-:   In general, use *either* only for a choice between two things, not
-    for a choice among multiple things. Writing *either A or B or C* will
-    distract some readers, but if it's the best phrasing for your situation,
-    then use it.
-
-**element**
-:   In HTML and XML, a tag is a component of an element that indicates
-    the start or end of the element. (For example, the
-    `<i>` start tag indicates the beginning of the
-    `<i>example</i>` element.) In general, don't use
-    the term *tag* to refer to an entire element.
-
-**emoji**
-:   Use *emoji* for both singular and plural forms.
 
 **enable**
 :   In procedures, use the appropriate label and action for the
@@ -506,10 +315,6 @@
     * Use the same term throughout the document unless there's a
       difference in the UI elements for different procedures.
 :   For making it feasible to do something, use *lets you*.
-
-**enter**
-:   Use *enter* to refer to the user entering text. If it's important to
-    not press `Enter`, explicitly say so.
 
 **ephemeral external IP address**
 :   Don't use *ephemeral IP address* or *external IP address* to
@@ -532,11 +337,6 @@
 **female adapter**
 :   Don't use. Instead, use a genderless word like *socket*.
 
-**fill in; fill out**
-:   Use *fill in* when referring to entering information in individual
-    fields.
-:   Use *fill out* when referring to completing an entire form.
-
 **fintech**
 :   Write out on first mention: *financial technology (fintech)*. Don't
     use *FinTech* or *fin-tech*.
@@ -548,10 +348,6 @@
     that every network has an implied virtual distributed firewall.
 :   Outside of Compute Engine or networking documentation, the term
     *firewalls* is acceptable.
-
-**following**
-:   It's not necessary to use a noun after *following* unless it helps
-    provide clarity and enables accessibility.
 
 **functionality**
 :   Use with caution. With respect to hardware or software,
@@ -571,10 +367,6 @@
 **Gbps**
 :   Short for *gigabits per second*. By convention, we don't use
     *Gb/s*.
-
-**gender-neutral he, him, or his (or she or her)**
-:   Don't use. Instead, use the singular *they*. Don't use *he/she* or *(s)he* or other
-    such punctuational approaches.
 
 **generative AI**
 :   Spell out *generative*. Use sentence case.
@@ -607,10 +399,6 @@
 
 **hardcode (verb), hardcoded (adjective)**
 
-**he, him, his**
-:   Don't use a gendered pronoun except for a specific individual of known
-    gender. Use *they* and *their* for the general singular pronoun.
-
 **health check**
 :   Use with caution. When describing an action taken for a computer system,
     only use the term *health check* if this is the term that appears in
@@ -624,28 +412,9 @@
 :   Lowercase except when part of a product name, but OK to abbreviate as
     *HA* after first use.
 
-**higher**
-:   Don't use for a range of version numbers. Instead, use *later*.
-:   Don't use to refer to a position in a document. Use *earlier* or
-    *preceding*.
-:   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language.
-:   A release with the highest version number might not be the latest version.
-
 **high performance computing (HPC)**
 :   Don't hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
-
-**hold the pointer over**
-:   Only use this verb phrase in the following cases:
-
-    * When the user needs to hold their mouse over a UI element, but not
-      click the UI element. This action involves waiting for the UI to
-      react—for example, waiting for a tooltip to open or waiting for a
-      submenu to open.
-    * When the duration of time is important.
-
-    The phrase *point to* is more common.
 
 **hot**
 :   When possible, avoid jargon like *hot failover*,
@@ -677,10 +446,6 @@
 :   In some contexts, it's best to spell out as *identifier* or
     *identification*.
 
-**if**
-:   Although it is common in casual usage to omit the word *then* in *if...then*
-    statements, you should include helper words like *then* in technical documentation.
-
 **image**
 :   *Image* by itself doesn't localize well because of its many meanings. Consider adding
     context—for example, *disk image* or *container image*.
@@ -688,10 +453,6 @@
 **impact**
 :   Use only as a noun. Instead of writing that something *has an
     impact*, use the word *affect*.
-
-**index**
-:   Use the plural *indexes* unless there is a domain-specific reason
-    (for example, a mathematical or financial context) to use *indices*.
 
 **ingest**
 :   Use *import*, *load*, or *copy* when referring to simple movement of data. Use
@@ -739,16 +500,6 @@
     inadequate refresh rate. Don't use otherwise. Use a less figurative term to refer to something
     of poor or unreliable quality.
 
-**just**
-:   Avoid. Usually, *just* is a filler word that you can delete without
-    affecting your meaning.
-:   If your meaning is unclear without *just*, then use a more specific
-    term such as *only*, *instead*, or *previously*, or revise
-    your language to be more specific.
-:   Sometimes, *just* is useful for conveying that one approach is
-    simpler than another. In those cases, use *just* instead of
-    *simply*.
-
 ---
 
 ### K
@@ -781,26 +532,11 @@
 
 ### L
 
-**later**
-:   Use for a range of version numbers, not *higher*.
-:   A release with the highest version number might not be the latest version.
-:   When referring to a position in a document, use *later* or
-    *following*, not *below*.
-
-**latest**
-:   Avoid in timeless documentation because this word can become outdated.
-:   If you must use *latest*, give the reader a reference
-    point—for example, a version number or release date.
-
 **legacy**
 :   If possible, use a more precise term. If you do use *legacy*,
     include or point to a definition to clarify what you mean in the current
     context. Don't use *legacy* with any sort of pejorative
     connotation.
-
-**like versus such as**
-:   It's OK to use either *like* or *such as* for comparisons or
-    examples.
 
 **limits**
 :   In an API context, *limit* often refers to usage limits (number of
@@ -828,22 +564,12 @@
 :   Not *long running operation*.
 :   OK to abbreviate as *LRO* after the first use.
 
-**lower**
-:   Don't use for a range of version numbers. Instead, use *earlier*.
-:   Don't use to refer to a position in a document. Instead, use *later*
-    or *following*.
-:   Don't use to refer to a position in the UI. Instead, write instructions
-    that avoid directional language.
-
 ---
 
 ### M
 
 **male adapter**
 :   Don't use. Instead, use a genderless word like *plug*.
-
-**Markdown**
-:   Always capitalized, even when you're referring to a nonstandard version.
 
 **master**
 :   Use with caution. Never use in conjunction with *slave*. Where
@@ -859,16 +585,6 @@
 
 **Material Design**
 :   Capitalize each word in *Material Design*.
-
-**matrix**
-:   Use the plural *matrixes* unless there is a domain-specific reason
-    (for example, a mathematical context) to use *matrices*.
-
-**may**
-:   In general, reserve for official policy or legal considerations.
-:   To convey *possibility*, use *can* or *might*
-    instead.
-:   To convey *permission*, use *can* instead.
 
 **MBps**
 :   Short for *megabytes per second*. By convention, we don't use
@@ -892,10 +608,6 @@
 **metropolitan area (metro)**
 :   In networking, a *metro* is a city where a colocation facility is
     located.
-
-**might**
-:   Use to convey possibility or an uncertain outcome (for example, "You
-    might be prompted to enter your credentials").
 
 **MIME type**
 :   *MIME* stands for "Multipurpose Internet Mail Extensions," and was originally used to
@@ -927,18 +639,9 @@
 :   Hyphenate. We generally prefer to close prefixed words, but this is
     an exception because it's an established term.
 
-**must**
-:   Use to describe a required action or state (for example, "You must have
-    the Editor role"). You can also write *you need* in order to convey a
-    requirement.
-
 ---
 
 ### N
-
-**N/A**
-:   Not *NA*. Spell out as *not available* or *not applicable*
-    on first reference.
 
 **native**
 :   Avoid using *native* to refer to people.
@@ -949,9 +652,6 @@
     *cloud-native* could mean that something was written for the cloud,
     or that it's built in to a cloud platform, or that it currently exists in
     a cloud platform.
-
-**neither**
-:   Write *neither A nor B*, not *neither A or B*.
 
 **nonce**
 :   Use with caution: this term has a secondary slang meaning that can cause
@@ -966,12 +666,6 @@
 
 **OAuth 2.0**
 :   Not *OAuth 2*, *OAuth2*, or *Oauth*.
-
-**old, older**
-:   Don't use to refer to a previous version of a product. Instead, use
-    *earlier*.
-:   Make sure that you provide a version number by which to understand
-    *earlier*.
 
 **on-premises**
 :   Not *on prem*, *on premise*, or *on-premise*. Hyphenate
@@ -992,13 +686,6 @@
 
 **PaaS**
 :   Write out on first mention: *platform as a service (PaaS)*.
-
-**page**
-:   Use *page* to refer to the following:
-
-    * A whole web page, which can include text, images, links, banners, navigational panes,
-      and other features.
-    * A sub-page of a console in particular.
 
 **parameter**
 :   In our API documentation, *parameter* is usually short for *query
@@ -1040,24 +727,7 @@
 :   In most contexts, use *plain text*, but use *plaintext* in a
     cryptography context.
 
-**please**
-:   Don't use *please* in the normal course of explaining how to use a
-    product, even if you're explaining a difficult task.
-:   Don't use the phrase *please note*.
-:   Use *please* only when you're asking for permission or
-    forgiveness—for example, when what you're asking for benefits you,
-    inconveniences a reader, or suggests a potential issue with a product.
-
 **plugin (noun), plug-in (adjective), plug in (verb)**
-
-**point to**
-:   Use to refer to the action of pointing the mouse pointer (focus). This
-    action doesn't imply a length of time waiting for the UI to react to user
-    action.
-:   This is similar to the action *hold the
-    pointer over (hover)*. In most cases, it's better to use the verb
-    phrase *hold the pointer over* if you want the user to wait for the
-    UI to react.
 
 **POJO**
 :   If you're not actually writing about a Plain Old Java Object for a Java
@@ -1070,16 +740,8 @@
 :   Not recommended: point of presence
     (POP)
 
-**populate**
-:   OK to use if you're writing about a process populating a table or other
-    entity. If you're writing about a person, use *fill in*.
-
 **port**
 :   Use *listen on* (not *to*).
-
-**possible**
-:   Don't use *possible* or *impossible* to mean *you can* or
-    *you can't*.
 
 **PostgreSQL**
 :   If the UI uses the name *Postgres*, it's OK to match the UI. Don't
@@ -1105,11 +767,6 @@
 
 **pre-shared key**
 :   Not *preshared key*.
-
-**press**
-:   Use when referring to pressing a key or a key combination to cause an
-    action to occur. Also use for mechanical buttons.
-:   For on-screen and soft (capacitive) buttons, use *tap*.
 
 **primitive**
 :   Use with caution. Don't use *primitive* in a disparaging sense.
@@ -1144,12 +801,6 @@
     example, write out *you can try it again* or *can be tried
     again*.
 
-**review**
-:   If you mean "read, potentially for the first time," then use *read*
-    instead of *review*.
-:   If you mean "read critically, commenting on problems" (as in *code
-    review*), then *review* is fine.
-
 **RFC**
 :   When referencing an RFC specification, use a space between *RFC* and
     the number (for example, *RFC 2318*).
@@ -1179,22 +830,6 @@
 :   Not *screen shot* or *screensnap*.
 :   Don't use as a verb; instead, use *take a screenshot*.
 
-**scroll**
-:   OK to use *scroll* as a verb, but if possible, instead use a term
-    that isn't specific to implementation. For example, write *go to the
-    section*, instead of *scroll to the section*.
-:   If you use *scroll*, don't use directional language
-    like *scroll up*.
-
-**see**
-:   OK as a general term and when referring to links and cross-references. Our
-    research indicates that language relating to sight is OK for a wide range
-    of readers.
-
-**select**
-:   Use to describe choosing an item from among multiple options, selecting
-    text, or marking a checkbox.
-
 **sensitive**
 :   *Sensitive* data is data for which the release might be harmful. See
     *confidential*.
@@ -1215,22 +850,12 @@
     heading, or list item.
 :   OK to abbreviate as *SLO* after first use.
 
-**setup (noun or adjective), set up (verb)**
-
 **SHA-1**
 :   Not *SHA1*, except in string literals/enums and in hyphenated phrases
     such as *HSA-SHA1*.
 
 **shall**
 :   Avoid *shall* except under advice from a lawyer.
-
-**she, her, hers**
-:   Don't use a gendered pronoun except for a specific individual of known
-    gender. Use *they* and *their* for the general singular pronoun.
-
-**should, should be**
-:   Generally avoid.
-:   Because *should* is ambiguous by definition, it can be problematic.
 
 **sign-in (noun or adjective), sign in (verb)**
 :   Not *log in* or *signin*.
@@ -1245,11 +870,6 @@
 **sign-out (noun or adjective), sign out (verb)**
 :   Not *log out* or *signout*.
 
-**since**
-:   If you mean *because*, then use *because* instead of
-    *since*. *Since* is ambiguous; it can refer to the passage of
-    time. *Because* refers to causation or the reason for something.
-
 **single most**
 :   Not *singlemost*.
 
@@ -1261,8 +881,6 @@
 **ssh and SSH**
 :   Don't use `ssh` or SSH as a verb. SSH is a secure
     communications protocol; `ssh` is a utility.
-
-**startup (noun or adjective), start up (verb)**
 
 **static external IP address**
 :   Don't use *static IP address* or *external IP address* to refer
@@ -1284,16 +902,9 @@
 :   OK to use as a shortening of *subnetwork*. Use the same term consistently throughout your
     document.
 
-**such as versus like**
-:   It's OK to use either.
-
 ---
 
 ### T
-
-**tab**
-:   When referring to the sub-pages of a console, use
-    *page* instead of *tab*.
 
 **table name**
 :   Two words. Set specific table names in code font.
@@ -1302,30 +913,7 @@
 :   *Tablet* is OK. If you don't know whether it's a tablet or a phone,
     use *device*.
 
-**their (singular)**
-:   This is our preferred gender-neutral pronoun. Whether used as singular
-    or plural, it always takes the plural verb.
-
-**then**
-:   Although it is common in casual usage to omit the word *then* in *if...then*
-    statements, you should include helper words like *then* in technical documentation.
-
-**they (singular)**
-:   This is our preferred gender-neutral pronoun. Whether used as singular
-    or plural, it always takes the plural verb. For example, "A user
-    authenticates their identity by entering their password."
-
 **third party (noun), third-party (adjective)**
-
-**this, that**
-:   Where possible, put a noun after *this* or *that* for clarity.
-    If doing so results in clunky prose, then don't do it; but even then, try
-    thinking about what the noun would be. If you aren't sure what noun
-    *this* or *that* refers to, then consider rephrasing—
-    otherwise, your reader probably won't know what noun you're referring to,
-    either.
-
-**timeout (noun), time out (verb)**
 
 **time to live**
 :   Not *time-to-live*. Abbreviate as *TTL* after first use.
@@ -1351,16 +939,6 @@
 **tutorial**
 :   OK to use.
 
-**type**
-:   In general, use *enter* instead of *type* because
-    there is typically more than one way to enter text than typing (such as
-    pasting text or speaking).
-
-**typically**
-:   Use to describe what is usual or expected under normal circumstances.
-:   Don't use as the first word in a sentence, as doing so can leave the
-    meaning open to misinterpretation.
-
 ---
 
 ### U
@@ -1370,11 +948,6 @@
     term like *page* or
     *console*. If a specific term is unavailable,
     use *web interface*.
-
-**under**
-:   Don't use for a range of version numbers. Instead,
-    use *earlier*.
-:   Don't use to refer to a position in the UI.
 
 **Unicode**
 :   Not *UNICODE*.
@@ -1390,15 +963,6 @@
 **US**
 :   OK to use as an abbreviation for *United States*. Don't use
     *U.S.* or *U.S.A.*
-
-**user**
-:   Use the word *user* only to refer to the user of the software that
-    your reader is developing. Otherwise, address the reader as *you*
-    and assume that they will complete the tasks that you're documenting.
-
-**using**
-:   Where *using* might have more than one interpretation, use *by
-    using* to help clarify the logic of the sentence.
 
 **UTF**
 :   Include the hyphen in the names of Unicode encodings, such as
@@ -1432,13 +996,6 @@
     of these phrases, define it on first use and use it consistently
     throughout the document.
 
-**we**
-:   Don't use *we* (or other first-person plural pronouns such as
-    *our* or *us*) to address the reader who is performing the
-    tasks that you're documenting. Instead, use *you*.
-:   It's OK to use *we* to refer to the organization that's represented
-    as the author of the document as long as the antecedent is clear.
-
 **web (lowercase)**
 
 **WebAssembly, Wasm**
@@ -1446,23 +1003,6 @@
     WebAssembly specification.
 
 **web application firewall (lowercase)**
-
-**whether**
-:   *To decide whether it's more appropriate to use *if* or
-      *whether*, see Grammar Girl's
-      discussion of *if* and *whether*.
-    * To decide whether you need to add *or not* when using
-      *whether*, see the New York
-      Times's blog post about whether (or not).
-
-**while**
-:   Don't use to indicate a contrast. Instead, use a more precise term, such
-    as *although*.
-:   OK to use to refer to a period of time.
-
-**with**
-:   Don't use *with* when expressing ownership.
-:   Don't use *with* when expressing use.
 
 **workload**
 :   The term *workload* might refer to software, like an app or
@@ -1474,23 +1014,3 @@
 
 **World Wide Web**
 :   Don't use. Instead, use *web*.
-
-**would**
-:   Avoid using. Instead, use *can* where possible.
-
----
-
-### Y
-
-**you**
-:   Use *you* instead of *user* to address the
-    reader of your document.
-
----
-
-## See Also
-
-* [Vale rules](../vale_styles/Google/) - Automated checks for many of these terms
-* [Inclusive documentation](/style/inclusive-documentation)
-* [Timeless documentation](/style/timeless-documentation)
-* [Translation guidelines](/style/translation)

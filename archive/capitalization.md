@@ -33,8 +33,7 @@ Use a lowercase letter to begin the first word of the text immediately
 following a colon, unless the text is one of the following:
 
 * A proper noun (*Open source software: Hadoop*)
-* A heading; see also [Capitalization in titles
-  and headings](#capitalization-in-titles-and-headings)
+* A heading
 * A quotation (*Arthurian wit: "Bring me yon sworde"*)
 * Text that follows a label such as *Caution* or *Note*
 
@@ -64,5 +63,3 @@ Use sentence case for items in all types of lists.
 
 Use sentence case for all the elements in a table: contents, headings,
 labels, and captions.
-
-
