@@ -1,0 +1,20 @@
+extends: substitution
+message: "Avoid violent language. Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/inclusive-documentation#violent-language'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\babort\b': stop|exit|cancel|end
+  '\bkill(?:ed|ing)?\b': stop|end|terminate
+  '\bhang(?:s|ing)?\b': stop responding|not responding
+  '\bhung\b': stopped responding
+  '\bnuke(?:d|s)?\b': remove|delete
+  '\bSTONITH\b': fence failed nodes
+  '\bSTOMITH\b': fence failed nodes
+  '\bblast\s+radius\b': affected area|spatial impact
+  '\bwar\s+room\b': rapid response team|situation room|incident-management team
+  '\bpets\s+(?:vs\.?|versus)\s+cattle\b': persistent versus dynamic|manually configured versus automated
+  '\bfinal\s+solution\b': solution|definitive solution|optimal solution
+

@@ -1,0 +1,15 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/word-list'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bdata\s+cleansing\b': data cleaning
+  '\bMIME\s+type\b': media type
+  '\bplain\s+text\b': plaintext
+  '\bPOJO\b': simple object
+  '\bRetriable\b': can be retried
+  '\bTriable\b': can be tried
+

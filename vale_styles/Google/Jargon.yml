@@ -1,0 +1,30 @@
+extends: substitution
+message: "Consider using '%s' instead of the jargon '%s'."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bagnostic\b': platform-independent|independent
+  '\banti-pattern\b': avoid this practice|inefficient practice
+  '\bcanar(?:y|ying)\b': gradual rollout|phased deployment
+  '\bcold\s+(?:failover|standby|spare)\b': inactive backup|offline backup
+  '\bhot\s+(?:failover|standby|spare)\b': active backup|online backup
+  '\bwarm\s+(?:failover|standby|spare)\b': ready backup|standby backup
+  '\bdownscope\b': reduce scope|constrain scope
+  '\bfoo\b': example|placeholder
+  '\bbar\b': example|placeholder
+  '\bbaz\b': example|placeholder
+  '\bhousekeeping\b': maintenance|cleanup
+  '\bjanky?\b': glitchy|unreliable
+  '\blegacy\b': previous|earlier|existing
+  '\bleverage\b': use|build on|take advantage of
+  '\bNoOps\b': fully managed|no operations
+  '\bperformant\b': efficient|fast|optimized
+  '\brepo\b': repository
+  '\bspin\s+up\b': create|start|launch
+  '\bsurface\b': expose|make available
+  '\bvoila\b': there|done
+  '\bvoodoo\b': mysterious|complicated|nondeterministic
+

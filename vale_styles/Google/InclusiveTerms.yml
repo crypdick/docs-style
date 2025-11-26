@@ -1,0 +1,39 @@
+extends: substitution
+message: "Don't use '%s'. Instead, use '%s'."
+link: 'https://developers.google.com/style/inclusive-documentation'
+level: error
+ignorecase: true
+action:
+  name: replace
+swap:
+  # Blacklist/whitelist alternatives
+  '\bblacklist(?:s|ed|ing)?\b': denylist|excludelist|blocklist
+  '\bwhitelist(?:s|ed|ing)?\b': allowlist|trustlist|safelist
+  '\bgr[ae]ylist(?:s|ed|ing)?\b': provisional list
+  
+  # Master/slave alternatives
+  '\bmaster\s+(?:and\s+)?slave\b': primary and replica|controller and worker
+  '\bslave\b': replica|worker|secondary
+  
+  # Other problematic terms
+  '\bblackhat\b': unethical|illegal
+  '\bwhitehat\b': ethical|legal
+  '\bblack-?box\b': opaque-box|synthetic monitoring
+  '\bwhite-?box\b': clear-box|introspective monitoring
+  '\bgr[ae]y-?box\b': translucent-box
+  '\bblackhole(?:d)?\b': dropped without notification
+  '\bfirst-?class(?:\s+citizen)?\b': core feature|built-in|top-level
+  '\bgrandfathered?\b': legacy|exempt|made an exception
+  '\bgrandfather\s+clause\b': legacy clause
+  '\bman-in-the-middle\b': on-path attacker|person-in-the-middle
+  '\bman\s+hours?\b': person hours|staff hours
+  '\bmanpower\b': staff|workforce|personnel
+  '\bmanned\b': staffed|crewed
+  '\bmanmade\b': artificial|manufactured|synthetic
+  '\bnative\b': built-in|integrated
+  '\btribal\s+(?:knowledge|wisdom)\b': group knowledge|shared knowledge
+  '\bgyps[yi]\b': Romani|Roma|Traveller
+  '\bsherpa\b': guide|mentor
+  '\bguru\b': expert|teacher
+  '\bninja\b': expert|specialist
+

@@ -1,0 +1,30 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bactionable\b': useful|that you can act on
+  '\ballows\s+you\s+to\b': lets you
+  '\band\s+so\s+on\b': ''
+  '\band/or\b': and
+  '\bas\s+of\s+this\s+writing,?\s*': ''
+  '\bcomprises?\b': consists of|contains|includes
+  '\bcould\b': can|might
+  '\bdesired?\b': want|need
+  '\beasy,?\s+': ''
+  '\beasily,?\s+': ''
+  '\betc\.': ''
+  '\bfor\s+instance\b': for example|such as
+  '\bin\s+order\s+to\b': to
+  '\bjust\b': ''
+  '\bquickly?,?\s+': ''
+  '\bsimply?,?\s+': ''
+  '\butilize\b': use
+  '\butilization\b': use|usage
+  '\bvia\b': through|using|with
+  '\bvice\s+versa\b': the other way around|conversely
+  '\bwish(?:es)?\b': want|need
+

@@ -1,0 +1,14 @@
+extends: existence
+message: "The term '%s' is ambiguous. Consider using a more specific term."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+tokens:
+  - '\bconfig\b'
+  - '\bimage\b'
+  - '\blimits?\b'
+  - '\bquotas?\b'
+  - '\bworkloads?\b'
+  - '\btraditional\b'
+  - '\bpractitioners?\b'
+

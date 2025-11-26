@@ -1,0 +1,29 @@
+extends: substitution
+message: "Don't use '%s'. Instead, use '%s'."
+link: 'https://developers.google.com/style/inclusive-documentation'
+level: error
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\babnormal\b': atypical|non-standard
+  '\bblind\s+(?:to|eye)\b': ignore|unaware of|disregard
+  '\bblind\s+writes?\b': write operation without a read operation
+  '\bblind\s+change\b': change without first confirming the value
+  '\bcraz(?:y|ier|iest)\b': complicated|complex|unexpected
+  '\bbonkers\b': unexpected|surprising
+  '\bmad\b': unexpected|surprising
+  '\blunatic\b': unexpected|erratic
+  '\binsane\b': extreme|intense
+  '\blo+ny\b': erratic|unpredictable
+  '\bcripple(?:d|s)?\b': slowed|restricted|limited
+  '\bdeficient\b': insufficient|inadequate
+  '\bdeformed\b': malformed|corrupted
+  '\bdumb(?:\s+down)?\b': simplify|remove technical jargon
+  '\bdummy\s+variable\b': placeholder|indicator variable
+  '\bgimp(?:y|ed)?\b': limited|restricted
+  '\blame\b': limited|restricted|inadequate
+  '\bretarded\b': slowed|delayed
+  '\bsane\b': valid|sensible|reasonable
+  '\bsanity\s+check\b': quick check|confidence check|coherence check
+

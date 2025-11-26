@@ -1,0 +1,13 @@
+extends: substitution
+message: "Use '%s' instead of '%s' for plural forms."
+link: 'https://developers.google.com/style/word-list'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bappendices\b': appendixes
+  '\bindices\b': indexes
+  '\bmatrices\b': matrixes
+  '\bemojis\b': emoji
+

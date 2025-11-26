@@ -1,0 +1,27 @@
+extends: substitution
+message: "Avoid figurative language. Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bbreak-?glass\b': emergency access|manual fallback
+  '\bbrown\s+bag\b': learning session|lunch and learn
+  '\bbuild\s+(?:cop|sheriff)\b': build monitor
+  '\bchubby\b': unused|overextended
+  '\bdojo\b': training|workshop
+  '\bfat\s+(?:client|connection)\b': full-featured client|high-capacity connection
+  '\bghetto\b': clumsy|workaround|inelegant
+  '\bhands-?off\b': automated
+  '\bhands-?on\b': customizable|interactive
+  '\boff\s+the\s+reservation\b': non-standard|unexpected
+  '\boutside\s+the\s+box\b': creative|innovative
+  '\bout\s+of\s+the\s+box\b': by default|pre-configured
+  '\bredline\b': track changes|set priorities
+  '\broll\s+out\b': deploy|launch|release
+  '\bsexy\b': fast|powerful|elegant
+  '\bshift\s+left\b': shift earlier|move to an earlier phase
+  '\bsingle\s+pane\s+of\s+glass\b': single interface|unified interface
+  '\bslice\s+and\s+dice\b': segment data|analyze|break into parts
+

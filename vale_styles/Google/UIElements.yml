@@ -1,0 +1,17 @@
+extends: substitution
+message: "Use '%s' instead of '%s' for UI elements."
+link: 'https://developers.google.com/style/ui-elements'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bhamburger\s+menu\b': menu
+  '\bpop-?up\b': dialog|menu
+  '\bdisclosure\s+(?:triangle|widget)\b': expander arrow
+  '\bexpando\b': expander arrow
+  '\bzippy\b': expander arrow
+  '\bdrop-?down\b': list|menu
+  '\bhover\b': hold the pointer over|point to
+  '\bhit\b': click|press|type
+

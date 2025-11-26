@@ -1,0 +1,13 @@
+extends: substitution
+message: "Use '%s' instead of '%s' for copyright-related terms."
+link: 'https://developers.google.com/style/word-list'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bCyber\s+Monday\b': peak scale event
+  '\bBlack\s+Friday\b': peak scale event
+  '\bthe\s+holidays?\b': end of year|Q4|December
+  '\bAmerica(?:n)?\b': the US|United States|the Americas
+

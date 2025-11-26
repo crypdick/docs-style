@@ -1,0 +1,14 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/word-list'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\bunarchive\b': extract
+  '\buncompress\b': extract
+  '\buntar\b': extract
+  '\bunzip\b': extract
+  '\btarball\b': tar file
+
