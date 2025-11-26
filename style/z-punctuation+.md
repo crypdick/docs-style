@@ -3,7 +3,6 @@
 ## Colons
 
 * **Introduction:** Preceding text must be a complete sentence.
-* **Capitalization:** Lowercase the first word after the colon (unless it's a proper noun or a separate sentence/list).
 
 ## Semicolons
 
@@ -16,16 +15,11 @@ Avoid semicolons. Use them only for:
 
 * **Usage:**
   * **Lists:** End items with a period if they are complete sentences.
-  * **Headings:** Do not end headings with periods.
   * **URLs:** Avoid ending a sentence with a URL. If unavoidable, do not put a space between the URL and the period.
-  * **Quotes:** Place periods inside quotation marks.
   * **Numbers:** Use periods for decimals.
-* **Spacing:** Use only one space between sentences.
-* **Exclamations:** Avoid exclamation points (except in code).
 
 ## Commas
 
-* **Serial (Oxford) Comma:** Use it in a series of 3+ items ("zones, regions, and multi-regions").
 * **Introductory phrases:** Place a comma after introductory phrases ("Finally, ...").
 * **Independent clauses:**
   * Use a comma before coordinating conjunctions (*and, but, or*) that join two independent clauses ("The library creates feeds, and it ensures validity").
@@ -38,7 +32,6 @@ Avoid semicolons. Use them only for:
 
 ## Ellipses
 
-* **Avoid:** Don't use ellipses for hesitation or vague omissions.
 * **Quotes:** Use to indicate omitted text in quotes (4 dots if crossing sentence boundary).
 * **UI:** Use if the UI element contains them (`Save ...`).
 * **Formatting:** Space before and after (` ... `).
@@ -61,7 +54,6 @@ Avoid parentheses for important information; assume readers might skip them. Use
   * **Metaphors:** Use if introducing an unfamiliar metaphorical term (e.g., This configuration forms an "island" in the network).
   * **Emphasis:** Do not use quotation marks for emphasis.
 * **Punctuation:**
-  * **General:** Place commas and periods *inside* quotation marks.
   * **Exception:** Place punctuation *outside* if the quote is a literal string or code entity (e.g., If you enter "escape", the program crashes.).
 
 ## Slashes
@@ -74,7 +66,7 @@ Avoid parentheses for important information; assume readers might skip them. Use
 
 ## Dashes
 
-* **Em dash (—):** Use for interruptions or breaks in thought. Do not put spaces around it.
+* **Em dash (—):** Use for interruptions or breaks in thought.
 * **En dash (–):** Do not use. Use a hyphen or "to" for ranges (e.g., 10-20 or 10 to 20).
 * **Lists:** Use a colon (not a dash) to separate items from descriptions in lists.
 
@@ -107,4 +99,3 @@ Use hyphens for clarity and to combine terms.
 * **Ranges:** Use a hyphen (10-20), NOT an en dash.
 * **Units:** Do not hyphenate number + unit (*200 GB disk*), except for modifiers where the unit implies multiplication (*vCPU-hours*, *person-hours*).
 * **Suspended:** Use for shared base (*one- or two-hour intervals*).
-

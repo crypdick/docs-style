@@ -9,10 +9,8 @@
 * **Be direct but polite:** Use the imperative mood ("Click Save") without excessive politeness ("Please click Save").
   * *Exception:* "Please" is acceptable in FAQs or when asking for user feedback/help.
 * **Avoid fillers:** Remove phrases like "Please note," "At this time," or "It is important to note that."
-* **Avoid subjectivity:** Words like "simply," "easy," "just," or "quickly" can be frustrating if the user finds the task difficult.
 * **No "Let's":** Avoid "Let's do X." Use "Do X."
 * **No pop-culture references:** They age poorly and may not translate across cultures.
-* **Exclamation marks:** Use them rarely, if ever.
 
 ## Techniques for checking tone
 
@@ -34,10 +32,3 @@ Don't attribute human qualities (seeing, telling, thinking, wanting) to software
 * **Future-proof:** Ensure claims will remain true over time. Avoid absolute statements that might be invalidated by future releases or competitor updates.
 * **Security:** Don't claim a product is "secure" (implies invulnerability). Say it "helps with security" or "is designed for security".
 * **Comparisons:** Be factual, specific, and cite sources.
-
-## Contractions
-
-* **Recommended:** Use common contractions (*you're*, *don't*, *it's*) for a conversational tone.
-  * **Negation:** Prefer *don't*, *isn't*, *can't* over *do not*, *is not* (easier to scan).
-* **Avoid:** Nonstandard (*guides're*), ambiguous (*'s* for *is*/possessive), or three-word contractions (*mightn't've*).
-

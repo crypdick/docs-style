@@ -4,12 +4,7 @@ Write documentation that is respectful and accessible to everyone.
 
 ## Avoid non-inclusive language
 
-* **Ableist:** Avoid *sanity check*, *cripple*, *crazy*, *blind eye*. Use *final check*, *slow down*, *baffling*, *ignore*.
-* **Gendered:** Avoid *man-hours*, *mankind*. Use *person-hours*, *humanity*.
-* **Violent:** Avoid *kill*, *hang*. Use *stop*, *unresponsive*.
-* **Socially charged:**
-  * Avoid *blacklist/whitelist*, *master/slave*. Use *blocklist/allowlist*, *primary/replica*, *controller/agent*.
-  * Avoid *first-class citizen*. Use *core feature*, *built-in*, or *top-level*.
+Avoid ableist, gendered, violent, and socially charged language. Vale automation checks for specific terms.
 
 ## Handling legacy code terms
 

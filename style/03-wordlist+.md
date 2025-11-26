@@ -96,12 +96,6 @@
 :   Recommended: PRODUCT\_NAME Alpha
 :   Recommended: PRODUCT\_NAME is in alpha.
 
-**AM, PM**
-:   To be consistent with Material Design,
-    use all caps, no periods, and a space before.
-:   Recommended: 9:00 AM
-:   Recommended: 10:30 PM
-
 **among**
 :   See [between versus among](#between-versus-among).
 

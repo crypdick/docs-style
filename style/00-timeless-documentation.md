@@ -6,11 +6,8 @@ Timeless documentation avoids words that anchor the text to a specific point in 
 
 ## Words to avoid
 
-* **Implied context:** *currently*, *now*, *at present*, *as of this writing*. The documentation is assumed to be current for the version being read.
-  * *Avoid:* "The emulator currently supports X." -> *Use:* "The emulator supports X."
 * **Relative timing:** *new*, *newer*, *latest*. These quickly become outdated.
   * *Avoid:* "The new subcommands..." -> *Use:* "The subcommands..." (or specify the version adding them).
-* **Promises/Speculation:** *soon*, *eventually*, *future*. Do not promise features that don't exist yet.
 
 ## Exceptions
 

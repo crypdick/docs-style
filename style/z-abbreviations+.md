@@ -8,10 +8,7 @@ Use standard abbreviations to save time, but spell them out if they might be unf
 * **Exceptions:** Don't spell out widely known terms (AI, API, URL, PDF, JSON, USB).
 * **Plurals:** Add *s* or *es* (APIs, OSes). Do not use an apostrophe.
 * **Verbs:** Do not use abbreviations as verbs (e.g., "Use SSH to log in", not "ssh into").
-* **Latin abbreviations:** Avoid *i.e.* and *e.g.*. Use *that is* and *for example* respectively.
-* **Periods:**
-  * **No periods** for acronyms/initialisms (US, UK, API).
-  * **Use periods** for shortened words (Dr., etc.).
+* **Periods:** Use periods for shortened words (Dr., etc.).
 
 ## Indefinite articles
 

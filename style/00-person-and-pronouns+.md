@@ -22,7 +22,7 @@ Ensure pronouns clearly refer to their antecedent.
 
 ### Gender-neutral pronouns
 
-* Use singular *they* instead of *he*, *she*, or *he/she*.
+* Use singular *they*.
 
 ### Personal pronouns
 
@@ -36,4 +36,3 @@ Ensure pronouns clearly refer to their antecedent.
   * Use *which* for non-restrictive clauses (comma): "The echidna, *which has a long snout*, is furry." (Adds extra info).
 * **Who:** Use *who* for people.
 * **Optional pronouns:** Use *that* and *which* to prevent ambiguity (e.g., "The link *that* you want to open").
-

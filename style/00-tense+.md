@@ -2,9 +2,6 @@
 
 Use present tense for statements that describe general behavior that is not associated with a particular time.
 
-* **Recommended:** "The server sends an acknowledgment."
-* **Not recommended:** "The server will send an acknowledgment."
-
 ## Future tense
 
 Use future tense (*will*) only to distinguish an action that will occur in the future, distinct from the immediate action being described.

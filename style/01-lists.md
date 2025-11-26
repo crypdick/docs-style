@@ -23,5 +23,4 @@
 
 ## Comma-separated lists
 
-* Use serial commas (Oxford comma) before the conjunction in a list of three or more items.
 * **Non-exhaustive lists:** Introduce the list in a way that makes it clear that the list isn't all-inclusive (e.g., using "including" or "such as"). Avoid ending a list with "etc." or "and so on".

@@ -6,10 +6,6 @@
 
 Italicize the letter and add *'s* (e.g., "Mind your *p*'s and *q*'s"). When capitalization is irrelevant, use uppercase (e.g., "Mind your *P's* and *Q's*").
 
-### Parenthetical plurals
-
-Do not use parenthetical plurals like "value(s)". Use "one or more values" or just the plural form.
-
 ## Prepositions
 
 * **End of sentence:** It is acceptable to end a sentence with a preposition if it sounds more natural (e.g., "...the language you're interacting with").
