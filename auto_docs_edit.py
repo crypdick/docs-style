@@ -8,7 +8,8 @@
 #   "loguru>=0.7.0",
 #   "langchain>=0.1.0",
 #   "langchain-openai>=0.0.5",
-#   "pydantic>=2.0.0"
+#   "pydantic>=2.0.0",
+#   "langfuse>=2.0.0"
 # ]
 # ///
 """Iteratively apply Google style guide pages to a target markdown document.
@@ -54,7 +55,7 @@ from settings import (
     STYLE_DIR,
 )
 from utils import (
-    log_incident,
+    get_langfuse_handler,
     setup_logging,
 )
 
@@ -113,6 +114,11 @@ def process_style_guide(style_guide_text: str, session: DocumentSession) -> None
     """Run the agent loop to apply edits from the style guide."""
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
 
+    callbacks = []
+    handler = get_langfuse_handler()
+    if handler:
+        callbacks.append(handler)
+
     @tool
     def apply_edit(before: str, after: str):
         """
@@ -158,7 +164,8 @@ def process_style_guide(style_guide_text: str, session: DocumentSession) -> None
         {
             "style_guide": style_guide_text,
             "document": session.current_content,
-        }
+        },
+        config={"callbacks": callbacks},
     )
 
 
@@ -174,6 +181,11 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         return
 
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
+
+    callbacks = []
+    handler = get_langfuse_handler()
+    if handler:
+        callbacks.append(handler)
 
     prompt_template = ChatPromptTemplate.from_template(
         "You are a technical editor. I will provide you with a markdown document and a list of style errors found by Vale (Google Style Guide).\n"
@@ -239,7 +251,9 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         current_text = document_path.read_text(encoding="utf-8")
 
         # Ask LLM to fix
-        response = chain.invoke({"errors": formatted_errors, "document": current_text})
+        response = chain.invoke(
+            {"errors": formatted_errors, "document": current_text}, config={"callbacks": callbacks}
+        )
 
         if response.strip() == "PEDANTIC":
             logger.info("[Vale] LLM determined remaining errors are pedantic. Stopping.")
@@ -379,12 +393,6 @@ def main() -> None:
 
         if session.failed_edits:
             logger.warning(f"Failed edits: {session.failed_edits}")
-            log_incident(
-                page_path,
-                target_path,
-                f"Applied edits: {session.session_edits}",
-                session.failed_edits,
-            )
 
         # Only pause for user review if the document actually changed.
         if changed and not args.yolo:
