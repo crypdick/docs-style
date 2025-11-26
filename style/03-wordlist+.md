@@ -9,6 +9,38 @@
 
 ---
 
+## Conceptual Guidelines
+
+These are not literal keyword searches but conceptual distinctions to keep in mind:
+
+**Data sensitivity and confidentiality**
+:   *Sensitive* data is data for which the release might be harmful.
+    *Confidential* data is data that is protected to prevent unauthorized access.
+    Both terms refer to data that requires special handling and protection.
+
+**Authentication and authorization**
+:   In general, use the word *authenticated* only to refer to users,
+    and use *authorized* only to refer to requests that are sent by a
+    client app on behalf of an authenticated user.
+
+    A user *authenticates* their identity by entering their password
+    (or giving some other proof of identity). The *authenticated
+    user* then *authorizes* the client app to send an
+    *authorized request* to the server on the user's behalf.
+
+**Happiness and satisfaction**
+:   Use *happiness* when referring to a customer's perception of a
+    site's reliability. Use *satisfaction* when referring to whether the
+    site meets the customer's needs.
+:   Site reliability engineering (SRE) content generally refers to
+    measuring *customer happiness* instead of *customer
+    satisfaction*. The two phrases are not equivalent.
+:   The distinction the SRE documentation makes is between satisfying a need
+    (a dispassionate act) and establishing an emotional response (creating
+    happiness).
+
+---
+
 ### Numbers and Symbols
 
 **+**
@@ -86,16 +118,6 @@
 **appendix**
 :   Use the plural *appendixes*, not *appendices*.
 
-**authentication and authorization**
-:   In general, use the word *authenticated* only to refer to users,
-    and use *authorized* only to refer to requests that are sent by a
-    client app on behalf of an authenticated user.
-
-    A user *authenticates* their identity by entering their password
-    (or giving some other proof of identity). The *authenticated
-    user* then *authorizes* the client app to send an
-    *authorized request* to the server on the user's behalf.
-
 **-aware**
 :   Avoid using as a compound modifier, as in *healthcare-aware*.
 :   OK to use when it's part of a product name, such as *Identity-Aware
@@ -170,19 +192,9 @@
 :   Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-**cold**
-:   When possible, avoid jargon like *cold
-    failover*, *cold standby*, and *cold spare*. If you use one
-    of these phrases, define it on first use and use it consistently
-    throughout the document.
-
 **compliant, compliance**
 :   Use with caution. A claim that a product or its output is *compliant*
     with a standard is a strong statement.
-
-**confidential**
-:   *Confidential* data is data that is protected to prevent unauthorized access. See
-    [sensitive](#sensitive).
 
 **content type**
 :   Be as specific as possible when writing about a content type, and use the term only when applicable.
@@ -386,17 +398,6 @@
     runs containerized applications and other workloads. The machine is a
     Compute Engine VM that GKE creates during cluster creation.
 
-**happiness and satisfaction**
-:   Use *happiness* when referring to a customer's perception of a
-    site's reliability. Use *satisfaction* when referring to whether the
-    site meets the customer's needs.
-:   Site reliability engineering (SRE) content generally refers to
-    measuring *customer happiness* instead of *customer
-    satisfaction*. The two phrases are not equivalent.
-:   The distinction the SRE documentation makes is between satisfying a need
-    (a dispassionate act) and establishing an emotional response (creating
-    happiness).
-
 **hardcode (verb), hardcoded (adjective)**
 
 **health check**
@@ -416,20 +417,18 @@
 :   Don't hyphenate. Lowercase except at the beginning of a sentence,
     heading, or list item.
 
-**hot**
+**hot, hotspot**
 :   When possible, avoid jargon like *hot failover*,
-    *hot standby*, and *hot spare*. If you use one of these phrases,
-    define it on first use and use it consistently throughout the document. However, see
-    [hotspot](#hotspot).
-
-**hotspot**
-:   In databases, *hotspots* occur when a small number of nearby rows are
+    *hot standby*, *hot spare*, *cold failover*, *cold standby*,
+    *cold spare*, *warm failover*, *warm standby*, and *warm spare*.
+    If you use one of these phrases, define it on first use and use it consistently
+    throughout the document.
+:   Exception: In databases, *hotspots* occur when a small number of nearby rows are
     accessed frequently in a short period of time, causing CPU spikes and
     affecting performance. Use *hotspot* and *hotspots* as nouns.
     Don't use verb and gerund forms such as *hotspotting*, because they
-    translate less consistently.
-:   When you use *hotspot*, define it the first time that you use it on
-    a page as you normally do with jargon.
+    translate less consistently. When you use *hotspot*, define it the first time
+    that you use it on a page as you normally do with jargon.
 
 **HTTPS**
 :   Not *HTTPs*.
@@ -830,10 +829,6 @@
 :   Not *screen shot* or *screensnap*.
 :   Don't use as a verb; instead, use *take a screenshot*.
 
-**sensitive**
-:   *Sensitive* data is data for which the release might be harmful. See
-    *confidential*.
-
 **service level agreement**
 :   Lowercase when referring to service level agreements in general.
 :   It's OK to use title case (*Service Level Agreement*) when referring
@@ -989,12 +984,6 @@
 ### W
 
 **wake lock (noun), wake-lock (adjective)**
-
-**warm**
-:   When possible, avoid jargon like *warm
-    failover*, *warm standby*, and *warm spare*. If you use one
-    of these phrases, define it on first use and use it consistently
-    throughout the document.
 
 **web (lowercase)**
 
