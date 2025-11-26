@@ -1,0 +1,17 @@
+extends: substitution
+message: "Avoid directional language. Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/ui-elements'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\babove\b': earlier|preceding
+  '\bbelow\b': later|following
+  '\bhigher\b': earlier|preceding
+  '\blower\b': later|following
+  '\bleft-nav\b': navigation menu|content navigation menu
+  '\bright-nav\b': navigation menu|content navigation menu
+  '\bscroll\s+up\b': scroll|go to
+  '\bscroll\s+down\b': scroll|go to
+

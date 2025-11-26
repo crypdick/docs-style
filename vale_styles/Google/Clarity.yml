@@ -1,0 +1,23 @@
+extends: substitution
+message: "Use '%s' instead of '%s' for clarity."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\baccess\b': see|edit|find|use|view
+  '\bclick\s+here\b': descriptive link text
+  '\bcomprises?\b': consists of|contains|includes
+  '\bdisplay\s+(?!the)\b': appears|is displayed
+  '\bexecute\b': run
+  '\bexploit\b': use
+  '\bimpacts?\b': affects|has an impact on
+  '\binterface\s+with\b': interact with|communicate with
+  '\blets?\s+us\b': we|let's
+  '\bpersist\b': make persistent|save
+  '\bpopulate\b': fill in|add data to
+  '\breview\b': read|examine
+  '\btarget\b': intended for|focused on
+  '\btype\b': enter
+

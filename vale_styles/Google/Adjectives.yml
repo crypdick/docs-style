@@ -1,0 +1,11 @@
+extends: existence
+message: "Avoid using '%s' as an adjective. Use a more specific term."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+tokens:
+  - '\bkey\s+(?:feature|component|element)'
+  - '\bactionable\s+'
+  - '\b-aware\s+'
+  - '\berror-prone\b'
+

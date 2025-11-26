@@ -1,0 +1,17 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\babout\s+indexes\b': about indexes
+  '\bon\s+indexes\b': about indexes
+  '\bas\b(?=\s+\w+\s+(?:because|since))': because
+  '\bsince\b(?=\s+\w+\s+(?:because))': because
+  '\bonce\b(?=\s+\w+\s+(?:after))': after
+  '\bper\s+the\b': according to
+  '\bas\s+per\b': according to
+  '\bunder\s+(?:Service account|the)': in|for
+

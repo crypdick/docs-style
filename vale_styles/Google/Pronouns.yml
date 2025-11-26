@@ -1,0 +1,15 @@
+extends: existence
+message: "Avoid gendered pronouns like '%s'. Use 'they/their' instead."
+link: 'https://developers.google.com/style/pronouns'
+level: warning
+ignorecase: true
+tokens:
+  - '\bhe\b'
+  - '\bhim\b'
+  - '\bhis\b'
+  - '\bshe\b'
+  - '\bher\b'
+  - '\bhers\b'
+  - '\bhimself\b'
+  - '\bherself\b'
+

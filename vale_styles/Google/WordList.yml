@@ -6,12 +6,12 @@ ignorecase: false
 action:
   name: replace
 swap:
+  # Existing rules
   "(?:API Console|dev|developer) key": API key
   "(?:cell ?phone|smart ?phone)": phone|mobile phone
   "(?:dev|developer|APIs) console": API console
   "(?:e-mail|Email|E-mail)": email
   "(?:file ?path|path ?name)": path
-  "(?:kill|terminate|abort)": stop|exit|cancel|end
   "(?:OAuth ?2|Oauth)": OAuth 2.0
   "(?:ok|Okay)": OK|okay
   "(?:WiFi|wifi)": Wi-Fi
@@ -20,6 +20,62 @@ swap:
   'Google (?:I\-O|IO)': Google I/O
   "tap (?:&|and) hold": touch & hold
   "un(?:check|select)": clear
+  
+  # New additions from wordlist
+  "(?:cURL|curl)": curl
+  "(?:HTTPs|https)": HTTPS
+  "(?:IPSec|IPSEC)": IPsec
+  "(?:No-SQL|No SQL)": NoSQL
+  "(?:UNICODE)": Unicode
+  "(?:Unixlike|Unix like)": Unix-like
+  "(?:back-end|back end)": backend
+  "(?:blue/green|blue green)": blue-green
+  "(?:code base)": codebase
+  "(?:co-locate|colo)": colocate
+  "(?:data center)": data center
+  "(?:data store)": datastore
+  "(?:datatype)": data type
+  "(?:e-commerce)": ecommerce
+  "(?:end point)": endpoint
+  "(?:file system)": file system
+  "(?:fintech|FinTech|fin-tech)": financial technology (fintech)
+  "(?:front-end|front end)": frontend
+  "(?:health care|health-care)": healthcare
+  "(?:host name)": hostname
+  "(?:life cycle|life-cycle)": lifecycle
+  "(?:live stream)": livestream
+  "(?:name space)": namespace
+  "(?:name server)": name server
+  "(?:on prem|on premise|on-premise)": on-premises
+  "(?:open-source)": open source
+  "(?:pre-built)": prebuilt
+  "(?:pre-capture)": precapture
+  "(?:pre-emptible|pre-emptive)": preemptible
+  "(?:preexisting)": pre-existing
+  "(?:pre-recorded)": prerecorded
+  "(?:preshared key)": pre-shared key
+  "(?:pre-submit)": presubmit
+  "(?:run book)": runbook
+  "(?:screen shot|screensnap)": screenshot
+  "(?:sign-on)": single sign-on
+  "(?:smart phone|smartphone)": mobile phone|phone
+  "(?:statusbar|status-bar)": status bar
+  "(?:sub-tree)": subtree
+  "(?:sub-zone|sub zone)": subzone
+  "(?:time frame)": timeframe
+  "(?:time stamp)": timestamp
+  "(?:time-to-live)": time to live
+  "(?:tool-kit|tool kit)": toolkit
+  "(?:touch screen)": touchscreen
+  "(?:touch and hold)": touch & hold
+  "(?:transcompile)": transpile
+  "(?:walk-through)": walkthrough
+  "(?:web server)": web server
+  "(?:white paper)": whitepaper
+  "(?:white space)": whitespace
+  "(?:wild card)": wildcard
+  
+  # Existing rules continued
   above: preceding
   account name: username
   action bar: app bar
@@ -33,6 +89,11 @@ swap:
   approx\.: approximately
   authN: authentication
   authZ: authorization
+  auto-healing: autohealing
+  auto populate: autopopulate
+  auto-populate: autopopulate
+  auto-scaling: autoscaling
+  auto-tagging: autotagging
   autoupdate: automatically update
   cellular data: mobile data
   cellular network: mobile network

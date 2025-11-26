@@ -1,0 +1,13 @@
+extends: substitution
+message: "Use '%s' instead of '%s' for version comparisons."
+link: 'https://developers.google.com/style/word-list'
+level: warning
+ignorecase: true
+action:
+  name: replace
+swap:
+  '\b(?:above|higher)\s+(?:version|than)\b': later version|later than
+  '\b(?:below|lower)\s+(?:version|than)\b': earlier version|earlier than
+  '\b(?:old|older)\s+version\b': earlier version
+  '\b(?:new|newer)\s+version\b': later version
+

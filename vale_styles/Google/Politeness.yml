@@ -1,0 +1,9 @@
+extends: existence
+message: "Avoid '%s' in normal documentation. Use only when asking for permission or forgiveness."
+link: 'https://developers.google.com/style/word-list#please'
+level: suggestion
+ignorecase: true
+tokens:
+  - '\bplease\b'
+  - '\bplease\s+note\b'
+

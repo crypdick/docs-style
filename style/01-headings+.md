@@ -1,7 +1,5 @@
 # Headings and titles
 
-Use sentence case for headings and titles.
-
 ## Heading text
 
 * **Task-based headings:** Start with a bare imperative verb (e.g., "Create an instance" not "Creating an instance").
@@ -15,7 +13,6 @@ Use sentence case for headings and titles.
 
 ## Heading format
 
-* **Sentence case:** Always use sentence case.
 * **No numbers:** Don't use numbers to indicate sequence (e.g., "1. Introduction").
 * **Minimal punctuation:** Avoid punctuation in headings. Punctuation often indicates the heading is too complex and should be rewritten.
 * **Hierarchy:** Don't skip levels (e.g., H2 to H4).

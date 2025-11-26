@@ -1,0 +1,11 @@
+extends: existence
+message: "Avoid anthropomorphizing. Consider rephrasing '%s'."
+link: 'https://developers.google.com/style/anthropomorphism'
+level: suggestion
+ignorecase: true
+tokens:
+  - '\bhealthy\b'
+  - '\bunhealthy\b'
+  - '\bhappiness\b'
+  - '\bsatisfaction\b'
+

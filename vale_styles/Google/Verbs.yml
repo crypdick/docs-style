@@ -1,0 +1,12 @@
+extends: existence
+message: "Don't use '%s' as a verb."
+link: 'https://developers.google.com/style/word-list'
+level: error
+ignorecase: true
+tokens:
+  - '\ballowlist(?:ed|ing)\b'
+  - '\bdenylist(?:ed|ing)\b'
+  - '\bemail\s+(?:him|her|them|me|you)'
+  - '\bimpacts?\b'
+  - '\binterface\s+with\b'
+

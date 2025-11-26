@@ -1,0 +1,8 @@
+extends: existence
+message: "Avoid using 'with' to express ownership. Use 'that has' instead."
+link: 'https://developers.google.com/style/word-list#with'
+level: suggestion
+ignorecase: true
+tokens:
+  - '\b(?:handset|device|system|server)\s+with\s+\d+\s*(?:GB|MB|TB|CPU|core)'
+

@@ -1,0 +1,12 @@
+extends: existence
+message: "Use '%s' carefully - consider if you mean 'can' or 'might' instead."
+link: 'https://developers.google.com/style/word-list'
+level: suggestion
+ignorecase: true
+tokens:
+  - '\bmay\b'
+  - '\bshall\b'
+  - '\bshould\b'
+  - '\bwould\b'
+  - '\bcould\b'
+
