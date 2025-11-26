@@ -19,15 +19,12 @@ Usage:
 The script will iterate over every ``*.md`` file inside ``style/`` (each
 scraped Google dev style-guide page). For each page it:
 
-1. Sends the style-guide page and the current document to the LLM and requests edits.
-If the style page is not relevant, we skip the step and move on to the next style page.
-2. Filters out duplicate, reversing, or
-   no-op edits.
-3. Applies the remaining edits locally via plain string replacement.
-4. Writes the updated document back to disk (if anything changed).
-5. Pauses so you can review the result. Press <ENTER> to continue to the next guide or
+1. Sends the style-guide page and the current document to the LLM agent.
+2. The agent applies edits serially using a tool.
+3. Writes the updated document back to disk (if anything changed).
+4. Pauses so you can review the result. Press <ENTER> to continue to the next guide or
    Ctrl+C to abort the run.
-6. Records statistics and incident logs, then moves on to the next style page.
+5. Records statistics and incident logs, then moves on to the next style page.
 
 Environment:
     OPENAI_API_KEY must be set and is preferably loaded from a ``.env`` file in
@@ -44,11 +41,12 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from loguru import logger
-from pydantic import BaseModel, Field
 
 from settings import (
     FINAL_PASS_MARKER,
@@ -61,100 +59,107 @@ from utils import (
 )
 
 # ---------------------------------------------------------------------------
-# Console colours (ANSI)
-# ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# Pydantic Models for Structured Output
+# Agent Tools & Session
 # ---------------------------------------------------------------------------
 
 
-class StyleEdit(BaseModel):
-    """A single edit to the document."""
+class DocumentSession:
+    """Manages the document state and edit history for the agent."""
 
-    before: str = Field(
-        ...,
-        description="The exact text to be replaced, matching character-for-character including whitespace.",
-    )
-    after: str = Field(..., description="The replacement text.")
-    reason: str | None = Field(
-        None, description="A brief explanation of the style rule being applied."
-    )
+    def __init__(self, content: str, seen_edits: set[tuple[str, str]]):
+        self.initial_content = content
+        self.current_content = content
+        self.seen_edits = seen_edits  # Edits seen globally across all guides
+        self.session_edits: list[tuple[str, str]] = []  # Edits applied in this session
+        self.failed_edits: list[str] = []
 
+    def apply_edit(self, before: str, after: str) -> str:
+        """Tool implementation to replace text."""
+        if before not in self.current_content:
+            msg = f"Edit failed: Text '{before}' not found in document."
+            self.failed_edits.append(msg)
+            return msg
 
-class StyleEditList(BaseModel):
-    """A list of style edits."""
+        # Check if this specific edit (before -> after) has been applied before (globally)
+        # Note: logic could be refined. If text exists, maybe we SHOULD apply it even if seen before?
+        # But original logic was to avoid loops.
+        if (before, after) in self.seen_edits:
+            # If it's already in the text, applying it again is a no-op if before==after,
+            # but here before != after.
+            # If 'before' exists, it means the previous application was reverted or 'before' appeared again.
+            # We allow it, but log it?
+            # Actually, let's allow the agent to decide.
+            pass
 
-    edits: list[StyleEdit] = Field(..., description="List of edits to apply to the document.")
+        # Prevent infinite loops within the same session:
+        # If we already applied this exact edit in this session, and 'before' is still there?
+        # (e.g. multiple occurrences). We should apply it.
+        # replace() replaces ALL occurrences by default?
+        # Python's str.replace(old, new) replaces all occurrences.
 
+        self.current_content = self.current_content.replace(before, after)
+        self.session_edits.append((before, after))
+        self.seen_edits.add((before, after))
 
-# ---------------------------------------------------------------------------
-# Helper functions
-# ---------------------------------------------------------------------------
-
-
-def _parse_edits(edits_output: StyleEditList | str) -> list[tuple[str, str]]:
-    """Convert StyleEditList or legacy XML string into a list of (before, after) tuples."""
-    if isinstance(edits_output, StyleEditList):
-        return [
-            (edit.before, edit.after) for edit in edits_output.edits if edit.before != edit.after
-        ]
-    return []
-
-
-def _apply_edits_locally(original_doc: str, edits: list[tuple[str, str]]) -> tuple[str, list[str]]:
-    """Apply edits to *original_doc*.
-
-    Args:
-        original_doc: The source text.
-        edits: List of (before, after) tuples.
-    """
-    updated = original_doc
-    missed: list[str] = []
-    for before, after in edits:
-        if before not in updated:
-            missed.append(before)
-            logger.warning(f"[warn] Skipping edit – snippet not found: {before!r}")
-            continue
-        updated = updated.replace(before, after)
-    return updated, missed
+        return "Edit applied successfully."
 
 
 # ---------------------------------------------------------------------------
-# Diff generation
+# Agent Logic
 # ---------------------------------------------------------------------------
 
 
-def generate_diff(style_guide: str, document: str) -> StyleEditList | None:
-    """Request structured edits from the model."""
-    logger.info("Generating diff via LLM...")
+def process_style_guide(style_guide_text: str, session: DocumentSession) -> None:
+    """Run the agent loop to apply edits from the style guide."""
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
-    structured_llm = llm.with_structured_output(StyleEditList)
+
+    @tool
+    def apply_edit(before: str, after: str):
+        """
+        Replaces exact text in the document.
+        Args:
+            before: The exact text snippet to replace (must match character-for-character, including whitespace).
+            after: The replacement text.
+        """
+        logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
+        return session.apply_edit(before, after)
+
+    tools = [apply_edit]
 
     system_prompt = (
         "You are an expert technical editor. "
-        "Given a STYLE GUIDE and a MARKDOWN DOCUMENT, propose the MINIMAL set of textual edits needed "
+        "Given a STYLE GUIDE and a MARKDOWN DOCUMENT, apply the MINIMAL set of textual edits needed "
         "for the document to follow the guide. "
-        "IMPORTANT: The 'before' text must match the document text *character-for-character*, including whitespace. "
-        "Do NOT pad 'before' or 'after' text with quotation marks. "
-        "If the style guide does NOT apply or no changes are needed, return an empty list of edits. "
-        "Avoid purely stylistic rewrites unless mandated by the guide. "
-        "Ensure code blocks remain syntactically valid."
+        "Use the `apply_edit` tool to apply changes. "
+        "IMPORTANT: \n"
+        "1. The 'before' text must match the document text *character-for-character*, including whitespace. "
+        "2. If an edit fails (not found), the tool will return an error. You may try to correct the snippet or skip it. "
+        "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
+        "4. Ensure code blocks remain syntactically valid. "
+        "5. If no changes are needed, just stop. "
+        "6. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
+        "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
     )
 
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", system_prompt),
             ("user", "Style Guide:\n{style_guide}\n\nDocument:\n{document}"),
+            ("placeholder", "{agent_scratchpad}"),
         ]
     )
 
-    chain = prompt | structured_llm
+    agent = create_tool_calling_agent(llm, tools, prompt)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, max_iterations=50)
 
-    try:
-        return chain.invoke({"style_guide": style_guide, "document": document})
-    except KeyboardInterrupt:
-        return None
+    logger.info("Starting agent loop...")
+
+    agent_executor.invoke(
+        {
+            "style_guide": style_guide_text,
+            "document": session.current_content,
+        }
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -307,24 +312,13 @@ def main() -> None:
         logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
         sys.exit(1)
 
-    # openai.api_key = os.environ["OPENAI_API_KEY"] # Not needed for LangChain
-
     # Maintain a memory of all (before, after) tuples ever suggested by the LLM
-    # during this run. If the same exact edit appears again in a later round,
-    # we silently ignore it to avoid redundant prompts and incident logs.
     seen_edits: set[tuple[str, str]] = set()
-    # Track edits that actually made it into the document so that future
-    # style-guide passes cannot revert them (avoiding tug-of-war between
-    # conflicting guides).
-    applied_edits: set[tuple[str, str]] = set()
+
     # -------------------------------------------------------------------
     # Statistics counters
     # -------------------------------------------------------------------
-    total_edits_proposed = 0
-    duplicates_dropped = 0
-    reversals_dropped = 0
-    edits_applied_successfully = 0
-    edits_missed = 0
+    total_edits_applied = 0
 
     # Always process style pages in a deterministic order (alphabetical by filename).
     style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
@@ -342,10 +336,6 @@ def main() -> None:
             style_pages = style_pages[skip_idx + 1 :]
             logger.info(f"Skipped {skip_idx} style pages.")
         except StopIteration:
-            # If the requested *skip-through* filename is not found, abort with an
-            # explicit error rather than silently continuing. This prevents
-            # accidental typos from going unnoticed and ensures the user
-            # understands why the script did not behave as expected.
             logger.error(f"--skip-through: '{skip_name}' not found among style pages.")
             sys.exit(1)
 
@@ -361,121 +351,40 @@ def main() -> None:
         logger.info(f"[{idx}/{len(style_pages)}] Processing style guide: {page_path.name}")
         style_text = page_path.read_text(encoding="utf-8")
 
-        # Ask the LLM to create a diff while showing a spinner so that
-        # the user knows the process is still ongoing.
-        diff = generate_diff(style_text, doc_text)
+        # Initialize Session
+        session = DocumentSession(doc_text, seen_edits)
 
-        # If *None* was returned, the user hit ESC during diff generation.
-        if diff is None:
-            logger.info("\n↷ Skip requested via ESC – moving to next style guide.\n")
+        try:
+            process_style_guide(style_text, session)
+        except KeyboardInterrupt:
+            logger.info("\n↷ Skip requested via Ctrl+C/ESC – moving to next style guide.\n")
             continue
 
-        # Reject obviously malformed diffs up-front.
-        if not diff.edits:  # diff is a StyleEditList object
-            logger.info("-> Style guide not relevant or no changes detected. Skipping.\n")
-            continue
+        # Check results
+        edits_made = len(session.session_edits)
+        total_edits_applied += edits_made
 
-        # Show raw diff from the model.
-        logger.info("Generated diff (model output):\n")
-        # Create a debug representation of the edits
-        diff_debug = "\n".join(
-            [
-                f"<edit>\n<before>{e.before}</before>\n<after>{e.after}</after>\n<reason>{e.reason}</reason>\n</edit>"
-                for e in diff.edits
-            ]
-        )
-        logger.info(f"<yellow>{diff_debug}</>")
-
-        # Parse edits to identify the effective (non–no-op) changes.
-        parsed_edits = _parse_edits(diff)
-        # Update stats – total edits proposed
-        total_edits_proposed += len(parsed_edits)
-
-        # -------------------------------------------------------------------
-        # Step 1: drop edits we've already *seen* (same before→after pair).
-        # -------------------------------------------------------------------
-        unseen_edits: list[tuple[str, str]] = [
-            (b, a) for (b, a) in parsed_edits if (b, a) not in seen_edits
-        ]
-        # Update stats – duplicates that were already seen
-        duplicates_dropped += len(parsed_edits) - len(unseen_edits)
-
-        # Record *all* parsed edits (including duplicates) so that any future
-        # occurrences are recognised and skipped automatically.
-        seen_edits.update(parsed_edits)
-
-        # -------------------------------------------------------------------
-        # Step 2: drop edits that would *undo* a change already applied.
-        # That is, if we previously applied (x → y) and the current guide
-        # proposes (y → x), we reject it.
-        # -------------------------------------------------------------------
-        non_reversing_edits: list[tuple[str, str]] = [
-            (b, a) for (b, a) in unseen_edits if (a, b) not in applied_edits
-        ]
-        # Update stats – edits that would reverse previous changes
-        reversals_dropped += len(unseen_edits) - len(non_reversing_edits)
-
-        if not non_reversing_edits:
-            logger.info(
-                "-> All suggested edits are duplicates or would undo earlier edits. Skipping.\n"
-            )
-            continue
-
-        # Rebuild the diff text using only the edits that are both unseen and non-reversing.
-        filtered_diff_text = "\n\n".join(
-            f"<edit>\n<before>{b}</before>\n<after>{a}</after>\n</edit>"
-            for b, a in non_reversing_edits
-        )
-
-        if filtered_diff_text.strip() != diff.strip():
-            logger.info("\nDiff after filtering out no-op edits (will be applied):\n")
-            logger.info(f"<green>{filtered_diff_text}</>")
-
-        # Apply edits locally (deterministic and safer than LLM application).
-        updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
-
-        # Update stats – snippets that didn't match the document
-        edits_missed += len(missed_snippets)
-
-        changed = updated_doc != doc_text
-
-        # Add successfully applied edits to the *applied_edits* memory so that
-        # future passes can detect and avoid reversals. We exclude snippets
-        # that were missed during application (i.e., not found in the doc).
-        if changed:
-            successful_edits = [
-                (b, a) for (b, a) in non_reversing_edits if b not in missed_snippets
-            ]
-            applied_edits.update(successful_edits)
-            # Update stats – successfully applied edits
-            edits_applied_successfully += len(successful_edits)
+        changed = session.current_content != session.initial_content
 
         if changed:
-            # Only write back if something actually changed.
-            target_path.write_text(updated_doc, encoding="utf-8")
-            logger.success(f"-> Document updated via {page_path.name}.\n")
+            target_path.write_text(session.current_content, encoding="utf-8")
+            logger.success(f"-> Document updated via {page_path.name} ({edits_made} edits).")
         else:
-            logger.info("-> Patch produced no net changes. Skipping write.\n")
+            logger.info("-> No changes applied.\n")
 
-        # -------------------------------------------------------------------
-        # Per-style-guide statistics
-        # -------------------------------------------------------------------
-        page_total = len(parsed_edits)
-        page_duplicates = len(parsed_edits) - len(unseen_edits)
-        page_reversals = len(unseen_edits) - len(non_reversing_edits)
-        page_applied = len(successful_edits) if changed else 0
-        page_missed = len(missed_snippets)
-
+        # Log stats for this page
         logger.info("Edit statistics for this style guide:")
-        logger.info(f" • Proposed edits        : {page_total}")
-        logger.info(f" • Duplicates skipped    : {page_duplicates}")
-        logger.info(f" • Reversals dropped     : {page_reversals}")
-        logger.info(f" • Edits applied         : {page_applied}")
-        logger.info(f" • Edits missed/not found: {page_missed}\n")
+        logger.info(f" • Edits applied         : {edits_made}")
+        logger.info(f" • Edits failed          : {len(session.failed_edits)}")
 
-        # Log incident if any edits were missed or nothing changed.
-        if missed_snippets or not changed:
-            log_incident(page_path, target_path, diff, missed_snippets)
+        if session.failed_edits:
+            logger.warning(f"Failed edits: {session.failed_edits}")
+            log_incident(
+                page_path,
+                target_path,
+                f"Applied edits: {session.session_edits}",
+                session.failed_edits,
+            )
 
         # Only pause for user review if the document actually changed.
         if changed and not args.yolo:
@@ -492,15 +401,11 @@ def main() -> None:
             logger.warning("YOLO mode enabled. Memento mori 💀")
 
     # -------------------------------------------------------------------
-    # Summary statistics about edit processing
+    # Summary statistics
     # -------------------------------------------------------------------
     logger.info("=" * 80)
     logger.info("Edit summary statistics:")
-    logger.info(f"Total edits proposed      : {total_edits_proposed}")
-    logger.info(f" - Already seen (skipped) : {duplicates_dropped}")
-    logger.info(f" - Reversals dropped      : {reversals_dropped}")
-    logger.info(f"Edits applied successfully: {edits_applied_successfully}")
-    logger.info(f"Edits missed (not found)  : {edits_missed}")
+    logger.info(f"Total edits applied successfully: {total_edits_applied}")
     logger.info("=" * 80)
 
     # -------------------------------------------------------------------
