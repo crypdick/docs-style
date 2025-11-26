@@ -3,8 +3,35 @@ name = "auto_docs_editor"
 version = "0.1.0"
 description = "AutoDocsEditor makes documentation conform to the Google Docs Style Guide"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.12"
+dependencies = [
+    "jupytext>=1.18.1",
+    "langchain>=1.1.0",
+    "langchain-classic>=1.0.0",
+    "langchain-community>=0.4.1",
+    "langchain-openai>=1.1.0",
+    "langfuse>=3.10.1",
+    "loguru>=0.7.3",
+    "nbconvert>=7.16.6",
+    "openai>=2.8.1",
+    "pydantic>=2.12.4",
+    "python-dotenv>=1.2.1",
+    "rich>=14.2.0",
+    "textual>=6.6.0",
+]
+
+[project.scripts]
+auto-docs-edit = "auto_docs_editor.cli:main"
+auto-docs-tui = "auto_docs_editor.tui:run"
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
 line-length = 100

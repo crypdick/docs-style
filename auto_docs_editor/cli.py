@@ -1,36 +1,5 @@
-#!/usr/bin/env -S uv run --script
-#
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#   "python-dotenv>=1.0",
-#   "openai>=1.16.0",
-#   "loguru>=0.7.0",
-#   "langchain>=0.1.0",
-#   "langchain-openai>=0.0.5",
-#   "pydantic>=2.0.0",
-#   "langfuse>=2.0.0"
-# ]
-# ///
-"""Iteratively apply Google style guide pages to a target markdown document.
-
-Usage:
-    uv run --script auto_docs_edit.py [--skip-through STYLE_FILE] <path-to-doc>
-
-The script will iterate over every ``*.md`` file inside ``style/`` (each
-scraped Google dev style-guide page). For each page it:
-
-1. Sends the style-guide page and the current document to the LLM agent.
-2. The agent applies edits serially using a tool.
-3. Writes the updated document back to disk (if anything changed).
-4. Pauses so you can review the result. Press <ENTER> to continue to the next guide or
-   Ctrl+C to abort the run.
-5. Records statistics and incident logs, then moves on to the next style page.
-
-Environment:
-    OPENAI_API_KEY must be set and is preferably loaded from a ``.env`` file in
-    the project root.
-"""
+#!/usr/bin/env python3
+"""Command-line interface for auto_docs_editor."""
 
 from __future__ import annotations
 
@@ -42,136 +11,15 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from loguru import logger
 
-from settings import (
-    FINAL_PASS_MARKER,
-    MODEL_NAME,
-    STYLE_DIR,
-)
-from utils import (
-    get_langfuse_handler,
-    setup_logging,
-)
-
-# ---------------------------------------------------------------------------
-# Agent Tools & Session
-# ---------------------------------------------------------------------------
-
-
-class DocumentSession:
-    """Manages the document state and edit history for the agent."""
-
-    def __init__(self, content: str, seen_edits: set[tuple[str, str]]):
-        self.initial_content = content
-        self.current_content = content
-        self.seen_edits = seen_edits  # Edits seen globally across all guides
-        self.session_edits: list[tuple[str, str]] = []  # Edits applied in this session
-        self.failed_edits: list[str] = []
-
-    def apply_edit(self, before: str, after: str) -> str:
-        """Tool implementation to replace text."""
-        if before not in self.current_content:
-            msg = f"Edit failed: Text '{before}' not found in document."
-            self.failed_edits.append(msg)
-            return msg
-
-        # Check if this specific edit (before -> after) has been applied before (globally)
-        # Note: logic could be refined. If text exists, maybe we SHOULD apply it even if seen before?
-        # But original logic was to avoid loops.
-        if (before, after) in self.seen_edits:
-            # If it's already in the text, applying it again is a no-op if before==after,
-            # but here before != after.
-            # If 'before' exists, it means the previous application was reverted or 'before' appeared again.
-            # We allow it, but log it?
-            # Actually, let's allow the agent to decide.
-            pass
-
-        # Prevent infinite loops within the same session:
-        # If we already applied this exact edit in this session, and 'before' is still there?
-        # (e.g. multiple occurrences). We should apply it.
-        # replace() replaces ALL occurrences by default?
-        # Python's str.replace(old, new) replaces all occurrences.
-
-        self.current_content = self.current_content.replace(before, after)
-        self.session_edits.append((before, after))
-        self.seen_edits.add((before, after))
-
-        return "Edit applied successfully."
-
-
-# ---------------------------------------------------------------------------
-# Agent Logic
-# ---------------------------------------------------------------------------
-
-
-def process_style_guide(style_guide_text: str, session: DocumentSession) -> None:
-    """Run the agent loop to apply edits from the style guide."""
-    llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
-
-    callbacks = []
-    handler = get_langfuse_handler()
-    if handler:
-        callbacks.append(handler)
-
-    @tool
-    def apply_edit(before: str, after: str):
-        """
-        Replaces exact text in the document.
-        Args:
-            before: The exact text snippet to replace (must match character-for-character, including whitespace).
-            after: The replacement text.
-        """
-        logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
-        return session.apply_edit(before, after)
-
-    tools = [apply_edit]
-
-    system_prompt = (
-        "You are an expert technical editor. "
-        "Given a STYLE GUIDE and a MARKDOWN DOCUMENT, apply the MINIMAL set of textual edits needed "
-        "for the document to follow the guide. "
-        "Use the `apply_edit` tool to apply changes. "
-        "IMPORTANT: \n"
-        "1. The 'before' text must match the document text *character-for-character*, including whitespace. "
-        "2. If an edit fails (not found), the tool will return an error. You may try to correct the snippet or skip it. "
-        "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
-        "4. Ensure code blocks remain syntactically valid. "
-        "5. If no changes are needed, just stop. "
-        "6. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
-        "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
-    )
-
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", system_prompt),
-            ("user", "Style Guide:\n{style_guide}\n\nDocument:\n{document}"),
-            ("placeholder", "{agent_scratchpad}"),
-        ]
-    )
-
-    agent = create_tool_calling_agent(llm, tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, max_iterations=50)
-
-    logger.info("Starting agent loop...")
-
-    agent_executor.invoke(
-        {
-            "style_guide": style_guide_text,
-            "document": session.current_content,
-        },
-        config={"callbacks": callbacks},
-    )
-
-
-# ---------------------------------------------------------------------------
-# Vale Enforcement (LangChain Loop)
-# ---------------------------------------------------------------------------
+from auto_docs_editor.core import DocumentSession, process_style_guide
+from auto_docs_editor.notebook import NotebookHandler, ensure_jupytext_installed, is_notebook
+from settings import FINAL_PASS_MARKER, MODEL_NAME, STYLE_DIR
+from utils import get_langfuse_handler, setup_logging
 
 
 def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
@@ -203,34 +51,29 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
 
         # Run Vale
         try:
-            # JSON output is crashing in some environments, using line output as fallback
             result = subprocess.run(
                 ["vale", "--output=line", str(document_path)],
                 capture_output=True,
                 text=True,
-                check=False,  # Vale returns exit code 1 on errors
+                check=False,
             )
         except Exception as e:
             logger.error(f"[Vale] Failed to run vale: {e}")
             return
 
         # Parse line output
-        # Format: file:line:col:Check:Message
-        # e.g. test.md:10:5:Google.We:Avoid using 'we'.
         output_lines = result.stdout.strip().splitlines()
 
         file_errors = []
         for line in output_lines:
             parts = line.split(":", 4)
             if len(parts) >= 5:
-                # path = parts[0] # unused, we know it's the document
                 line_num = parts[1]
-                # col = parts[2] # unused
                 check = parts[3]
                 message = parts[4]
                 file_errors.append(
                     {"Line": line_num, "Message": message.strip(), "Check": check, "Match": "N/A"}
-                )  # Match is not available in line output easily
+                )
 
         if not file_errors:
             logger.success("[Vale] No errors found!")
@@ -242,7 +85,6 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
             line = err.get("Line")
             msg = err.get("Message")
             rule = err.get("Check")
-            # Match is N/A in line output, so we rely on line number and message
             error_list.append(f"- Line {line}: {msg} (Rule: {rule})")
 
         formatted_errors = "\n".join(error_list)
@@ -277,18 +119,14 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         logger.warning("[Vale] Max retries reached. Some errors may remain.")
 
 
-# ---------------------------------------------------------------------------
-# Main flow
-# ---------------------------------------------------------------------------
-
-
 def main() -> None:
+    """Main entry point for the CLI."""
     parser = argparse.ArgumentParser(
-        description="Iteratively apply Google style guide pages to a markdown document.",
+        description="Iteratively apply Google style guide pages to a markdown document or Jupyter notebook.",
     )
     parser.add_argument(
         "markdown_document",
-        help="Path to the markdown document to process.",
+        help="Path to the markdown document or Jupyter notebook (.ipynb) to process.",
     )
     parser.add_argument(
         "--skip-through",
@@ -326,12 +164,30 @@ def main() -> None:
         logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
         sys.exit(1)
 
+    # Handle Jupyter notebooks
+    notebook_handler = None
+    original_target = target_path
+
+    if is_notebook(target_path):
+        if not ensure_jupytext_installed():
+            logger.error("Jupytext is not installed. Install it with: uv add jupytext")
+            sys.exit(1)
+
+        logger.info(f"Detected Jupyter notebook: {target_path}")
+        notebook_handler = NotebookHandler(target_path)
+
+        try:
+            # Pair notebook with Markdown (will error if .md already exists)
+            target_path = notebook_handler.ensure_paired()
+            logger.info(f"Working with paired Markdown: {target_path}")
+        except RuntimeError as e:
+            logger.error(str(e))
+            sys.exit(1)
+
     # Maintain a memory of all (before, after) tuples ever suggested by the LLM
     seen_edits: set[tuple[str, str]] = set()
 
-    # -------------------------------------------------------------------
     # Statistics counters
-    # -------------------------------------------------------------------
     total_edits_applied = 0
 
     # Always process style pages in a deterministic order (alphabetical by filename).
@@ -357,6 +213,12 @@ def main() -> None:
         logger.info("No style guide pages left to process.")
         sys.exit(0)
 
+    # Get Langfuse handler for callbacks
+    callbacks = []
+    handler = get_langfuse_handler()
+    if handler:
+        callbacks.append(handler)
+
     for idx, page_path in enumerate(style_pages, 1):
         # Re-read the document so that any manual edits the user made after the
         # previous iteration are taken into account.
@@ -369,7 +231,7 @@ def main() -> None:
         session = DocumentSession(doc_text, seen_edits)
 
         try:
-            process_style_guide(style_text, session)
+            process_style_guide(style_text, session, callbacks=callbacks, interactive=False)
         except KeyboardInterrupt:
             logger.info("\n↷ Skip requested via Ctrl+C/ESC – moving to next style guide.\n")
             continue
@@ -408,19 +270,28 @@ def main() -> None:
         elif changed and args.yolo:
             logger.warning("YOLO mode enabled. Memento mori 💀")
 
-    # -------------------------------------------------------------------
     # Summary statistics
-    # -------------------------------------------------------------------
     logger.info("=" * 80)
     logger.info("Edit summary statistics:")
     logger.info(f"Total edits applied successfully: {total_edits_applied}")
     logger.info("=" * 80)
 
-    # -------------------------------------------------------------------
     # Vale Enforcement
-    # -------------------------------------------------------------------
     logger.info("Starting Vale style enforcement...")
     enforce_vale_style(target_path)
+
+    # Sync back to notebook if needed
+    if notebook_handler:
+        logger.info("=" * 80)
+        logger.info("Syncing changes back to notebook...")
+        try:
+            notebook_handler.sync_back()
+            logger.success(f"Successfully updated notebook: {original_target}")
+            logger.info(f"Paired Markdown preserved at: {target_path}")
+        except RuntimeError as e:
+            logger.error(f"Failed to sync back to notebook: {e}")
+            logger.warning(f"Markdown edits are preserved in: {target_path}")
+            sys.exit(1)
 
     logger.info("All style pages and Vale checks processed. Done.")
 
