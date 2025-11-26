@@ -55,25 +55,13 @@ from settings import (
     STYLE_DIR,
 )
 from utils import (
-    log_incident,
+    get_langfuse_handler,
     setup_logging,
 )
 
 # ---------------------------------------------------------------------------
 # Agent Tools & Session
 # ---------------------------------------------------------------------------
-
-
-def get_langfuse_handler():
-    """Initialize Langfuse callback handler if credentials are present."""
-    if os.getenv("LANGFUSE_SECRET_KEY") and os.getenv("LANGFUSE_PUBLIC_KEY"):
-        logger.info("Langfuse credentials found. Initializing tracing.")
-        from langfuse.langchain import CallbackHandler
-
-        return CallbackHandler()
-
-    logger.info("Langfuse credentials not found. Tracing disabled.")
-    return None
 
 
 class DocumentSession:
@@ -405,12 +393,6 @@ def main() -> None:
 
         if session.failed_edits:
             logger.warning(f"Failed edits: {session.failed_edits}")
-            log_incident(
-                page_path,
-                target_path,
-                f"Applied edits: {session.session_edits}",
-                session.failed_edits,
-            )
 
         # Only pause for user review if the document actually changed.
         if changed and not args.yolo:

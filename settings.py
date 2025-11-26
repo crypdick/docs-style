@@ -14,7 +14,7 @@ AUTO_DOCS_EDIT_SCRIPT = ROOT_DIR / "auto_docs_edit.py"
 # Auto Docs Edit Settings
 # ---------------------------------------------------------------------------
 
-MODEL_NAME = "o4-mini"  # "gpt-4.1-mini"
+MODEL_NAME = "gpt-5.1"
 DIFF_END_MARKER = "NO_CHANGES"
 # Symbol that marks a style-guide Markdown file as relevant for the
 # "final pass" mode (see --final-pass CLI flag). Any file whose **stem**

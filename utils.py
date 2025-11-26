@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -45,25 +46,13 @@ def setup_logging() -> Path:
     return log_path
 
 
-def log_incident(
-    guide_path: Path,
-    target_doc: Path,
-    diff_text: str,
-    missed_snippets: list[str],
-) -> None:
-    """Write an incident log file containing the problematic diff and context."""
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    fname = f"{timestamp}_{guide_path.stem}.log"
-    run_dir = CURRENT_RUN_DIR if CURRENT_RUN_DIR is not None else LOGS_DIR
-    incident_path = run_dir / fname
+def get_langfuse_handler():
+    """Initialize Langfuse callback handler if credentials are present."""
+    if os.getenv("LANGFUSE_SECRET_KEY") and os.getenv("LANGFUSE_PUBLIC_KEY"):
+        logger.info("Langfuse credentials found. Initializing tracing.")
+        from langfuse.langchain import CallbackHandler
 
-    missed_section = "\n".join(f"- {s}" for s in missed_snippets) if missed_snippets else "<none>"
+        return CallbackHandler()
 
-    content = (
-        f"Guide: {guide_path.name}\n"
-        f"Target doc: {target_doc}\n"
-        f"Missed snippets: {missed_section}\n"
-        f"--- DIFF START ---\n{diff_text}\n--- DIFF END ---\n"
-    )
-
-    incident_path.write_text(content, encoding="utf-8")
+    logger.info("Langfuse credentials not found. Tracing disabled.")
+    return None
