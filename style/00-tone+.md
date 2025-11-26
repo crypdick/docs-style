@@ -1,80 +1,43 @@
-# Voice and tone  
+# Voice and tone
 
-In your documents, aim for a voice and tone that's conversational, friendly,
-and respectful without using slang or being overly colloquial or frivolous; a voice that's
-casual and natural and approachable, not pedantic or pushy. Try to sound like a
-knowledgeable friend who understands what the developer wants to do.
+**Voice:** Conversational, friendly, respectful, and knowledgeable. Aim to sound like a helpful colleague.
+**Tone:** Casual but professional. Accessible to a global audience.
 
-Don't try to write exactly the way you speak; you probably speak more
-colloquially and verbosely than you should write, at least for developer
-documentation. But aim for a conversational tone rather than a formal one.
+## Guidelines
 
-Don't try to be super-entertaining, but also don't aim for super-dry. Be
-human, let your personality show, and be memorable. But remember that the
-primary purpose of the document is to provide information to someone who's
-looking for it and may be in a hurry.
+* **Be conversational but not colloquial:** Use natural language, but avoid slang ("dude", "awesome") or text-speak.
+* **Be direct but polite:** Use the imperative mood ("Click Save") without excessive politeness ("Please click Save").
+  * *Exception:* "Please" is acceptable in FAQs or when asking for user feedback/help.
+* **Avoid fillers:** Remove phrases like "Please note," "At this time," or "It is important to note that."
+* **Avoid subjectivity:** Words like "simply," "easy," "just," or "quickly" can be frustrating if the user finds the task difficult.
+* **No "Let's":** Avoid "Let's do X." Use "Do X."
+* **No pop-culture references:** They age poorly and may not translate across cultures.
+* **Exclamation marks:** Use them rarely, if ever.
 
-Consider that readers come from many different cultures and may have varying
-levels of ability reading English. As much as possible, avoid culturally
-specific references. Simple and consistent writing can also make it easier to
-translate documents into other languages.
+## Techniques for checking tone
 
-## Some things to avoid where possible
+* **Read it aloud:** If a sentence sounds awkward or robotic when spoken, rewrite it to be more conversational.
+* **Check transitions:** Use transitions (*though*, *however*, *this way*) to make text flow smoother, but avoid overusing formal transitions like *nonetheless* or *herein*.
 
-* Being too cutesy.
-* Placeholder phrases like *please note* and *at this time.*
-* Choppy or long-winded sentences.
-* Starting all sentences with the same phrase (such as *You can* or *To
-  do*).
-* Current pop-culture references.
-* Exclamation marks, except in rare really exciting moments.
-* Wackiness, zaniness, and goofiness.
-* Mixing metaphors or taking a metaphor too far.
-* Phrasing that denigrates or insults any group of people.
-* Phrasing in terms of *let's* do something.
-* Using phrases like *simply*, *It's that simple*, *It's easy*, or *quickly* in a
-  procedure.
+## Anthropomorphism
 
-## Some techniques and approaches to consider
+Don't attribute human qualities (seeing, telling, thinking, wanting) to software or hardware.
 
-* If you're having trouble expressing something, step back and ask yourself,
-  "What am I trying to say?" Often, the answer you give yourself reveals what you
-  should be saying in the document.
-* If you're uncertain about your phrasing or tone, ask a colleague to take a
-  look.
-* Try reading parts of your document out loud, or at least mouthing the
-  words. Does it sound natural? Not every sentence has to sound natural when
-  spoken; these are written documents. But if you come across a sentence that's
-  awkward or confusing when spoken, consider whether you can make it more
-  conversational.
-* Use transitions between sentences. Phrases like *Though* or *This way* can
-  make paragraphs less stilted. (Then again, sometimes transitions like *However*
-  or *Nonetheless* can make paragraphs more stilted.)
-* Even if you're having trouble hitting the right tone, make sure you're
-  communicating useful information in a clear and direct way; that's the most
-  important part.
+**Why?** Anthropomorphism is figurative language, which is imprecise and difficult to translate.
 
-## Politeness and use of *please*
+* **Recommended:** "The system detects a new device." / "The object specifies the split point."
+* **Not recommended:** "The system sees a new device." / "The object tells the splitter..."
 
-It's great to be polite, but using *please* in a set of instructions is
-overdoing the politeness.
+## Excessive claims
 
-Recommended: To view the document, click
-**View**.
+* **Avoid hype:** Don't use *best*, *fastest*, *guaranteed* unless verifiable.
+* **Future-proof:** Ensure claims will remain true over time. Avoid absolute statements that might be invalidated by future releases or competitor updates.
+* **Security:** Don't claim a product is "secure" (implies invulnerability). Say it "helps with security" or "is designed for security".
+* **Comparisons:** Be factual, specific, and cite sources.
 
-Not recommended: To view the document,
-please click **View**.
+## Contractions
 
-Recommended: For more information, see
-[link to other document].
+* **Recommended:** Use common contractions (*you're*, *don't*, *it's*) for a conversational tone.
+  * **Negation:** Prefer *don't*, *isn't*, *can't* over *do not*, *is not* (easier to scan).
+* **Avoid:** Nonstandard (*guides're*), ambiguous (*'s* for *is*/possessive), or three-word contractions (*mightn't've*).
 
-Not recommended: For more information,
-please see [link to other document].
-
-## Examples
-
-| Too informal | Just about right | Too formal |
-| --- | --- | --- |
-| Dude! This API is totally awesome! | This API lets you collect data about what your users like. | The API documented by this page may enable the acquisition of information pertaining to user preferences. |
-| Just like a certain pop star, this call gets your *telephone* number. The easy way to ask for someone's digits! | To get the user's phone number, call `user.phoneNumber.get`. | The telephone number can be retrieved by the developer via the simple expedient of using the `get` method on the `user` object's `phoneNumber` property. |
-| Then—BOOM—just garbage-collect, and you're golden. | To clean up, call the `collectGarbage` method. | Please note that completion of the task requires the following prerequisite: executing an automated memory management function. |
