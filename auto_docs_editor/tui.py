@@ -3,18 +3,19 @@
 
 from __future__ import annotations
 
+import difflib
 import os
 import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
 from loguru import logger
-from rich.syntax import Syntax
+from rich.text import Text
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
-from textual.widgets import Button, Footer, Header, Label, Static
+from textual.widgets import Button, Footer, Header, Label, RichLog, Static, TextArea
 
 from auto_docs_editor.core import DocumentSession, process_style_guide
 from auto_docs_editor.notebook import NotebookHandler, ensure_jupytext_installed, is_notebook
@@ -22,8 +23,8 @@ from settings import FINAL_PASS_MARKER, STYLE_DIR
 from utils import get_langfuse_handler, setup_logging
 
 
-class DiffView(Static):
-    """Widget to display a diff with before/after comparison."""
+class DiffView(Container):
+    """Widget to display a git-style unified diff with editable after content."""
 
     def __init__(self, before: str, after: str, reason: str = "", **kwargs):
         super().__init__(**kwargs)
@@ -34,18 +35,44 @@ class DiffView(Static):
     def compose(self) -> ComposeResult:
         """Create child widgets."""
         if self.reason:
-            yield Label(f"[bold cyan]Reason:[/bold cyan] {self.reason}", classes="reason")
+            yield Label(
+                f"[bold cyan]Reason:[/bold cyan] {self.reason}", classes="reason", markup=True
+            )
 
-        yield Label("[bold red]Before:[/bold red]", classes="diff-label")
-        yield Static(
-            Syntax(self.before, "markdown", theme="monokai", line_numbers=False),
-            classes="diff-before",
-        )
+        # Create unified diff
+        diff_text = Text()
 
-        yield Label("[bold green]After:[/bold green]", classes="diff-label")
-        yield Static(
-            Syntax(self.after, "markdown", theme="monokai", line_numbers=False),
-            classes="diff-after",
+        before_lines = self.before.splitlines(keepends=False)
+        after_lines = self.after.splitlines(keepends=False)
+
+        # Use difflib to create a unified diff
+        differ = difflib.Differ()
+        diff = list(differ.compare(before_lines, after_lines))
+
+        for line in diff:
+            if line.startswith("- "):
+                # Removed line
+                diff_text.append("- ", style="bold red")
+                diff_text.append(line[2:], style="red")
+                diff_text.append("\n")
+            elif line.startswith("+ "):
+                # Added line
+                diff_text.append("+ ", style="bold green")
+                diff_text.append(line[2:], style="green")
+                diff_text.append("\n")
+            elif line.startswith("  "):
+                # Context line (unchanged)
+                diff_text.append("  ", style="dim")
+                diff_text.append(line[2:], style="dim")
+                diff_text.append("\n")
+            # Skip lines starting with '?' (difflib's change indicators)
+
+        yield Label("[bold]Diff Preview:[/bold]", markup=True)
+        yield Static(diff_text, classes="diff-inline")
+
+        yield Label("\n[bold]Edit Result (editable):[/bold]", markup=True, classes="edit-label")
+        yield TextArea(
+            self.after, language="markdown", theme="monokai", id="edit-area", classes="edit-area"
         )
 
 
@@ -81,21 +108,23 @@ class AutoDocsEditorTUI(App):
         background: $panel;
     }
 
-    .diff-label {
-        margin-top: 1;
-        margin-bottom: 1;
+    .diff-inline {
+        height: auto;
+        max-height: 20;
+        padding: 1;
+        background: $surface;
+        border: solid $primary;
+        overflow-y: auto;
     }
 
-    .diff-before {
-        background: $error 20%;
-        padding: 1;
-        border: solid $error;
-    }
-
-    .diff-after {
-        background: $success 20%;
-        padding: 1;
+    .edit-area {
+        height: 1fr;
+        min-height: 10;
         border: solid $success;
+    }
+
+    .edit-label {
+        margin-top: 1;
     }
 
     .reason {
@@ -122,7 +151,7 @@ class AutoDocsEditorTUI(App):
     """
 
     BINDINGS = [
-        Binding("a", "accept", "Accept", priority=True),
+        Binding("a", "accept", "Accept & Apply", priority=True),
         Binding("r", "reject", "Reject", priority=True),
         Binding("s", "skip_guide", "Skip Guide", priority=True),
         Binding("q", "quit", "Quit", priority=True),
@@ -160,11 +189,14 @@ class AutoDocsEditorTUI(App):
                 yield Label("", id="progress-label")
 
             with VerticalScroll(id="diff-container"):
-                yield Label("Loading...", id="diff-content")
+                yield RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
 
             with Horizontal(id="button-panel"):
                 yield Button(
-                    "Accept (a)", variant="success", id="btn-accept", classes="button-accept"
+                    "Accept & Apply (a)",
+                    variant="success",
+                    id="btn-accept",
+                    classes="button-accept",
                 )
                 yield Button(
                     "Reject (r)", variant="error", id="btn-reject", classes="button-reject"
@@ -191,6 +223,10 @@ class AutoDocsEditorTUI(App):
             f"[bold]Style Guide:[/bold] {page_path.name} ({self.current_page_idx + 1}/{len(self.style_pages)})"
         )
 
+        # Log to activity log
+        activity_log = self.query_one("#activity-log", RichLog)
+        activity_log.write(f"[bold cyan]Processing:[/bold cyan] {page_path.name}")
+
         # Read current document content
         doc_text = self.document_path.read_text(encoding="utf-8")
         style_text = page_path.read_text(encoding="utf-8")
@@ -207,6 +243,7 @@ class AutoDocsEditorTUI(App):
             )
         except Exception as e:
             logger.error(f"Error processing style guide: {e}")
+            activity_log.write(f"[bold red]Error:[/bold red] {e}")
             self.show_error(str(e))
             return
 
@@ -215,9 +252,13 @@ class AutoDocsEditorTUI(App):
 
         if not self.session.pending_edits:
             logger.info("No edits proposed for this guide.")
+            activity_log.write(f"[dim]No edits needed for {page_path.name}[/dim]")
             self.next_guide()
         else:
             logger.info(f"Collected {len(self.session.pending_edits)} proposed edits.")
+            activity_log.write(
+                f"[bold green]Found {len(self.session.pending_edits)} edits[/bold green]"
+            )
             self.show_current_edit()
 
     def show_current_edit(self) -> None:
@@ -233,23 +274,38 @@ class AutoDocsEditorTUI(App):
             f"Accepted: {self.total_accepted} | Rejected: {self.total_rejected}"
         )
 
-        # Replace diff content
+        # Clear activity log and show diff
         diff_container = self.query_one("#diff-container", VerticalScroll)
         diff_container.remove_children()
         diff_container.mount(DiffView(before, after, reason))
 
     def action_accept(self) -> None:
-        """Accept the current edit."""
+        """Accept the current edit (using edited text from TextArea if available)."""
         if not self.session or self.current_edit_idx >= len(self.session.pending_edits):
             return
 
         before, after, reason = self.session.pending_edits[self.current_edit_idx]
+
+        # Try to get edited text from TextArea
+        try:
+            edit_area = self.query_one("#edit-area", TextArea)
+            edited_after = edit_area.text
+            # Use the edited version instead of original
+            after = edited_after
+        except Exception:
+            # If TextArea not found, use original after text
+            pass
+
         result = self.session.apply_edit(before, after, reason)
 
+        # Show in activity log
+        activity_log = self.query_one("#activity-log", RichLog)
         if "successfully" in result:
             self.total_accepted += 1
+            activity_log.write(f"[green]✓ Accepted edit {self.current_edit_idx + 1}[/green]")
             logger.info(f"Edit accepted: '{before[:50]}...' -> '{after[:50]}...'")
         else:
+            activity_log.write(f"[red]✗ Failed to apply edit: {result}[/red]")
             logger.error(f"Failed to apply edit: {result}")
 
         self.current_edit_idx += 1
@@ -262,6 +318,10 @@ class AutoDocsEditorTUI(App):
 
         before, after, _ = self.session.pending_edits[self.current_edit_idx]
         self.total_rejected += 1
+
+        # Show in activity log
+        activity_log = self.query_one("#activity-log", RichLog)
+        activity_log.write(f"[yellow]⊘ Rejected edit {self.current_edit_idx + 1}[/yellow]")
         logger.info(f"Edit rejected: '{before[:50]}...' -> '{after[:50]}...'")
 
         self.current_edit_idx += 1
@@ -270,19 +330,37 @@ class AutoDocsEditorTUI(App):
     def action_skip_guide(self) -> None:
         """Skip the rest of the current guide."""
         logger.info("Skipping remaining edits in current guide.")
+
+        # Show in activity log
+        activity_log = self.query_one("#activity-log", RichLog)
+        activity_log.write("[dim]⏭ Skipped remaining edits in guide[/dim]")
+
         self.save_and_next_guide()
 
     def save_and_next_guide(self) -> None:
         """Save changes and move to the next guide."""
+        activity_log = self.query_one("#activity-log", RichLog)
+
         if self.session and self.session.current_content != self.session.initial_content:
             self.document_path.write_text(self.session.current_content, encoding="utf-8")
-            logger.success(f"Document updated with {len(self.session.session_edits)} edits.")
+            edits_count = len(self.session.session_edits)
+            activity_log.write(f"[bold green]💾 Saved {edits_count} edits to document[/bold green]")
+            logger.success(f"Document updated with {edits_count} edits.")
+        else:
+            activity_log.write("[dim]No changes to save[/dim]")
 
         self.next_guide()
 
     def next_guide(self) -> None:
         """Move to the next style guide."""
         self.current_page_idx += 1
+
+        # Show activity log while processing
+        diff_container = self.query_one("#diff-container", VerticalScroll)
+        diff_container.remove_children()
+        activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
+        diff_container.mount(activity_log)
+
         self.process_current_guide()
 
     def show_completion(self) -> None:
@@ -297,13 +375,16 @@ class AutoDocsEditorTUI(App):
 
         diff_container = self.query_one("#diff-container", VerticalScroll)
         diff_container.remove_children()
-        diff_container.mount(
-            Label(
-                "\n\n[bold cyan]All style guides have been processed![/bold cyan]\n\n"
-                "Press 'q' to quit.",
-                id="diff-content",
-            )
-        )
+
+        activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
+        diff_container.mount(activity_log)
+
+        activity_log.write("\n[bold cyan]═══════════════════════════════════════[/bold cyan]")
+        activity_log.write("[bold green]✓ All style guides processed![/bold green]")
+        activity_log.write("[bold cyan]═══════════════════════════════════════[/bold cyan]\n")
+        activity_log.write(f"[bold]Total Accepted:[/bold] [green]{self.total_accepted}[/green]")
+        activity_log.write(f"[bold]Total Rejected:[/bold] [yellow]{self.total_rejected}[/yellow]")
+        activity_log.write("\n[dim]Press 'q' to quit.[/dim]")
 
     def show_error(self, error: str) -> None:
         """Show an error message."""
