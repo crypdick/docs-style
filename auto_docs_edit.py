@@ -5,7 +5,10 @@
 # dependencies = [
 #   "python-dotenv>=1.0",
 #   "openai>=1.16.0",
-#   "loguru>=0.7.0"
+#   "loguru>=0.7.0",
+#   "langchain>=0.1.0",
+#   "langchain-openai>=0.0.5",
+#   "pydantic>=2.0.0"
 # ]
 # ///
 """Iteratively apply Google style guide pages to a target markdown document.
@@ -16,15 +19,12 @@ Usage:
 The script will iterate over every ``*.md`` file inside ``style/`` (each
 scraped Google dev style-guide page). For each page it:
 
-1. Sends the style-guide page and the current document to the LLM and requests edits.
-If the style page is not relevant, we skip the step and move on to the next style page.
-2. Filters out duplicate, reversing, or
-   no-op edits.
-3. Applies the remaining edits locally via plain string replacement.
-4. Writes the updated document back to disk (if anything changed).
-5. Pauses so you can review the result. Press <ENTER> to continue to the next guide or
+1. Sends the style-guide page and the current document to the LLM agent.
+2. The agent applies edits serially using a tool.
+3. Writes the updated document back to disk (if anything changed).
+4. Pauses so you can review the result. Press <ENTER> to continue to the next guide or
    Ctrl+C to abort the run.
-6. Records statistics and incident logs, then moves on to the next style page.
+5. Records statistics and incident logs, then moves on to the next style page.
 
 Environment:
     OPENAI_API_KEY must be set and is preferably loaded from a ``.env`` file in
@@ -35,165 +35,232 @@ from __future__ import annotations
 
 import argparse
 import os
-import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
-import openai
 from dotenv import load_dotenv
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.tools import tool
+from langchain_openai import ChatOpenAI
 from loguru import logger
 
 from settings import (
-    DIFF_END_MARKER,
-    DIFF_SYSTEM_PROMPT,
     FINAL_PASS_MARKER,
     MODEL_NAME,
     STYLE_DIR,
 )
 from utils import (
-    Spinner,
-    check_cancellation,
     log_incident,
-    restore_input_mode,
-    run_with_spinner,
-    setup_input_mode,
     setup_logging,
 )
 
 # ---------------------------------------------------------------------------
-# Console colours (ANSI)
-# ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# Helper functions
+# Agent Tools & Session
 # ---------------------------------------------------------------------------
 
 
-def _parse_edits(edits_text: str) -> list[tuple[str, str]]:
-    """Parse *edits_text* produced by the LLM into a list of ``(before, after)`` tuples.
+class DocumentSession:
+    """Manages the document state and edit history for the agent."""
 
-    The function parses **XML blocks** of the form:
+    def __init__(self, content: str, seen_edits: set[tuple[str, str]]):
+        self.initial_content = content
+        self.current_content = content
+        self.seen_edits = seen_edits  # Edits seen globally across all guides
+        self.session_edits: list[tuple[str, str]] = []  # Edits applied in this session
+        self.failed_edits: list[str] = []
 
-           <edit>
-           <before>[...any text...]</before>
-           <after>[...any text...]</after>
-           <reason>[...any text...]</reason>
-           </edit>
+    def apply_edit(self, before: str, after: str) -> str:
+        """Tool implementation to replace text."""
+        if before not in self.current_content:
+            msg = f"Edit failed: Text '{before}' not found in document."
+            self.failed_edits.append(msg)
+            return msg
 
-    """
-    xml_pattern = re.compile(
-        r"<edit>\s*<before>(.*?)</before>\s*<after>(.*?)</after>\s*(?:<reason>(.*?)</reason>)?\s*</edit>",
-        re.DOTALL | re.IGNORECASE,
+        # Check if this specific edit (before -> after) has been applied before (globally)
+        # Note: logic could be refined. If text exists, maybe we SHOULD apply it even if seen before?
+        # But original logic was to avoid loops.
+        if (before, after) in self.seen_edits:
+            # If it's already in the text, applying it again is a no-op if before==after,
+            # but here before != after.
+            # If 'before' exists, it means the previous application was reverted or 'before' appeared again.
+            # We allow it, but log it?
+            # Actually, let's allow the agent to decide.
+            pass
+
+        # Prevent infinite loops within the same session:
+        # If we already applied this exact edit in this session, and 'before' is still there?
+        # (e.g. multiple occurrences). We should apply it.
+        # replace() replaces ALL occurrences by default?
+        # Python's str.replace(old, new) replaces all occurrences.
+
+        self.current_content = self.current_content.replace(before, after)
+        self.session_edits.append((before, after))
+        self.seen_edits.add((before, after))
+
+        return "Edit applied successfully."
+
+
+# ---------------------------------------------------------------------------
+# Agent Logic
+# ---------------------------------------------------------------------------
+
+
+def process_style_guide(style_guide_text: str, session: DocumentSession) -> None:
+    """Run the agent loop to apply edits from the style guide."""
+    llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
+
+    @tool
+    def apply_edit(before: str, after: str):
+        """
+        Replaces exact text in the document.
+        Args:
+            before: The exact text snippet to replace (must match character-for-character, including whitespace).
+            after: The replacement text.
+        """
+        logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
+        return session.apply_edit(before, after)
+
+    tools = [apply_edit]
+
+    system_prompt = (
+        "You are an expert technical editor. "
+        "Given a STYLE GUIDE and a MARKDOWN DOCUMENT, apply the MINIMAL set of textual edits needed "
+        "for the document to follow the guide. "
+        "Use the `apply_edit` tool to apply changes. "
+        "IMPORTANT: \n"
+        "1. The 'before' text must match the document text *character-for-character*, including whitespace. "
+        "2. If an edit fails (not found), the tool will return an error. You may try to correct the snippet or skip it. "
+        "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
+        "4. Ensure code blocks remain syntactically valid. "
+        "5. If no changes are needed, just stop. "
+        "6. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
+        "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
     )
 
-    edits: list[tuple[str, str]] = []
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", system_prompt),
+            ("user", "Style Guide:\n{style_guide}\n\nDocument:\n{document}"),
+            ("placeholder", "{agent_scratchpad}"),
+        ]
+    )
 
-    for match in xml_pattern.finditer(edits_text):
-        before, after = match.group(1), match.group(2)
+    agent = create_tool_calling_agent(llm, tools, prompt)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, max_iterations=50)
 
-        # Skip any edit that merely moves or modifies the sentinel value indicating
-        # "no changes". The model occasionally (wrongly) embeds the sentinel
-        # string inside an <edit> block which should be treated as a no-op.
-        if before.strip() == DIFF_END_MARKER or after.strip() == DIFF_END_MARKER:
-            continue  # Ignore this bogus edit outright.
+    logger.info("Starting agent loop...")
 
-        if before != after:
-            edits.append((before, after))
-
-    if edits:
-        return edits  # Successfully parsed XML edits.
-
-    return edits
-
-
-def _diff_has_changes(diff_text: str) -> bool:  # noqa: E302 – redefine with new semantics
-    """Return True if *diff_text* contains at least one **meaningful** edit."""
-    return bool(_parse_edits(diff_text))
-
-
-def _apply_edits_locally(original_doc: str, edits_text: str) -> tuple[str, list[str]]:
-    """Apply *edits_text* to *original_doc*.
-
-    We perform **literal** (non-regex) replacements. All occurrences of each
-    *before* snippet are replaced with the *after* snippet. If any *before*
-    snippet is **not** found in the document, we leave the document unchanged
-    and emit a warning to stderr.
-    """
-    updated = original_doc
-    missed: list[str] = []
-    for before, after in _parse_edits(edits_text):
-        if before not in updated:
-            missed.append(before)
-            # Emit warning and continue.
-            logger.warning(f"[warn] Skipping edit – snippet not found: {before!r}")
-            continue
-        updated = updated.replace(before, after)
-    return updated, missed
-
-
-# ---------------------------------------------------------------------------
-# Diff generation (streaming with in-loop ESC cancellation)
-# ---------------------------------------------------------------------------
-
-
-def generate_diff(style_guide: str, document: str) -> str | None:
-    """Request a streaming diff from the model with full ESC cancellation.
-
-    The call proceeds in two phases:
-    1. Waiting for the network request to reach the OpenAI servers and the
-       first token to arrive (wrapped in ``run_with_spinner``).
-    2. Streaming tokens; we print a tiny spinner and still honour ESC to abort
-       mid-stream (only the tokens already generated are billed).
-    """
-    messages = [
-        {"role": "system", "content": DIFF_SYSTEM_PROMPT},
+    agent_executor.invoke(
         {
-            "role": "user",
-            "content": (
-                "<style_guide>\n"
-                + style_guide
-                + "\n</style_guide>\n\n"
-                + "<document>\n"
-                + document
-                + "\n</document>"
-            ),
-        },
-    ]
+            "style_guide": style_guide_text,
+            "document": session.current_content,
+        }
+    )
 
-    def _start_stream():
-        return openai.chat.completions.create(
-            model=MODEL_NAME,
-            messages=messages,  # type: ignore
-            stream=True,
-        )
 
-    stream = run_with_spinner(_start_stream, "Waiting for model response")
-    if stream is None:
-        return None  # User cancelled before the stream started.
+# ---------------------------------------------------------------------------
+# Vale Enforcement (LangChain Loop)
+# ---------------------------------------------------------------------------
 
-    diff_chunks: list[str] = []
-    fd, old_termios = setup_input_mode()
-    spinner = Spinner("Generating diff via LLM")
 
-    try:
-        for chunk in stream:
-            if chunk.choices:
-                delta = chunk.choices[0].delta
-                content = getattr(delta, "content", None)
-                if content:
-                    diff_chunks.append(content)
+def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
+    """Iteratively run Vale and use an LLM to fix the errors."""
+    if not shutil.which("vale"):
+        logger.error("Vale is not installed or not in PATH. Skipping Vale enforcement.")
+        return
 
-            spinner.tick()
+    llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
 
-            if check_cancellation(fd):
-                stream.close()
-                return None
+    prompt_template = ChatPromptTemplate.from_template(
+        "You are a technical editor. I will provide you with a markdown document and a list of style errors found by Vale (Google Style Guide).\n"
+        "Your task is to fix the style errors in the document. \n"
+        "If a Vale error is too pedantic, false positive, or makes the text worse/awkward, you may ignore it.\n"
+        "If you determine that ALL remaining errors are pedantic or should be ignored, strictly output the single word: PEDANTIC\n"
+        "Otherwise, output the FULL corrected markdown document. Do not include any markdown fences (like ```markdown) or conversational text.\n\n"
+        "Errors:\n{errors}\n\n"
+        "Document:\n{document}"
+    )
+    chain = prompt_template | llm | StrOutputParser()
 
-    finally:
-        spinner.clear()
-        restore_input_mode(fd, old_termios)
+    for attempt in range(1, max_retries + 1):
+        logger.info(f"[Vale] Enforcement attempt {attempt}/{max_retries}...")
 
-    return "".join(diff_chunks).strip()
+        # Run Vale
+        try:
+            # JSON output is crashing in some environments, using line output as fallback
+            result = subprocess.run(
+                ["vale", "--output=line", str(document_path)],
+                capture_output=True,
+                text=True,
+                check=False,  # Vale returns exit code 1 on errors
+            )
+        except Exception as e:
+            logger.error(f"[Vale] Failed to run vale: {e}")
+            return
+
+        # Parse line output
+        # Format: file:line:col:Check:Message
+        # e.g. test.md:10:5:Google.We:Avoid using 'we'.
+        output_lines = result.stdout.strip().splitlines()
+
+        file_errors = []
+        for line in output_lines:
+            parts = line.split(":", 4)
+            if len(parts) >= 5:
+                # path = parts[0] # unused, we know it's the document
+                line_num = parts[1]
+                # col = parts[2] # unused
+                check = parts[3]
+                message = parts[4]
+                file_errors.append(
+                    {"Line": line_num, "Message": message.strip(), "Check": check, "Match": "N/A"}
+                )  # Match is not available in line output easily
+
+        if not file_errors:
+            logger.success("[Vale] No errors found!")
+            break
+
+        # Filter/Format errors for the LLM
+        error_list = []
+        for err in file_errors:
+            line = err.get("Line")
+            msg = err.get("Message")
+            rule = err.get("Check")
+            # Match is N/A in line output, so we rely on line number and message
+            error_list.append(f"- Line {line}: {msg} (Rule: {rule})")
+
+        formatted_errors = "\n".join(error_list)
+        logger.info(f"[Vale] Found {len(error_list)} errors:\n{formatted_errors}")
+
+        current_text = document_path.read_text(encoding="utf-8")
+
+        # Ask LLM to fix
+        response = chain.invoke({"errors": formatted_errors, "document": current_text})
+
+        if response.strip() == "PEDANTIC":
+            logger.info("[Vale] LLM determined remaining errors are pedantic. Stopping.")
+            break
+
+        # Heuristic check: if response is drastically shorter, something might be wrong
+        if len(response) < len(current_text) * 0.5:
+            logger.warning(
+                "[Vale] LLM response seems too short. Aborting this step to prevent data loss."
+            )
+            break
+
+        # Apply changes
+        if response != current_text:
+            document_path.write_text(response, encoding="utf-8")
+            logger.success("[Vale] Applied fixes from LLM.")
+        else:
+            logger.info("[Vale] LLM proposed no changes. Stopping.")
+            break
+    else:
+        logger.warning("[Vale] Max retries reached. Some errors may remain.")
 
 
 # ---------------------------------------------------------------------------
@@ -245,24 +312,13 @@ def main() -> None:
         logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
         sys.exit(1)
 
-    openai.api_key = os.environ["OPENAI_API_KEY"]
-
     # Maintain a memory of all (before, after) tuples ever suggested by the LLM
-    # during this run. If the same exact edit appears again in a later round,
-    # we silently ignore it to avoid redundant prompts and incident logs.
     seen_edits: set[tuple[str, str]] = set()
-    # Track edits that actually made it into the document so that future
-    # style-guide passes cannot revert them (avoiding tug-of-war between
-    # conflicting guides).
-    applied_edits: set[tuple[str, str]] = set()
+
     # -------------------------------------------------------------------
     # Statistics counters
     # -------------------------------------------------------------------
-    total_edits_proposed = 0
-    duplicates_dropped = 0
-    reversals_dropped = 0
-    edits_applied_successfully = 0
-    edits_missed = 0
+    total_edits_applied = 0
 
     # Always process style pages in a deterministic order (alphabetical by filename).
     style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
@@ -280,10 +336,6 @@ def main() -> None:
             style_pages = style_pages[skip_idx + 1 :]
             logger.info(f"Skipped {skip_idx} style pages.")
         except StopIteration:
-            # If the requested *skip-through* filename is not found, abort with an
-            # explicit error rather than silently continuing. This prevents
-            # accidental typos from going unnoticed and ensures the user
-            # understands why the script did not behave as expected.
             logger.error(f"--skip-through: '{skip_name}' not found among style pages.")
             sys.exit(1)
 
@@ -299,114 +351,40 @@ def main() -> None:
         logger.info(f"[{idx}/{len(style_pages)}] Processing style guide: {page_path.name}")
         style_text = page_path.read_text(encoding="utf-8")
 
-        # Ask the LLM to create a diff while showing a spinner so that
-        # the user knows the process is still ongoing.
-        diff = generate_diff(style_text, doc_text)
+        # Initialize Session
+        session = DocumentSession(doc_text, seen_edits)
 
-        # If *None* was returned, the user hit ESC during diff generation.
-        if diff is None:
-            logger.info("\n↷ Skip requested via ESC – moving to next style guide.\n")
+        try:
+            process_style_guide(style_text, session)
+        except KeyboardInterrupt:
+            logger.info("\n↷ Skip requested via Ctrl+C/ESC – moving to next style guide.\n")
             continue
 
-        # Reject obviously malformed diffs up-front.
-        if diff.strip() == DIFF_END_MARKER or not _diff_has_changes(diff):
-            logger.info("-> Style guide not relevant or no changes detected. Skipping.\n")
-            continue
+        # Check results
+        edits_made = len(session.session_edits)
+        total_edits_applied += edits_made
 
-        # Show raw diff from the model.
-        logger.info("Generated diff (model output):\n")
-        logger.info(f"<yellow>{diff}</>")
-
-        # Parse edits to identify the effective (non–no-op) changes.
-        parsed_edits = _parse_edits(diff)
-        # Update stats – total edits proposed
-        total_edits_proposed += len(parsed_edits)
-
-        # -------------------------------------------------------------------
-        # Step 1: drop edits we've already *seen* (same before→after pair).
-        # -------------------------------------------------------------------
-        unseen_edits: list[tuple[str, str]] = [
-            (b, a) for (b, a) in parsed_edits if (b, a) not in seen_edits
-        ]
-        # Update stats – duplicates that were already seen
-        duplicates_dropped += len(parsed_edits) - len(unseen_edits)
-
-        # Record *all* parsed edits (including duplicates) so that any future
-        # occurrences are recognised and skipped automatically.
-        seen_edits.update(parsed_edits)
-
-        # -------------------------------------------------------------------
-        # Step 2: drop edits that would *undo* a change already applied.
-        # That is, if we previously applied (x → y) and the current guide
-        # proposes (y → x), we reject it.
-        # -------------------------------------------------------------------
-        non_reversing_edits: list[tuple[str, str]] = [
-            (b, a) for (b, a) in unseen_edits if (a, b) not in applied_edits
-        ]
-        # Update stats – edits that would reverse previous changes
-        reversals_dropped += len(unseen_edits) - len(non_reversing_edits)
-
-        if not non_reversing_edits:
-            logger.info(
-                "-> All suggested edits are duplicates or would undo earlier edits. Skipping.\n"
-            )
-            continue
-
-        # Rebuild the diff text using only the edits that are both unseen and non-reversing.
-        filtered_diff_text = "\n\n".join(
-            f"<edit>\n<before>{b}</before>\n<after>{a}</after>\n</edit>"
-            for b, a in non_reversing_edits
-        )
-
-        if filtered_diff_text.strip() != diff.strip():
-            logger.info("\nDiff after filtering out no-op edits (will be applied):\n")
-            logger.info(f"<green>{filtered_diff_text}</>")
-
-        # Apply edits locally (deterministic and safer than LLM application).
-        updated_doc, missed_snippets = _apply_edits_locally(doc_text, filtered_diff_text)
-
-        # Update stats – snippets that didn't match the document
-        edits_missed += len(missed_snippets)
-
-        changed = updated_doc != doc_text
-
-        # Add successfully applied edits to the *applied_edits* memory so that
-        # future passes can detect and avoid reversals. We exclude snippets
-        # that were missed during application (i.e., not found in the doc).
-        if changed:
-            successful_edits = [
-                (b, a) for (b, a) in non_reversing_edits if b not in missed_snippets
-            ]
-            applied_edits.update(successful_edits)
-            # Update stats – successfully applied edits
-            edits_applied_successfully += len(successful_edits)
+        changed = session.current_content != session.initial_content
 
         if changed:
-            # Only write back if something actually changed.
-            target_path.write_text(updated_doc, encoding="utf-8")
-            logger.success(f"-> Document updated via {page_path.name}.\n")
+            target_path.write_text(session.current_content, encoding="utf-8")
+            logger.success(f"-> Document updated via {page_path.name} ({edits_made} edits).")
         else:
-            logger.info("-> Patch produced no net changes. Skipping write.\n")
+            logger.info("-> No changes applied.\n")
 
-        # -------------------------------------------------------------------
-        # Per-style-guide statistics
-        # -------------------------------------------------------------------
-        page_total = len(parsed_edits)
-        page_duplicates = len(parsed_edits) - len(unseen_edits)
-        page_reversals = len(unseen_edits) - len(non_reversing_edits)
-        page_applied = len(successful_edits) if changed else 0
-        page_missed = len(missed_snippets)
-
+        # Log stats for this page
         logger.info("Edit statistics for this style guide:")
-        logger.info(f" • Proposed edits        : {page_total}")
-        logger.info(f" • Duplicates skipped    : {page_duplicates}")
-        logger.info(f" • Reversals dropped     : {page_reversals}")
-        logger.info(f" • Edits applied         : {page_applied}")
-        logger.info(f" • Edits missed/not found: {page_missed}\n")
+        logger.info(f" • Edits applied         : {edits_made}")
+        logger.info(f" • Edits failed          : {len(session.failed_edits)}")
 
-        # Log incident if any edits were missed or nothing changed.
-        if missed_snippets or not changed:
-            log_incident(page_path, target_path, diff, missed_snippets)
+        if session.failed_edits:
+            logger.warning(f"Failed edits: {session.failed_edits}")
+            log_incident(
+                page_path,
+                target_path,
+                f"Applied edits: {session.session_edits}",
+                session.failed_edits,
+            )
 
         # Only pause for user review if the document actually changed.
         if changed and not args.yolo:
@@ -423,17 +401,20 @@ def main() -> None:
             logger.warning("YOLO mode enabled. Memento mori 💀")
 
     # -------------------------------------------------------------------
-    # Summary statistics about edit processing
+    # Summary statistics
     # -------------------------------------------------------------------
     logger.info("=" * 80)
     logger.info("Edit summary statistics:")
-    logger.info(f"Total edits proposed      : {total_edits_proposed}")
-    logger.info(f" - Already seen (skipped) : {duplicates_dropped}")
-    logger.info(f" - Reversals dropped      : {reversals_dropped}")
-    logger.info(f"Edits applied successfully: {edits_applied_successfully}")
-    logger.info(f"Edits missed (not found)  : {edits_missed}")
+    logger.info(f"Total edits applied successfully: {total_edits_applied}")
     logger.info("=" * 80)
-    logger.info("All style pages processed. Done.")
+
+    # -------------------------------------------------------------------
+    # Vale Enforcement
+    # -------------------------------------------------------------------
+    logger.info("Starting Vale style enforcement...")
+    enforce_vale_style(target_path)
+
+    logger.info("All style pages and Vale checks processed. Done.")
 
 
 if __name__ == "__main__":
