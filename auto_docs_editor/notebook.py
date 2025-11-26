@@ -24,6 +24,24 @@ class NotebookHandler:
         self.notebook_path = notebook_path
         self.markdown_path = notebook_path.with_suffix(".md")
 
+    def is_paired(self) -> bool:
+        """Check if the notebook is already paired with the markdown file.
+
+        Returns:
+            True if paired, False otherwise
+        """
+        if not self.markdown_path.exists():
+            return False
+
+        # Check if the markdown file has jupytext metadata indicating pairing
+        try:
+            with open(self.markdown_path, encoding="utf-8") as f:
+                content = f.read(500)  # Read first 500 chars to check metadata
+                # Look for jupytext metadata in the frontmatter
+                return "jupytext:" in content and "ipynb" in content
+        except Exception:
+            return False
+
     def ensure_paired(self) -> Path:
         """Ensure the notebook is paired with a Markdown file.
 
@@ -31,15 +49,20 @@ class NotebookHandler:
             Path to the paired Markdown file
 
         Raises:
-            RuntimeError: If the Markdown file already exists or pairing fails
+            RuntimeError: If markdown exists but is not paired, or if pairing fails
         """
         # Check if markdown already exists
         if self.markdown_path.exists():
-            raise RuntimeError(
-                f"Markdown file already exists: {self.markdown_path}\n"
-                f"Please delete it or use a different notebook.\n"
-                f"The tool will create a paired Markdown file automatically."
-            )
+            if self.is_paired():
+                logger.info(f"Using existing paired Markdown: {self.markdown_path}")
+                return self.markdown_path
+            else:
+                raise RuntimeError(
+                    f"Markdown file exists but is not paired with the notebook: {self.markdown_path}\n"
+                    f"Please either:\n"
+                    f"  1. Delete the markdown file to let the tool create a paired version\n"
+                    f"  2. Pair it manually: jupytext --set-formats ipynb,md:myst {self.notebook_path}"
+                )
 
         logger.info(f"Pairing notebook with Markdown: {self.notebook_path}")
 

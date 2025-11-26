@@ -236,7 +236,7 @@ class AutoDocsEditorTUI(App):
         # Replace diff content
         diff_container = self.query_one("#diff-container", VerticalScroll)
         diff_container.remove_children()
-        diff_container.mount(DiffView(before, after, reason, id="diff-content"))
+        diff_container.mount(DiffView(before, after, reason))
 
     def action_accept(self) -> None:
         """Accept the current edit."""
