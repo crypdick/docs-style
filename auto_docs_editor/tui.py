@@ -11,7 +11,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from loguru import logger
 from rich.text import Text
-from textual import on
+from textual import on, work
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
@@ -79,76 +79,7 @@ class DiffView(Container):
 class AutoDocsEditorTUI(App):
     """TUI application for reviewing style guide edits."""
 
-    CSS = """
-    Screen {
-        background: $surface;
-    }
-
-    #main-container {
-        height: 100%;
-        width: 100%;
-    }
-
-    #info-panel {
-        height: auto;
-        padding: 1;
-        background: $boost;
-        border: solid $primary;
-    }
-
-    #diff-container {
-        height: 1fr;
-        padding: 1;
-        border: solid $accent;
-    }
-
-    #button-panel {
-        height: auto;
-        padding: 1;
-        background: $panel;
-    }
-
-    .diff-inline {
-        height: auto;
-        max-height: 20;
-        padding: 1;
-        background: $surface;
-        border: solid $primary;
-        overflow-y: auto;
-    }
-
-    .edit-area {
-        height: 1fr;
-        min-height: 10;
-        border: solid $success;
-    }
-
-    .edit-label {
-        margin-top: 1;
-    }
-
-    .reason {
-        padding: 1;
-        background: $accent 20%;
-        margin-bottom: 1;
-    }
-
-    Button {
-        margin: 0 1;
-    }
-
-    .button-accept {
-        background: $success;
-    }
-
-    .button-reject {
-        background: $error;
-    }
-
-    .button-skip {
-        background: $warning;
-    }
-    """
+    CSS_PATH = "tui.tcss"
 
     BINDINGS = [
         Binding("a", "accept", "Accept & Apply", priority=True),
@@ -162,12 +93,16 @@ class AutoDocsEditorTUI(App):
         document_path: Path,
         style_pages: list[Path],
         seen_edits: set[tuple[str, str]],
+        is_notebook: bool = False,
+        notebook_handler: NotebookHandler | None = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
         self.document_path = document_path
         self.style_pages = style_pages
         self.seen_edits = seen_edits
+        self.is_notebook = is_notebook
+        self.notebook_handler = notebook_handler
         self.current_page_idx = 0
         self.current_edit_idx = 0
         self.session: DocumentSession | None = None
@@ -298,14 +233,21 @@ class AutoDocsEditorTUI(App):
 
         result = self.session.apply_edit(before, after, reason)
 
-        # Show in activity log
-        activity_log = self.query_one("#activity-log", RichLog)
+        # Show in activity log if it exists
+        try:
+            activity_log = self.query_one("#activity-log", RichLog)
+            if "successfully" in result:
+                activity_log.write(f"[green]✓ Accepted edit {self.current_edit_idx + 1}[/green]")
+            else:
+                activity_log.write(f"[red]✗ Failed to apply edit: {result}[/red]")
+        except Exception:
+            # Activity log not present (showing diff view instead)
+            pass
+
         if "successfully" in result:
             self.total_accepted += 1
-            activity_log.write(f"[green]✓ Accepted edit {self.current_edit_idx + 1}[/green]")
             logger.info(f"Edit accepted: '{before[:50]}...' -> '{after[:50]}...'")
         else:
-            activity_log.write(f"[red]✗ Failed to apply edit: {result}[/red]")
             logger.error(f"Failed to apply edit: {result}")
 
         self.current_edit_idx += 1
@@ -319,9 +261,14 @@ class AutoDocsEditorTUI(App):
         before, after, _ = self.session.pending_edits[self.current_edit_idx]
         self.total_rejected += 1
 
-        # Show in activity log
-        activity_log = self.query_one("#activity-log", RichLog)
-        activity_log.write(f"[yellow]⊘ Rejected edit {self.current_edit_idx + 1}[/yellow]")
+        # Show in activity log if it exists
+        try:
+            activity_log = self.query_one("#activity-log", RichLog)
+            activity_log.write(f"[yellow]⊘ Rejected edit {self.current_edit_idx + 1}[/yellow]")
+        except Exception:
+            # Activity log not present (showing diff view instead)
+            pass
+
         logger.info(f"Edit rejected: '{before[:50]}...' -> '{after[:50]}...'")
 
         self.current_edit_idx += 1
@@ -331,25 +278,76 @@ class AutoDocsEditorTUI(App):
         """Skip the rest of the current guide."""
         logger.info("Skipping remaining edits in current guide.")
 
-        # Show in activity log
-        activity_log = self.query_one("#activity-log", RichLog)
-        activity_log.write("[dim]⏭ Skipped remaining edits in guide[/dim]")
+        # Show in activity log if it exists
+        try:
+            activity_log = self.query_one("#activity-log", RichLog)
+            activity_log.write("[dim]⏭ Skipped remaining edits in guide[/dim]")
+        except Exception:
+            # Activity log not present (showing diff view instead)
+            pass
 
         self.save_and_next_guide()
 
     def save_and_next_guide(self) -> None:
         """Save changes and move to the next guide."""
-        activity_log = self.query_one("#activity-log", RichLog)
-
+        # Capture session info before moving to next guide
+        had_changes = False
+        edits_count = 0
         if self.session and self.session.current_content != self.session.initial_content:
             self.document_path.write_text(self.session.current_content, encoding="utf-8")
             edits_count = len(self.session.session_edits)
-            activity_log.write(f"[bold green]💾 Saved {edits_count} edits to document[/bold green]")
+            had_changes = True
             logger.success(f"Document updated with {edits_count} edits.")
-        else:
-            activity_log.write("[dim]No changes to save[/dim]")
 
+            # Sync notebook in background if applicable
+            if self.is_notebook and self.notebook_handler:
+                self.sync_notebook_background()
+
+        # Move to next guide (which will recreate the activity log and reset session)
         self.next_guide()
+
+        # Now write to the newly created activity log
+        try:
+            activity_log = self.query_one("#activity-log", RichLog)
+            if had_changes:
+                save_msg = f"💾 Saved {edits_count} edits from previous guide"
+                if self.is_notebook:
+                    save_msg += " (syncing to notebook...)"
+                activity_log.write(f"[bold green]{save_msg}[/bold green]")
+            else:
+                activity_log.write("[dim]No changes to save from previous guide[/dim]")
+        except Exception:
+            # Activity log not available yet
+            pass
+
+    @work(exclusive=False, thread=True)
+    def sync_notebook_background(self) -> None:
+        """Sync markdown changes back to notebook in a background worker."""
+        if not self.notebook_handler:
+            return
+
+        try:
+            logger.info("Background sync: Syncing Markdown to notebook...")
+            self.notebook_handler.sync_back()
+            logger.success("Background sync: Successfully synced to notebook")
+
+            # Update UI with success message
+            self.call_from_thread(self._on_sync_complete, success=True)
+        except Exception as e:
+            logger.error(f"Background sync failed: {e}")
+            self.call_from_thread(self._on_sync_complete, success=False, error=str(e))
+
+    def _on_sync_complete(self, success: bool, error: str = "") -> None:
+        """Called when background sync completes (runs on main thread)."""
+        try:
+            activity_log = self.query_one("#activity-log", RichLog)
+            if success:
+                activity_log.write("[dim]✓ Notebook synced[/dim]")
+            else:
+                activity_log.write(f"[bold red]✗ Notebook sync failed: {error}[/bold red]")
+        except Exception:
+            # Activity log not available
+            pass
 
     def next_guide(self) -> None:
         """Move to the next style guide."""
@@ -384,6 +382,8 @@ class AutoDocsEditorTUI(App):
         activity_log.write("[bold cyan]═══════════════════════════════════════[/bold cyan]\n")
         activity_log.write(f"[bold]Total Accepted:[/bold] [green]{self.total_accepted}[/green]")
         activity_log.write(f"[bold]Total Rejected:[/bold] [yellow]{self.total_rejected}[/yellow]")
+        if self.is_notebook:
+            activity_log.write("\n[bold green]Note:[/bold green] All changes synced to notebook.")
         activity_log.write("\n[dim]Press 'q' to quit.[/dim]")
 
     def show_error(self, error: str) -> None:
@@ -504,12 +504,18 @@ def run() -> None:
 
     # Run the TUI
     seen_edits: set[tuple[str, str]] = set()
-    app = AutoDocsEditorTUI(target_path, style_pages, seen_edits)
+    app = AutoDocsEditorTUI(
+        target_path,
+        style_pages,
+        seen_edits,
+        is_notebook=notebook_handler is not None,
+        notebook_handler=notebook_handler,
+    )
     app.run()
 
-    # Sync back to notebook if needed
+    # Final sync back to notebook if needed (in case there are pending changes)
     if notebook_handler:
-        logger.info("Syncing changes back to notebook...")
+        logger.info("Final sync: Syncing changes back to notebook...")
         try:
             notebook_handler.sync_back()
             logger.success(f"Successfully updated notebook: {original_target}")
