@@ -107,7 +107,9 @@ def update_trace_metrics(session: DocumentSession, langfuse: Any):
     )
 
 
-def expand_edit_context(full_content: str, before: str, after: str, context_lines: int = 3) -> tuple[str, str]:
+def expand_edit_context(
+    full_content: str, before: str, after: str, context_lines: int = 3
+) -> tuple[str, str]:
     """Expand the edit context to include surrounding lines.
 
     Args:
@@ -129,43 +131,45 @@ def expand_edit_context(full_content: str, before: str, after: str, context_line
 
     # Find start of context (scan backwards)
     scan_start = start_idx
-    
+
     # First, find the start of the line containing the match
-    line_start = full_content.rfind('\n', 0, start_idx) + 1
+    line_start = full_content.rfind("\n", 0, start_idx) + 1
     scan_start = line_start
 
     # Now go back N lines
     for _ in range(context_lines):
-        prev_newline = full_content.rfind('\n', 0, scan_start - 1)
+        if scan_start == 0:
+            break
+        prev_newline = full_content.rfind("\n", 0, scan_start - 1)
         if prev_newline == -1:
             scan_start = 0
             break
         scan_start = prev_newline + 1
-    
+
     expanded_start = scan_start
 
     # Find end of context (scan forwards)
     scan_end = end_idx
-    
+
     # Find the end of the line containing the match
-    line_end = full_content.find('\n', end_idx)
+    line_end = full_content.find("\n", end_idx)
     if line_end == -1:
         line_end = len(full_content)
     else:
         # Include the newline character of the current line
         line_end += 1
-    
+
     scan_end = line_end
 
     # Now go forward N lines
     for _ in range(context_lines):
-        next_newline = full_content.find('\n', scan_end)
+        next_newline = full_content.find("\n", scan_end)
         if next_newline == -1:
             scan_end = len(full_content)
             break
         # Include the newline
         scan_end = next_newline + 1
-    
+
     expanded_end = scan_end
 
     # Extract the expanded original block
@@ -203,10 +207,12 @@ async def handle_edit_proposal(
 
     if review_callback:
         # Interactive mode: Pause and ask user
-        
+
         # Expand context for better visibility
-        expanded_before, expanded_after = expand_edit_context(session.current_content, before, after)
-        
+        expanded_before, expanded_after = expand_edit_context(
+            session.current_content, before, after
+        )
+
         logger.info(
             f"Agent proposing edit for review.\nBefore:\n```{expanded_before}```\nAfter->\n```{expanded_after}```\n"
         )

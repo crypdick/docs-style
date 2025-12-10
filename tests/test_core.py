@@ -100,7 +100,12 @@ async def test_handle_edit_proposal_interactive_modified():
     session = DocumentSession(content, set())
 
     def callback(before, after, reason):
-        return {"status": "modified", "new_text": "friend"}
+        # The callback now receives the expanded context.
+        # before will be "Hello world" (since context expansion grabs the line)
+        # after will be "Hello universe"
+        # The user's modified text should replace the ENTIRE expanded block.
+        # So if we want the result to be "Hello friend", we should return "Hello friend".
+        return {"status": "modified", "new_text": "Hello friend"}
 
     result = await handle_edit_proposal(
         session, "world", "universe", "reason", review_callback=callback
