@@ -145,6 +145,7 @@ class AutoDocsEditorTUI(App):
         # Synchronization primitives for thread <-> UI communication
         self.review_event = threading.Event()
         self.review_decision: dict | None = None
+        self.is_quitting = False
 
         handler = get_langfuse_handler()
         if handler:
@@ -219,6 +220,9 @@ class AutoDocsEditorTUI(App):
                 review_callback=self.ask_user_review,
                 guide_name=page_path.name,
             )
+        except (KeyboardInterrupt, SystemExit):
+            logger.info("Processing interrupted by user shutdown.")
+            return
         except Exception as e:
             logger.error(f"Error processing style guide: {e}")
             self.call_from_thread(self.log_activity, f"[bold red]Error:[/bold red] {e}")
@@ -233,6 +237,9 @@ class AutoDocsEditorTUI(App):
 
         Blocks until the user interacts with the UI.
         """
+        if self.is_quitting:
+            raise KeyboardInterrupt("Application quitting")
+
         # Clear previous decision
         self.review_decision = None
         self.review_event.clear()
@@ -244,6 +251,9 @@ class AutoDocsEditorTUI(App):
         logger.info("ask_user_review: Waiting for user review...")
         self.review_event.wait()
         logger.info("ask_user_review: User review received.")
+
+        if self.is_quitting:
+            raise KeyboardInterrupt("Application quitting")
 
         # Return the user's decision
         return self.review_decision or {"status": "rejected", "reason": "Cancelled or Interrupted"}
@@ -330,20 +340,34 @@ class AutoDocsEditorTUI(App):
             self.review_event.set()
             self.log_activity("[dim]⏭ Skipped[/dim]")
 
+    def action_quit(self) -> None:
+        """Handle quit action."""
+        self.is_quitting = True
+        # Unblock any waiting threads
+        if not self.review_event.is_set():
+            self.review_decision = {"status": "rejected", "reason": "Application quitting"}
+            self.review_event.set()
+        self.exit()
+
     async def save_and_next_guide(self) -> None:
         """Save changes and move to the next guide."""
         # Capture session info before moving to next guide
         had_changes = False
         edits_count = 0
         if self.session and self.session.current_content != self.session.initial_content:
-            self.document_path.write_text(self.session.current_content, encoding="utf-8")
-            edits_count = len(self.session.session_edits)
-            had_changes = True
-            logger.success(f"Document updated with {edits_count} edits.")
+            try:
+                self.document_path.write_text(self.session.current_content, encoding="utf-8")
+                edits_count = len(self.session.session_edits)
+                had_changes = True
+                logger.success(f"Document updated with {edits_count} edits.")
 
-            # Sync notebook in background if applicable
-            if self.is_notebook and self.notebook_handler:
-                self.sync_notebook_background()
+                # Sync notebook in background if applicable
+                if self.is_notebook and self.notebook_handler:
+                    self.sync_notebook_background()
+            except Exception as e:
+                logger.error(f"Failed to save document: {e}")
+                self.show_error(f"Failed to save document: {e}")
+                return
 
         # Move to next guide
         await self.next_guide()

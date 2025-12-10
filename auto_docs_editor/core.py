@@ -44,6 +44,7 @@ class DocumentSession:
         """Tool implementation to replace text."""
         if before not in self.current_content:
             msg = f"Edit failed: Text '{before}' not found in document."
+            logger.error(msg)
             self.failed_edits.append(msg)
             return msg
 
@@ -51,6 +52,7 @@ class DocumentSession:
         self.session_edits.append((before, after))
         self.seen_edits.add((before, after))
 
+        logger.info(f"Edit applied.\nBefore:\n{before}\nAfter->\n'{after}")
         return "Edit applied successfully."
 
 
@@ -102,18 +104,29 @@ def handle_edit_proposal(
     """Handle the proposal of an edit, including interaction and application."""
     # First check if text exists (fail fast for agent)
     if before not in session.current_content:
-        logger.warning(f"Edit failed: Text '{before}' not found.")
+        logger.error(f"Edit failed: Text '{before}' not found.")
         return f"Edit failed: Text '{before}' not found in document. Please verify the snippet."
 
     if review_callback:
         # Interactive mode: Pause and ask user
         logger.info(f"Agent proposing edit for review: '{before[:50]}...' -> '{after[:50]}...'")
-        decision = review_callback(before, after, reason)
+
+        try:
+            decision = review_callback(before, after, reason)
+        except Exception as e:
+            logger.error(f"Error in review callback: {e}")
+            return f"Error interacting with user: {e}"
 
         if decision["status"] == "accepted":
             # User accepted -> Apply
             session.stats["accepted"] += 1
             result = session.apply_edit(before, after, reason)
+
+            if "failed" in result.lower():
+                err_msg = f"CRITICAL: User accepted edit but apply failed. Result: {result}"
+                logger.error(err_msg)
+                raise RuntimeError(err_msg)
+
             if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
                 try:
                     langfuse = Langfuse()
@@ -133,6 +146,11 @@ def handle_edit_proposal(
             session.stats["rejected"] += 1
             new_text = decision.get("new_text", after)
             result = session.apply_edit(before, new_text, reason)
+
+            if "failed" in result.lower():
+                err_msg = f"CRITICAL: User modified edit but apply failed. Result: {result}"
+                logger.error(err_msg)
+                raise RuntimeError(err_msg)
 
             if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
                 try:
