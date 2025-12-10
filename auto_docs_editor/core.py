@@ -93,7 +93,8 @@ CORE_INSTRUCTIONS = (
     "2. If an edit fails (not found), the tool will return an error. You may try to correct the snippet or skip it. "
     "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
     "4. Ensure code blocks remain syntactically valid. "
-    "5. Check the ENTIRE document. If you find multiple issues, apply MULTIPLE edits. You can call `apply_edit` multiple times in parallel. "
+    "5. Check the ENTIRE document. If you find multiple issues, apply them ONE BY ONE. Do NOT call `apply_edit` multiple times in parallel. Wait for the tool to return before proposing the next edit. "
+    "Remember: each edit updates the document state immediately, so subsequent edits must target the NEW state of the document. "
     "6. If no changes are needed, just stop. Do NOT call `apply_edit` with identical 'before' and 'after' text.\n"
     "7. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
     "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
@@ -290,7 +291,7 @@ async def handle_edit_proposal(
                 except Exception as e:
                     logger.error(f"Failed to score Langfuse trace: {e}")
 
-            return f"User changed suggested diff before applying. Result: {result}"
+            return f"User changed suggested diff to:\n```{new_text}```\nResult: {result}"
         else:
             # User rejected -> Don't apply
             session.stats["rejected"] += 1
