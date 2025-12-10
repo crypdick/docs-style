@@ -68,3 +68,19 @@ Button {
     background: $warning;
 }
 
+RejectionModal {
+    align: center middle;
+}
+
+.modal-content {
+    width: 60%;
+    height: auto;
+    border: thick $background 80%;
+    background: $surface;
+    padding: 2;
+}
+
+#reason-input {
+    height: 10;
+    margin: 1 0;
+}
