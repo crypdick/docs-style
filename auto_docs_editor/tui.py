@@ -291,7 +291,7 @@ class AutoDocsEditorTUI(App):
 
                 # Sync notebook in background if applicable
                 if self.controller.is_notebook:
-                    self.run_worker_daemon(self.sync_notebook_background)
+                    self.sync_notebook_background()
             else:
                 self.log_activity("[dim]No changes to save from previous guide[/dim]")
 
