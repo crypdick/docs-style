@@ -205,6 +205,17 @@ class AutoDocsEditorTUI(App):
         except Exception:
             pass
 
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        """Handle button press events."""
+        if event.button.id == "btn-accept":
+            self.action_accept()
+        elif event.button.id == "btn-reject":
+            self.action_reject()
+        elif event.button.id == "btn-skip":
+            self.action_skip_guide()
+        elif event.button.id == "btn-quit":
+            self.action_quit()
+
     def action_accept(self) -> None:
         """Handle accept action from UI."""
         if not self.review_event.is_set() and self.current_proposal:
