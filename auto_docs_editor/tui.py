@@ -4,12 +4,10 @@
 from __future__ import annotations
 
 import difflib
-import os
 import sys
 import threading
 from pathlib import Path
 
-from dotenv import load_dotenv
 from loguru import logger
 from rich.text import Text
 from textual import on, work
@@ -25,8 +23,14 @@ except ImportError:
     Langfuse = None
 
 from auto_docs_editor.core import DocumentSession, process_style_guide
-from auto_docs_editor.notebook import NotebookHandler, ensure_jupytext_installed, is_notebook
-from settings import FINAL_PASS_MARKER, STYLE_DIR
+from auto_docs_editor.core_vale import enforce_vale_style
+from auto_docs_editor.notebook import NotebookHandler
+from auto_docs_editor.workflow import (
+    get_style_guides,
+    load_and_validate_target,
+    setup_environment,
+)
+from settings import FINAL_PASS_MARKER
 from utils import get_langfuse_handler, setup_logging
 
 
@@ -237,13 +241,16 @@ class AutoDocsEditorTUI(App):
         self.call_from_thread(self.show_diff_ui, before, after, reason)
 
         # Wait for user action
+        logger.info("ask_user_review: Waiting for user review...")
         self.review_event.wait()
+        logger.info("ask_user_review: User review received.")
 
         # Return the user's decision
         return self.review_decision or {"status": "rejected", "reason": "Cancelled or Interrupted"}
 
     def show_diff_ui(self, before: str, after: str, reason: str) -> None:
         """Update the UI to show the diff (runs on main thread via call_from_thread)."""
+        logger.info("show_diff_ui: Updating UI with diff.")
         # Store current proposal for later comparison
         self.current_proposal = (before, after, reason)
 
@@ -428,9 +435,29 @@ class AutoDocsEditorTUI(App):
         activity_log.write("[bold cyan]═══════════════════════════════════════[/bold cyan]\n")
         activity_log.write(f"[bold]Total Accepted:[/bold] [green]{self.total_accepted}[/green]")
         activity_log.write(f"[bold]Total Rejected:[/bold] [yellow]{self.total_rejected}[/yellow]")
+
+        # Run Vale enforcement if requested or automatically
+        activity_log.write("\n[bold]Running Vale enforcement...[/bold]")
+        self.run_vale_enforcement()
+
+    @work(exclusive=True, thread=True)
+    def run_vale_enforcement(self) -> None:
+        """Run Vale enforcement in background and log to TUI."""
+        self.call_from_thread(self.log_activity, "\n[bold]Starting Vale enforcement...[/bold]")
+        try:
+            enforce_vale_style(self.document_path)
+            self.call_from_thread(self.log_activity, "[green]✓ Vale enforcement complete.[/green]")
+        except Exception as e:
+            self.call_from_thread(
+                self.log_activity, f"[bold red]✗ Vale enforcement failed: {e}[/bold red]"
+            )
+
         if self.is_notebook:
-            activity_log.write("\n[bold green]Note:[/bold green] All changes synced to notebook.")
-        activity_log.write("\n[dim]Press 'q' to quit.[/dim]")
+            self.call_from_thread(
+                self.log_activity,
+                "\n[bold green]Note:[/bold green] All changes synced to notebook.",
+            )
+        self.call_from_thread(self.log_activity, "\n[dim]Press 'q' to quit.[/dim]")
 
     def show_error(self, error: str) -> None:
         """Show an error message."""
@@ -491,80 +518,34 @@ def run() -> None:
     log_file = setup_logging(tui_mode=True)
     logger.info(f"TUI session started. Log file: {log_file}")
 
-    # Load environment
-    load_dotenv()
-    if not os.getenv("OPENAI_API_KEY"):
-        logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")
-        sys.exit(1)
-
-    # Validate document path
-    target_path = Path(args.markdown_document).expanduser().resolve()
-    if not target_path.is_file():
-        logger.error(f"Error: {target_path} is not a file.")
-        sys.exit(1)
-
-    # Handle Jupyter notebooks
-    notebook_handler = None
-    original_target = target_path
-
-    if is_notebook(target_path):
-        if not ensure_jupytext_installed():
-            logger.error("Jupytext is not installed. Install it with: uv add jupytext")
-            sys.exit(1)
-
-        logger.info(f"Detected Jupyter notebook: {target_path}")
-        notebook_handler = NotebookHandler(target_path)
-
-        try:
-            # Pair notebook with Markdown (will error if .md already exists)
-            target_path = notebook_handler.ensure_paired()
-            logger.info(f"Working with paired Markdown: {target_path}")
-        except RuntimeError as e:
-            logger.error(str(e))
-            sys.exit(1)
+    # Setup environment and target
+    setup_environment()
+    context = load_and_validate_target(args.markdown_document)
 
     # Get style pages
-    style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
-
-    if args.final_pass:
-        logger.info("Processing final pass style rules only.")
-        style_pages = [p for p in style_pages if p.stem.endswith(FINAL_PASS_MARKER)]
-
-    if args.skip_through:
-        skip_name = Path(args.skip_through).name
-        try:
-            skip_idx = next(i for i, p in enumerate(style_pages) if p.name == skip_name)
-            style_pages = style_pages[skip_idx + 1 :]
-            logger.info(f"Skipped {skip_idx} style pages.")
-        except StopIteration:
-            logger.error(f"--skip-through: '{skip_name}' not found among style pages.")
-            sys.exit(1)
-
-    if not style_pages:
-        logger.info("No style guide pages left to process.")
-        sys.exit(0)
+    style_pages = get_style_guides(skip_through=args.skip_through, final_pass=args.final_pass)
 
     # Run the TUI
     seen_edits: set[tuple[str, str]] = set()
     app = AutoDocsEditorTUI(
-        target_path,
+        context.target_path,
         style_pages,
         seen_edits,
-        is_notebook=notebook_handler is not None,
-        notebook_handler=notebook_handler,
+        is_notebook=context.notebook_handler is not None,
+        notebook_handler=context.notebook_handler,
     )
     app.run()
 
     # Final sync back to notebook if needed (in case there are pending changes)
-    if notebook_handler:
+    if context.notebook_handler:
         logger.info("Final sync: Syncing changes back to notebook...")
         try:
-            notebook_handler.sync_back()
-            logger.success(f"Successfully updated notebook: {original_target}")
-            logger.info(f"Paired Markdown preserved at: {target_path}")
+            context.notebook_handler.sync_back()
+            logger.success(f"Successfully updated notebook: {context.original_target}")
+            logger.info(f"Paired Markdown preserved at: {context.target_path}")
         except RuntimeError as e:
             logger.error(f"Failed to sync back to notebook: {e}")
-            logger.warning(f"Markdown edits are preserved in: {target_path}")
+            logger.warning(f"Markdown edits are preserved in: {context.target_path}")
             sys.exit(1)
 
 

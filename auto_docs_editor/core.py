@@ -17,10 +17,12 @@ from loguru import logger
 
 try:
     from langfuse import Langfuse
+    from langfuse.langchain import CallbackHandler as LangfuseCallbackHandler
 except ImportError:
     Langfuse = None
+    LangfuseCallbackHandler = None
 
-from settings import MODEL_NAME, TRACE_DATASET_VERSION
+from settings import MODEL_NAME
 
 
 class DocumentSession:
@@ -96,24 +98,19 @@ def process_style_guide(
     session.current_style_guide = style_guide_text
 
     # Initialize Langfuse trace if credentials exist and Langfuse is available
-    if Langfuse and os.getenv("LANGFUSE_SECRET_KEY") and os.getenv("LANGFUSE_PUBLIC_KEY"):
+    if (
+        Langfuse
+        and LangfuseCallbackHandler
+        and os.getenv("LANGFUSE_SECRET_KEY")
+        and os.getenv("LANGFUSE_PUBLIC_KEY")
+    ):
         try:
-            langfuse = Langfuse()
-            tags = [TRACE_DATASET_VERSION]
-            if guide_name:
-                tags.append(guide_name)
-
-            trace = langfuse.trace(
-                name="style-guide-process",
-                version=TRACE_DATASET_VERSION,
-                metadata={
-                    "interactive": review_callback is not None,
-                },
-                tags=tags,
-            )
-            handler = trace.get_langchain_handler()
+            # Use CallbackHandler directly as Langfuse.trace() is not available in v3
+            # CallbackHandler in this version does not accept tags/version in __init__
+            handler = LangfuseCallbackHandler()
             callbacks.append(handler)
-            session.trace_id = trace.id
+            # session.trace_id remains None as we rely on CallbackHandler's internal trace creation
+            logger.info("Langfuse handler initialized.")
         except Exception as e:
             logger.error(f"Failed to initialize Langfuse trace: {e}")
 
