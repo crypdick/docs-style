@@ -35,6 +35,7 @@ class DocumentSession:
         content: str,
         seen_edits: set[tuple[str, str]],
         on_apply: Callable[[str], Any] | None = None,
+        content_provider: Callable[[], Any] | None = None,
     ):
         self.initial_content = content
         self.current_content = content
@@ -46,9 +47,22 @@ class DocumentSession:
         # Metrics for queryability
         self.stats = {"accepted": 0, "rejected": 0}
         self.on_apply = on_apply
+        self.content_provider = content_provider
 
     async def apply_edit(self, before: str, after: str, reason: str = "") -> str:
         """Tool implementation to replace text."""
+        # Refresh content from provider if available to catch out-of-band edits
+        if self.content_provider:
+            try:
+                if inspect.iscoroutinefunction(self.content_provider):
+                    self.current_content = await self.content_provider()
+                else:
+                    self.current_content = self.content_provider()
+            except Exception as e:
+                msg = f"Failed to refresh content from disk: {e}"
+                logger.error(msg)
+                raise RuntimeError(msg) from e
+
         if before not in self.current_content:
             msg = f"Edit failed: Text ```{before}``` not found in document."
             logger.error(msg)

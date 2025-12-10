@@ -56,7 +56,15 @@ class ReviewController:
             raise ValueError("No current guide available.")
 
         doc_text = await read_text_async(self.document_path, encoding="utf-8")
-        self.session = DocumentSession(doc_text, self.seen_edits, on_apply=on_apply)
+
+        # Read the document in between each edit, so that any manual edits that
+        # are made out-of-band are not lost.
+        async def content_provider() -> str:
+            return await read_text_async(self.document_path, encoding="utf-8")
+
+        self.session = DocumentSession(
+            doc_text, self.seen_edits, on_apply=on_apply, content_provider=content_provider
+        )
         return self.session
 
     async def get_style_guide_content(self) -> str:
