@@ -185,10 +185,7 @@ class AutoDocsEditorTUI(App):
         # Store current proposal for later comparison
         self.current_proposal = (before, after, reason)
 
-        self.query_one("#progress-label", Label).update(
-            f"[bold]Accepted:[/bold] {self.controller.total_accepted} | "
-            f"[bold]Rejected:[/bold] {self.controller.total_rejected}"
-        )
+        self.update_stats_label()
 
         # Clear activity log and show diff
         diff_container = self.query_one("#diff-container", VerticalScroll)
@@ -197,6 +194,13 @@ class AutoDocsEditorTUI(App):
 
     def update_status(self, text: str) -> None:
         self.query_one("#status-label", Label).update(text)
+
+    def update_stats_label(self) -> None:
+        """Update the accepted/rejected stats label."""
+        self.query_one("#progress-label", Label).update(
+            f"[bold]Accepted:[/bold] {self.controller.total_accepted} | "
+            f"[bold]Rejected:[/bold] {self.controller.total_rejected}"
+        )
 
     def log_activity(self, text: str) -> None:
         try:
@@ -240,6 +244,7 @@ class AutoDocsEditorTUI(App):
                 self.review_decision = {"status": "accepted"}
                 self.log_activity("[bold green]✓ Accepted[/bold green]")
 
+            self.update_stats_label()
             self.review_event.set()
 
     def action_reject(self) -> None:
@@ -253,6 +258,7 @@ class AutoDocsEditorTUI(App):
                 self.controller.total_rejected += 1
                 self.review_decision = {"status": "rejected", "reason": reason}
                 self.log_activity(f"[bold red]✗ Rejected:[/bold red] {reason}")
+                self.update_stats_label()
                 self.review_event.set()
 
             self.push_screen(RejectionModal(), finalize_rejection)
