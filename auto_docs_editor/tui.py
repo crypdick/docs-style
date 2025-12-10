@@ -445,8 +445,8 @@ def run() -> None:
     )
     args = parser.parse_args()
 
-    # Setup logging
-    log_file = setup_logging()
+    # Setup logging (TUI mode - only log to file, not to stdout)
+    log_file = setup_logging(tui_mode=True)
     logger.info(f"TUI session started. Log file: {log_file}")
 
     # Load environment

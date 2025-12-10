@@ -150,7 +150,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # Prepare logging (creates per-run directory and log file).
-    log_file = setup_logging()
+    log_file = setup_logging(tui_mode=False)
     logger.info(f"Logging configured. Full session log: {log_file}")
 
     target_path = Path(args.markdown_document).expanduser().resolve()
