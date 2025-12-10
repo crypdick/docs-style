@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from collections.abc import Callable
+from typing import Any
 
 try:
     from langchain.agents import AgentExecutor, create_tool_calling_agent
@@ -71,6 +72,108 @@ CORE_INSTRUCTIONS = (
 )
 
 
+def update_trace_metrics(session: DocumentSession, langfuse: Any):
+    """Update trace metadata with running counters."""
+    if not session.trace_id:
+        return
+
+    n_accepted = session.stats["accepted"]
+    n_rejected = session.stats["rejected"]
+    total = n_accepted + n_rejected
+    frac_rejected = round(n_rejected / total, 2) if total > 0 else 0.0
+
+    langfuse.trace(
+        id=session.trace_id,
+        metadata={
+            "N_accepted": n_accepted,
+            "N_rejected": n_rejected,
+            "frac_rejected": frac_rejected,
+        },
+    )
+
+
+def handle_edit_proposal(
+    session: DocumentSession,
+    before: str,
+    after: str,
+    reason: str,
+    review_callback: Callable[[str, str, str], dict] | None = None,
+) -> str:
+    """Handle the proposal of an edit, including interaction and application."""
+    # First check if text exists (fail fast for agent)
+    if before not in session.current_content:
+        logger.warning(f"Edit failed: Text '{before}' not found.")
+        return f"Edit failed: Text '{before}' not found in document. Please verify the snippet."
+
+    if review_callback:
+        # Interactive mode: Pause and ask user
+        logger.info(f"Agent proposing edit for review: '{before[:50]}...' -> '{after[:50]}...'")
+        decision = review_callback(before, after, reason)
+
+        if decision["status"] == "accepted":
+            # User accepted -> Apply
+            session.stats["accepted"] += 1
+            result = session.apply_edit(before, after, reason)
+            if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
+                try:
+                    langfuse = Langfuse()
+                    langfuse.score(
+                        trace_id=session.trace_id,
+                        name="user-review",
+                        value=1,
+                        comment=f"Accepted edit: '{before[:30]}...' -> '{after[:30]}...'",
+                    )
+                    update_trace_metrics(session, langfuse)
+                except Exception as e:
+                    logger.error(f"Failed to score Langfuse trace: {e}")
+
+            return f"User accepted the proposal. {result}"
+        elif decision["status"] == "modified":
+            # User modified -> Apply new text, count as rejected (quality issue)
+            session.stats["rejected"] += 1
+            new_text = decision.get("new_text", after)
+            result = session.apply_edit(before, new_text, reason)
+
+            if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
+                try:
+                    langfuse = Langfuse()
+                    langfuse.score(
+                        trace_id=session.trace_id,
+                        name="user-review",
+                        value=0,
+                        comment=f"User modified edit: '{before[:30]}...' -> '{new_text[:30]}...'",
+                    )
+                    update_trace_metrics(session, langfuse)
+                except Exception as e:
+                    logger.error(f"Failed to score Langfuse trace: {e}")
+
+            return f"User changed suggested diff before applying. Result: {result}"
+        else:
+            # User rejected -> Don't apply
+            session.stats["rejected"] += 1
+            rejection_reason = decision.get("reason", "No reason provided")
+            logger.info(f"User rejected edit. Reason: {rejection_reason}")
+
+            if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
+                try:
+                    langfuse = Langfuse()
+                    langfuse.score(
+                        trace_id=session.trace_id,
+                        name="user-review",
+                        value=0,
+                        comment=f"Rejected edit: '{before[:30]}...' -> '{after[:30]}...'. Reason: {rejection_reason}",
+                    )
+                    update_trace_metrics(session, langfuse)
+                except Exception as e:
+                    logger.error(f"Failed to score Langfuse trace: {e}")
+
+            return f"User rejected the proposal. Reason given: {rejection_reason}. Move on to the next issue."
+    else:
+        # Non-interactive mode: Apply immediately
+        logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
+        return session.apply_edit(before, after, reason)
+
+
 def process_style_guide(
     style_guide_text: str,
     session: DocumentSession,
@@ -114,25 +217,6 @@ def process_style_guide(
         except Exception as e:
             logger.error(f"Failed to initialize Langfuse trace: {e}")
 
-    def update_trace_metrics(session: DocumentSession, langfuse: Langfuse):
-        """Update trace metadata with running counters."""
-        if not session.trace_id:
-            return
-
-        n_accepted = session.stats["accepted"]
-        n_rejected = session.stats["rejected"]
-        total = n_accepted + n_rejected
-        frac_rejected = round(n_rejected / total, 2) if total > 0 else 0.0
-
-        langfuse.trace(
-            id=session.trace_id,
-            metadata={
-                "N_accepted": n_accepted,
-                "N_rejected": n_rejected,
-                "frac_rejected": frac_rejected,
-            },
-        )
-
     @tool
     def apply_edit(before: str, after: str, reason: str = ""):
         """
@@ -142,78 +226,7 @@ def process_style_guide(
             after: The replacement text.
             reason: A brief explanation of why this edit is necessary based on the style guide.
         """
-        # First check if text exists (fail fast for agent)
-        if before not in session.current_content:
-            logger.warning(f"Edit failed: Text '{before}' not found.")
-            return f"Edit failed: Text '{before}' not found in document. Please verify the snippet."
-
-        if review_callback:
-            # Interactive mode: Pause and ask user
-            logger.info(f"Agent proposing edit for review: '{before[:50]}...' -> '{after[:50]}...'")
-            decision = review_callback(before, after, reason)
-
-            if decision["status"] == "accepted":
-                # User accepted -> Apply
-                session.stats["accepted"] += 1
-                result = session.apply_edit(before, after, reason)
-                if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
-                    try:
-                        langfuse = Langfuse()
-                        langfuse.score(
-                            trace_id=session.trace_id,
-                            name="user-review",
-                            value=1,
-                            comment=f"Accepted edit: '{before[:30]}...' -> '{after[:30]}...'",
-                        )
-                        update_trace_metrics(session, langfuse)
-                    except Exception as e:
-                        logger.error(f"Failed to score Langfuse trace: {e}")
-
-                return f"User accepted the proposal. {result}"
-            elif decision["status"] == "modified":
-                # User modified -> Apply new text, count as rejected (quality issue)
-                session.stats["rejected"] += 1
-                new_text = decision.get("new_text", after)
-                result = session.apply_edit(before, new_text, reason)
-
-                if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
-                    try:
-                        langfuse = Langfuse()
-                        langfuse.score(
-                            trace_id=session.trace_id,
-                            name="user-review",
-                            value=0,
-                            comment=f"User modified edit: '{before[:30]}...' -> '{new_text[:30]}...'",
-                        )
-                        update_trace_metrics(session, langfuse)
-                    except Exception as e:
-                        logger.error(f"Failed to score Langfuse trace: {e}")
-
-                return f"User changed suggested diff before applying: {new_text}"
-            else:
-                # User rejected -> Don't apply
-                session.stats["rejected"] += 1
-                rejection_reason = decision.get("reason", "No reason provided")
-                logger.info(f"User rejected edit. Reason: {rejection_reason}")
-
-                if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
-                    try:
-                        langfuse = Langfuse()
-                        langfuse.score(
-                            trace_id=session.trace_id,
-                            name="user-review",
-                            value=0,
-                            comment=f"Rejected edit: '{before[:30]}...' -> '{after[:30]}...'. Reason: {rejection_reason}",
-                        )
-                        update_trace_metrics(session, langfuse)
-                    except Exception as e:
-                        logger.error(f"Failed to score Langfuse trace: {e}")
-
-                return f"User rejected the proposal. Reason given: {rejection_reason}. Move on to the next issue."
-        else:
-            # Non-interactive mode: Apply immediately
-            logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
-            return session.apply_edit(before, after, reason)
+        return handle_edit_proposal(session, before, after, reason, review_callback)
 
     tools = [apply_edit]
 

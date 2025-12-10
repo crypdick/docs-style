@@ -279,9 +279,11 @@ class AutoDocsEditorTUI(App):
         if not self.review_event.is_set():
             # Get edited text if any
             try:
-                edit_area = self.query_one("#edit-area", TextArea)
+                # Use query().last() to handle potential race condition where old widget is not yet removed
+                edit_area = self.query("TextArea.edit-area").last()
                 edited_after = edit_area.text
-            except Exception:
+            except Exception as e:
+                logger.error(f"Failed to retrieve edited text: {e}")
                 edited_after = self.current_proposal[
                     1
                 ]  # Should not happen given DiffView structure

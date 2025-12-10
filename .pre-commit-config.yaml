@@ -1,7 +1,46 @@
+# Run with `uvx pre-commit run --all-files`
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.1  # Use the latest tagged version of Ruff
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
     hooks:
-      - id: ruff
-        args: ["--fix"]  # Automatically apply autofixable lint rules
-      - id: ruff-format 
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: mixed-line-ending
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.8
+    hooks:
+      - id: ruff-check
+        args: [--fix, --quiet]
+      - id: ruff-format
+        args: [--quiet]
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.21.2
+    hooks:
+      - id: pyupgrade
+        args: [--py312-plus]
+
+  - repo: https://github.com/ikamensh/flynt/
+    rev: '1.0.6'
+    hooks:
+      - id: flynt
+
+  - repo: local
+    hooks:
+      - id: check-python-syntax
+        name: check Python syntax
+        entry: uv run --no-project python -m py_compile
+        language: system
+        types: [python]
+      - id: pytest
+        name: Run pytest
+        entry: uv run pytest tests/
+        language: system
+        types: [python]
