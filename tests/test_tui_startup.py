@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
+from auto_docs_editor.controller import ReviewController
 from auto_docs_editor.tui import AutoDocsEditorTUI
 
 
@@ -14,7 +15,6 @@ def mock_dependencies():
         patch("auto_docs_editor.tui.get_style_guides") as mock_get_guides,
         patch("auto_docs_editor.tui.load_and_validate_target") as mock_load,
         patch("auto_docs_editor.tui.setup_logging"),
-        patch("auto_docs_editor.tui.Langfuse", None),
         patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
     ):
         # Setup mocks
@@ -40,11 +40,12 @@ async def test_app_startup(mock_dependencies, tmp_path):
     style_path.write_text("Style guide content")
 
     # Setup app with mocks
-    app = AutoDocsEditorTUI(
+    controller = ReviewController(
         document_path=doc_path,
         style_pages=[style_path],
         seen_edits=set(),
     )
+    app = AutoDocsEditorTUI(controller)
 
     # Run the app for a short duration to trigger startup events
     async with app.run_test() as pilot:

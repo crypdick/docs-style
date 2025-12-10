@@ -4,109 +4,24 @@
 from __future__ import annotations
 
 import asyncio
-import difflib
-import sys
-from pathlib import Path
 
 from loguru import logger
-from rich.text import Text
-from textual import on, work
+from textual import work
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
-from textual.screen import ModalScreen
-from textual.widgets import Button, Footer, Header, Label, RichLog, Static, TextArea
+from textual.widgets import Button, Footer, Header, Label, RichLog
 
-try:
-    from langfuse import Langfuse
-except ImportError:
-    Langfuse = None
-
-from auto_docs_editor.core import DocumentSession, process_style_guide
-from auto_docs_editor.core_vale import enforce_vale_style
-from auto_docs_editor.notebook import NotebookHandler
+from auto_docs_editor.controller import ReviewController
+from auto_docs_editor.core import process_style_guide
+from auto_docs_editor.widgets import DiffView, RejectionModal
 from auto_docs_editor.workflow import (
     get_style_guides,
     load_and_validate_target,
     setup_environment,
 )
 from settings import FINAL_PASS_MARKER
-from utils import get_langfuse_handler, read_text_async, setup_logging, write_text_async
-
-
-class DiffView(Container):
-    """Widget to display a git-style unified diff with editable after content."""
-
-    def __init__(self, before: str, after: str, reason: str = "", **kwargs):
-        super().__init__(**kwargs)
-        self.before = before
-        self.after = after
-        self.reason = reason
-
-    def compose(self) -> ComposeResult:
-        """Create child widgets."""
-        if self.reason:
-            yield Label(
-                f"[bold cyan]Reason:[/bold cyan] {self.reason}", classes="reason", markup=True
-            )
-
-        # Create unified diff
-        diff_text = Text()
-
-        before_lines = self.before.splitlines(keepends=False)
-        after_lines = self.after.splitlines(keepends=False)
-
-        # Use difflib to create a unified diff
-        differ = difflib.Differ()
-        diff = list(differ.compare(before_lines, after_lines))
-
-        for line in diff:
-            if line.startswith("- "):
-                # Removed line
-                diff_text.append("- ", style="bold red")
-                diff_text.append(line[2:], style="red")
-                diff_text.append("\n")
-            elif line.startswith("+ "):
-                # Added line
-                diff_text.append("+ ", style="bold green")
-                diff_text.append(line[2:], style="green")
-                diff_text.append("\n")
-            elif line.startswith("  "):
-                # Context line (unchanged)
-                diff_text.append("  ", style="dim")
-                diff_text.append(line[2:], style="dim")
-                diff_text.append("\n")
-            # Skip lines starting with '?' (difflib's change indicators)
-
-        yield Label("[bold]Diff Preview:[/bold]", markup=True)
-        yield Static(diff_text, classes="diff-inline")
-
-        yield Label("\n[bold]Edit Result (editable):[/bold]", markup=True, classes="edit-label")
-        yield TextArea(
-            self.after, language="markdown", theme="monokai", id="edit-area", classes="edit-area"
-        )
-
-
-class RejectionModal(ModalScreen[str]):
-    """Modal to enter rejection reason."""
-
-    def compose(self) -> ComposeResult:
-        yield Vertical(
-            Label("Enter rejection reason (optional):"),
-            TextArea(id="reason-input"),
-            Horizontal(
-                Button("Confirm Reject", variant="error", id="confirm"),
-                Button("Cancel", variant="default", id="cancel"),
-            ),
-            classes="modal-content",
-        )
-
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        if event.button.id == "confirm":
-            reason = self.query_one("#reason-input", TextArea).text
-            self.dismiss(reason)
-        else:
-            self.dismiss(None)
+from utils import get_langfuse_handler, setup_logging, write_text_async
 
 
 class AutoDocsEditorTUI(App):
@@ -121,31 +36,16 @@ class AutoDocsEditorTUI(App):
         Binding("q", "quit", "Quit", priority=True),
     ]
 
-    def __init__(
-        self,
-        document_path: Path,
-        style_pages: list[Path],
-        seen_edits: set[tuple[str, str]],
-        is_notebook: bool = False,
-        notebook_handler: NotebookHandler | None = None,
-        **kwargs,
-    ):
+    def __init__(self, controller: ReviewController, **kwargs):
         super().__init__(**kwargs)
-        self.document_path = document_path
-        self.style_pages = style_pages
-        self.seen_edits = seen_edits
-        self.is_notebook = is_notebook
-        self.notebook_handler = notebook_handler
-        self.current_page_idx = 0
-        self.session: DocumentSession | None = None
-        self.total_accepted = 0
-        self.total_rejected = 0
+        self.controller = controller
         self.callbacks = []
 
         # Synchronization primitives for thread <-> UI communication
         self.review_event = asyncio.Event()
         self.review_decision: dict | None = None
         self.is_quitting = False
+        self.current_proposal: tuple[str, str, str] | None = None
 
         handler = get_langfuse_handler()
         if handler:
@@ -187,44 +87,47 @@ class AutoDocsEditorTUI(App):
     async def on_edit_applied(self, content: str) -> None:
         """Callback for when an edit is applied to the session."""
         # Write directly to file - fail fast if this errors
-        await write_text_async(self.document_path, content, encoding="utf-8")
+        await write_text_async(self.controller.document_path, content, encoding="utf-8")
 
         # Sync notebook if needed
-        if self.is_notebook and self.notebook_handler:
+        if self.controller.is_notebook:
             self.sync_notebook_background()
 
     @work
     async def start_processing_guide(self) -> None:
         """Process the current style guide in a worker."""
-        if self.current_page_idx >= len(self.style_pages):
+        if self.controller.is_finished:
             await self.show_completion()
             return
 
-        page_path = self.style_pages[self.current_page_idx]
+        guide_path = self.controller.current_guide_path
+        if not guide_path:
+            return  # Should not happen given is_finished check
+
         self.update_status(
-            f"[bold]Style Guide:[/bold] {page_path.name} ({self.current_page_idx + 1}/{len(self.style_pages)})",
+            f"[bold]Style Guide:[/bold] {guide_path.name} ({self.controller.progress_str})",
         )
 
         # Log to activity log
-        self.log_activity(f"[bold cyan]Processing:[/bold cyan] {page_path.name}")
-
-        # Read current document content
-        doc_text = await read_text_async(self.document_path, encoding="utf-8")
-        style_text = await read_text_async(page_path, encoding="utf-8")
-
-        # Create session and process guide
-        self.session = DocumentSession(doc_text, self.seen_edits, on_apply=self.on_edit_applied)
-
-        logger.info(f"Processing style guide: {page_path.name}")
+        self.log_activity(f"[bold cyan]Processing:[/bold cyan] {guide_path.name}")
 
         try:
+            # Create session via controller
+            await self.controller.prepare_session(on_apply=self.on_edit_applied)
+            style_text = await self.controller.get_style_guide_content()
+            session = self.controller.session
+            if not session:
+                raise RuntimeError("Session failed to initialize")
+
+            logger.info(f"Processing style guide: {guide_path.name}")
+
             # Process with interactive callback
             await process_style_guide(
                 style_text,
-                self.session,
+                session,
                 callbacks=self.callbacks,
                 review_callback=self.ask_user_review,
-                guide_name=page_path.name,
+                guide_name=guide_path.name,
             )
         except (asyncio.CancelledError, KeyboardInterrupt, SystemExit):
             logger.info("Processing interrupted by user shutdown.")
@@ -239,10 +142,7 @@ class AutoDocsEditorTUI(App):
         await self.save_and_next_guide()
 
     async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
-        """Callback invoked by the agent to request user review.
-
-        Awaits until the user interacts with the UI.
-        """
+        """Callback invoked by the agent to request user review."""
         if self.is_quitting:
             raise asyncio.CancelledError("Application quitting")
 
@@ -271,8 +171,8 @@ class AutoDocsEditorTUI(App):
         self.current_proposal = (before, after, reason)
 
         self.query_one("#progress-label", Label).update(
-            f"[bold]Accepted:[/bold] {self.total_accepted} | "
-            f"[bold]Rejected:[/bold] {self.total_rejected}"
+            f"[bold]Accepted:[/bold] {self.controller.total_accepted} | "
+            f"[bold]Rejected:[/bold] {self.controller.total_rejected}"
         )
 
         # Clear activity log and show diff
@@ -292,7 +192,7 @@ class AutoDocsEditorTUI(App):
 
     def action_accept(self) -> None:
         """Handle accept action from UI."""
-        if not self.review_event.is_set():
+        if not self.review_event.is_set() and self.current_proposal:
             # Get edited text if any
             try:
                 # Use query().last() to handle potential race condition where old widget is not yet removed
@@ -300,18 +200,16 @@ class AutoDocsEditorTUI(App):
                 edited_after = edit_area.text
             except Exception as e:
                 logger.error(f"Failed to retrieve edited text: {e}")
-                edited_after = self.current_proposal[
-                    1
-                ]  # Should not happen given DiffView structure
+                edited_after = self.current_proposal[1]
 
             original_after = self.current_proposal[1]
 
             if edited_after != original_after:
                 # User modified the text -> Count as rejection per requirements
-                self.total_rejected += 1
+                self.controller.total_rejected += 1
                 self.review_decision = {"status": "modified", "new_text": edited_after}
             else:
-                self.total_accepted += 1
+                self.controller.total_accepted += 1
                 self.review_decision = {"status": "accepted"}
 
             self.review_event.set()
@@ -324,7 +222,7 @@ class AutoDocsEditorTUI(App):
                 if reason is None:
                     return  # Cancelled modal
 
-                self.total_rejected += 1
+                self.controller.total_rejected += 1
                 self.review_decision = {"status": "rejected", "reason": reason}
                 self.review_event.set()
 
@@ -332,17 +230,8 @@ class AutoDocsEditorTUI(App):
 
     def action_skip_guide(self) -> None:
         """Skip the rest of the current guide."""
-        # For the Agent loop, skipping is tricky. We can just reject with a special reason?
-        # Or we can cancel the future.
-        # Simplest is to reject this one and set a flag to reject all future ones?
-        # Or just stop the agent?
-        # `process_style_guide` doesn't have a clean "abort" signal exposed to callback other than maybe raising exception.
-        # Let's reject current with "Skipping guide".
         if not self.review_event.is_set():
             self.review_decision = {"status": "rejected", "reason": "User skipped remaining edits."}
-            # Ideally we should signal the loop to stop.
-            # We can do this by raising an exception in the callback?
-            # For now, just reject.
             self.review_event.set()
             self.log_activity("[dim]⏭ Skipped[/dim]")
 
@@ -362,47 +251,44 @@ class AutoDocsEditorTUI(App):
 
     async def save_and_next_guide(self) -> None:
         """Save changes and move to the next guide."""
-        # Capture session info before moving to next guide
-        had_changes = False
-        edits_count = 0
-        if self.session and self.session.current_content != self.session.initial_content:
-            try:
-                await write_text_async(
-                    self.document_path, self.session.current_content, encoding="utf-8"
-                )
-                edits_count = len(self.session.session_edits)
-                had_changes = True
-                logger.success(f"Document updated with {edits_count} edits.")
+        try:
+            had_changes, edits_count = await self.controller.save_if_changed()
+
+            if had_changes:
+                save_msg = f"💾 Saved {edits_count} edits from previous guide"
+                if self.controller.is_notebook:
+                    save_msg += " (syncing to notebook...)"
+                self.log_activity(f"[bold green]{save_msg}[/bold green]")
 
                 # Sync notebook in background if applicable
-                if self.is_notebook and self.notebook_handler:
+                if self.controller.is_notebook:
                     self.run_worker_daemon(self.sync_notebook_background)
-            except Exception as e:
-                logger.error(f"Failed to save document: {e}")
-                await self.show_error(f"Failed to save document: {e}")
-                return
+            else:
+                self.log_activity("[dim]No changes to save from previous guide[/dim]")
+
+        except Exception as e:
+            logger.error(f"Failed to save document: {e}")
+            await self.show_error(f"Failed to save document: {e}")
+            return
 
         # Move to next guide
-        await self.next_guide()
+        self.controller.advance()
 
-        # Log save status
-        if had_changes:
-            save_msg = f"💾 Saved {edits_count} edits from previous guide"
-            if self.is_notebook:
-                save_msg += " (syncing to notebook...)"
-            self.log_activity(f"[bold green]{save_msg}[/bold green]")
-        else:
-            self.log_activity("[dim]No changes to save from previous guide[/dim]")
+        # Re-initialize UI state
+        diff_container = self.query_one("#diff-container", VerticalScroll)
+        await diff_container.remove_children()
+        activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
+        await diff_container.mount(activity_log)
+
+        # Start processing next guide
+        self.start_processing_guide()
 
     @work(exclusive=False, thread=True)
     def sync_notebook_background(self) -> None:
         """Sync markdown changes back to notebook in a background worker."""
-        if not self.notebook_handler:
-            return
-
         try:
             logger.info("Background sync: Syncing Markdown to notebook...")
-            self.notebook_handler.sync_back()
+            self.controller.sync_notebook()
             logger.success("Background sync: Successfully synced to notebook")
             self.call_from_thread(self._on_sync_complete, success=True)
         except Exception as e:
@@ -416,27 +302,14 @@ class AutoDocsEditorTUI(App):
         else:
             self.log_activity(f"[bold red]✗ Notebook sync failed: {error}[/bold red]")
 
-    async def next_guide(self) -> None:
-        """Move to the next style guide."""
-        self.current_page_idx += 1
-
-        # Re-initialize UI state
-        diff_container = self.query_one("#diff-container", VerticalScroll)
-        await diff_container.remove_children()
-        activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-        await diff_container.mount(activity_log)
-
-        # Start processing next guide
-        self.start_processing_guide()
-
     async def show_completion(self) -> None:
         """Show completion message."""
         self.query_one("#status-label", Label).update(
             "[bold green]✓ All style guides processed![/bold green]"
         )
         self.query_one("#progress-label", Label).update(
-            f"[bold]Total Accepted:[/bold] {self.total_accepted} | "
-            f"[bold]Total Rejected:[/bold] {self.total_rejected}"
+            f"[bold]Total Accepted:[/bold] {self.controller.total_accepted} | "
+            f"[bold]Total Rejected:[/bold] {self.controller.total_rejected}"
         )
 
         diff_container = self.query_one("#diff-container", VerticalScroll)
@@ -448,10 +321,14 @@ class AutoDocsEditorTUI(App):
         activity_log.write("\n[bold cyan]═══════════════════════════════════════[/bold cyan]")
         activity_log.write("[bold green]✓ All style guides processed![/bold green]")
         activity_log.write("[bold cyan]═══════════════════════════════════════[/bold cyan]\n")
-        activity_log.write(f"[bold]Total Accepted:[/bold] [green]{self.total_accepted}[/green]")
-        activity_log.write(f"[bold]Total Rejected:[/bold] [yellow]{self.total_rejected}[/yellow]")
+        activity_log.write(
+            f"[bold]Total Accepted:[/bold] [green]{self.controller.total_accepted}[/green]"
+        )
+        activity_log.write(
+            f"[bold]Total Rejected:[/bold] [yellow]{self.controller.total_rejected}[/yellow]"
+        )
 
-        # Run Vale enforcement if requested or automatically
+        # Run Vale enforcement
         activity_log.write("\n[bold]Running Vale enforcement...[/bold]")
         self.run_vale_enforcement()
 
@@ -460,14 +337,14 @@ class AutoDocsEditorTUI(App):
         """Run Vale enforcement in background and log to TUI."""
         self.call_from_thread(self.log_activity, "\n[bold]Starting Vale enforcement...[/bold]")
         try:
-            enforce_vale_style(self.document_path)
+            self.controller.run_vale()
             self.call_from_thread(self.log_activity, "[green]✓ Vale enforcement complete.[/green]")
         except Exception as e:
             self.call_from_thread(
                 self.log_activity, f"[bold red]✗ Vale enforcement failed: {e}[/bold red]"
             )
 
-        if self.is_notebook:
+        if self.controller.is_notebook:
             self.call_from_thread(
                 self.log_activity,
                 "\n[bold green]Note:[/bold green] All changes synced to notebook.",
@@ -486,26 +363,11 @@ class AutoDocsEditorTUI(App):
             )
         )
 
-    @on(Button.Pressed, "#btn-accept")
-    def on_accept_pressed(self) -> None:
-        self.action_accept()
-
-    @on(Button.Pressed, "#btn-reject")
-    def on_reject_pressed(self) -> None:
-        self.action_reject()
-
-    @on(Button.Pressed, "#btn-skip")
-    def on_skip_pressed(self) -> None:
-        self.action_skip_guide()
-
-    @on(Button.Pressed, "#btn-quit")
-    def on_quit_pressed(self) -> None:
-        self.action_quit()
-
 
 def run() -> None:
     """Entry point for the TUI application."""
     import argparse
+    import sys
 
     parser = argparse.ArgumentParser(
         description="Interactive TUI for applying Google style guide edits.",
@@ -540,18 +402,20 @@ def run() -> None:
     # Get style pages
     style_pages = get_style_guides(skip_through=args.skip_through, final_pass=args.final_pass)
 
-    # Run the TUI
+    # Initialize Controller
     seen_edits: set[tuple[str, str]] = set()
-    app = AutoDocsEditorTUI(
+    controller = ReviewController(
         context.target_path,
         style_pages,
         seen_edits,
-        is_notebook=context.notebook_handler is not None,
         notebook_handler=context.notebook_handler,
     )
+
+    # Run the TUI
+    app = AutoDocsEditorTUI(controller)
     app.run()
 
-    # Final sync back to notebook if needed (in case there are pending changes)
+    # Final sync back to notebook if needed
     if context.notebook_handler:
         logger.info("Final sync: Syncing changes back to notebook...")
         try:
