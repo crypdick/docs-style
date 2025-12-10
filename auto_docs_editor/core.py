@@ -50,10 +50,10 @@ class DocumentSession:
     def apply_edit(self, before: str, after: str, reason: str = "") -> str:
         """Tool implementation to replace text."""
         if before not in self.current_content:
-            msg = f"Edit failed: Text '{before}' not found in document."
+            msg = f"Edit failed: Text ```{before}``` not found in document."
             logger.error(msg)
             self.failed_edits.append(msg)
-            return msg
+            raise RuntimeError(msg)
 
         self.current_content = self.current_content.replace(before, after)
         self.session_edits.append((before, after))
@@ -62,7 +62,7 @@ class DocumentSession:
         if self.on_apply:
             self.on_apply(self.current_content)
 
-        logger.info(f"Edit applied.\nBefore:\n{before}\nAfter->\n'{after}")
+        logger.info(f"Edit applied.\nBefore:\n```{before}```\nAfter->\n```{after}```")
         return "Edit applied successfully."
 
 
@@ -114,16 +114,21 @@ async def handle_edit_proposal(
     """Handle the proposal of an edit, including interaction and application."""
     # First check if text exists (fail fast for agent)
     if before == after:
-        logger.info(f"Agent proposed no-op edit: '{before}' -> '{after}'")
+        logger.info(
+            f"Agent proposed no-op edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n"
+        )
         return "Edit failed: The 'before' and 'after' text are identical. No changes needed."
 
     if before not in session.current_content:
-        logger.error(f"Edit failed: Text '{before}' not found.")
-        return f"Edit failed: Text '{before}' not found in document. Please verify the snippet."
+        msg = f"Edit failed: Text ```{before}``` not found in document."
+        logger.error(msg)
+        raise RuntimeError(msg)
 
     if review_callback:
         # Interactive mode: Pause and ask user
-        logger.info(f"Agent proposing edit for review: '{before[:50]}...' -> '{after[:50]}...'")
+        logger.info(
+            f"Agent proposing edit for review.\nBefore:\n```{before}```\nAfter->\n```{after}```\n"
+        )
 
         try:
             if inspect.iscoroutinefunction(review_callback):
@@ -151,7 +156,7 @@ async def handle_edit_proposal(
                         trace_id=session.trace_id,
                         name="user-review",
                         value=1,
-                        comment=f"Accepted edit: '{before[:30]}...' -> '{after[:30]}...'",
+                        comment=f"Accepted edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n",
                     )
                     update_trace_metrics(session, langfuse)
                 except Exception as e:
@@ -196,7 +201,7 @@ async def handle_edit_proposal(
                         trace_id=session.trace_id,
                         name="user-review",
                         value=0,
-                        comment=f"Rejected edit: '{before[:30]}...' -> '{after[:30]}...'. Reason: {rejection_reason}",
+                        comment=f"Rejected edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\nReason: {rejection_reason}",
                     )
                     update_trace_metrics(session, langfuse)
                 except Exception as e:
@@ -205,7 +210,7 @@ async def handle_edit_proposal(
             return f"User rejected the proposal. Reason given: {rejection_reason}. Move on to the next issue."
     else:
         # Non-interactive mode: Apply immediately
-        logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
+        logger.info(f"Agent proposing edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n")
         return session.apply_edit(before, after, reason)
 
 
@@ -267,7 +272,9 @@ async def process_style_guide(
     tools = [apply_edit]
 
     # Refactored prompt structure: Style Guide as System, Document as User
-    system_message = style_guide_text + CORE_INSTRUCTIONS
+    # Escape curly braces in style guide to prevent them being interpreted as variables
+    safe_style_guide_text = style_guide_text.replace("{", "{{").replace("}", "}}")
+    system_message = safe_style_guide_text + CORE_INSTRUCTIONS
 
     prompt = ChatPromptTemplate.from_messages(
         [
