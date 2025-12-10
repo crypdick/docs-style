@@ -3,9 +3,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import difflib
 import sys
-import threading
 from pathlib import Path
 
 from loguru import logger
@@ -143,7 +143,7 @@ class AutoDocsEditorTUI(App):
         self.callbacks = []
 
         # Synchronization primitives for thread <-> UI communication
-        self.review_event = threading.Event()
+        self.review_event = asyncio.Event()
         self.review_decision: dict | None = None
         self.is_quitting = False
 
@@ -193,9 +193,9 @@ class AutoDocsEditorTUI(App):
         if self.is_notebook and self.notebook_handler:
             self.sync_notebook_background()
 
-    @work(exclusive=True, thread=True)
-    def start_processing_guide(self) -> None:
-        """Process the current style guide in a worker thread."""
+    @work
+    async def start_processing_guide(self) -> None:
+        """Process the current style guide in a worker."""
         if self.current_page_idx >= len(self.style_pages):
             self.call_from_thread(self.show_completion)
             return
@@ -222,14 +222,14 @@ class AutoDocsEditorTUI(App):
 
         try:
             # Process with interactive callback
-            process_style_guide(
+            await process_style_guide(
                 style_text,
                 self.session,
                 callbacks=self.callbacks,
                 review_callback=self.ask_user_review,
                 guide_name=page_path.name,
             )
-        except (KeyboardInterrupt, SystemExit):
+        except (asyncio.CancelledError, KeyboardInterrupt, SystemExit):
             logger.info("Processing interrupted by user shutdown.")
             return
         except Exception as e:
@@ -241,13 +241,13 @@ class AutoDocsEditorTUI(App):
         # Guide processing finished
         self.call_from_thread(self.save_and_next_guide)
 
-    def ask_user_review(self, before: str, after: str, reason: str) -> dict:
-        """Callback invoked by the agent (in worker thread) to request user review.
+    async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
+        """Callback invoked by the agent to request user review.
 
-        Blocks until the user interacts with the UI.
+        Awaits until the user interacts with the UI.
         """
         if self.is_quitting:
-            raise KeyboardInterrupt("Application quitting")
+            raise asyncio.CancelledError("Application quitting")
 
         # Clear previous decision
         self.review_decision = None
@@ -258,11 +258,11 @@ class AutoDocsEditorTUI(App):
 
         # Wait for user action
         logger.info("ask_user_review: Waiting for user review...")
-        self.review_event.wait()
+        await self.review_event.wait()
         logger.info("ask_user_review: User review received.")
 
         if self.is_quitting:
-            raise KeyboardInterrupt("Application quitting")
+            raise asyncio.CancelledError("Application quitting")
 
         # Return the user's decision
         return self.review_decision or {"status": "rejected", "reason": "Cancelled or Interrupted"}
@@ -356,6 +356,11 @@ class AutoDocsEditorTUI(App):
         if not self.review_event.is_set():
             self.review_decision = {"status": "rejected", "reason": "Application quitting"}
             self.review_event.set()
+
+        # Cancel all workers
+        for worker in self.workers:
+            worker.cancel()
+
         self.exit()
 
     async def save_and_next_guide(self) -> None:
@@ -372,7 +377,7 @@ class AutoDocsEditorTUI(App):
 
                 # Sync notebook in background if applicable
                 if self.is_notebook and self.notebook_handler:
-                    self.sync_notebook_background()
+                    self.run_worker_daemon(self.sync_notebook_background)
             except Exception as e:
                 logger.error(f"Failed to save document: {e}")
                 self.show_error(f"Failed to save document: {e}")

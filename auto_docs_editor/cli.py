@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import sys
 
 from loguru import logger
@@ -85,7 +86,9 @@ def main() -> None:
         session = DocumentSession(doc_text, seen_edits)
 
         try:
-            process_style_guide(style_text, session, callbacks=callbacks, interactive=False)
+            asyncio.run(
+                process_style_guide(style_text, session, callbacks=callbacks, review_callback=None)
+            )
         except KeyboardInterrupt:
             logger.info("\n↷ Skip requested via Ctrl+C/ESC – moving to next style guide.\n")
             continue

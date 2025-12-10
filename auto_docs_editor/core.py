@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import inspect
 import os
 from collections.abc import Callable
 from typing import Any
@@ -76,7 +77,7 @@ CORE_INSTRUCTIONS = (
     "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
     "4. Ensure code blocks remain syntactically valid. "
     "5. Check the ENTIRE document. If you find multiple issues, apply MULTIPLE edits. You can call `apply_edit` multiple times in parallel. "
-    "6. If no changes are needed, just stop. "
+    "6. If no changes are needed, just stop. Do NOT call `apply_edit` with identical 'before' and 'after' text.\n"
     "7. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
     "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
     "8. Provide a brief `reason` for each edit explaining which rule is being applied."
@@ -103,15 +104,19 @@ def update_trace_metrics(session: DocumentSession, langfuse: Any):
     )
 
 
-def handle_edit_proposal(
+async def handle_edit_proposal(
     session: DocumentSession,
     before: str,
     after: str,
     reason: str,
-    review_callback: Callable[[str, str, str], dict] | None = None,
+    review_callback: Callable[[str, str, str], Any] | None = None,
 ) -> str:
     """Handle the proposal of an edit, including interaction and application."""
     # First check if text exists (fail fast for agent)
+    if before == after:
+        logger.info(f"Agent proposed no-op edit: '{before}' -> '{after}'")
+        return "Edit failed: The 'before' and 'after' text are identical. No changes needed."
+
     if before not in session.current_content:
         logger.error(f"Edit failed: Text '{before}' not found.")
         return f"Edit failed: Text '{before}' not found in document. Please verify the snippet."
@@ -121,7 +126,10 @@ def handle_edit_proposal(
         logger.info(f"Agent proposing edit for review: '{before[:50]}...' -> '{after[:50]}...'")
 
         try:
-            decision = review_callback(before, after, reason)
+            if inspect.iscoroutinefunction(review_callback):
+                decision = await review_callback(before, after, reason)
+            else:
+                decision = review_callback(before, after, reason)
         except Exception as e:
             logger.error(f"Error in review callback: {e}")
             return f"Error interacting with user: {e}"
@@ -201,11 +209,11 @@ def handle_edit_proposal(
         return session.apply_edit(before, after, reason)
 
 
-def process_style_guide(
+async def process_style_guide(
     style_guide_text: str,
     session: DocumentSession,
     callbacks: list | None = None,
-    review_callback: Callable[[str, str, str], dict] | None = None,
+    review_callback: Callable[[str, str, str], Any] | None = None,
     guide_name: str = "",
 ) -> None:
     """Run the agent loop to apply edits from the style guide.
@@ -217,6 +225,7 @@ def process_style_guide(
         review_callback: Optional callback for interactive review.
                          Should accept (before, after, reason) and return dict with:
                          {"status": "accepted"|"rejected", "reason": str|None}
+                         Can be async.
         guide_name: Optional name of the style guide file for tagging
     """
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
@@ -245,7 +254,7 @@ def process_style_guide(
             logger.error(f"Failed to initialize Langfuse trace: {e}")
 
     @tool
-    def apply_edit(before: str, after: str, reason: str = ""):
+    async def apply_edit(before: str, after: str, reason: str = ""):
         """
         Replaces exact text in the document.
         Args:
@@ -253,7 +262,7 @@ def process_style_guide(
             after: The replacement text.
             reason: A brief explanation of why this edit is necessary based on the style guide.
         """
-        return handle_edit_proposal(session, before, after, reason, review_callback)
+        return await handle_edit_proposal(session, before, after, reason, review_callback)
 
     tools = [apply_edit]
 
@@ -273,7 +282,7 @@ def process_style_guide(
 
     logger.info("Starting agent loop...")
 
-    agent_executor.invoke(
+    await agent_executor.ainvoke(
         {
             "document": session.current_content,
         },
