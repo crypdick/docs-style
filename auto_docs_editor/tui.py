@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import threading
 
 from loguru import logger
 from textual import work
@@ -153,7 +154,16 @@ class AutoDocsEditorTUI(App):
             self.review_event.clear()
 
             # Update UI to show the diff
-            await self.show_diff_ui(before, after, reason)
+            # Must run on main thread since we are in a worker here
+            # But check if we are already on main thread (e.g. in tests)
+            try:
+                if self._thread_id == threading.get_ident():
+                    await self.show_diff_ui(before, after, reason)
+                else:
+                    await self.call_from_thread(self.show_diff_ui, before, after, reason)
+            except AttributeError:
+                # Fallback if _thread_id is not available (older Textual versions or testing mocks)
+                await self.call_from_thread(self.show_diff_ui, before, after, reason)
 
             # Wait for user action
             logger.info("ask_user_review: Waiting for user review...")
@@ -213,9 +223,11 @@ class AutoDocsEditorTUI(App):
                 # User modified the text -> Count as rejection per requirements
                 self.controller.total_rejected += 1
                 self.review_decision = {"status": "modified", "new_text": edited_after}
+                self.log_activity("[bold yellow]✎ Modified & Applied[/bold yellow]")
             else:
                 self.controller.total_accepted += 1
                 self.review_decision = {"status": "accepted"}
+                self.log_activity("[bold green]✓ Accepted[/bold green]")
 
             self.review_event.set()
 
@@ -229,6 +241,7 @@ class AutoDocsEditorTUI(App):
 
                 self.controller.total_rejected += 1
                 self.review_decision = {"status": "rejected", "reason": reason}
+                self.log_activity(f"[bold red]✗ Rejected:[/bold red] {reason}")
                 self.review_event.set()
 
             self.push_screen(RejectionModal(), finalize_rejection)
