@@ -197,19 +197,16 @@ class AutoDocsEditorTUI(App):
     async def start_processing_guide(self) -> None:
         """Process the current style guide in a worker."""
         if self.current_page_idx >= len(self.style_pages):
-            self.call_from_thread(self.show_completion)
+            await self.show_completion()
             return
 
         page_path = self.style_pages[self.current_page_idx]
-        self.call_from_thread(
-            self.update_status,
+        self.update_status(
             f"[bold]Style Guide:[/bold] {page_path.name} ({self.current_page_idx + 1}/{len(self.style_pages)})",
         )
 
         # Log to activity log
-        self.call_from_thread(
-            self.log_activity, f"[bold cyan]Processing:[/bold cyan] {page_path.name}"
-        )
+        self.log_activity(f"[bold cyan]Processing:[/bold cyan] {page_path.name}")
 
         # Read current document content
         doc_text = self.document_path.read_text(encoding="utf-8")
@@ -234,12 +231,12 @@ class AutoDocsEditorTUI(App):
             return
         except Exception as e:
             logger.error(f"Error processing style guide: {e}")
-            self.call_from_thread(self.log_activity, f"[bold red]Error:[/bold red] {e}")
-            self.call_from_thread(self.show_error, str(e))
+            self.log_activity(f"[bold red]Error:[/bold red] {e}")
+            await self.show_error(str(e))
             return
 
         # Guide processing finished
-        self.call_from_thread(self.save_and_next_guide)
+        await self.save_and_next_guide()
 
     async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
         """Callback invoked by the agent to request user review.
@@ -254,7 +251,7 @@ class AutoDocsEditorTUI(App):
         self.review_event.clear()
 
         # Update UI to show the diff
-        self.call_from_thread(self.show_diff_ui, before, after, reason)
+        self.show_diff_ui(before, after, reason)
 
         # Wait for user action
         logger.info("ask_user_review: Waiting for user review...")
@@ -267,7 +264,7 @@ class AutoDocsEditorTUI(App):
         # Return the user's decision
         return self.review_decision or {"status": "rejected", "reason": "Cancelled or Interrupted"}
 
-    def show_diff_ui(self, before: str, after: str, reason: str) -> None:
+    async def show_diff_ui(self, before: str, after: str, reason: str) -> None:
         """Update the UI to show the diff (runs on main thread via call_from_thread)."""
         logger.info("show_diff_ui: Updating UI with diff.")
         # Store current proposal for later comparison
@@ -280,8 +277,8 @@ class AutoDocsEditorTUI(App):
 
         # Clear activity log and show diff
         diff_container = self.query_one("#diff-container", VerticalScroll)
-        diff_container.remove_children()
-        diff_container.mount(DiffView(before, after, reason))
+        await diff_container.remove_children()
+        await diff_container.mount(DiffView(before, after, reason))
 
     def update_status(self, text: str) -> None:
         self.query_one("#status-label", Label).update(text)
@@ -430,7 +427,7 @@ class AutoDocsEditorTUI(App):
         # Start processing next guide
         self.start_processing_guide()
 
-    def show_completion(self) -> None:
+    async def show_completion(self) -> None:
         """Show completion message."""
         self.query_one("#status-label", Label).update(
             "[bold green]✓ All style guides processed![/bold green]"
@@ -441,10 +438,10 @@ class AutoDocsEditorTUI(App):
         )
 
         diff_container = self.query_one("#diff-container", VerticalScroll)
-        diff_container.remove_children()
+        await diff_container.remove_children()
 
         activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-        diff_container.mount(activity_log)
+        await diff_container.mount(activity_log)
 
         activity_log.write("\n[bold cyan]═══════════════════════════════════════[/bold cyan]")
         activity_log.write("[bold green]✓ All style guides processed![/bold green]")
@@ -475,11 +472,11 @@ class AutoDocsEditorTUI(App):
             )
         self.call_from_thread(self.log_activity, "\n[dim]Press 'q' to quit.[/dim]")
 
-    def show_error(self, error: str) -> None:
+    async def show_error(self, error: str) -> None:
         """Show an error message."""
         diff_container = self.query_one("#diff-container", VerticalScroll)
-        diff_container.remove_children()
-        diff_container.mount(
+        await diff_container.remove_children()
+        await diff_container.mount(
             Label(
                 f"\n\n[bold red]Error:[/bold red]\n\n{error}\n\n"
                 "Press 'q' to quit or 's' to skip to next guide.",
