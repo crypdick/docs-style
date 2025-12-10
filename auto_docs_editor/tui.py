@@ -188,7 +188,7 @@ class AutoDocsEditorTUI(App):
         if not self.session.pending_edits:
             logger.info("No edits proposed for this guide.")
             activity_log.write(f"[dim]No edits needed for {page_path.name}[/dim]")
-            self.next_guide()
+            self.call_after_refresh(self.next_guide)
         else:
             logger.info(f"Collected {len(self.session.pending_edits)} proposed edits.")
             activity_log.write(
@@ -355,9 +355,16 @@ class AutoDocsEditorTUI(App):
 
         # Show activity log while processing
         diff_container = self.query_one("#diff-container", VerticalScroll)
-        diff_container.remove_children()
-        activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-        diff_container.mount(activity_log)
+
+        # Check for existing activity log to reuse (avoids DuplicateIds error)
+        existing_log = diff_container.query("RichLog#activity-log")
+        if existing_log:
+            activity_log = existing_log.first()
+            activity_log.clear()
+        else:
+            diff_container.remove_children()
+            activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
+            diff_container.mount(activity_log)
 
         self.process_current_guide()
 
