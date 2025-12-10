@@ -292,25 +292,9 @@ class AutoDocsEditorTUI(App):
                 # User modified the text -> Count as rejection per requirements
                 self.total_rejected += 1
                 self.review_decision = {"status": "modified", "new_text": edited_after}
-
-                # Re-mount log
-                diff_container = self.query_one("#diff-container", VerticalScroll)
-                diff_container.remove_children()
-                diff_container.mount(
-                    RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-                )
-                self.log_activity("[yellow]⚠ Accepted with changes (counted as rejection)[/yellow]")
             else:
                 self.total_accepted += 1
                 self.review_decision = {"status": "accepted"}
-
-                # Re-mount log
-                diff_container = self.query_one("#diff-container", VerticalScroll)
-                diff_container.remove_children()
-                diff_container.mount(
-                    RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-                )
-                self.log_activity("[green]✓ Accepted[/green]")
 
             self.review_event.set()
 
@@ -325,14 +309,6 @@ class AutoDocsEditorTUI(App):
                 self.total_rejected += 1
                 self.review_decision = {"status": "rejected", "reason": reason}
                 self.review_event.set()
-
-                # Re-mount log
-                diff_container = self.query_one("#diff-container", VerticalScroll)
-                diff_container.remove_children()
-                diff_container.mount(
-                    RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-                )
-                self.log_activity(f"[yellow]⊘ Rejected[/yellow] (Reason: {reason})")
 
             self.push_screen(RejectionModal(), finalize_rejection)
 
@@ -352,7 +328,7 @@ class AutoDocsEditorTUI(App):
             self.review_event.set()
             self.log_activity("[dim]⏭ Skipped[/dim]")
 
-    def save_and_next_guide(self) -> None:
+    async def save_and_next_guide(self) -> None:
         """Save changes and move to the next guide."""
         # Capture session info before moving to next guide
         had_changes = False
@@ -368,7 +344,7 @@ class AutoDocsEditorTUI(App):
                 self.sync_notebook_background()
 
         # Move to next guide
-        self.next_guide()
+        await self.next_guide()
 
         # Log save status
         if had_changes:
@@ -401,15 +377,15 @@ class AutoDocsEditorTUI(App):
         else:
             self.log_activity(f"[bold red]✗ Notebook sync failed: {error}[/bold red]")
 
-    def next_guide(self) -> None:
+    async def next_guide(self) -> None:
         """Move to the next style guide."""
         self.current_page_idx += 1
 
         # Re-initialize UI state
         diff_container = self.query_one("#diff-container", VerticalScroll)
-        diff_container.remove_children()
+        await diff_container.remove_children()
         activity_log = RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-        diff_container.mount(activity_log)
+        await diff_container.mount(activity_log)
 
         # Start processing next guide
         self.start_processing_guide()
