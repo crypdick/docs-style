@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TypeVar
 
@@ -15,26 +15,35 @@ T = TypeVar("T")
 CURRENT_RUN_DIR: Path | None = None
 
 
-def setup_logging() -> Path:
-    """Configure logging with Loguru to write *all* console output to a file in logs/."""
+def setup_logging(tui_mode: bool = False) -> Path:
+    """Configure logging with Loguru to write *all* console output to a file in logs/.
+
+    Args:
+        tui_mode: If True, only log to file (not to stdout) to avoid interfering with TUI display.
+    """
     global CURRENT_RUN_DIR
 
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
-    run_timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    run_timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     CURRENT_RUN_DIR = LOGS_DIR / run_timestamp
     CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
     log_path = CURRENT_RUN_DIR / "session.log"
 
-    # Configure Loguru sinks: console + file.
+    # Configure Loguru sinks: console (unless in TUI mode) + file.
     logger.remove()
-    logger.add(
-        sys.stdout,
-        level="INFO",
-        format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}",
-        colorize=True,
-    )
+
+    # Only add stdout sink in CLI mode (not in TUI mode)
+    if not tui_mode:
+        logger.add(
+            sys.stdout,
+            level="INFO",
+            format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}",
+            colorize=True,
+        )
+
+    # Always add file sink
     logger.add(
         log_path,
         level="INFO",
