@@ -28,16 +28,17 @@ Screen {
 
 .diff-inline {
     height: auto;
-    max-height: 20;
     padding: 1;
     background: $surface;
     border: solid $primary;
-    overflow-y: auto;
+}
+
+DiffView {
+    height: auto;
 }
 
 .edit-area {
-    height: 1fr;
-    min-height: 10;
+    height: auto;
     border: solid $success;
 }
 
