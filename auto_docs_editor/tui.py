@@ -31,7 +31,7 @@ from auto_docs_editor.workflow import (
     setup_environment,
 )
 from settings import FINAL_PASS_MARKER
-from utils import get_langfuse_handler, setup_logging
+from utils import get_langfuse_handler, read_text_async, setup_logging, write_text_async
 
 
 class DiffView(Container):
@@ -184,10 +184,10 @@ class AutoDocsEditorTUI(App):
         """Process the first style guide when the app starts."""
         self.start_processing_guide()
 
-    def on_edit_applied(self, content: str) -> None:
+    async def on_edit_applied(self, content: str) -> None:
         """Callback for when an edit is applied to the session."""
         # Write directly to file - fail fast if this errors
-        self.document_path.write_text(content, encoding="utf-8")
+        await write_text_async(self.document_path, content, encoding="utf-8")
 
         # Sync notebook if needed
         if self.is_notebook and self.notebook_handler:
@@ -209,8 +209,8 @@ class AutoDocsEditorTUI(App):
         self.log_activity(f"[bold cyan]Processing:[/bold cyan] {page_path.name}")
 
         # Read current document content
-        doc_text = self.document_path.read_text(encoding="utf-8")
-        style_text = page_path.read_text(encoding="utf-8")
+        doc_text = await read_text_async(self.document_path, encoding="utf-8")
+        style_text = await read_text_async(page_path, encoding="utf-8")
 
         # Create session and process guide
         self.session = DocumentSession(doc_text, self.seen_edits, on_apply=self.on_edit_applied)
@@ -251,7 +251,7 @@ class AutoDocsEditorTUI(App):
         self.review_event.clear()
 
         # Update UI to show the diff
-        self.show_diff_ui(before, after, reason)
+        await self.show_diff_ui(before, after, reason)
 
         # Wait for user action
         logger.info("ask_user_review: Waiting for user review...")
@@ -367,7 +367,9 @@ class AutoDocsEditorTUI(App):
         edits_count = 0
         if self.session and self.session.current_content != self.session.initial_content:
             try:
-                self.document_path.write_text(self.session.current_content, encoding="utf-8")
+                await write_text_async(
+                    self.document_path, self.session.current_content, encoding="utf-8"
+                )
                 edits_count = len(self.session.session_edits)
                 had_changes = True
                 logger.success(f"Document updated with {edits_count} edits.")
@@ -377,7 +379,7 @@ class AutoDocsEditorTUI(App):
                     self.run_worker_daemon(self.sync_notebook_background)
             except Exception as e:
                 logger.error(f"Failed to save document: {e}")
-                self.show_error(f"Failed to save document: {e}")
+                await self.show_error(f"Failed to save document: {e}")
                 return
 
         # Move to next guide

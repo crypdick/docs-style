@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import os
 import sys
 from datetime import UTC, datetime
@@ -13,6 +14,18 @@ from settings import LOGS_DIR
 T = TypeVar("T")
 
 CURRENT_RUN_DIR: Path | None = None
+
+
+async def read_text_async(path: Path, encoding: str = "utf-8") -> str:
+    """Read text from a file asynchronously."""
+    loop = asyncio.get_running_loop()
+    return await loop.run_in_executor(None, path.read_text, encoding)
+
+
+async def write_text_async(path: Path, content: str, encoding: str = "utf-8") -> None:
+    """Write text to a file asynchronously."""
+    loop = asyncio.get_running_loop()
+    await loop.run_in_executor(None, lambda: path.write_text(content, encoding=encoding))
 
 
 def setup_logging(tui_mode: bool = False) -> Path:

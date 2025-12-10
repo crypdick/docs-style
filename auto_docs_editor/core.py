@@ -34,7 +34,7 @@ class DocumentSession:
         self,
         content: str,
         seen_edits: set[tuple[str, str]],
-        on_apply: Callable[[str], None] | None = None,
+        on_apply: Callable[[str], Any] | None = None,
     ):
         self.initial_content = content
         self.current_content = content
@@ -47,7 +47,7 @@ class DocumentSession:
         self.stats = {"accepted": 0, "rejected": 0}
         self.on_apply = on_apply
 
-    def apply_edit(self, before: str, after: str, reason: str = "") -> str:
+    async def apply_edit(self, before: str, after: str, reason: str = "") -> str:
         """Tool implementation to replace text."""
         if before not in self.current_content:
             msg = f"Edit failed: Text ```{before}``` not found in document."
@@ -60,7 +60,10 @@ class DocumentSession:
         self.seen_edits.add((before, after))
 
         if self.on_apply:
-            self.on_apply(self.current_content)
+            if inspect.iscoroutinefunction(self.on_apply):
+                await self.on_apply(self.current_content)
+            else:
+                self.on_apply(self.current_content)
 
         logger.info(f"Edit applied.\nBefore:\n```{before}```\nAfter->\n```{after}```")
         return "Edit applied successfully."
@@ -142,7 +145,7 @@ async def handle_edit_proposal(
         if decision["status"] == "accepted":
             # User accepted -> Apply
             session.stats["accepted"] += 1
-            result = session.apply_edit(before, after, reason)
+            result = await session.apply_edit(before, after, reason)
 
             if "failed" in result.lower():
                 err_msg = f"CRITICAL: User accepted edit but apply failed. Result: {result}"
@@ -167,7 +170,7 @@ async def handle_edit_proposal(
             # User modified -> Apply new text, count as rejected (quality issue)
             session.stats["rejected"] += 1
             new_text = decision.get("new_text", after)
-            result = session.apply_edit(before, new_text, reason)
+            result = await session.apply_edit(before, new_text, reason)
 
             if "failed" in result.lower():
                 err_msg = f"CRITICAL: User modified edit but apply failed. Result: {result}"
@@ -211,7 +214,7 @@ async def handle_edit_proposal(
     else:
         # Non-interactive mode: Apply immediately
         logger.info(f"Agent proposing edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n")
-        return session.apply_edit(before, after, reason)
+        return await session.apply_edit(before, after, reason)
 
 
 async def process_style_guide(

@@ -6,18 +6,25 @@ from auto_docs_editor.core import DocumentSession, handle_edit_proposal, process
 
 
 def test_document_session_apply_edit():
+    pass
+    # Original test removed because apply_edit is now async and requires an event loop
+    # See test_document_session_apply_edit_async below
+
+
+@pytest.mark.asyncio
+async def test_document_session_apply_edit_async():
     content = "Hello world"
     session = DocumentSession(content, set())
 
     # Successful edit
-    result = session.apply_edit("world", "universe")
+    result = await session.apply_edit("world", "universe")
     assert "Edit applied successfully" in result
     assert session.current_content == "Hello universe"
     assert ("world", "universe") in session.session_edits
 
     # Failed edit (not found) -> Should raise RuntimeError
     with pytest.raises(RuntimeError) as excinfo:
-        session.apply_edit("foobar", "baz")
+        await session.apply_edit("foobar", "baz")
 
     assert "not found in document" in str(excinfo.value)
     assert len(session.failed_edits) == 1
@@ -37,6 +44,22 @@ async def test_handle_edit_proposal_non_interactive():
     with pytest.raises(RuntimeError) as excinfo:
         await handle_edit_proposal(session, "foo", "bar", "reason")
     assert "not found in document" in str(excinfo.value)
+
+
+@pytest.mark.asyncio
+async def test_handle_edit_proposal_interactive_async_callback():
+    content = "Hello world"
+    session = DocumentSession(content, set())
+
+    async def callback(before, after, reason):
+        return {"status": "accepted"}
+
+    result = await handle_edit_proposal(
+        session, "world", "universe", "reason", review_callback=callback
+    )
+    assert "User accepted" in result
+    assert session.current_content == "Hello universe"
+    assert session.stats["accepted"] == 1
 
 
 @pytest.mark.asyncio

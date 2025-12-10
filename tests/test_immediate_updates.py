@@ -3,7 +3,8 @@ import pytest
 from auto_docs_editor.core import DocumentSession
 
 
-def test_immediate_file_updates(tmp_path):
+@pytest.mark.asyncio
+async def test_immediate_file_updates(tmp_path):
     """Verify that the target file is updated immediately after each accepted edit."""
     # Setup initial file
     target_file = tmp_path / "test_doc.md"
@@ -18,7 +19,7 @@ def test_immediate_file_updates(tmp_path):
     session = DocumentSession(initial_content, set(), on_apply=on_apply)
 
     # Edit 1: Change Line 1
-    session.apply_edit("Line 1", "Header 1", "Make it a header")
+    await session.apply_edit("Line 1", "Header 1", "Make it a header")
 
     # Check immediate update
     current_content = target_file.read_text(encoding="utf-8")
@@ -27,7 +28,7 @@ def test_immediate_file_updates(tmp_path):
     assert current_content == "Header 1\nLine 2\nLine 3"
 
     # Edit 2: Change Line 3
-    session.apply_edit("Line 3", "Footer", "Make it a footer")
+    await session.apply_edit("Line 3", "Footer", "Make it a footer")
 
     # Check immediate update again
     current_content = target_file.read_text(encoding="utf-8")
@@ -36,7 +37,8 @@ def test_immediate_file_updates(tmp_path):
     assert current_content == "Header 1\nLine 2\nFooter"
 
 
-def test_failed_save_propagates(tmp_path):
+@pytest.mark.asyncio
+async def test_failed_save_propagates(tmp_path):
     """Verify that file save errors propagate (crash fast/loud)."""
     target_file = tmp_path / "protected.md"
     target_file.write_text("content", encoding="utf-8")
@@ -47,4 +49,4 @@ def test_failed_save_propagates(tmp_path):
     session = DocumentSession("content", set(), on_apply=failing_on_apply)
 
     with pytest.raises(PermissionError, match="Disk full"):
-        session.apply_edit("content", "new content", "reason")
+        await session.apply_edit("content", "new content", "reason")
