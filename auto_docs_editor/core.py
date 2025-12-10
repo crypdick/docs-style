@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import inspect
 import os
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -49,6 +50,21 @@ class DocumentSession:
         self.on_apply = on_apply
         self.content_provider = content_provider
 
+    def find_best_match(self, snippet: str) -> str | None:
+        """Find the best match for the snippet in the document.
+
+        Returns:
+            The exact matching text from the document, or None if not found/ambiguous.
+        """
+        if snippet in self.current_content:
+            return snippet
+
+        fuzzy_matches = self._find_fuzzy_matches(snippet)
+        if len(fuzzy_matches) == 1:
+            return fuzzy_matches[0]
+
+        return None
+
     async def apply_edit(self, before: str, after: str, reason: str = "") -> str:
         """Tool implementation to replace text."""
         # Refresh content from provider if available to catch out-of-band edits
@@ -63,11 +79,21 @@ class DocumentSession:
                 logger.error(msg)
                 raise RuntimeError(msg) from e
 
-        if before not in self.current_content:
-            msg = f"Edit failed: Text ```{before}``` not found in document."
+        best_match = self.find_best_match(before)
+        if not best_match:
+            # Fallback failed or ambiguous
+            fuzzy_matches = self._find_fuzzy_matches(before)
+            if len(fuzzy_matches) > 1:
+                msg = f"Edit failed: Exact text not found, and fuzzy match is ambiguous ({len(fuzzy_matches)} matches found)."
+            else:
+                msg = f"Edit failed: Text ```{before}``` not found in document."
+
             logger.error(msg)
             self.failed_edits.append(msg)
             raise RuntimeError(msg)
+
+        # Use the actual matched text
+        before = best_match
 
         self.current_content = self.current_content.replace(before, after)
         self.session_edits.append((before, after))
@@ -81,6 +107,47 @@ class DocumentSession:
 
         logger.info(f"Edit applied.\nBefore:\n```{before}```\nAfter->\n```{after}```")
         return "Edit applied successfully."
+
+    def _find_fuzzy_matches(self, snippet: str) -> list[str]:
+        """
+        Find all occurrences of snippet in current_content, allowing for:
+        1. Differences in trailing whitespace on lines.
+        2. Differences in newline style (\r\n vs \n).
+        """
+        if not snippet:
+            return []
+
+        # Construct a regex that matches each line of the snippet
+        # followed by optional whitespace and a newline
+
+        snippet_lines = snippet.splitlines()
+        regex_parts = []
+
+        for line in snippet_lines:
+            # Escape the line to treat it as literal text
+            # rstrip() to ignore trailing whitespace in the snippet itself
+            escaped_line = re.escape(line.rstrip())
+
+            # Match the line, followed by optional horizontal whitespace
+            part = escaped_line + r"[ \t]*"
+
+            regex_parts.append(part)
+
+        # Join lines with flexible newline matcher
+        # We use \r?\n to match \n or \r\n
+        pattern_str = r"\r?\n".join(regex_parts)
+
+        # Compile regex with multiline flag?
+        # No, we are building the full block regex explicitly.
+        # But we need to handle the case where the document has different newlines.
+
+        try:
+            pattern = re.compile(pattern_str)
+            matches = list(pattern.finditer(self.current_content))
+            return [m.group(0) for m in matches]
+        except re.error as e:
+            logger.warning(f"Failed to compile fuzzy regex: {e}")
+            return []
 
 
 CORE_INSTRUCTIONS = (
@@ -215,10 +282,17 @@ async def handle_edit_proposal(
         )
         return "Edit failed: The 'before' and 'after' text are identical. No changes needed."
 
-    if before not in session.current_content:
+    best_match = session.find_best_match(before)
+    if not best_match:
         msg = f"Edit failed: Text ```{before}``` not found in document."
         logger.error(msg)
         raise RuntimeError(msg)
+
+    if best_match != before:
+        logger.info(
+            f"Using fuzzy match for edit.\nOriginal: ```{before}```\nMatched: ```{best_match}```"
+        )
+        before = best_match
 
     if review_callback:
         # Interactive mode: Pause and ask user
