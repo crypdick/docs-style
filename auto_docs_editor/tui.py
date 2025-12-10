@@ -244,6 +244,9 @@ class AutoDocsEditorTUI(App):
 
     def show_diff_ui(self, before: str, after: str, reason: str) -> None:
         """Update the UI to show the diff (runs on main thread via call_from_thread)."""
+        # Store current proposal for later comparison
+        self.current_proposal = (before, after, reason)
+
         self.query_one("#progress-label", Label).update(
             f"[bold]Accepted:[/bold] {self.total_accepted} | "
             f"[bold]Rejected:[/bold] {self.total_rejected}"
@@ -268,46 +271,41 @@ class AutoDocsEditorTUI(App):
         """Handle accept action from UI."""
         if not self.review_event.is_set():
             # Get edited text if any
-            # try:
-            #     edit_area = self.query_one("#edit-area", TextArea)
-            #     after = edit_area.text
-            # except Exception:
-            #     after = None  # Should not happen given DiffView structure, but safe fallback
+            try:
+                edit_area = self.query_one("#edit-area", TextArea)
+                edited_after = edit_area.text
+            except Exception:
+                edited_after = self.current_proposal[
+                    1
+                ]  # Should not happen given DiffView structure
 
-            # We need to construct the result with the (potentially modified) text
-            # NOTE: We can't easily change 'before' here as it comes from the agent.
-            # But we can change 'after'.
-            # However, `ask_user_review` logic expects just a status.
-            # To support edited text, we need to handle it in `core.py` or pass it back.
-            # `core.py` currently takes (before, after, reason) from agent.
-            # If we want to support user edits, we should pass back the *final* after text.
-            # But `core.py` logic: `session.apply_edit(before, after, reason)` uses the `after` passed to it.
-            # Wait, `core.py` says: `if decision["status"] == "accepted": session.apply_edit(before, after, reason)`
-            # So `core.py` uses the Agent's `after`.
-            # Ideally `core.py` should allow the callback to override `after`.
-            # For now, let's assume strict acceptance of Agent's proposal, or if we want to support editing,
-            # we need to update `core.py` to use `decision.get("after", after)`.
+            original_after = self.current_proposal[1]
 
-            # Update: I'll stick to the core logic for now to match the requested flow "accepted -> agent sees accepted".
-            # If user edits the text, strictly speaking the *Agent's* proposal wasn't exactly accepted, but a modified version.
-            # For simplicity, let's just accept the Agent's proposal as is for now, or assume the user blindly accepts.
-            # Wait, the TUI *does* have an editable text area. If I ignore it, that's bad UX.
-            # I will modify `core.py` slightly in the next step to support overriding `after`.
-            # Actually, I can't modify `core.py` inside this tool call easily without multiple writes.
-            # I will just proceed. The `apply_edit` in `core.py` uses `after`.
-            # I will implement the UI side to just set the decision.
+            if edited_after != original_after:
+                # User modified the text -> Count as rejection per requirements
+                self.total_rejected += 1
+                self.review_decision = {"status": "modified", "new_text": edited_after}
 
-            self.total_accepted += 1
-            self.review_decision = {"status": "accepted"}
+                # Re-mount log
+                diff_container = self.query_one("#diff-container", VerticalScroll)
+                diff_container.remove_children()
+                diff_container.mount(
+                    RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
+                )
+                self.log_activity("[yellow]⚠ Accepted with changes (counted as rejection)[/yellow]")
+            else:
+                self.total_accepted += 1
+                self.review_decision = {"status": "accepted"}
+
+                # Re-mount log
+                diff_container = self.query_one("#diff-container", VerticalScroll)
+                diff_container.remove_children()
+                diff_container.mount(
+                    RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
+                )
+                self.log_activity("[green]✓ Accepted[/green]")
+
             self.review_event.set()
-
-            # Re-mount log for next messages
-            diff_container = self.query_one("#diff-container", VerticalScroll)
-            diff_container.remove_children()
-            diff_container.mount(
-                RichLog(id="activity-log", wrap=True, highlight=False, markup=True)
-            )
-            self.log_activity("[green]✓ Accepted[/green]")
 
     def action_reject(self) -> None:
         """Handle reject action from UI."""

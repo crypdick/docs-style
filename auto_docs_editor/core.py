@@ -173,6 +173,26 @@ def process_style_guide(
                         logger.error(f"Failed to score Langfuse trace: {e}")
 
                 return f"User accepted the proposal. {result}"
+            elif decision["status"] == "modified":
+                # User modified -> Apply new text, count as rejected (quality issue)
+                session.stats["rejected"] += 1
+                new_text = decision.get("new_text", after)
+                result = session.apply_edit(before, new_text, reason)
+
+                if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
+                    try:
+                        langfuse = Langfuse()
+                        langfuse.score(
+                            trace_id=session.trace_id,
+                            name="user-review",
+                            value=0,
+                            comment=f"User modified edit: '{before[:30]}...' -> '{new_text[:30]}...'",
+                        )
+                        update_trace_metrics(session, langfuse)
+                    except Exception as e:
+                        logger.error(f"Failed to score Langfuse trace: {e}")
+
+                return f"User changed suggested diff before applying: {new_text}"
             else:
                 # User rejected -> Don't apply
                 session.stats["rejected"] += 1
