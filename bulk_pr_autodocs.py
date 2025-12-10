@@ -28,7 +28,7 @@ import re
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -194,7 +194,7 @@ def process_document(
 
     # 9. Copy session log into bulk logs dir for archive
     BULK_LOGS_DIR.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     shutil.copy2(log_path, BULK_LOGS_DIR / f"{timestamp}_{branch.replace('/', '-')}.log")
 
 
@@ -217,7 +217,7 @@ def main() -> None:
 
     # Logging setup
     BULK_LOGS_DIR.mkdir(parents=True, exist_ok=True)
-    log_file = BULK_LOGS_DIR / (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + ".log")
+    log_file = BULK_LOGS_DIR / (datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ") + ".log")
     logger.remove()
     logger.add(sys.stdout, level="INFO", format="{time:YYYY-MM-DD HH:mm:ss} {level}: {message}")
     logger.add(log_file, level="DEBUG", encoding="utf-8")

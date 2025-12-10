@@ -43,6 +43,7 @@ class AutoDocsEditorTUI(App):
 
         # Synchronization primitives for thread <-> UI communication
         self.review_event = asyncio.Event()
+        self.review_lock = asyncio.Lock()
         self.review_decision: dict | None = None
         self.is_quitting = False
         self.current_proposal: tuple[str, str, str] | None = None
@@ -143,26 +144,30 @@ class AutoDocsEditorTUI(App):
 
     async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
         """Callback invoked by the agent to request user review."""
-        if self.is_quitting:
-            raise asyncio.CancelledError("Application quitting")
+        async with self.review_lock:
+            if self.is_quitting:
+                raise asyncio.CancelledError("Application quitting")
 
-        # Clear previous decision
-        self.review_decision = None
-        self.review_event.clear()
+            # Clear previous decision
+            self.review_decision = None
+            self.review_event.clear()
 
-        # Update UI to show the diff
-        await self.show_diff_ui(before, after, reason)
+            # Update UI to show the diff
+            await self.show_diff_ui(before, after, reason)
 
-        # Wait for user action
-        logger.info("ask_user_review: Waiting for user review...")
-        await self.review_event.wait()
-        logger.info("ask_user_review: User review received.")
+            # Wait for user action
+            logger.info("ask_user_review: Waiting for user review...")
+            await self.review_event.wait()
+            logger.info("ask_user_review: User review received.")
 
-        if self.is_quitting:
-            raise asyncio.CancelledError("Application quitting")
+            if self.is_quitting:
+                raise asyncio.CancelledError("Application quitting")
 
-        # Return the user's decision
-        return self.review_decision or {"status": "rejected", "reason": "Cancelled or Interrupted"}
+            # Return the user's decision
+            return self.review_decision or {
+                "status": "rejected",
+                "reason": "Cancelled or Interrupted",
+            }
 
     async def show_diff_ui(self, before: str, after: str, reason: str) -> None:
         """Update the UI to show the diff (runs on main thread via call_from_thread)."""
