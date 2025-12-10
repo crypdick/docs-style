@@ -184,6 +184,15 @@ class AutoDocsEditorTUI(App):
         """Process the first style guide when the app starts."""
         self.start_processing_guide()
 
+    def on_edit_applied(self, content: str) -> None:
+        """Callback for when an edit is applied to the session."""
+        # Write directly to file - fail fast if this errors
+        self.document_path.write_text(content, encoding="utf-8")
+
+        # Sync notebook if needed
+        if self.is_notebook and self.notebook_handler:
+            self.sync_notebook_background()
+
     @work(exclusive=True, thread=True)
     def start_processing_guide(self) -> None:
         """Process the current style guide in a worker thread."""
@@ -207,7 +216,7 @@ class AutoDocsEditorTUI(App):
         style_text = page_path.read_text(encoding="utf-8")
 
         # Create session and process guide
-        self.session = DocumentSession(doc_text, self.seen_edits)
+        self.session = DocumentSession(doc_text, self.seen_edits, on_apply=self.on_edit_applied)
 
         logger.info(f"Processing style guide: {page_path.name}")
 

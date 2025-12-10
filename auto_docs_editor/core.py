@@ -29,7 +29,12 @@ from settings import MODEL_NAME
 class DocumentSession:
     """Manages the document state and edit history for the agent."""
 
-    def __init__(self, content: str, seen_edits: set[tuple[str, str]]):
+    def __init__(
+        self,
+        content: str,
+        seen_edits: set[tuple[str, str]],
+        on_apply: Callable[[str], None] | None = None,
+    ):
         self.initial_content = content
         self.current_content = content
         self.seen_edits = seen_edits  # Edits seen globally across all guides
@@ -39,6 +44,7 @@ class DocumentSession:
         self.current_style_guide: str = ""
         # Metrics for queryability
         self.stats = {"accepted": 0, "rejected": 0}
+        self.on_apply = on_apply
 
     def apply_edit(self, before: str, after: str, reason: str = "") -> str:
         """Tool implementation to replace text."""
@@ -51,6 +57,9 @@ class DocumentSession:
         self.current_content = self.current_content.replace(before, after)
         self.session_edits.append((before, after))
         self.seen_edits.add((before, after))
+
+        if self.on_apply:
+            self.on_apply(self.current_content)
 
         logger.info(f"Edit applied.\nBefore:\n{before}\nAfter->\n'{after}")
         return "Edit applied successfully."
@@ -159,7 +168,7 @@ def handle_edit_proposal(
                         trace_id=session.trace_id,
                         name="user-review",
                         value=0,
-                        comment=f"User modified edit: '{before[:30]}...' -> '{new_text[:30]}...'",
+                        comment=f"User modified proposed edit.\nBefore:\n```{before}```\nAfter->\n```{new_text}```",
                     )
                     update_trace_metrics(session, langfuse)
                 except Exception as e:
