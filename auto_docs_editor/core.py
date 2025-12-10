@@ -74,27 +74,29 @@ def process_style_guide(
     if interactive:
 
         @tool
-        def apply_edit(before: str, after: str):
+        def apply_edit(before: str, after: str, reason: str = ""):
             """
             Proposes a text replacement for user review.
             Args:
                 before: The exact text snippet to replace (must match character-for-character, including whitespace).
                 after: The replacement text.
+                reason: A brief explanation of why this edit is necessary based on the style guide.
             """
             logger.info(f"Agent proposing edit for review: '{before[:50]}...' -> '{after[:50]}...'")
-            return session.propose_edit(before, after)
+            return session.propose_edit(before, after, reason)
     else:
 
         @tool
-        def apply_edit(before: str, after: str):
+        def apply_edit(before: str, after: str, reason: str = ""):
             """
             Replaces exact text in the document.
             Args:
                 before: The exact text snippet to replace (must match character-for-character, including whitespace).
                 after: The replacement text.
+                reason: A brief explanation of why this edit is necessary based on the style guide.
             """
             logger.info(f"Agent proposing edit: '{before}' -> '{after}'")
-            return session.apply_edit(before, after)
+            return session.apply_edit(before, after, reason)
 
     tools = [apply_edit]
 
@@ -108,9 +110,11 @@ def process_style_guide(
         "2. If an edit fails (not found), the tool will return an error. You may try to correct the snippet or skip it. "
         "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
         "4. Ensure code blocks remain syntactically valid. "
-        "5. If no changes are needed, just stop. "
-        "6. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
+        "5. Check the ENTIRE document. If you find multiple issues, apply MULTIPLE edits. You can call `apply_edit` multiple times in parallel. "
+        "6. If no changes are needed, just stop. "
+        "7. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
         "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
+        "8. Provide a brief `reason` for each edit explaining which rule is being applied."
     )
 
     prompt = ChatPromptTemplate.from_messages(
