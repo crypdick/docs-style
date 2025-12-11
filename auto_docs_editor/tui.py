@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import asyncio
-import threading
 
 from loguru import logger
 from textual import work
@@ -157,7 +156,7 @@ class AutoDocsEditorTUI(App):
             # This prevents race conditions where the UI updates while the modal is still closing
             while True:
                 try:
-                    is_modal = await self.call_from_thread(self.is_rejection_modal_active)
+                    is_modal = self.is_rejection_modal_active()
                     if not is_modal:
                         break
                     await asyncio.sleep(0.05)
@@ -167,15 +166,10 @@ class AutoDocsEditorTUI(App):
 
             # Update UI to show the diff
             # Must run on main thread since we are in a worker here
-            # But check if we are already on main thread (e.g. in tests)
             try:
-                if self._thread_id == threading.get_ident():
-                    await self.show_diff_ui(before, after, reason)
-                else:
-                    await self.call_from_thread(self.show_diff_ui, before, after, reason)
-            except AttributeError:
-                # Fallback if _thread_id is not available (older Textual versions or testing mocks)
-                await self.call_from_thread(self.show_diff_ui, before, after, reason)
+                await self.show_diff_ui(before, after, reason)
+            except Exception as e:
+                logger.error(f"Error showing diff UI: {e}")
 
             # Wait for user action
             logger.info("ask_user_review: Waiting for user review...")
