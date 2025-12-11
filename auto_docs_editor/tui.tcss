@@ -64,6 +64,10 @@ Button {
     background: $error;
 }
 
+.button-ignore {
+    background: $primary;
+}
+
 .button-skip {
     background: $warning;
 }

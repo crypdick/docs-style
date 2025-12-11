@@ -32,6 +32,7 @@ class AutoDocsEditorTUI(App):
     BINDINGS = [
         Binding("a", "accept", "Accept & Apply", priority=True),
         Binding("r", "reject", "Reject", priority=True),
+        Binding("i", "ignore", "Ignore", priority=True),
         Binding("s", "skip_guide", "Skip Guide", priority=True),
         Binding("q", "quit", "Quit", priority=True),
     ]
@@ -73,6 +74,9 @@ class AutoDocsEditorTUI(App):
                 )
                 yield Button(
                     "Reject (r)", variant="error", id="btn-reject", classes="button-reject"
+                )
+                yield Button(
+                    "Ignore (i)", variant="primary", id="btn-ignore", classes="button-ignore"
                 )
                 yield Button(
                     "Skip Guide (s)", variant="warning", id="btn-skip", classes="button-skip"
@@ -227,6 +231,8 @@ class AutoDocsEditorTUI(App):
             self.action_accept()
         elif event.button.id == "btn-reject":
             self.action_reject()
+        elif event.button.id == "btn-ignore":
+            self.action_ignore()
         elif event.button.id == "btn-skip":
             self.action_skip_guide()
         elif event.button.id == "btn-quit":
@@ -274,6 +280,15 @@ class AutoDocsEditorTUI(App):
                 self.review_event.set()
 
             self.push_screen(RejectionModal(), finalize_rejection)
+
+    def action_ignore(self) -> None:
+        """Handle ignore action (skip single edit) from UI."""
+        if not self.review_event.is_set():
+            self.controller.total_rejected += 1
+            self.review_decision = {"status": "rejected", "reason": "Ignored by user"}
+            self.log_activity("[bold yellow]↷ Ignored[/bold yellow]")
+            self.update_stats_label()
+            self.review_event.set()
 
     def action_skip_guide(self) -> None:
         """Skip the rest of the current guide."""
