@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 
 from auto_docs_editor.controller import ReviewController
-from auto_docs_editor.tui import AutoDocsEditorTUI
+from tests.helpers.textual import drain_pilot
 
 
 # Mock external dependencies
@@ -28,10 +28,9 @@ def mock_dependencies():
         }
 
 
-@pytest.mark.asyncio
-async def test_app_startup(mock_dependencies, tmp_path):
-    """Test that the app starts up without crashing."""
-
+@pytest.fixture
+def controller(mock_dependencies, tmp_path):
+    """Override the default mock controller with a real one for this test module."""
     # Create dummy files
     doc_path = tmp_path / "test.md"
     doc_path.write_text("Hello World")
@@ -39,13 +38,17 @@ async def test_app_startup(mock_dependencies, tmp_path):
     style_path = tmp_path / "style_guide.md"
     style_path.write_text("Style guide content")
 
-    # Setup app with mocks
-    controller = ReviewController(
+    # Setup controller with mocks
+    return ReviewController(
         document_path=doc_path,
         style_pages=[style_path],
         seen_edits=set(),
     )
-    app = AutoDocsEditorTUI(controller)
+
+
+@pytest.mark.asyncio
+async def test_app_startup(app):
+    """Test that the app starts up without crashing."""
 
     # Run the app for a short duration to trigger startup events
     async with app.run_test() as pilot:
@@ -53,7 +56,8 @@ async def test_app_startup(mock_dependencies, tmp_path):
         assert app.is_running
 
         # Allow some time for workers to start/fail
-        await pilot.pause(0.5)
+        # drain_pilot waits for workers to be idle, which is better than hardcoded sleep
+        await drain_pilot(pilot)
 
         # If it crashed, it would have raised an exception by now or app.return_value would be set
         # But run_test suppresses some errors unless we check explicitly or if they bubble up.
