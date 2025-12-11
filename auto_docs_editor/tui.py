@@ -153,6 +153,18 @@ class AutoDocsEditorTUI(App):
             self.review_decision = None
             self.review_event.clear()
 
+            # Wait for RejectionModal to fully dismiss if it was just active
+            # This prevents race conditions where the UI updates while the modal is still closing
+            while True:
+                try:
+                    is_modal = await self.call_from_thread(self.is_rejection_modal_active)
+                    if not is_modal:
+                        break
+                    await asyncio.sleep(0.05)
+                except Exception as e:
+                    logger.error(f"Error checking active screen: {e}")
+                    break
+
             # Update UI to show the diff
             # Must run on main thread since we are in a worker here
             # But check if we are already on main thread (e.g. in tests)
@@ -178,6 +190,12 @@ class AutoDocsEditorTUI(App):
                 "status": "rejected",
                 "reason": "Cancelled or Interrupted",
             }
+
+    def is_rejection_modal_active(self) -> bool:
+        """Check if the RejectionModal is the active screen."""
+        from auto_docs_editor.widgets import RejectionModal
+
+        return isinstance(self.screen, RejectionModal)
 
     async def show_diff_ui(self, before: str, after: str, reason: str) -> None:
         """Update the UI to show the diff (runs on main thread via call_from_thread)."""
