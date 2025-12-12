@@ -21,6 +21,15 @@ DIFF_END_MARKER = "NO_CHANGES"
 # ends with this character will be included when --final-pass is used.
 FINAL_PASS_MARKER = "+"
 
+# ---------------------------------------------------------------------------
+# Langfuse Tracing
+# ---------------------------------------------------------------------------
+
+# Version tag for Langfuse traces.
+# Bump this version when changing the trace structure, prompt logic, or data format
+# to ensure we can filter for consistent datasets (e.g., for fine-tuning).
+TRACE_DATASET_VERSION = "v1"
+
 DIFF_SYSTEM_PROMPT = (
     "You are an expert technical editor. "
     "Given a STYLE GUIDE and a MARKDOWN DOCUMENT (each provided inside their own XML tags), propose the MINIMAL set of textual edits needed "
@@ -40,8 +49,7 @@ DIFF_SYSTEM_PROMPT = (
     "The STYLE GUIDE will be supplied inside <style_guide>…</style_guide> and the DOCUMENT inside <document>…</document>. "
     "Only modify the DOCUMENT—never the STYLE GUIDE. "
     "Do NOT remove or alter Markdown anchor tags or link identifiers such as '[](){ #anchor-id }' (and similar inline anchor syntaxes). "
-    "Separate <edit> blocks only by whitespace/newlines—no other text. If several identical snippets require the same "
-    "replacement, output ONE <edit> block for them. If the style guide does NOT apply, respond with exactly "
+    "Separate <edit> blocks only by whitespace/newlines—no other text. If the style guide does NOT apply, respond with exactly "
     f"'{DIFF_END_MARKER}'.  Do NOT output anything else. "
     "Never output an <edit> block whose <before> and <after> content are identical. "
     "These are a NO-OP and should be discarded. "
@@ -55,6 +63,7 @@ DIFF_SYSTEM_PROMPT = (
     "Inside fenced (```\n...\n```) or indented code blocks, only make edits that are guaranteed to keep the code syntactically valid for its language. "
     "If applying a grammar or style rule could break, invalidate, or change the meaning of the code, skip that edit entirely. "
     "When several corrections are possible, prefer the one that achieves compliance with the least amount of change."
+    "Example 3: If the text is 'Please click on the Button', and the style guide says 'Do not capitalize UI elements', the edit should be <before>Button</before><after>button</after>, not <before>Please click on the Button</before><after>Please click on the button</after>."
     " If a literal application of the STYLE GUIDE produces text that reads awkwardly, stilted, or unclear, exercise editorial judgment and rephrase the passage so it remains natural, readable, and faithful to the original meaning while still honoring the spirit of the guideline. Prioritize clarity and smooth prose over mechanical adherence when necessary."
 )
 

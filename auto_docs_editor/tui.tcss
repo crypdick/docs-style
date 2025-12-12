@@ -1,0 +1,90 @@
+Screen {
+    background: $surface;
+}
+
+#main-container {
+    height: 100%;
+    width: 100%;
+}
+
+#info-panel {
+    height: auto;
+    padding: 1;
+    background: $boost;
+    border: solid $primary;
+}
+
+#diff-container {
+    height: 1fr;
+    padding: 1;
+    border: solid $accent;
+}
+
+#button-panel {
+    height: auto;
+    padding: 1;
+    background: $panel;
+}
+
+.diff-inline {
+    height: auto;
+    padding: 1;
+    background: $surface;
+    border: solid $primary;
+}
+
+DiffView {
+    height: auto;
+}
+
+.edit-area {
+    height: auto;
+    border: solid $success;
+}
+
+.edit-label {
+    margin-top: 1;
+}
+
+.reason {
+    padding: 1;
+    background: $accent 20%;
+    margin-bottom: 1;
+}
+
+Button {
+    margin: 0 1;
+}
+
+.button-accept {
+    background: $success;
+}
+
+.button-reject {
+    background: $error;
+}
+
+.button-ignore {
+    background: $primary;
+}
+
+.button-skip {
+    background: $warning;
+}
+
+RejectionModal {
+    align: center middle;
+}
+
+.modal-content {
+    width: 60%;
+    height: auto;
+    border: thick $background 80%;
+    background: $surface;
+    padding: 2;
+}
+
+#reason-input {
+    height: 10;
+    margin: 1 0;
+}
