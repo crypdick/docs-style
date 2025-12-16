@@ -412,7 +412,11 @@ class AutoDocsEditorTUI(App):
             )
             raise e
 
-        # After Vale check, start processing guides (call as a worker method)
+        # After Vale check, start processing guides from the main thread
+        self.call_from_thread(self._start_processing_after_vale)
+
+    def _start_processing_after_vale(self) -> None:
+        """Helper to start processing from main thread after Vale check."""
         self.start_processing_guide()
 
     @work(exclusive=True, thread=True)

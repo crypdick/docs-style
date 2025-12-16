@@ -183,6 +183,67 @@ If you see `[gw1] node down: Not properly terminated` or silent crashes during p
     - Missing `await` in async handlers.
     - Infinite recursion in properties or `compose()`.
 
+### Worker Thread Transitions
+
+When a `@work(thread=True)` worker needs to start another async worker, use `call_from_thread()` to properly schedule it on the main event loop:
+
+```python
+# ❌ Bad: Directly calling async worker from thread worker
+@work(exclusive=True, thread=True)
+def run_background_task(self) -> None:
+    # Do blocking work...
+    self.start_next_worker()  # Never gets scheduled!
+
+# ✅ Good: Use call_from_thread to schedule on main thread
+@work(exclusive=True, thread=True)
+def run_background_task(self) -> None:
+    # Do blocking work...
+    self.call_from_thread(self._start_next_worker)
+
+def _start_next_worker(self) -> None:
+    """Helper to start async worker from main thread."""
+    self.start_next_worker()  # Now properly scheduled
+```
+
+**Why this matters:**
+
+- Async `@work` methods must be scheduled on the main event loop
+- Calling them directly from a thread worker doesn't schedule them
+- The app appears to hang because the next worker never starts
+- Tests with `MagicMock` controllers won't catch this (mocks succeed silently)
+
+**Testing worker transitions:**
+
+Use real controllers (not `MagicMock`) and verify state progression:
+
+```python
+# ✅ Test that catches worker transition bugs
+@pytest.mark.asyncio
+async def test_worker_transition(tmp_path):
+    controller = ReviewController(...)  # Real controller, not MagicMock
+
+    processing_started = False
+
+    async def track_processing(*args, **kwargs):
+        nonlocal processing_started
+        processing_started = True
+
+    with patch("auto_docs_editor.tui.process_style_guide", side_effect=track_processing):
+        app = AutoDocsEditorTUI(controller)
+
+        async with app.run_test() as pilot:
+            await drain_pilot(pilot, timeout=2.0)
+
+            # Verify transition actually happened
+            await wait_for_condition(
+                pilot,
+                lambda: processing_started,
+                timeout=3.0,
+            )
+```
+
+See `docs/bug-analysis-vale-transition.md` for a real-world example of this bug.
+
 ### Reliable Modal Results
 
 In integration tests, `await app.push_screen(screen)` might sometimes return `None` unexpectedly or race with the worker result. A robust pattern in application code is to push the screen and then explicitly await its dismissal.
@@ -636,6 +697,8 @@ class TestLoadingScreen(BaseScreen):
 | Stale state after interaction | Use `lambda: pilot.app.screen.property` not captured screen reference |
 | Worker crashes with screen loops | Use `@pytest.mark.parametrize` instead of looping over screens in test |
 | Deadlock when pushing screen | Use `self.run_worker(self.app.push_screen(...))` in app code |
+| App hangs after thread worker completes | Use `call_from_thread()` to schedule next async worker from thread worker |
+| MagicMock hides worker transition bugs | Use real controllers in integration tests, not `MagicMock` |
 
 ---
 

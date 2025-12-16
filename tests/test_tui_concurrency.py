@@ -6,6 +6,10 @@ from textual.widgets import TextArea
 
 from auto_docs_editor.controller import ReviewController
 from auto_docs_editor.tui import AutoDocsEditorTUI
+from tests.helpers.textual import wait_for_condition
+
+# Run these tests serially to avoid timing issues with UI mounting
+pytestmark = pytest.mark.xdist_group(name="tui_concurrency_tests")
 
 
 @pytest.mark.asyncio
@@ -117,7 +121,24 @@ async def test_user_edits_are_preserved_with_concurrency(tmp_path):
             task1 = asyncio.create_task(review_1())
             task2 = asyncio.create_task(review_2())
 
-            await asyncio.sleep(0.1)
+            # Wait for the diff UI to be fully rendered
+            await wait_for_condition(
+                pilot,
+                lambda: app.current_proposal is not None and app.current_proposal[1] == "Change 1",
+                timeout=2.0,
+            )
+
+            # Wait for DiffView and its TextArea to be mounted
+            # The DiffView is mounted asynchronously in show_diff_ui
+            await pilot.pause()
+
+            def text_area_exists():
+                try:
+                    return len(app.query("TextArea.edit-area")) > 0
+                except Exception:
+                    return False
+
+            await wait_for_condition(pilot, text_area_exists, timeout=3.0)
 
             # Confirm we are on Change 1
             assert app.current_proposal[1] == "Change 1"
@@ -125,6 +146,14 @@ async def test_user_edits_are_preserved_with_concurrency(tmp_path):
             # User edits the text area
             text_area = app.query_one("TextArea.edit-area", TextArea)
             text_area.load_text("Change 1 Modified")
+
+            # Accept
+            await pilot.press("a")
+
+            result1 = await task1
+            # Should be modified
+            assert result1["status"] == "modified"
+            assert result1["new_text"] == "Change 1 Modified"
 
             # Accept
             await pilot.press("a")
