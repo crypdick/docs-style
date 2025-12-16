@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+from pathlib import Path
 
 from loguru import logger
 from textual import work
@@ -452,6 +453,16 @@ def run() -> None:
         ),
     )
     args = parser.parse_args()
+
+    # Validate file exists before setting up logging (so error is visible to user)
+    target_path = Path(args.markdown_document).expanduser().resolve()
+    if not target_path.exists():
+        print(f"Error: File not found: {target_path}", file=sys.stderr)
+        print("Please check that the file exists and the path is correct.", file=sys.stderr)
+        sys.exit(1)
+    if not target_path.is_file():
+        print(f"Error: Path is not a file: {target_path}", file=sys.stderr)
+        sys.exit(1)
 
     # Setup logging (TUI mode - only log to file, not to stdout)
     log_file = setup_logging(tui_mode=True)
