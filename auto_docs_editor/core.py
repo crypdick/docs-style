@@ -137,10 +137,6 @@ class DocumentSession:
         # We use \r?\n to match \n or \r\n
         pattern_str = r"\r?\n".join(regex_parts)
 
-        # Compile regex with multiline flag?
-        # No, we are building the full block regex explicitly.
-        # But we need to handle the case where the document has different newlines.
-
         try:
             pattern = re.compile(pattern_str)
             matches = list(pattern.finditer(self.current_content))
