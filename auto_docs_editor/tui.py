@@ -87,8 +87,8 @@ class AutoDocsEditorTUI(App):
         yield Footer()
 
     def on_mount(self) -> None:
-        """Process the first style guide when the app starts."""
-        self.start_processing_guide()
+        """Run initial Vale check and then process the first style guide."""
+        self.run_initial_vale_check()
 
     async def on_edit_applied(self, content: str) -> None:
         """Callback for when an edit is applied to the session."""
@@ -394,6 +394,26 @@ class AutoDocsEditorTUI(App):
         # Run Vale enforcement
         activity_log.write("\n[bold]Running Vale enforcement...[/bold]")
         self.run_vale_enforcement()
+
+    @work(exclusive=True, thread=True)
+    def run_initial_vale_check(self) -> None:
+        """Run initial Vale check before processing style guides."""
+        self.call_from_thread(
+            self.log_activity, "[bold cyan]Running initial Vale check...[/bold cyan]"
+        )
+        try:
+            self.controller.run_vale()
+            self.call_from_thread(
+                self.log_activity, "[green]✓ Initial Vale check complete.[/green]"
+            )
+        except Exception as e:
+            self.call_from_thread(
+                self.log_activity, f"[bold red]✗ Initial Vale check failed: {e}[/bold red]"
+            )
+            raise e
+
+        # After Vale check, start processing guides (call as a worker method)
+        self.start_processing_guide()
 
     @work(exclusive=True, thread=True)
     def run_vale_enforcement(self) -> None:
