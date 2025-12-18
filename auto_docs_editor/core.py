@@ -381,7 +381,7 @@ async def handle_edit_proposal(
                 except Exception as e:
                     logger.error(f"Failed to score Langfuse trace: {e}")
 
-            return f"User rejected the proposal. Reason given: {rejection_reason}. Move on to the next issue."
+            return f"User rejected the proposal. Reason given: {rejection_reason}. If the user provided feedback, incorporate that feedback and try again. If the user ignored your change, move on to the next proposed change. If you do not respond with a tool call, it will be assumed that you have no more edit proposals and the session will end."
     else:
         # Non-interactive mode: Apply immediately (no context expansion to stay faithful to agent request)
         logger.info(f"Agent proposing edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n")
