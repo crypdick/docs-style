@@ -20,8 +20,11 @@ async def test_update_stats_label(tmp_path):
         seen_edits=set(),
     )
 
-    # Mock get_langfuse_handler to prevent import errors or side effects
-    with patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None):
+    # Mock dependencies and checks that require API keys
+    with (
+        patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("auto_docs_editor.controller.enforce_vale_style"),
+    ):
         app = AutoDocsEditorTUI(controller)
 
         async with app.run_test() as pilot:

@@ -6,7 +6,7 @@ from textual.widgets import TextArea
 from auto_docs_editor.controller import ReviewController
 from auto_docs_editor.tui import AutoDocsEditorTUI
 from auto_docs_editor.widgets import RejectionModal
-from tests.helpers.textual import drain_pilot, press_and_drain, wait_for_condition
+from tests.helpers.textual import click_and_drain, drain_pilot, press_and_drain, wait_for_condition
 
 
 @pytest.mark.asyncio
@@ -69,8 +69,7 @@ async def test_rejection_ui_update_race(tmp_path):
             reason_input.load_text("My Reason")
 
             # 5. Confirm rejection
-            await pilot.click("#confirm")
-            await drain_pilot(pilot)
+            await click_and_drain(pilot, "#confirm")
 
             # 6. Wait for second proposal in state
             await wait_for_condition(

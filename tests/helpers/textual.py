@@ -56,6 +56,12 @@ async def press_and_drain(pilot, *keys: str) -> None:
     await drain_pilot(pilot)
 
 
+async def click_and_drain(pilot, selector: str) -> None:
+    """Click a widget and wait for any resulting UI work to finish."""
+    await pilot.click(selector)
+    await drain_pilot(pilot)
+
+
 async def focus_and_drain(widget: Any, pilot) -> None:
     """Focus a widget and wait for focus/worker side effects to settle."""
     widget.focus()

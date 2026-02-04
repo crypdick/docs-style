@@ -7,7 +7,7 @@ from auto_docs_editor.controller import ReviewController
 from tests.helpers.textual import drain_pilot
 
 
-# Mock external dependencies
+# Mock external dependencies and checks that require API keys
 @pytest.fixture
 def mock_dependencies():
     with (
@@ -16,6 +16,7 @@ def mock_dependencies():
         patch("auto_docs_editor.tui.load_and_validate_target") as mock_load,
         patch("auto_docs_editor.tui.setup_logging"),
         patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("auto_docs_editor.controller.enforce_vale_style"),
     ):
         # Setup mocks
         mock_process.return_value = None  # async mock if needed
