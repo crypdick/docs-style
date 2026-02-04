@@ -32,6 +32,9 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         "If a Vale error is too pedantic, false positive, or makes the text worse/awkward, you may ignore it.\n"
         "If you determine that ALL remaining errors are pedantic or should be ignored, strictly output the single word: PEDANTIC\n"
         "Otherwise, output the FULL corrected markdown document. Do not include any markdown fences (like ```markdown) or conversational text.\n\n"
+        "CRITICAL: Preserve all existing link syntax EXACTLY as-is. This includes:\n"
+        "- RST-style links: `Link Text <URL>`__ (note the double underscore __ at the end)\n"
+        "- Markdown links: [Link Text](URL)\n"
         "Errors:\n{errors}\n\n"
         "Document:\n{document}"
     )
