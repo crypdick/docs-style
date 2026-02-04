@@ -50,6 +50,10 @@ class AutoDocsEditorTUI(App):
         self.is_quitting = False
         self.current_proposal: tuple[str, str, str] | None = None
 
+        # Error recovery state - when True, 's' or 'q' will resolve the error
+        self.in_error_state = False
+        self.error_recovery_event = asyncio.Event()
+
         handler = get_langfuse_handler()
         if handler:
             self.callbacks.append(handler)
@@ -142,9 +146,13 @@ class AutoDocsEditorTUI(App):
             logger.error(f"Error processing style guide: {e}")
             self.log_activity(f"[bold red]Error:[/bold red] {e}")
             await self.show_error(str(e))
-            return
 
-        # Guide processing finished
+            # Wait for user to press 's' to skip or 'q' to quit
+            should_continue = await self.wait_for_error_recovery()
+            if not should_continue:
+                return  # User quit
+
+        # Guide processing finished (or error was skipped)
         await self.save_and_next_guide()
 
     async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
@@ -284,6 +292,12 @@ class AutoDocsEditorTUI(App):
 
     def action_ignore(self) -> None:
         """Handle ignore action (skip single edit) from UI."""
+        # Handle error recovery state - ignore error and continue with same guide
+        if self.in_error_state:
+            self.log_activity("[bold yellow]↷ Ignored error[/bold yellow]")
+            self.error_recovery_event.set()
+            return
+
         if not self.review_event.is_set():
             self.controller.total_rejected += 1
             self.review_decision = {"status": "rejected", "reason": "Ignored by user"}
@@ -293,6 +307,12 @@ class AutoDocsEditorTUI(App):
 
     def action_skip_guide(self) -> None:
         """Skip the rest of the current guide."""
+        # Handle error recovery state
+        if self.in_error_state:
+            self.log_activity("[dim]⏭ Skipped (after error)[/dim]")
+            self.error_recovery_event.set()
+            return
+
         if not self.review_event.is_set():
             self.review_decision = {"status": "rejected", "reason": "User skipped remaining edits."}
             self.review_event.set()
@@ -301,7 +321,12 @@ class AutoDocsEditorTUI(App):
     def action_quit(self) -> None:
         """Handle quit action."""
         self.is_quitting = True
-        # Unblock any waiting threads
+
+        # Unblock error recovery if waiting
+        if self.in_error_state:
+            self.error_recovery_event.set()
+
+        # Unblock any waiting review
         if not self.review_event.is_set():
             self.review_decision = {"status": "rejected", "reason": "Application quitting"}
             self.review_event.set()
@@ -445,10 +470,28 @@ class AutoDocsEditorTUI(App):
         await diff_container.mount(
             Label(
                 f"\n\n[bold red]Error:[/bold red]\n\n{error}\n\n"
-                "Press 'q' to quit or 's' to skip to next guide.",
+                "Press 'i' to ignore and continue, 's' to skip to next guide, or 'q' to quit.",
                 id="diff-content",
             )
         )
+
+    async def wait_for_error_recovery(self) -> bool:
+        """Wait for user to decide what to do after an error.
+
+        Returns:
+            True if user wants to continue (skip to next guide), False if quitting.
+        """
+        self.in_error_state = True
+        self.error_recovery_event.clear()
+
+        logger.info("Waiting for user to skip or quit after error...")
+        await self.error_recovery_event.wait()
+
+        self.in_error_state = False
+
+        if self.is_quitting:
+            return False
+        return True
 
 
 def run() -> None:

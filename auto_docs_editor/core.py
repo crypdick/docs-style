@@ -167,7 +167,7 @@ class DocumentSession:
             if len(fuzzy_matches) > 1:
                 msg = f"Edit failed: Exact text not found, and fuzzy match is ambiguous ({len(fuzzy_matches)} matches found)."
             else:
-                msg = f"Edit failed: Text ```{before}``` not found in document."
+                msg = "Edit failed: Text not found in document. Check for whitespace differences or try a smaller snippet."
 
             logger.error(msg)
             self.failed_edits.append(msg)
@@ -361,7 +361,7 @@ async def handle_edit_proposal(
 
     best_match = session.find_best_match(before)
     if not best_match:
-        msg = f"Edit failed: Text ```{before}``` not found in document."
+        msg = "Edit failed: Text not found in document. Check for whitespace differences or try a smaller snippet."
         logger.error(msg)
         raise RuntimeError(msg)
 
