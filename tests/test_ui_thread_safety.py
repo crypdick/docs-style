@@ -2,35 +2,48 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
+from auto_docs_editor.controller import ReviewController
+from auto_docs_editor.tui import AutoDocsEditorTUI
+from tests.helpers.textual import drain_pilot
+
 
 @pytest.mark.asyncio
-async def test_ask_user_review_thread_safety(app):
+async def test_ask_user_review_thread_safety(tmp_path):
     """
     Regression test: Ensure ask_user_review handles being called from the main thread
     without raising 'call_from_thread method must run in a different thread' error.
     """
-    with patch("auto_docs_editor.tui.logger.error") as mock_error:
+    # Create real files and controller to avoid MagicMock issues
+    doc_path = tmp_path / "test.md"
+    doc_path.write_text("Hello World")
+    style_path = tmp_path / "style_guide.md"
+    style_path.write_text("Style guide content")
+
+    controller = ReviewController(
+        document_path=doc_path,
+        style_pages=[style_path],
+        seen_edits=set(),
+    )
+
+    # Mock dependencies and checks that require API keys
+    with (
+        patch("auto_docs_editor.tui.process_style_guide"),
+        patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("auto_docs_editor.controller.enforce_vale_style"),
+        patch("auto_docs_editor.tui.logger.error") as mock_error,
+    ):
+        app = AutoDocsEditorTUI(controller)
+
         async with app.run_test() as pilot:
-            # Just calling the method directly from the main thread
-            # This simulates what happens when start_processing_guide (async worker on main loop) calls it.
+            await drain_pilot(pilot)
 
-            # We need to wrap it in a try/except because if the second call_from_thread (lines 175/178)
-            # triggers and IS NOT guarded (if threading.get_ident() mismatch or AttributeError), it might raise.
-            # But likely in this test setup, threading.get_ident() matches, so it goes to line 173 (direct call).
-            # So only the FIRST call_from_thread (line 160) should fail and be caught.
-
-            # Note: ask_user_review awaits review_event.wait(). We need to set it or the test will hang.
-            # We can schedule a task to set the event, or just rely on timeout/mocking?
-            # Or we can just let it hang? No, we need it to return or at least reach the error point.
-            # The error point is BEFORE the wait.
-
-            # But if it waits, the test will hang.
-            # We can mock review_event.wait to return immediately.
-
+            # Mock review_event.wait to avoid hanging - we just want to test
+            # that ask_user_review can be called without thread safety errors
             app.review_event.wait = AsyncMock()
 
             await app.ask_user_review("before", "after", "reason")
 
+            # Verify no thread-related errors were logged
             found = False
             for call in mock_error.call_args_list:
                 msg = str(call[0][0])
