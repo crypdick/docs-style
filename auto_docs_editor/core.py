@@ -7,12 +7,14 @@ import os
 import re
 from collections.abc import Callable
 from typing import Any
+from uuid import UUID
 
 try:
     from langchain.agents import AgentExecutor, create_tool_calling_agent
 except ImportError:
     # Fallback for newer langchain versions (1.1.0+)
     from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
@@ -26,6 +28,85 @@ except ImportError:
     LangfuseCallbackHandler = None
 
 from settings import MODEL_NAME
+
+
+class LoguruCallbackHandler(BaseCallbackHandler):
+    """Callback handler that routes langchain agent actions to loguru.
+
+    This replaces the `verbose=True` flag on AgentExecutor, which writes directly
+    to stdout. Writing to stdout conflicts with Textual TUI applications that also
+    use stdout for rendering, causing the display to freeze or become corrupted.
+
+    By using a callback handler instead, we capture the same debugging information
+    but route it to the log file via loguru, keeping stdout clean for the TUI.
+    """
+
+    def on_chain_start(
+        self,
+        serialized: dict[str, Any],
+        inputs: dict[str, Any],
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> None:
+        """Log when a chain starts."""
+        chain_name = serialized.get("name", serialized.get("id", ["Unknown"])[-1])
+        # Only log top-level chain starts (no parent) to reduce noise
+        if parent_run_id is None:
+            logger.debug(f"[Chain] Starting: {chain_name}")
+
+    def on_chain_end(
+        self,
+        outputs: dict[str, Any],
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> None:
+        """Log when a chain ends."""
+        if parent_run_id is None:
+            logger.debug("[Chain] Finished")
+
+    def on_tool_start(
+        self,
+        serialized: dict[str, Any],
+        input_str: str,
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> None:
+        """Log when a tool is invoked."""
+        tool_name = serialized.get("name", "unknown_tool")
+        # Truncate very long inputs for readability
+        display_input = input_str[:500] + "..." if len(input_str) > 500 else input_str
+        logger.debug(f"[Tool] Invoking: {tool_name}")
+        logger.debug(f"[Tool] Input: {display_input}")
+
+    def on_tool_end(
+        self,
+        output: str,
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> None:
+        """Log when a tool returns."""
+        # Truncate very long outputs for readability
+        display_output = output[:500] + "..." if len(output) > 500 else output
+        logger.debug(f"[Tool] Output: {display_output}")
+
+    def on_tool_error(
+        self,
+        error: BaseException,
+        *,
+        run_id: UUID,
+        parent_run_id: UUID | None = None,
+        **kwargs: Any,
+    ) -> None:
+        """Log tool errors."""
+        logger.warning(f"[Tool] Error: {error}")
 
 
 class DocumentSession:
@@ -459,7 +540,17 @@ async def process_style_guide(
     )
 
     agent = create_tool_calling_agent(llm, tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, max_iterations=50)
+
+    # IMPORTANT: verbose must be False to avoid stdout pollution.
+    # Langchain's verbose=True writes directly to stdout, which conflicts with
+    # Textual TUI applications that also use stdout for rendering. This causes
+    # the TUI display to freeze or become corrupted.
+    #
+    # Instead, we use LoguruCallbackHandler to capture the same debugging
+    # information and route it to the log file. This keeps stdout clean while
+    # preserving full visibility into agent actions for debugging.
+    callbacks.append(LoguruCallbackHandler())
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False, max_iterations=50)
 
     logger.info("Starting agent loop...")
 

@@ -6,7 +6,7 @@ from textual.widgets import TextArea
 
 from auto_docs_editor.controller import ReviewController
 from auto_docs_editor.tui import AutoDocsEditorTUI
-from tests.helpers.textual import wait_for_condition
+from tests.helpers.textual import drain_pilot, press_and_drain, wait_for_condition
 
 # Run these tests serially to avoid timing issues with UI mounting
 pytestmark = pytest.mark.xdist_group(name="tui_concurrency_tests")
@@ -23,13 +23,14 @@ async def test_concurrent_reviews_are_serialized(tmp_path):
     style_path = tmp_path / "style_guide.md"
     style_path.write_text("Style guide content")
 
-    # Mock dependencies
+    # Mock dependencies and checks that require API keys
     with (
         patch("auto_docs_editor.tui.process_style_guide"),
         patch("auto_docs_editor.tui.get_style_guides", return_value=[style_path]),
         patch("auto_docs_editor.tui.load_and_validate_target"),
         patch("auto_docs_editor.tui.setup_logging"),
         patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("auto_docs_editor.controller.enforce_vale_style"),
     ):
         controller = ReviewController(
             document_path=doc_path,
@@ -39,44 +40,44 @@ async def test_concurrent_reviews_are_serialized(tmp_path):
         app = AutoDocsEditorTUI(controller)
 
         async with app.run_test() as pilot:
-            await pilot.pause()
+            await drain_pilot(pilot)
 
             # Define two concurrent review tasks
             async def review_1():
                 return await app.ask_user_review("Original", "Change 1", "Reason 1")
 
             async def review_2():
-                # Yield to ensure review_1 grabs lock first if they start same time
-                await asyncio.sleep(0.01)
+                # Yield control to ensure review_1 grabs lock first
+                await drain_pilot(pilot)
                 return await app.ask_user_review("Original", "Change 2", "Reason 2")
 
             # Launch both tasks
             task1 = asyncio.create_task(review_1())
             task2 = asyncio.create_task(review_2())
 
-            # Give them time to settle
-            await asyncio.sleep(0.1)
-
-            # At this point, review_1 should have the lock and be showing "Change 1".
-            # review_2 should be waiting on the lock.
-
-            assert app.current_proposal is not None
-            assert app.current_proposal[1] == "Change 1"
+            # Wait for first proposal to appear
+            await wait_for_condition(
+                pilot,
+                lambda: app.current_proposal is not None and app.current_proposal[1] == "Change 1",
+                timeout=2.0,
+            )
 
             # Accept the first proposal
-            await pilot.press("a")
+            await press_and_drain(pilot, "a")
 
-            # Wait a bit for task 1 to finish and task 2 to start
+            # Wait for task 1 to complete
             result1 = await task1
             assert result1["status"] == "accepted"
 
-            await asyncio.sleep(0.1)
-
-            # Now review_2 should be active and showing "Change 2"
-            assert app.current_proposal[1] == "Change 2"
+            # Wait for second proposal to appear
+            await wait_for_condition(
+                pilot,
+                lambda: app.current_proposal[1] == "Change 2",
+                timeout=2.0,
+            )
 
             # Accept the second proposal
-            await pilot.press("a")
+            await press_and_drain(pilot, "a")
 
             result2 = await task2
             assert result2["status"] == "accepted"
@@ -93,13 +94,14 @@ async def test_user_edits_are_preserved_with_concurrency(tmp_path):
     style_path = tmp_path / "style_guide.md"
     style_path.write_text("Style guide content")
 
-    # Mock dependencies
+    # Mock dependencies and checks that require API keys
     with (
         patch("auto_docs_editor.tui.process_style_guide"),
         patch("auto_docs_editor.tui.get_style_guides", return_value=[style_path]),
         patch("auto_docs_editor.tui.load_and_validate_target"),
         patch("auto_docs_editor.tui.setup_logging"),
         patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("auto_docs_editor.controller.enforce_vale_style"),
     ):
         controller = ReviewController(
             document_path=doc_path,
@@ -109,67 +111,56 @@ async def test_user_edits_are_preserved_with_concurrency(tmp_path):
         app = AutoDocsEditorTUI(controller)
 
         async with app.run_test() as pilot:
-            await pilot.pause()
+            await drain_pilot(pilot)
 
             async def review_1():
                 return await app.ask_user_review("Original", "Change 1", "Reason 1")
 
             async def review_2():
-                await asyncio.sleep(0.01)
+                # Yield control to ensure review_1 grabs lock first
+                await drain_pilot(pilot)
                 return await app.ask_user_review("Original", "Change 2", "Reason 2")
 
             task1 = asyncio.create_task(review_1())
             task2 = asyncio.create_task(review_2())
 
-            # Wait for the diff UI to be fully rendered
+            # Wait for first proposal to appear
             await wait_for_condition(
                 pilot,
                 lambda: app.current_proposal is not None and app.current_proposal[1] == "Change 1",
                 timeout=2.0,
             )
 
-            # Wait for DiffView and its TextArea to be mounted
-            # The DiffView is mounted asynchronously in show_diff_ui
-            await pilot.pause()
-
-            def text_area_exists():
+            # Wait for DiffView's TextArea to be mounted
+            def text_area_mounted():
                 try:
                     return len(app.query("TextArea.edit-area")) > 0
                 except Exception:
                     return False
 
-            await wait_for_condition(pilot, text_area_exists, timeout=3.0)
-
-            # Confirm we are on Change 1
-            assert app.current_proposal[1] == "Change 1"
+            await wait_for_condition(pilot, text_area_mounted, timeout=2.0)
 
             # User edits the text area
             text_area = app.query_one("TextArea.edit-area", TextArea)
             text_area.load_text("Change 1 Modified")
 
-            # Accept
-            await pilot.press("a")
+            # Accept the modified proposal
+            await press_and_drain(pilot, "a")
 
             result1 = await task1
-            # Should be modified
+            # Should be modified since user changed the text
             assert result1["status"] == "modified"
             assert result1["new_text"] == "Change 1 Modified"
 
-            # Accept
-            await pilot.press("a")
-
-            result1 = await task1
-            # Should be modified
-            assert result1["status"] == "modified"
-            assert result1["new_text"] == "Change 1 Modified"
-
-            await asyncio.sleep(0.1)
-
-            # Now on Change 2
-            assert app.current_proposal[1] == "Change 2"
+            # Wait for second proposal to appear
+            await wait_for_condition(
+                pilot,
+                lambda: app.current_proposal[1] == "Change 2",
+                timeout=2.0,
+            )
 
             # User accepts Change 2 as is
-            await pilot.press("a")
+            await press_and_drain(pilot, "a")
 
             result2 = await task2
             assert result2["status"] == "accepted"
