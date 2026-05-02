@@ -8,17 +8,37 @@
 Convert the curated Google Developer Documentation Style Guide rules and
 Vale lint setup in this repo into a shareable Claude Code plugin so any
 Claude Code user can apply the rules to a markdown document without
-running the bundled Python LLM pipeline. The Python pipeline stays
-intact for users who prefer it.
+running the bundled Python LLM pipeline. Consolidate naming around
+`docs-style` across the repo, GitHub, Python distribution, and plugin.
+The Python pipeline remains intact for users who prefer it.
 
 ## Non-goals
 
-- Removing the Python pipeline (`auto_docs_editor/`, `cli.py`, `tui.py`,
-  `bulk_pr_autodocs.py`, etc.). It remains the canonical CLI/TUI flow.
+- Removing the Python pipeline (`cli.py`, `tui.py`, `bulk_pr_autodocs.py`,
+  etc.). It remains the canonical CLI/TUI flow.
+- Renaming the user's local clone parent directory (`~/src/PERSONAL/auto_docs_editor/`).
+  Renaming would invalidate the active Claude Code session's working dir.
 - Notebook (`.ipynb`) support inside the plugin.
 - Bulk PR automation inside the plugin.
 - Crawler script inside the plugin.
-- Registry publication or plugin CI.
+- Plugin CI / release automation.
+- Publishing the plugin to a registry.
+
+## Naming
+
+| Thing                             | From                                  | To                                      |
+|-----------------------------------|---------------------------------------|-----------------------------------------|
+| GitHub repo                       | `auto_docs_editor`                    | `docs-style`                            |
+| Local clone parent dir            | `~/src/PERSONAL/auto_docs_editor/`    | unchanged (do NOT rename)               |
+| Plugin name                       | (new)                                 | `docs-style`                            |
+| Skill name                        | (new)                                 | `docs-style`                            |
+| Python distribution name          | `auto_docs_editor`                    | `docs-style`                            |
+| Python package directory          | `auto_docs_editor/`                   | `docs_style/`                           |
+| Console script (CLI)              | `auto-docs-edit`                      | `docs-style-edit`                       |
+| Console script (TUI)              | `auto-docs-tui`                       | `docs-style-tui`                        |
+
+Single-skill plugin: skill dir name = plugin name = `docs-style`. Final
+plugin path inside the repo: `docs-style/skills/docs-style/SKILL.md`.
 
 ## Architecture
 
@@ -29,12 +49,13 @@ inside the plugin; the Python pipeline is updated to read from the new
 paths.
 
 ```
-auto_docs_editor/
-├── docs-style/                              # NEW plugin
-│   ├── plugin.json
+~/src/PERSONAL/auto_docs_editor/             # local parent dir UNCHANGED
+├── docs-style/                              # NEW plugin root
+│   ├── .claude-plugin/
+│   │   └── plugin.json
 │   ├── README.md                            # minimal install + usage
 │   └── skills/
-│       └── auto-docs-edit/
+│       └── docs-style/
 │           ├── SKILL.md
 │           ├── .vale.ini                    # git mv from repo root
 │           ├── references/
@@ -45,8 +66,17 @@ auto_docs_editor/
 │           │   └── vale_check.sh
 │           └── vale_styles/                 # git mv from /vale_styles/
 │               └── Google/
-├── auto_docs_editor/                        # existing pkg, paths updated
-├── settings.py                              # STYLE_DIR path updated
+├── docs_style/                              # git mv from auto_docs_editor/
+│   ├── cli.py
+│   ├── core.py
+│   ├── core_vale.py
+│   ├── controller.py
+│   ├── tui.py
+│   └── ... (rest of pkg)
+├── pyproject.toml                           # name + scripts renamed
+├── settings.py                              # STYLE_DIR + new VALE_CONFIG
+├── main.py                                  # imports updated
+├── tests/                                   # imports updated
 └── (rest unchanged)
 ```
 
@@ -56,13 +86,13 @@ Two boundaries:
    the trigger language. Body is process discipline: how to apply rules
    in prefix order, when to call vale, error handling.
 2. **`scripts/vale_check.sh`** — thin shell wrapper. Calls
-   `vale --config=<plugin>/.vale.ini --output=line <doc>`. No LLM,
-   no langchain, no retry loop. Claude reads stdout and edits the doc
-   via the `Edit` tool.
+   `vale --config="$CLAUDE_PLUGIN_ROOT/skills/docs-style/.vale.ini" --output=line <doc>`.
+   No LLM, no langchain, no retry loop. Claude reads stdout and edits
+   the doc via the `Edit` tool.
 
 ## Components
 
-### `docs-style/plugin.json`
+### `docs-style/.claude-plugin/plugin.json`
 
 ```json
 {
@@ -72,19 +102,24 @@ Two boundaries:
   "author": {
     "name": "Ricardo Decal",
     "email": "biz@ricardodecal.com"
-  }
+  },
+  "repository": "https://github.com/<owner>/docs-style",
+  "license": "MIT",
+  "keywords": ["documentation", "style-guide", "google", "vale", "markdown"]
 }
 ```
 
-Skills auto-discovered from `skills/` subdir per plugin convention.
+Skills auto-discovered from `skills/` subdir; no explicit listing in
+`plugin.json`. The `repository` URL placeholder `<owner>` is filled in
+during implementation once the GitHub username is confirmed.
 
-### `docs-style/skills/auto-docs-edit/SKILL.md`
+### `docs-style/skills/docs-style/SKILL.md`
 
 Frontmatter:
 
 ```yaml
 ---
-name: auto-docs-edit
+name: docs-style
 description: Use when user wants to apply Google Developer Documentation
   Style Guide to a markdown file or asks to "fix doc style", "edit docs",
   "review for style guide", "make this match Google style". Applies 16
@@ -104,7 +139,8 @@ Body sections:
      - Read current document.
      - Propose edits via `Edit` tool, applying only that rule.
      - Brief stop: summarize what changed; let user continue / skip / abort.
-  4. After all rules: run `scripts/vale_check.sh <doc>`.
+  4. After all rules: run
+     `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/scripts/vale_check.sh <doc>`.
   5. Read vale output; apply remaining mechanical fixes inline.
   6. Final summary: rules applied, vale errors fixed.
 - **Rule application discipline:**
@@ -126,7 +162,7 @@ Body sections:
   - Later rules may revert earlier rules — expected; that's why prefix
     ordering exists.
 
-### `docs-style/skills/auto-docs-edit/scripts/vale_check.sh`
+### `docs-style/skills/docs-style/scripts/vale_check.sh`
 
 ```bash
 #!/usr/bin/env bash
@@ -138,11 +174,11 @@ SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 exec vale --config="${SKILL_DIR}/.vale.ini" --output=line "$DOC" || true
 ```
 
-Vale-not-installed handling lives in SKILL.md: Claude detects the shell
-error from a missing `vale` binary and falls back per the SKILL.md
-instructions.
+The script computes its own location, so it works whether invoked
+directly, via `${CLAUDE_PLUGIN_ROOT}` from SKILL.md, or from the Python
+pipeline. Vale-not-installed handling lives in SKILL.md instructions.
 
-### `docs-style/skills/auto-docs-edit/.vale.ini`
+### `docs-style/skills/docs-style/.vale.ini`
 
 After `git mv` from repo root, edit `StylesPath` to point at the
 co-located `vale_styles` directory:
@@ -155,35 +191,74 @@ MinAlertLevel = suggestion
 BasedOnStyles = Google
 ```
 
-`StylesPath` is resolved relative to the `.vale.ini` location, so this
-works whether the plugin is run from the repo root or from another
-install location.
+`StylesPath` resolves relative to the `.vale.ini` location, so it works
+whether the plugin is run from the repo root or from another install
+location.
 
 ## Single-source-of-truth strategy
 
-Three artifacts move once via `git mv` and become the canonical copy.
-The Python pipeline reads from the new paths.
+Three artifacts move once via `git mv` and become canonical inside the
+plugin. Two more artifacts (Python pkg dir + repo root files) get
+consolidated to `docs-style` naming. Python pipeline is updated to read
+from the new paths via two new settings constants.
 
 | Artifact          | From                | To                                                            |
 |-------------------|---------------------|---------------------------------------------------------------|
-| Curated rules     | `style/`            | `docs-style/skills/auto-docs-edit/references/style/`          |
-| Vale rule bundle  | `vale_styles/`      | `docs-style/skills/auto-docs-edit/vale_styles/`               |
-| Vale config       | `.vale.ini`         | `docs-style/skills/auto-docs-edit/.vale.ini`                  |
+| Curated rules     | `style/`            | `docs-style/skills/docs-style/references/style/`              |
+| Vale rule bundle  | `vale_styles/`      | `docs-style/skills/docs-style/vale_styles/`                   |
+| Vale config       | `.vale.ini`         | `docs-style/skills/docs-style/.vale.ini`                      |
+| Python pkg        | `auto_docs_editor/` | `docs_style/`                                                 |
 
-Python pipeline edits to reach the new paths:
+Settings/path edits:
 
-1. **`settings.py:8`** — change
+1. **`settings.py`** — change
    `STYLE_DIR = ROOT_DIR / "style"` to
-   `STYLE_DIR = ROOT_DIR / "docs-style/skills/auto-docs-edit/references/style"`.
-2. **`auto_docs_editor/core_vale.py`** — update the `subprocess.run`
-   invocation (around line 48) to pass
-   `--config=<repo_root>/docs-style/skills/auto-docs-edit/.vale.ini`.
-   Compute path from a constant in `settings.py` (`VALE_CONFIG`) for
-   consistency.
+   `STYLE_DIR = ROOT_DIR / "docs-style/skills/docs-style/references/style"`.
+   Add `VALE_CONFIG = ROOT_DIR / "docs-style/skills/docs-style/.vale.ini"`.
+2. **`docs_style/core_vale.py`** — update the `subprocess.run` invocation
+   (line 48 of current `core_vale.py`) to pass
+   `f"--config={VALE_CONFIG}"`. Import `VALE_CONFIG` from `settings`.
 
 Existing tests in `tests/test_workflow.py` mock `STYLE_DIR` and use
-`Path("style/...")` strings only as test fixtures, so no test edits
-should be required. Confirm by running the suite after the move.
+`Path("style/...")` strings only as test fixtures, so no logic edits are
+required there. Only import paths in tests change (`auto_docs_editor` →
+`docs_style`).
+
+## Repo-wide rename
+
+A repo-wide find-replace consolidates names:
+
+- `auto_docs_editor` (snake_case Python pkg) → `docs_style` everywhere
+- `auto-docs-edit` (console script) → `docs-style-edit`
+- `auto-docs-tui` (console script) → `docs-style-tui`
+- `pyproject.toml` `name` field: `auto_docs_editor` → `docs-style`
+
+Touched files (from `grep -rn`):
+- `pyproject.toml` (3 lines: name + 2 scripts)
+- `main.py` (4 occurrences)
+- `README.md` (8 occurrences)
+- `docs_style/cli.py` (3 imports)
+- `docs_style/tui.py` (5 imports)
+- `docs_style/controller.py` (1 import)
+- `docs_style/core_vale.py` (2 imports — `from settings`, `from utils`)
+- `tests/test_tui_concurrency.py` (8 patches)
+- `tests/test_tui_startup.py` (2 patches)
+- `tests/test_workflow.py` (5 patches)
+- `tests/test_notebook.py` (1 import)
+- `tests/conftest.py` (1 import)
+- `tests/<other>` — verify and update any remaining
+- Any docstrings referencing the old name
+
+Verify completeness with
+`grep -rn 'auto_docs_editor\|auto-docs-edit\|auto-docs-tui'` after the
+rename pass.
+
+GitHub side:
+
+- `gh repo rename docs-style` (run by the repo owner from the working dir).
+- `git remote set-url origin <new-url>` to update the local clone.
+- Local clone parent dir stays `~/src/PERSONAL/auto_docs_editor/` for
+  this session; the user can rename later without time pressure.
 
 ## Data flow
 
@@ -198,13 +273,13 @@ user request
                       user approves / rejects / aborts
                  └─> Claude runs scripts/vale_check.sh <doc>
                       vale subprocess emits line-format errors
-                      Claude reads stderr/stdout
+                      Claude reads stdout
                       Claude applies inline fixes
                  └─> Claude prints summary
 ```
 
-No persistent state. No log files. No langfuse. Conversation history
-is the audit log.
+No persistent state. No log files. No langfuse. Conversation history is
+the audit log.
 
 ## Error handling
 
@@ -221,32 +296,40 @@ All error paths handled by SKILL.md instructions to Claude (no code):
 
 ## Testing
 
-- **Smoke install** — `claude plugin install ./docs-style` (or
-  equivalent local install path) loads without errors.
+- **Smoke install** — install the plugin via the local plugin install
+  flow; confirm it loads without errors.
 - **Trigger test** — start a Claude Code session, ask "fix doc style on
   `<some>.md`"; verify the skill activates.
 - **End-to-end** — tiny markdown fixture; run skill; verify staged
   edits applied; verify `vale_check.sh` invoked; verify summary.
-- **Python regression** — `uv run pytest` passes after the path moves
-  (existing suite, no edits).
+- **Python regression** — `uv run pytest` passes after the renames and
+  path moves. The suite already mocks `STYLE_DIR` and patches imports;
+  only import targets need updating.
 - **Vale config flag** — confirm `vale --config=<path> --output=line`
-  works as expected on the host's installed vale version, before
-  shipping.
+  works on the host's installed vale version, before shipping.
 
 ## Scope
 
 **In scope:**
 
-- Create `docs-style/` plugin tree.
-- Create `plugin.json`, `SKILL.md`, `vale_check.sh`, plugin `README.md`.
-- `git mv` of `style/`, `vale_styles/`, `.vale.ini`.
-- Update `settings.py` and `core_vale.py` to new paths.
-- Update root repo `README.md` to mention the plugin path.
+- Create `docs-style/` plugin tree with `.claude-plugin/plugin.json`.
+- Create `SKILL.md`, `vale_check.sh`, plugin `README.md`.
+- `git mv` of `style/`, `vale_styles/`, `.vale.ini`,
+  `auto_docs_editor/` → `docs_style/`.
+- Repo-wide find-replace of `auto_docs_editor` / `auto-docs-edit` /
+  `auto-docs-tui` to `docs_style` / `docs-style-edit` / `docs-style-tui`.
+- Update `settings.py` with new `STYLE_DIR` + `VALE_CONFIG`.
+- Update `core_vale.py` subprocess invocation to pass `--config`.
+- Update root repo `README.md` to mention plugin path + new console
+  script names.
+- `gh repo rename docs-style` + `git remote set-url`.
 - Run existing Python test suite to verify regressions.
 
 **Out of scope:**
 
-- Removing or refactoring the Python pipeline beyond the path edits above.
+- Renaming the local clone parent directory.
+- Removing or refactoring the Python pipeline beyond the path/import
+  edits above.
 - Notebook (`.ipynb`) support inside the plugin.
 - Bulk PR automation inside the plugin.
 - Crawler script inside the plugin.
@@ -255,9 +338,7 @@ All error paths handled by SKILL.md instructions to Claude (no code):
 
 ## Open questions / verification before implementation
 
-1. Confirm `vale --config=<path>` flag exists on current vale releases
-   (manual check during implementation; Vale documents this flag, but
-   verify on the host before merging).
-2. Confirm the plugin loader auto-discovers skills under `skills/` with
-   no explicit listing in `plugin.json`. If the loader requires an
-   explicit declaration, add a `skills` field.
+1. Confirm `vale --config=<path>` flag works on the host's installed
+   vale version. Vale documents this flag, but verify before merging.
+2. Confirm GitHub repo owner / target slug for the rename so the
+   `repository` URL in `plugin.json` is accurate.
