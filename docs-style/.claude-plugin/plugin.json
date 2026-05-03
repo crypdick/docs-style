@@ -1,0 +1,12 @@
+{
+  "name": "docs-style",
+  "version": "0.1.0",
+  "description": "Apply Google Developer Documentation Style Guide to markdown via staged edits + vale lint sweep",
+  "author": {
+    "name": "Ricardo Decal",
+    "email": "biz@ricardodecal.com"
+  },
+  "repository": "https://github.com/crypdick/docs-style",
+  "license": "MIT",
+  "keywords": ["documentation", "style-guide", "google", "vale", "markdown"]
+}
