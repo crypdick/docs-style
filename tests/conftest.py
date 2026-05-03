@@ -1,5 +1,4 @@
 import contextlib
-from unittest.mock import MagicMock
 
 import pytest
 import pytest_asyncio
@@ -32,15 +31,10 @@ def disable_langfuse(monkeypatch):
     pass
 
 
-@pytest.fixture
-def controller():
-    """Provide a default mock controller."""
-    controller = MagicMock()
-    # Mock necessary attributes of controller to avoid crashes during __init__ or on_mount
-    controller.is_finished = False
-    controller.current_guide_path = None
-    controller.progress_str = "0/0"
-    return controller
+# NOTE: No default `controller` fixture is provided here.
+# Tests using the `app` fixture must define their own `controller` fixture.
+# This prevents accidental use of MagicMock controllers which can mask bugs
+# (e.g., MagicMock.is_notebook is truthy, arithmetic on MagicMock returns MagicMock).
 
 
 @pytest_asyncio.fixture
@@ -49,6 +43,9 @@ async def app(controller):
 
     This fixture ensures proper cleanup of the app instance to prevent
     state leakage between tests.
+
+    IMPORTANT: Tests using this fixture must define their own `controller` fixture
+    that provides a real ReviewController instance.
     """
     app_instance = AutoDocsEditorTUI(controller)
 

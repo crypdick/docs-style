@@ -27,3 +27,11 @@ exceptions:
   - VS
   - Windows
   - JSON
+  - Ray Data
+  - Ray Train
+  - Ray Tune
+  - Ray Serve
+  - RLlib
+  - Anyscale
+  - Ray Distributed
+  - PyTorch

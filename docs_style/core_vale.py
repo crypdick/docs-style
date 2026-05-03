@@ -32,6 +32,9 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         "If a Vale error is too pedantic, false positive, or makes the text worse/awkward, you may ignore it.\n"
         "If you determine that ALL remaining errors are pedantic or should be ignored, strictly output the single word: PEDANTIC\n"
         "Otherwise, output the FULL corrected markdown document. Do not include any markdown fences (like ```markdown) or conversational text.\n\n"
+        "CRITICAL: Preserve all existing link syntax EXACTLY as-is. This includes:\n"
+        "- RST-style links: `Link Text <URL>`__ (note the double underscore __ at the end)\n"
+        "- Markdown links: [Link Text](URL)\n"
         "Errors:\n{errors}\n\n"
         "Document:\n{document}"
     )
@@ -52,7 +55,15 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
             )
         except Exception as e:
             logger.error(f"[Vale] Failed to run vale: {e}")
-            return
+            raise RuntimeError(f"Vale execution failed: {e}") from e
+
+        # Check if Vale itself failed (exit code 2 = configuration/syntax error)
+        # Exit code 1 = style violations found (expected)
+        # Exit code 0 = no violations
+        if result.returncode == 2:
+            error_msg = f"[Vale] Configuration error:\n{result.stderr or result.stdout}"
+            logger.error(error_msg)
+            raise RuntimeError(error_msg)
 
         # Parse line output
         output_lines = result.stdout.strip().splitlines()

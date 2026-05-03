@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+from pathlib import Path
 
 from loguru import logger
 from textual import work
@@ -49,6 +50,10 @@ class AutoDocsEditorTUI(App):
         self.is_quitting = False
         self.current_proposal: tuple[str, str, str] | None = None
 
+        # Error recovery state - when True, 's' or 'q' will resolve the error
+        self.in_error_state = False
+        self.error_recovery_event = asyncio.Event()
+
         handler = get_langfuse_handler()
         if handler:
             self.callbacks.append(handler)
@@ -86,8 +91,8 @@ class AutoDocsEditorTUI(App):
         yield Footer()
 
     def on_mount(self) -> None:
-        """Process the first style guide when the app starts."""
-        self.start_processing_guide()
+        """Run initial Vale check and then process the first style guide."""
+        self.run_initial_vale_check()
 
     async def on_edit_applied(self, content: str) -> None:
         """Callback for when an edit is applied to the session."""
@@ -141,9 +146,13 @@ class AutoDocsEditorTUI(App):
             logger.error(f"Error processing style guide: {e}")
             self.log_activity(f"[bold red]Error:[/bold red] {e}")
             await self.show_error(str(e))
-            return
 
-        # Guide processing finished
+            # Wait for user to press 's' to skip or 'q' to quit
+            should_continue = await self.wait_for_error_recovery()
+            if not should_continue:
+                return  # User quit
+
+        # Guide processing finished (or error was skipped)
         await self.save_and_next_guide()
 
     async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
@@ -283,6 +292,12 @@ class AutoDocsEditorTUI(App):
 
     def action_ignore(self) -> None:
         """Handle ignore action (skip single edit) from UI."""
+        # Handle error recovery state - ignore error and continue with same guide
+        if self.in_error_state:
+            self.log_activity("[bold yellow]↷ Ignored error[/bold yellow]")
+            self.error_recovery_event.set()
+            return
+
         if not self.review_event.is_set():
             self.controller.total_rejected += 1
             self.review_decision = {"status": "rejected", "reason": "Ignored by user"}
@@ -292,6 +307,12 @@ class AutoDocsEditorTUI(App):
 
     def action_skip_guide(self) -> None:
         """Skip the rest of the current guide."""
+        # Handle error recovery state
+        if self.in_error_state:
+            self.log_activity("[dim]⏭ Skipped (after error)[/dim]")
+            self.error_recovery_event.set()
+            return
+
         if not self.review_event.is_set():
             self.review_decision = {"status": "rejected", "reason": "User skipped remaining edits."}
             self.review_event.set()
@@ -300,7 +321,12 @@ class AutoDocsEditorTUI(App):
     def action_quit(self) -> None:
         """Handle quit action."""
         self.is_quitting = True
-        # Unblock any waiting threads
+
+        # Unblock error recovery if waiting
+        if self.in_error_state:
+            self.error_recovery_event.set()
+
+        # Unblock any waiting review
         if not self.review_event.is_set():
             self.review_decision = {"status": "rejected", "reason": "Application quitting"}
             self.review_event.set()
@@ -395,6 +421,30 @@ class AutoDocsEditorTUI(App):
         self.run_vale_enforcement()
 
     @work(exclusive=True, thread=True)
+    def run_initial_vale_check(self) -> None:
+        """Run initial Vale check before processing style guides."""
+        self.call_from_thread(
+            self.log_activity, "[bold cyan]Running initial Vale check...[/bold cyan]"
+        )
+        try:
+            self.controller.run_vale()
+            self.call_from_thread(
+                self.log_activity, "[green]✓ Initial Vale check complete.[/green]"
+            )
+        except Exception as e:
+            self.call_from_thread(
+                self.log_activity, f"[bold red]✗ Initial Vale check failed: {e}[/bold red]"
+            )
+            raise e
+
+        # After Vale check, start processing guides from the main thread
+        self.call_from_thread(self._start_processing_after_vale)
+
+    def _start_processing_after_vale(self) -> None:
+        """Helper to start processing from main thread after Vale check."""
+        self.start_processing_guide()
+
+    @work(exclusive=True, thread=True)
     def run_vale_enforcement(self) -> None:
         """Run Vale enforcement in background and log to TUI."""
         self.call_from_thread(self.log_activity, "\n[bold]Starting Vale enforcement...[/bold]")
@@ -420,10 +470,28 @@ class AutoDocsEditorTUI(App):
         await diff_container.mount(
             Label(
                 f"\n\n[bold red]Error:[/bold red]\n\n{error}\n\n"
-                "Press 'q' to quit or 's' to skip to next guide.",
+                "Press 'i' to ignore and continue, 's' to skip to next guide, or 'q' to quit.",
                 id="diff-content",
             )
         )
+
+    async def wait_for_error_recovery(self) -> bool:
+        """Wait for user to decide what to do after an error.
+
+        Returns:
+            True if user wants to continue (skip to next guide), False if quitting.
+        """
+        self.in_error_state = True
+        self.error_recovery_event.clear()
+
+        logger.info("Waiting for user to skip or quit after error...")
+        await self.error_recovery_event.wait()
+
+        self.in_error_state = False
+
+        if self.is_quitting:
+            return False
+        return True
 
 
 def run() -> None:
@@ -452,6 +520,16 @@ def run() -> None:
         ),
     )
     args = parser.parse_args()
+
+    # Validate file exists before setting up logging (so error is visible to user)
+    target_path = Path(args.markdown_document).expanduser().resolve()
+    if not target_path.exists():
+        print(f"Error: File not found: {target_path}", file=sys.stderr)
+        print("Please check that the file exists and the path is correct.", file=sys.stderr)
+        sys.exit(1)
+    if not target_path.is_file():
+        print(f"Error: Path is not a file: {target_path}", file=sys.stderr)
+        sys.exit(1)
 
     # Setup logging (TUI mode - only log to file, not to stdout)
     log_file = setup_logging(tui_mode=True)

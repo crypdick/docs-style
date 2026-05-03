@@ -1,4 +1,3 @@
-import asyncio
 from unittest.mock import patch
 
 import pytest
@@ -7,37 +6,7 @@ from textual.widgets import TextArea
 from docs_style.controller import ReviewController
 from docs_style.tui import AutoDocsEditorTUI
 from docs_style.widgets import RejectionModal
-
-# --- Helpers ---
-
-
-async def drain_pilot(pilot, timeout: float = 1.0) -> None:
-    """Wait for Textual's message queue (and any BaseScreen workers) to settle."""
-    await pilot.pause()
-    try:
-        screen = getattr(pilot.app, "screen", None)
-    except Exception:
-        screen = None
-    wait_for_workers = getattr(screen, "wait_for_workers_idle", None)
-    if callable(wait_for_workers):
-        try:
-            await wait_for_workers(timeout=timeout)
-        except TimeoutError:
-            pass
-
-
-async def wait_for_condition(pilot, predicate, timeout: float = 2.0) -> None:
-    """Poll for a condition without sprinkling raw pilot.pause() loops everywhere."""
-    loop = asyncio.get_running_loop()
-    deadline = loop.time() + timeout
-    while loop.time() < deadline:
-        if predicate():
-            return
-        await drain_pilot(pilot, timeout=max(timeout, 0.5))
-    raise AssertionError("Timed out waiting for condition")
-
-
-# --- Test ---
+from tests.helpers.textual import click_and_drain, drain_pilot, press_and_drain, wait_for_condition
 
 
 @pytest.mark.asyncio
@@ -63,12 +32,14 @@ async def test_rejection_ui_update_race(tmp_path):
         # IMMEDIATE next proposal to trigger potential race with modal dismissal
         await review_callback(before="Original Content", after="Second Proposal", reason="Reason 2")
 
+    # Mock dependencies and checks that require API keys
     with (
         patch("docs_style.tui.process_style_guide", side_effect=mock_process_style_guide),
         patch("docs_style.tui.get_style_guides", return_value=[style_path]),
         patch("docs_style.tui.load_and_validate_target"),
         patch("docs_style.tui.setup_logging"),
         patch("docs_style.tui.get_langfuse_handler", return_value=None),
+        patch("docs_style.controller.enforce_vale_style"),
     ):
         controller = ReviewController(
             document_path=doc_path,
@@ -78,6 +49,8 @@ async def test_rejection_ui_update_race(tmp_path):
         app = AutoDocsEditorTUI(controller)
 
         async with app.run_test() as pilot:
+            await drain_pilot(pilot)
+
             # 1. Wait for first proposal
             await wait_for_condition(
                 pilot,
@@ -86,7 +59,7 @@ async def test_rejection_ui_update_race(tmp_path):
             )
 
             # 2. Reject
-            await pilot.press("r")
+            await press_and_drain(pilot, "r")
 
             # 3. Wait for modal
             await wait_for_condition(pilot, lambda: isinstance(app.screen, RejectionModal))
@@ -96,7 +69,7 @@ async def test_rejection_ui_update_race(tmp_path):
             reason_input.load_text("My Reason")
 
             # 5. Confirm rejection
-            await pilot.click("#confirm")
+            await click_and_drain(pilot, "#confirm")
 
             # 6. Wait for second proposal in state
             await wait_for_condition(

@@ -20,7 +20,7 @@ swap:
   'Google (?:I\-O|IO)': Google I/O
   "tap (?:&|and) hold": touch & hold
   "un(?:check|select)": clear
-  
+
   # New additions from wordlist
   "(?:cURL|curl)": curl
   "(?:HTTPs|https)": HTTPS
@@ -74,7 +74,7 @@ swap:
   "(?:white paper)": whitepaper
   "(?:white space)": whitespace
   "(?:wild card)": wildcard
-  
+
   # Existing rules continued
   above: preceding
   account name: username
@@ -101,12 +101,9 @@ swap:
   check box: checkbox
   CLI: command-line tool
   click on: click|click in
-  Cloud: Google Cloud Platform|GCP
-  Container Engine: Kubernetes Engine
   content type: media type
   curated roles: predefined roles
   data are: data is
-  Developers Console: Google API Console|API Console
   disabled?: turn off|off
   ephemeral IP address: ephemeral external IP address
   fewer data: less data

@@ -74,6 +74,16 @@ def main() -> None:
     if handler:
         callbacks.append(handler)
 
+    # Run initial Vale check before processing style guides
+    logger.info("=" * 80)
+    logger.info("Running initial Vale check...")
+    try:
+        enforce_vale_style(context.target_path)
+        logger.success("Initial Vale check complete.")
+    except Exception as e:
+        logger.error(f"Initial Vale check failed: {e}")
+        raise e
+
     for idx, page_path in enumerate(style_pages, 1):
         # Re-read the document so that any manual edits the user made after the
         # previous iteration are taken into account.

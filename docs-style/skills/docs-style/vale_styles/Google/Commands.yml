@@ -9,4 +9,3 @@ swap:
   '\bRDP\s+(?:into|to)\b': connect using RDP to
   '\bssh\s+(?:into|to)\b': use ssh to connect to
   '\bssh''?ing\b': using ssh
-
