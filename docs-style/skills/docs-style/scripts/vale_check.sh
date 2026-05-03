@@ -9,4 +9,4 @@
 set -euo pipefail
 DOC="${1:?usage: vale_check.sh <document.md>}"
 SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-exec vale --config="${SKILL_DIR}/.vale.ini" --output=line "$DOC" || true
+vale --config="${SKILL_DIR}/.vale.ini" --output=line "$DOC" || true
