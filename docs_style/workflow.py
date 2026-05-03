@@ -8,7 +8,7 @@ from typing import NamedTuple
 from dotenv import load_dotenv
 from loguru import logger
 
-from auto_docs_editor.notebook import NotebookHandler, ensure_jupytext_installed, is_notebook
+from docs_style.notebook import NotebookHandler, ensure_jupytext_installed, is_notebook
 from settings import FINAL_PASS_MARKER, STYLE_DIR
 
 

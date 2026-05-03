@@ -1,4 +1,4 @@
-"""Controller logic for the auto_docs_editor workflow."""
+"""Controller logic for the docs_style workflow."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from auto_docs_editor.core import DocumentSession
-from auto_docs_editor.core_vale import enforce_vale_style
-from auto_docs_editor.notebook import NotebookHandler
+from docs_style.core import DocumentSession
+from docs_style.core_vale import enforce_vale_style
+from docs_style.notebook import NotebookHandler
 from utils import read_text_async, write_text_async
 
 

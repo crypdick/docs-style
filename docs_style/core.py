@@ -1,4 +1,4 @@
-"""Core editing logic for auto_docs_editor."""
+"""Core editing logic for docs_style."""
 
 from __future__ import annotations
 

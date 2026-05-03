@@ -12,10 +12,10 @@ from textual.binding import Binding
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
 from textual.widgets import Button, Footer, Header, Label, RichLog
 
-from auto_docs_editor.controller import ReviewController
-from auto_docs_editor.core import process_style_guide
-from auto_docs_editor.widgets import DiffView, RejectionModal
-from auto_docs_editor.workflow import (
+from docs_style.controller import ReviewController
+from docs_style.core import process_style_guide
+from docs_style.widgets import DiffView, RejectionModal
+from docs_style.workflow import (
     get_style_guides,
     load_and_validate_target,
     setup_environment,
@@ -191,7 +191,7 @@ class AutoDocsEditorTUI(App):
 
     def is_rejection_modal_active(self) -> bool:
         """Check if the RejectionModal is the active screen."""
-        from auto_docs_editor.widgets import RejectionModal
+        from docs_style.widgets import RejectionModal
 
         return isinstance(self.screen, RejectionModal)
 

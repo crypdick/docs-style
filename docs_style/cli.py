@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Command-line interface for auto_docs_editor."""
+"""Command-line interface for docs_style."""
 
 from __future__ import annotations
 
@@ -9,9 +9,9 @@ import sys
 
 from loguru import logger
 
-from auto_docs_editor.core import DocumentSession, process_style_guide
-from auto_docs_editor.core_vale import enforce_vale_style
-from auto_docs_editor.workflow import (
+from docs_style.core import DocumentSession, process_style_guide
+from docs_style.core_vale import enforce_vale_style
+from docs_style.workflow import (
     get_style_guides,
     load_and_validate_target,
     setup_environment,
