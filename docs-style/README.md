@@ -23,9 +23,9 @@ In a Claude Code session, ask:
 - "Apply Google style guide to README.md"
 - "Do a final pass on `docs/article.md`"
 
-Claude activates the `docs-style` skill, applies 16 curated style rules
-in prefix order, pauses between rounds for review, and ends with a vale
-lint sweep.
+Claude activates the `docs-style` skill, applies the curated style
+rules in prefix order, pauses between rounds for review, and ends with
+a vale lint sweep.
 
 ## Requirements
 
@@ -36,7 +36,7 @@ lint sweep.
 ## Layout
 
 - `skills/docs-style/SKILL.md` — workflow + discipline
-- `skills/docs-style/references/style/` — 16 curated style rule files
+- `skills/docs-style/references/style/` — curated style rule files
 - `skills/docs-style/scripts/vale_check.sh` — vale wrapper
 - `skills/docs-style/.vale.ini` + `vale_styles/Google/` — vale config + rules
 

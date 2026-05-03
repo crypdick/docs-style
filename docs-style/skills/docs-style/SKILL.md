@@ -19,7 +19,7 @@ The skill operates on a single `.md` file at a time.
 1. **Confirm the target file** with the user. Ensure it is a `.md` file
    and exists.
 
-2. **List the 16 curated style rules** at
+2. **List the curated style rules** at
    `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/references/style/*.md`,
    sorted by filename. The numeric prefixes (`00-`, `01-`, ..., `z-`)
    encode the order in which rules must be applied — earlier rules
@@ -67,7 +67,7 @@ The skill operates on a single `.md` file at a time.
 
 ## Resumption
 
-If the user says "skip through commas", "start from headings", or
+If the user says "start from lists", "skip through wordlist", or
 similar, find the matching rule file by filename substring and skip
 all earlier rules.
 
@@ -90,7 +90,7 @@ all others.
 
 ## References
 
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/references/style/*.md` — 16 curated rule files
+- `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/references/style/*.md` — curated rule files (apply in prefix order)
 - `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/scripts/vale_check.sh` — vale wrapper
 - `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/.vale.ini` — vale config
 - `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/vale_styles/Google/` — vale rule bundle

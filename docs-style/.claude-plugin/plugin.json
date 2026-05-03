@@ -8,5 +8,5 @@
   },
   "repository": "https://github.com/crypdick/docs-style",
   "license": "MIT",
-  "keywords": ["documentation", "style-guide", "google", "vale", "markdown"]
+  "keywords": ["documentation", "style-guide", "google", "vale", "lint", "markdown"]
 }
