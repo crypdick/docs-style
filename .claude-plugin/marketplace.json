@@ -1,0 +1,17 @@
+{
+  "name": "docs-style",
+  "owner": {
+    "name": "Ricardo Decal"
+  },
+  "metadata": {
+    "description": "Apply Google Developer Documentation Style Guide to markdown via staged edits + vale lint sweep"
+  },
+  "plugins": [
+    {
+      "name": "docs-style",
+      "source": "./docs-style",
+      "description": "Apply Google Developer Documentation Style Guide to markdown via staged edits + vale lint sweep",
+      "version": "0.1.0"
+    }
+  ]
+}
