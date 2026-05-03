@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from auto_docs_editor.controller import ReviewController
+from docs_style.controller import ReviewController
 from tests.helpers.textual import drain_pilot
 
 
@@ -11,11 +11,11 @@ from tests.helpers.textual import drain_pilot
 @pytest.fixture
 def mock_dependencies():
     with (
-        patch("auto_docs_editor.tui.process_style_guide") as mock_process,
-        patch("auto_docs_editor.tui.get_style_guides") as mock_get_guides,
-        patch("auto_docs_editor.tui.load_and_validate_target") as mock_load,
-        patch("auto_docs_editor.tui.setup_logging"),
-        patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("docs_style.tui.process_style_guide") as mock_process,
+        patch("docs_style.tui.get_style_guides") as mock_get_guides,
+        patch("docs_style.tui.load_and_validate_target") as mock_load,
+        patch("docs_style.tui.setup_logging"),
+        patch("docs_style.tui.get_langfuse_handler", return_value=None),
     ):
         # Setup mocks
         mock_process.return_value = None  # async mock if needed

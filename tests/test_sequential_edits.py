@@ -1,6 +1,6 @@
 import pytest
 
-from auto_docs_editor.core import DocumentSession, handle_edit_proposal
+from docs_style.core import DocumentSession, handle_edit_proposal
 
 
 @pytest.mark.asyncio

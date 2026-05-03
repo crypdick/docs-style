@@ -3,8 +3,8 @@ from unittest.mock import patch
 
 import pytest
 
-from auto_docs_editor.controller import ReviewController
-from auto_docs_editor.tui import AutoDocsEditorTUI
+from docs_style.controller import ReviewController
+from docs_style.tui import AutoDocsEditorTUI
 
 
 @pytest.mark.asyncio
@@ -20,11 +20,11 @@ async def test_concurrent_reviews_are_serialized(tmp_path):
 
     # Mock dependencies
     with (
-        patch("auto_docs_editor.tui.process_style_guide"),
-        patch("auto_docs_editor.tui.get_style_guides", return_value=[style_path]),
-        patch("auto_docs_editor.tui.load_and_validate_target"),
-        patch("auto_docs_editor.tui.setup_logging"),
-        patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("docs_style.tui.process_style_guide"),
+        patch("docs_style.tui.get_style_guides", return_value=[style_path]),
+        patch("docs_style.tui.load_and_validate_target"),
+        patch("docs_style.tui.setup_logging"),
+        patch("docs_style.tui.get_langfuse_handler", return_value=None),
     ):
         controller = ReviewController(
             document_path=doc_path,

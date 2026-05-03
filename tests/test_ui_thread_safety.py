@@ -9,7 +9,7 @@ async def test_ask_user_review_thread_safety(app):
     Regression test: Ensure ask_user_review handles being called from the main thread
     without raising 'call_from_thread method must run in a different thread' error.
     """
-    with patch("auto_docs_editor.tui.logger.error") as mock_error:
+    with patch("docs_style.tui.logger.error") as mock_error:
         async with app.run_test() as pilot:
             # Just calling the method directly from the main thread
             # This simulates what happens when start_processing_guide (async worker on main loop) calls it.

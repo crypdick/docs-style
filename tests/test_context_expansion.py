@@ -1,4 +1,4 @@
-from auto_docs_editor.core import expand_edit_context
+from docs_style.core import expand_edit_context
 
 
 def test_expand_edit_context_basic():

@@ -1,9 +1,9 @@
 from unittest.mock import Mock, patch
 
-from auto_docs_editor.core_vale import enforce_vale_style
+from docs_style.core_vale import enforce_vale_style
 
 
-@patch("auto_docs_editor.core_vale.shutil.which")
+@patch("docs_style.core_vale.shutil.which")
 def test_vale_missing(mock_which, tmp_path):
     mock_which.return_value = None
     f = tmp_path / "test.md"
@@ -13,15 +13,15 @@ def test_vale_missing(mock_which, tmp_path):
     # Should exit early, log error (but logs disabled)
 
 
-@patch("auto_docs_editor.core_vale.shutil.which")
-@patch("auto_docs_editor.core_vale.subprocess.run")
+@patch("docs_style.core_vale.shutil.which")
+@patch("docs_style.core_vale.subprocess.run")
 def test_vale_no_errors(mock_run, mock_which, tmp_path):
     mock_which.return_value = "/usr/bin/vale"
     mock_run.return_value.stdout = ""
     f = tmp_path / "test.md"
     f.touch()
 
-    with patch("auto_docs_editor.core_vale.ChatOpenAI") as mock_llm_cls:
+    with patch("docs_style.core_vale.ChatOpenAI") as mock_llm_cls:
         enforce_vale_style(f)
         # LLM is instantiated
         mock_llm_cls.assert_called_once()
@@ -32,9 +32,9 @@ def test_vale_no_errors(mock_run, mock_which, tmp_path):
         mock_llm_cls.return_value.invoke.assert_not_called()
 
 
-@patch("auto_docs_editor.core_vale.shutil.which")
-@patch("auto_docs_editor.core_vale.subprocess.run")
-@patch("auto_docs_editor.core_vale.ChatOpenAI")
+@patch("docs_style.core_vale.shutil.which")
+@patch("docs_style.core_vale.subprocess.run")
+@patch("docs_style.core_vale.ChatOpenAI")
 def test_vale_fix_applied(mock_llm_cls, mock_run, mock_which, tmp_path):
     mock_which.return_value = "/usr/bin/vale"
 
@@ -77,7 +77,7 @@ def test_vale_fix_applied(mock_llm_cls, mock_run, mock_which, tmp_path):
     # We can patch 'enforce_vale_style's internal chain usage? No.
 
     # Let's just patch ChatPromptTemplate so that __or__ returns a mock chain.
-    with patch("auto_docs_editor.core_vale.ChatPromptTemplate.from_template") as mock_prompt_tmpl:
+    with patch("docs_style.core_vale.ChatPromptTemplate.from_template") as mock_prompt_tmpl:
         mock_chain = Mock()
         mock_chain.invoke.return_value = "fixed content"
 
@@ -93,8 +93,8 @@ def test_vale_fix_applied(mock_llm_cls, mock_run, mock_which, tmp_path):
         assert f.read_text() == "fixed content"
 
 
-@patch("auto_docs_editor.core_vale.shutil.which")
-@patch("auto_docs_editor.core_vale.subprocess.run")
+@patch("docs_style.core_vale.shutil.which")
+@patch("docs_style.core_vale.subprocess.run")
 def test_vale_pedantic(mock_run, mock_which, tmp_path):
     mock_which.return_value = "/usr/bin/vale"
     mock_run.return_value.stdout = "test.md:1:1:Check:Error"
@@ -102,7 +102,7 @@ def test_vale_pedantic(mock_run, mock_which, tmp_path):
     f = tmp_path / "test.md"
     f.write_text("original")
 
-    with patch("auto_docs_editor.core_vale.ChatPromptTemplate.from_template") as mock_prompt_tmpl:
+    with patch("docs_style.core_vale.ChatPromptTemplate.from_template") as mock_prompt_tmpl:
         mock_chain = Mock()
         mock_chain.invoke.return_value = "PEDANTIC"
         mock_prompt_tmpl.return_value.__or__.return_value.__or__.return_value = mock_chain

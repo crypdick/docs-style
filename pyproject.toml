@@ -1,5 +1,5 @@
 [project]
-name = "auto_docs_editor"
+name = "docs-style"
 version = "0.1.0"
 description = "AutoDocsEditor makes documentation conform to the Google Docs Style Guide"
 readme = "README.md"
@@ -22,8 +22,8 @@ dependencies = [
 ]
 
 [project.scripts]
-auto-docs-edit = "auto_docs_editor.cli:main"
-auto-docs-tui = "auto_docs_editor.tui:run"
+docs-style-edit = "docs_style.cli:main"
+docs-style-tui = "docs_style.tui:run"
 
 [project.optional-dependencies]
 dev = [

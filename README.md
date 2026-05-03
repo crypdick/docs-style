@@ -6,6 +6,12 @@
 
 ![Screenshot of AutoDocsEditor in action](assets/screenshot.png)
 
+## Claude Code plugin
+
+This repo also ships a Claude Code plugin at [`docs-style/`](./docs-style/)
+that applies the same curated rules without the Python pipeline. See
+[`docs-style/README.md`](./docs-style/README.md) for install + usage.
+
 ## Quick start
 
 To get started, export your OpenAI key (or put it in a `.env` file):
@@ -29,7 +35,7 @@ Run the interactive TUI to review and accept/reject each proposed edit:
 uv run python main.py tui docs/your_article.md
 
 # Or using the direct command
-uv run auto-docs-tui docs/your_article.md
+uv run docs-style-tui docs/your_article.md
 ```
 
 The TUI provides a visual diff interface where you can:
@@ -48,7 +54,7 @@ Run the CLI mode to automatically apply edits (original behavior):
 uv run python main.py cli docs/your_article.md
 
 # Or using the direct command
-uv run auto-docs-edit docs/your_article.md
+uv run docs-style-edit docs/your_article.md
 ```
 
 Both modes process the Markdown file against every page of the style guide (stored locally in the `style/` directory). The CLI mode pauses between each set of edits, giving you the opportunity to review the proposed edits and commit the incremental changes before moving on to the next set of style rules. The script itself doesn't touch Git.
@@ -61,8 +67,8 @@ AutoDocsEditor supports Jupyter notebooks via [Jupytext](https://jupytext.readth
 
 ```shell
 # Edit a notebook directly - works with both TUI and CLI modes
-uv run auto-docs-tui notebooks/tutorial.ipynb
-uv run auto-docs-edit notebooks/tutorial.ipynb
+uv run docs-style-tui notebooks/tutorial.ipynb
+uv run docs-style-edit notebooks/tutorial.ipynb
 ```
 
 **How it works:**
@@ -77,9 +83,9 @@ uv run auto-docs-edit notebooks/tutorial.ipynb
 If you are resuming a run, you can skip style rules you have already processed:
 
 ```shell
-uv run auto-docs-tui --skip-through commas.md docs/your_article.md
+uv run docs-style-tui --skip-through commas.md docs/your_article.md
 # or
-uv run auto-docs-edit --skip-through commas.md docs/your_article.md
+uv run docs-style-edit --skip-through commas.md docs/your_article.md
 ```
 
 This example skips every style rule **up to and including** the `commas.md` file.
@@ -91,9 +97,9 @@ In TUI mode, you can also press `s` to skip to the next style guide, or `q` to q
 After you have iterated through the full style guide once and made additional manual edits, you can run a **quick compliance sweep** over only the most error-prone rules:
 
 ```shell
-uv run auto-docs-tui --final-pass docs/your_article.md
+uv run docs-style-tui --final-pass docs/your_article.md
 # or
-uv run auto-docs-edit --final-pass docs/your_article.md
+uv run docs-style-edit --final-pass docs/your_article.md
 ```
 
 The script will process **only** those style guide pages whose filenames end with a `+`, for example `00-tone+.md`.
@@ -103,7 +109,7 @@ The script will process **only** those style guide pages whose filenames end wit
 Run the CLI with `--yolo` to automatically accept every proposed edit and skip the manual review pauses:
 
 ```shell
-uv run auto-docs-edit --yolo docs/your_article.md
+uv run docs-style-edit --yolo docs/your_article.md
 ```
 
 YOLO mode is not recommended because mistakes will compound. Consider using the TUI mode instead for better control.

@@ -4,9 +4,9 @@ from unittest.mock import patch
 import pytest
 from textual.widgets import TextArea
 
-from auto_docs_editor.controller import ReviewController
-from auto_docs_editor.tui import AutoDocsEditorTUI
-from auto_docs_editor.widgets import RejectionModal
+from docs_style.controller import ReviewController
+from docs_style.tui import AutoDocsEditorTUI
+from docs_style.widgets import RejectionModal
 
 # --- Helpers ---
 
@@ -64,11 +64,11 @@ async def test_rejection_ui_update_race(tmp_path):
         await review_callback(before="Original Content", after="Second Proposal", reason="Reason 2")
 
     with (
-        patch("auto_docs_editor.tui.process_style_guide", side_effect=mock_process_style_guide),
-        patch("auto_docs_editor.tui.get_style_guides", return_value=[style_path]),
-        patch("auto_docs_editor.tui.load_and_validate_target"),
-        patch("auto_docs_editor.tui.setup_logging"),
-        patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None),
+        patch("docs_style.tui.process_style_guide", side_effect=mock_process_style_guide),
+        patch("docs_style.tui.get_style_guides", return_value=[style_path]),
+        patch("docs_style.tui.load_and_validate_target"),
+        patch("docs_style.tui.setup_logging"),
+        patch("docs_style.tui.get_langfuse_handler", return_value=None),
     ):
         controller = ReviewController(
             document_path=doc_path,

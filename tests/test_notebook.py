@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from auto_docs_editor.notebook import NotebookHandler, is_notebook
+from docs_style.notebook import NotebookHandler, is_notebook
 
 
 def test_is_notebook(tmp_path):

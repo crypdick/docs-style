@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Main entry point for auto_docs_editor.
+"""Main entry point for docs_style.
 
 This script allows you to launch either the TUI (interactive) or CLI (automatic) mode.
 """
@@ -25,8 +25,8 @@ def main() -> None:
         print("  - Jupyter notebooks (.ipynb) - converted via Jupytext")
         print()
         print("Or use the installed commands:")
-        print("  auto-docs-tui <document> [options]")
-        print("  auto-docs-edit <document> [options]")
+        print("  docs-style-tui <document> [options]")
+        print("  docs-style-edit <document> [options]")
         print()
         print("Options:")
         print("  --skip-through STYLE_FILE  Skip style guides up to and including this file")
@@ -45,13 +45,13 @@ def main() -> None:
     if mode in ("tui", "interactive", "ui"):
         # Remove the mode argument and launch TUI
         sys.argv.pop(1)
-        from auto_docs_editor.tui import run
+        from docs_style.tui import run
 
         run()
     elif mode in ("cli", "auto", "automatic"):
         # Remove the mode argument and launch CLI
         sys.argv.pop(1)
-        from auto_docs_editor.cli import main as cli_main
+        from docs_style.cli import main as cli_main
 
         cli_main()
     else:

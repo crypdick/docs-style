@@ -2,7 +2,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from auto_docs_editor.workflow import (
+from docs_style.workflow import (
     WorkflowContext,
     get_style_guides,
     load_and_validate_target,
@@ -17,7 +17,7 @@ def test_setup_environment_success(monkeypatch):
     setup_environment(require_api_key=True)
 
 
-@patch("auto_docs_editor.workflow.load_dotenv")
+@patch("docs_style.workflow.load_dotenv")
 def test_setup_environment_failure(mock_load_dotenv, monkeypatch):
     """Test environment setup failure when API key is missing."""
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
@@ -55,8 +55,8 @@ def test_load_and_validate_target_missing(tmp_path):
     assert exc.value.code == 1
 
 
-@patch("auto_docs_editor.workflow.ensure_jupytext_installed")
-@patch("auto_docs_editor.workflow.NotebookHandler")
+@patch("docs_style.workflow.ensure_jupytext_installed")
+@patch("docs_style.workflow.NotebookHandler")
 def test_load_and_validate_target_notebook(mock_handler_cls, mock_ensure_jupytext, tmp_path):
     """Test validating a notebook file."""
     nb_path = tmp_path / "test.ipynb"
@@ -78,7 +78,7 @@ def test_load_and_validate_target_notebook(mock_handler_cls, mock_ensure_jupytex
     mock_handler.ensure_paired.assert_called_once()
 
 
-@patch("auto_docs_editor.workflow.ensure_jupytext_installed")
+@patch("docs_style.workflow.ensure_jupytext_installed")
 def test_load_and_validate_target_notebook_no_jupytext(mock_ensure_jupytext, tmp_path):
     """Test validating a notebook without jupytext installed."""
     nb_path = tmp_path / "test.ipynb"
@@ -91,7 +91,7 @@ def test_load_and_validate_target_notebook_no_jupytext(mock_ensure_jupytext, tmp
     assert exc.value.code == 1
 
 
-@patch("auto_docs_editor.workflow.STYLE_DIR")
+@patch("docs_style.workflow.STYLE_DIR")
 def test_get_style_guides_basic(mock_style_dir, tmp_path):
     """Test retrieving style guides."""
     # Create fake style files
@@ -104,8 +104,8 @@ def test_get_style_guides_basic(mock_style_dir, tmp_path):
     assert guides == [p1, p2]
 
 
-@patch("auto_docs_editor.workflow.STYLE_DIR")
-@patch("auto_docs_editor.workflow.FINAL_PASS_MARKER", "+")
+@patch("docs_style.workflow.STYLE_DIR")
+@patch("docs_style.workflow.FINAL_PASS_MARKER", "+")
 def test_get_style_guides_final_pass(mock_style_dir, tmp_path):
     """Test filtering for final pass."""
     p1 = tmp_path / "01-regular.md"
@@ -117,7 +117,7 @@ def test_get_style_guides_final_pass(mock_style_dir, tmp_path):
     assert guides == [p2]
 
 
-@patch("auto_docs_editor.workflow.STYLE_DIR")
+@patch("docs_style.workflow.STYLE_DIR")
 def test_get_style_guides_skip_through(mock_style_dir, tmp_path):
     """Test skipping through specific guides."""
     p1 = tmp_path / "01-a.md"
@@ -131,7 +131,7 @@ def test_get_style_guides_skip_through(mock_style_dir, tmp_path):
     assert guides == [p3]
 
 
-@patch("auto_docs_editor.workflow.STYLE_DIR")
+@patch("docs_style.workflow.STYLE_DIR")
 def test_get_style_guides_skip_not_found(mock_style_dir, tmp_path):
     """Test skipping a guide that doesn't exist."""
     p1 = tmp_path / "01-a.md"
@@ -142,7 +142,7 @@ def test_get_style_guides_skip_not_found(mock_style_dir, tmp_path):
     assert exc.value.code == 1
 
 
-@patch("auto_docs_editor.workflow.STYLE_DIR")
+@patch("docs_style.workflow.STYLE_DIR")
 def test_get_style_guides_empty(mock_style_dir):
     """Test behavior when no guides are found."""
     mock_style_dir.glob.return_value = []

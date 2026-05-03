@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from auto_docs_editor.core import DocumentSession, handle_edit_proposal, process_style_guide
+from docs_style.core import DocumentSession, handle_edit_proposal, process_style_guide
 
 
 def test_document_session_apply_edit():
@@ -141,10 +141,10 @@ async def test_process_style_guide_escapes_braces():
 
     # Mock all the LangChain and OpenAI internals to avoid actual execution
     with (
-        patch("auto_docs_editor.core.ChatOpenAI"),
-        patch("auto_docs_editor.core.create_tool_calling_agent") as mock_create_agent,
-        patch("auto_docs_editor.core.AgentExecutor") as mock_executor_cls,
-        patch("auto_docs_editor.core.ChatPromptTemplate") as mock_prompt_cls,
+        patch("docs_style.core.ChatOpenAI"),
+        patch("docs_style.core.create_tool_calling_agent") as mock_create_agent,
+        patch("docs_style.core.AgentExecutor") as mock_executor_cls,
+        patch("docs_style.core.ChatPromptTemplate") as mock_prompt_cls,
     ):
         # Setup mocks
         mock_executor = MagicMock()

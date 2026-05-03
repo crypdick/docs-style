@@ -5,7 +5,7 @@ import pytest
 import pytest_asyncio
 from loguru import logger
 
-from auto_docs_editor.tui import AutoDocsEditorTUI
+from docs_style.tui import AutoDocsEditorTUI
 from tests.helpers.textual import reset_screen_stack
 
 

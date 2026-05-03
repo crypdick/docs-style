@@ -3,8 +3,8 @@ from unittest.mock import patch
 import pytest
 from textual.widgets import Label
 
-from auto_docs_editor.controller import ReviewController
-from auto_docs_editor.tui import AutoDocsEditorTUI
+from docs_style.controller import ReviewController
+from docs_style.tui import AutoDocsEditorTUI
 
 
 @pytest.mark.asyncio
@@ -21,7 +21,7 @@ async def test_update_stats_label(tmp_path):
     )
 
     # Mock get_langfuse_handler to prevent import errors or side effects
-    with patch("auto_docs_editor.tui.get_langfuse_handler", return_value=None):
+    with patch("docs_style.tui.get_langfuse_handler", return_value=None):
         app = AutoDocsEditorTUI(controller)
 
         async with app.run_test() as pilot:
