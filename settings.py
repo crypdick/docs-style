@@ -5,7 +5,8 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 
 ROOT_DIR = Path(__file__).resolve().parent
-STYLE_DIR = ROOT_DIR / "style"
+STYLE_DIR = ROOT_DIR / "docs-style" / "skills" / "docs-style" / "references" / "style"
+VALE_CONFIG = ROOT_DIR / "docs-style" / "skills" / "docs-style" / ".vale.ini"
 LOGS_DIR = ROOT_DIR / "logs"
 BULK_LOGS_DIR = LOGS_DIR / "bulk_pr_logs"
 AUTO_DOCS_EDIT_SCRIPT = ROOT_DIR / "auto_docs_edit.py"

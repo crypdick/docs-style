@@ -9,7 +9,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from loguru import logger
 
-from settings import MODEL_NAME
+from settings import MODEL_NAME, VALE_CONFIG
 from utils import get_langfuse_handler
 
 
@@ -45,7 +45,7 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         # Run Vale
         try:
             result = subprocess.run(
-                ["vale", "--output=line", str(document_path)],
+                ["vale", f"--config={VALE_CONFIG}", "--output=line", str(document_path)],
                 capture_output=True,
                 text=True,
                 check=False,
