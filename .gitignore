@@ -3,3 +3,6 @@
 logs/
 style/00-PERSONAL-*
 __pycache__/
+
+# Local-only git worktrees
+.worktrees/
