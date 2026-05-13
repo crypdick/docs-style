@@ -1,0 +1,39 @@
+{
+  "name": "docs-style",
+  "version": "0.2.0",
+  "description": "Apply Google Developer Documentation Style Guide to markdown via staged edits and a Vale lint sweep.",
+  "author": {
+    "name": "Ricardo Decal",
+    "email": "biz@ricardodecal.com"
+  },
+  "repository": "https://github.com/crypdick/docs-style",
+  "license": "MIT",
+  "keywords": [
+    "documentation",
+    "style-guide",
+    "google",
+    "vale",
+    "lint",
+    "markdown"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Docs Style",
+    "shortDescription": "Edit docs toward Google developer documentation style",
+    "longDescription": "Documentation editing workflows that apply the Google Developer Documentation Style Guide, stage targeted markdown edits, and use Vale as a lint sweep.",
+    "developerName": "Ricardo Decal",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Improve this markdown doc",
+      "Run a docs style review",
+      "Apply Google docs style"
+    ],
+    "brandColor": "#B25C2A",
+    "screenshots": []
+  }
+}
