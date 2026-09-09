@@ -8,7 +8,7 @@ uv run --script crawl/crawl_to_markdown.py \
     --output-dir /tmp/docs-style-crawl
 ```
 
-The crawler exports source pages for manual review. Its output can contain
+The output can contain
 navigation elements and duplicate pages. Curate changes before copying them into
-[the active references](../skills/docs-style/references/style/); do not replace
-those references wholesale with a fresh crawl.
+[the active references](../skills/docs-style/references/style/). Do not replace
+those references in full with unedited crawler output.

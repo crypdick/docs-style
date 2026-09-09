@@ -7,9 +7,8 @@ uv run pytest -n 2
 ```
 
 Tests use temporary documents and mock external large language model (LLM) and
-Vale calls. No API key, Langfuse account, or system-wide Vale installation is needed.
-The shared fixture supplies a
-dummy OpenAI key and removes Langfuse credentials.
+Vale calls. You don't need an API key, Langfuse account, or system-wide Vale installation.
+The shared fixture supplies a placeholder OpenAI API key and removes Langfuse credentials.
 
 For a focused failure, run the relevant module in one process:
 
@@ -37,14 +36,14 @@ The suite covers these behaviors:
 ## TUI tests
 
 Use a real `ReviewController` for workflow integration tests and mock the external
-operations at their boundaries. A controller supplied to the shared `app` fixture
-must be defined by the test module. Avoid a blanket `MagicMock` controller when
+operations at their boundaries. In the test module, define any controller that
+you supply to the shared `app` fixture. Avoid a blanket `MagicMock` controller when
 asserting state transitions: its truthy attributes can hide incorrect behavior.
 
 Run interactions inside `async with app.run_test() as pilot:`. The helpers in
 [tests/helpers/textual.py](../tests/helpers/textual.py) provide key presses,
 clicks, and message-queue draining. Use `wait_for_condition` to wait for an
-observable state change; a drained TUI queue does not prove that every background
+observable state change. A drained TUI queue does not prove that every background
 worker has finished.
 
 The initial Vale check runs in a worker thread. Its handoff to guide processing
@@ -64,13 +63,13 @@ Run the configured formatting and file checks:
 uv run prek run --all-files
 ```
 
-To check the bundled Vale configuration with the required project dependency:
+Check the bundled Vale configuration with the required project dependency:
 
 ```shell
 uv run --locked bash skills/docs-style/scripts/vale_check.sh README.md
 ```
 
-Vale findings require editorial review; a lint suggestion is not automatically
+Vale findings require editorial review. A lint suggestion is not automatically
 a useful edit. Changes to prompts or the skill also need a representative manual
 review because mocked LLM tests do not measure editing quality.
 
@@ -85,43 +84,43 @@ uv run prek install
 uv run prek run --all-files
 ```
 
-If the `new-feature` command-line interface (CLI) is installed,
+If you have installed the `new-feature` command-line tool,
 `new-feature create NAME --no-agent`
 creates an isolated worktree and runs the setup configured in `pyproject.toml`.
 Replace `NAME` with the name of your feature.
-Tests need no `.env`; provide credentials locally only for interactive editing.
+Tests need no `.env` file. Provide credentials locally only for interactive editing.
 Each checkout keeps its own `.venv`, logs, test cache, and coverage artifacts.
 The shared uv download cache is content-addressed.
 
 ## Quality gates
 
-The `prek.toml` configuration runs Vale, file hygiene and secret checks, Ruff,
+The `prek.toml` configuration file runs Vale, file hygiene and secret checks, Ruff,
 pyupgrade, flynt, strict mypy, Vulture, deptry, source policy checks, and tests.
 Continuous integration (CI) runs the same command on Python 3.12 and 3.13.
-The standalone maintenance scripts use PEP 723 dependencies and are linted but
-are outside the application's
-mypy and deptry scopes. Tests are outside mypy; test behavior is checked by pytest.
+The standalone maintenance scripts declare their dependencies inline. Ruff checks
+these scripts, but mypy and deptry exclude them. Tests are outside mypy scope.
+The pytest suite checks test behavior.
 
 Setup downloads the locked Vale executable on first use. The Vale hook checks
 maintained Markdown files with the bundled rules. Missing executables and
-configuration failures fail the hook; style findings remain subject to editorial
+configuration failures fail the hook. Style findings remain subject to editorial
 review. Unit tests mock Vale or use temporary stub executables and do not download
 or run the real binary.
 
 Branch coverage includes the full `docs_style` package, including entry points.
-The enforced floor is 70%; raise `fail_under` in `[tool.coverage.report]` as
-coverage improves toward 100%. Missing lines are
-printed in the terminal and rendered in `htmlcov/index.html`. Do not omit
+The enforced floor is 70%. Raise `fail_under` in `[tool.coverage.report]` as
+coverage improves toward 100%. The coverage report shows missing lines
+in the terminal and in the `htmlcov/index.html` file. Do not omit
 uncovered production modules or lower the floor to pass a change.
 
 For a focused run that does not measure the whole package, use `--no-cov` as in
 the example at the start of this page.
 
 The secrets baseline contains audited false positives only. Review each finding
-before updating it; never accept actual credentials into the baseline. Run scans
-with `--no-verify` to keep candidate credentials from being sent over the network.
+before updating it. Never accept actual credentials into the baseline. Run scans
+with `--no-verify` to prevent the scanner from sending candidate credentials over the network.
 
-When changing settings, CLI behavior, resource paths,
+When changing settings, command-line behavior, resource paths,
 or prompts, check the corresponding [README guidance](../README.md). Review
 [Architecture](ARCHITECTURE.md) twice a year and update the
 [Quality scorecard](QUALITY.md) after meaningful coverage or scope changes.
