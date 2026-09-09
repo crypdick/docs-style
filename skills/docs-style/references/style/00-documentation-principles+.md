@@ -16,7 +16,7 @@ Write prescriptive (opinionated) documentation that tells the reader what to do 
 
 ## Timeless documentation
 
-Timeless documentation avoids words that anchor the text to a specific point in time or assume knowledge of past or future versions. It reduces maintenance and ensures accuracy even when read months or years later.
+Avoid wording that depends on when the reader sees it or assumes knowledge of past or future versions. This reduces the need to update descriptions just because time has passed.
 
 Describe how the product works. Use release notes to explain changes over time.
 

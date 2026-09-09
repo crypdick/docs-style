@@ -14,7 +14,7 @@ Avoid jargon (specialized or figurative terminology) unless it is standard in th
 
 ## Italics for terms
 
-Use italics in two specific cases:
+Use italics for these cases:
 
 1. **New terms:** Italicize a new technical term upon its first definition (e.g., "A *Clos network* is a kind of...").
 2. **Words as words:** Italicize when referring to a word or letter itself (e.g., "Use the word *and*").
@@ -38,7 +38,7 @@ Use italics in two specific cases:
 
 ## Third-party content
 
-Do not copy content from third-party sources to avoid copyright issues. Link to the content instead.
+To avoid copyright issues, link to third-party content instead of copying it.
 
 Avoid copying from these sources:
 

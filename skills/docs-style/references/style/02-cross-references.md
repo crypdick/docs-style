@@ -2,7 +2,7 @@
 
 ## Strategy
 
-* **Context first:** Provide brief definitions or steps inline instead of linking, to reduce cognitive load.
+* **Context first:** Include brief definitions or steps in the text so readers can follow the explanation without opening another page.
 * **Selectivity:** Link only to relevant information. Avoid duplicate links on the same page.
 
 ## Link text

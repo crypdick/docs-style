@@ -1,6 +1,6 @@
 # Notices
 
-Use notices sparingly. Readers often skip them.
+Use notices sparingly. Readers often skip them, especially when there are too many.
 
 ## Types of notices
 
@@ -18,5 +18,4 @@ Use notices sparingly. Readers often skip them.
 
 ## Guidelines
 
-* **Don't stack notices:** Avoid putting two notices in a row. Reorganize content instead.
-* **Don't overuse:** Readers might overlook notices when there are too many.
+* Avoid putting two notices in a row. Reorganize the content instead.

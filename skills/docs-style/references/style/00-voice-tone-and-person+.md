@@ -2,8 +2,8 @@
 
 ## Voice and tone
 
-**Voice:** Conversational, friendly, respectful, and knowledgeable. Aim to sound like a helpful colleague.
-**Tone:** Casual but professional. Accessible to a global audience.
+Write like a helpful colleague: be friendly, respectful, and knowledgeable.
+Keep the tone casual but professional, and use language a global audience can understand.
 
 ### Guidelines
 
@@ -17,7 +17,7 @@
 ### Techniques for checking tone
 
 * **Read it aloud:** If a sentence sounds awkward or robotic when spoken, rewrite it to be more conversational.
-* **Check transitions:** Use transitions (*though*, *however*, *this way*) to make text flow smoother, but avoid overusing formal transitions like *nonetheless* or *herein*.
+* **Check transitions:** Use words such as *though* and *however* where they help connect ideas. Avoid overusing formal transitions like *nonetheless* or *herein*.
 
 ### Anthropomorphism
 
@@ -39,7 +39,7 @@ Anthropomorphism is figurative language, which is imprecise and difficult to tra
 
 Use active voice. The grammatical subject should perform the action.
 
-Passive voice often obscures the actor, making it hard for the reader to know *who* or *what* is responsible (the user? the system? a background process?).
+Passive voice can leave readers unsure whether the user, the system, or a background process performs an action.
 
 * **Active:** "The client queries the server." (Clear: Client -> Server)
 * **Passive:** "The server is queried." (Unclear: By whom?)
@@ -55,11 +55,11 @@ Passive voice is acceptable when the actor is unknown, irrelevant, or you want t
 
 ## Present tense
 
-Use present tense for statements that describe general behavior that is not associated with a particular time.
+Use present tense to describe general behavior without reference to a particular time.
 
 ### Future tense
 
-Use future tense (*will*) only to distinguish an action that will occur in the future, distinct from the immediate action being described.
+Use future tense (*will*) only when an action happens later than the immediate action being described.
 
 * **Correct:** "Add the filename to the backup list. The file **will be archived** the next time the backup process runs." (The archiving happens later).
 * **Incorrect:** "A message is sent that **will notify** subscribers." (If the notification is part of the sending process, use present: "that *notifies* subscribers").

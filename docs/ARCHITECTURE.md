@@ -7,7 +7,7 @@ after guide passes.
 
 ## Module map
 
-The repository divides responsibilities among these modules and directories:
+The modules and directories have these responsibilities:
 
 - The `skills/docs-style/` directory contains the agent workflow, curated references, Vale configuration,
   rule bundle, and lint wrapper. Plugin manifests expose this skill.
@@ -36,8 +36,9 @@ The repository divides responsibilities among these modules and directories:
 ## Invariants
 
 The UI imports the controller and core. Core and controller never import the
-UI. These are import directions, not execution order. Avoid a larger layer
-framework while this package remains small.
+UI. These rules describe which modules can import each other; they do not
+specify execution order. Keep the import structure simple while the package
+remains small.
 
 `skills/docs-style/references/style/` is the shared source of guide content.
 Guide ordering and final-pass selection belong in the `workflow.py` and `settings.py` files.

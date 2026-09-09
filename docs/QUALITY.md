@@ -38,8 +38,8 @@ the package coverage measurement. Ruff checks the crawler and bulk pull request 
 script, which are outside the application's mypy and deptry scopes.
 The bulk script has a mocked command regression test. The crawler has no
 automated behavior suite.
-Ruff checks the source policy scripts. Representative rejection cases verify
-their behavior, but these scripts are outside application coverage. Tests are outside mypy scope.
+Ruff checks the source policy scripts. Tests verify that they reject representative
+policy violations, but these scripts are outside application coverage. Tests are outside mypy scope.
 
 Vale runs as a required hook on maintained Markdown files. Its execution and
 configuration failures fail the check. Style findings require editorial review.
@@ -48,7 +48,7 @@ failures, editor startup, and wrapper behavior without running the real Vale bin
 
 ## Next improvements
 
-Improve coverage and validation with these tasks:
+The remaining coverage and validation tasks are:
 
 - Exercise CLI argument validation, guide iteration, startup failures, and
   notebook completion through public entry points.

@@ -24,7 +24,7 @@ If non-inclusive terms exist in code (e.g., a configuration parameter named `mas
 
 ## Write for a global audience
 
-Write to be easily understood by non-native speakers and machine translation.
+Use language that non-native speakers can understand and that machine translation can handle.
 
 ### Best practices
 
@@ -40,7 +40,7 @@ Write to be easily understood by non-native speakers and machine translation.
 * **Modifier placement:** Place modifiers like *only* immediately before the word they modify.
   * *Correct:* "Request *only* one token."
   * *Different meaning:* "*Only* request one token" can mean to request it without taking another action.
-* **Noun phrases:** Unpack dense strings of modifiers when their relationships are unclear. Preserve established technical terms.
+* **Noun phrases:** Rewrite strings of modifiers when it is unclear how the words relate to each other. Preserve established technical terms.
 * **Repetition:** Repeat a word if it improves clarity.
   * *Better:* "IAM segmentation and network segmentation."
   * *Worse:* "IAM and network segmentation."

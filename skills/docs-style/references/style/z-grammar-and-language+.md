@@ -19,7 +19,7 @@
 
 ## Abbreviations
 
-Use standard abbreviations to save time, but spell them out if they might be unfamiliar. If the reader has to pause to decipher an abbreviation, it slows down comprehension.
+Use standard abbreviations, but spell them out if readers might not recognize them.
 
 * **First reference:** Spell out the term followed by the abbreviation in parentheses: *Border Gateway Protocol* (*BGP*).
 * **Exceptions:** Don't spell out widely known terms (AI, API, URL, PDF, JSON, USB).

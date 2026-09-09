@@ -17,8 +17,8 @@ Use requests such as these:
 - "Apply docs-style to `docs/setup.md`."
 - "Do a final style pass on `docs/tutorial.md`."
 
-The skill reads the relevant curated rules, reports findings or edits according
-to the request, and requires a Vale check. It can combine related corrections.
+The skill reads the relevant rules, reviews or edits the document as requested,
+and runs Vale. It can combine related corrections.
 If you want to approve each round, ask for staged review.
 
 ## Python editor
@@ -111,8 +111,8 @@ bundled wrapper:
 uv run --locked bash skills/docs-style/scripts/vale_check.sh docs/your_article.md
 ```
 
-This wrapper reports findings only. The Python editor's Vale step additionally
-uses an LLM to apply fixes.
+This wrapper reports findings only. The Python editor also uses an LLM to fix
+Vale findings.
 
 ## Create draft pull requests in bulk
 
@@ -153,7 +153,7 @@ material. Unused source pages remain in the [source archive](archive/). The
 
 The Python editor applies guides in filename order: broad principles first,
 then structure and terminology, followed by mechanics. The agent skill uses
-the same references with discretion about how to group edits. Technical accuracy,
+the same references and can group related edits. Technical accuracy,
 repository conventions, and explicit user preferences take precedence over
 mechanical compliance.
 

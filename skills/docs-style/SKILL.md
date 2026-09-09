@@ -37,10 +37,9 @@ Use the [style references](references/style/) for the curated rules:
 - `z-grammar-and-language+.md`: grammar and punctuation
 
 For a full review, cover all applicable topics. For a focused request, read
-only the relevant references. Filename order provides a useful progression
-from broad editorial choices to mechanics. It does not require separate edit
-rounds. Combine related corrections and continue without per-rule approval
-unless the user requests staged review.
+only the relevant references. The files are ordered from broad editorial choices
+to mechanics, but you can combine related corrections in one pass. Continue
+without per-rule approval unless the user requests staged review.
 
 Preserve meaning, technical claims, and the author's voice. Prefer a small,
 useful correction over rephrasing already clear prose. User instructions and

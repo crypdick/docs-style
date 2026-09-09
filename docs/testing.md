@@ -10,7 +10,7 @@ Tests use temporary documents and mock external large language model (LLM) and
 Vale calls. You don't need an API key, Langfuse account, or system-wide Vale installation.
 The shared fixture supplies a placeholder OpenAI API key and removes Langfuse credentials.
 
-For a focused failure, run the relevant module in one process:
+To investigate a failure, run the relevant test module in one process:
 
 ```shell
 uv run pytest tests/test_core.py -n 0 --no-cov
@@ -49,7 +49,7 @@ worker has finished.
 The initial Vale check runs in a worker thread. Its handoff to guide processing
 must go through `call_from_thread()` to schedule work on the TUI thread.
 [test_vale_to_processing_flow.py](../tests/test_vale_to_processing_flow.py)
-checks that processing actually begins after Vale completes.
+checks that guide processing begins after Vale completes.
 
 Keep test documents and mutable state local to each test. If a failure occurs
 only in parallel, inspect shared state and worker cleanup before adding delays
@@ -99,7 +99,6 @@ pyupgrade, flynt, strict mypy, Vulture, deptry, source policy checks, and tests.
 Continuous integration (CI) runs the same command on Python 3.12 and 3.13.
 The standalone maintenance scripts declare their dependencies inline. Ruff checks
 these scripts, but mypy and deptry exclude them. Tests are outside mypy scope.
-The pytest suite checks test behavior.
 
 Setup downloads the locked Vale executable on first use. The Vale hook checks
 maintained Markdown files with the bundled rules. Missing executables and
