@@ -68,8 +68,7 @@ async def test_app_startup(app):
 
         # Let's inspect workers
         for worker in app.workers:
-            if worker.name == "start_processing_guide":
-                if worker.error:
-                    raise worker.error
+            if worker.name == "start_processing_guide" and worker.error:
+                raise worker.error
 
         assert not app.is_quitting

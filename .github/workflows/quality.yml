@@ -1,0 +1,22 @@
+name: Quality
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.7"
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - run: uv run --locked prek run --all-files

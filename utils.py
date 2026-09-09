@@ -5,15 +5,14 @@ import os
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import TypeVar
+from typing import TYPE_CHECKING
 
 from loguru import logger
 
 from settings import LOGS_DIR
 
-T = TypeVar("T")
-
-CURRENT_RUN_DIR: Path | None = None
+if TYPE_CHECKING:
+    from langfuse.langchain import CallbackHandler
 
 
 async def read_text_async(path: Path, encoding: str = "utf-8") -> str:
@@ -34,15 +33,13 @@ def setup_logging(tui_mode: bool = False) -> Path:
     Args:
         tui_mode: If True, only log to file (not to stdout) to avoid interfering with TUI display.
     """
-    global CURRENT_RUN_DIR
-
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     run_timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-    CURRENT_RUN_DIR = LOGS_DIR / run_timestamp
-    CURRENT_RUN_DIR.mkdir(parents=True, exist_ok=True)
+    run_dir = LOGS_DIR / run_timestamp
+    run_dir.mkdir(parents=True, exist_ok=True)
 
-    log_path = CURRENT_RUN_DIR / "session.log"
+    log_path = run_dir / "session.log"
 
     # Configure Loguru sinks: console (unless in TUI mode) + file.
     logger.remove()
@@ -68,7 +65,7 @@ def setup_logging(tui_mode: bool = False) -> Path:
     return log_path
 
 
-def get_langfuse_handler():
+def get_langfuse_handler() -> CallbackHandler | None:
     """Initialize Langfuse callback handler if credentials are present."""
     if os.getenv("LANGFUSE_SECRET_KEY") and os.getenv("LANGFUSE_PUBLIC_KEY"):
         logger.info("Langfuse credentials found. Initializing tracing.")

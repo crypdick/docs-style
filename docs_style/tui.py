@@ -1,36 +1,40 @@
-#!/usr/bin/env python3
 """Interactive TUI for reviewing and applying style guide edits."""
 
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Iterable
 from pathlib import Path
+from typing import Any, ClassVar
 
+from beartype import beartype
+from langchain_core.callbacks import BaseCallbackHandler
 from loguru import logger
 from textual import work
-from textual.app import App, ComposeResult
-from textual.binding import Binding
+from textual.app import App
+from textual.binding import Binding, BindingType
 from textual.containers import Container, Horizontal, Vertical, VerticalScroll
-from textual.widgets import Button, Footer, Header, Label, RichLog
+from textual.widget import Widget
+from textual.widgets import Button, Footer, Header, Label, RichLog, TextArea
 
 from docs_style.controller import ReviewController
 from docs_style.core import process_style_guide
+from docs_style.tui_arguments import parse_arguments
 from docs_style.widgets import DiffView, RejectionModal
 from docs_style.workflow import (
     get_style_guides,
     load_and_validate_target,
     setup_environment,
 )
-from settings import FINAL_PASS_MARKER
 from utils import get_langfuse_handler, setup_logging, write_text_async
 
 
-class AutoDocsEditorTUI(App):
+class AutoDocsEditorTUI(App[None]):
     """TUI application for reviewing style guide edits."""
 
     CSS_PATH = "tui.tcss"
 
-    BINDINGS = [
+    BINDINGS: ClassVar[list[BindingType]] = [
         Binding("a", "accept", "Accept & Apply", priority=True),
         Binding("r", "reject", "Reject", priority=True),
         Binding("i", "ignore", "Ignore", priority=True),
@@ -38,15 +42,19 @@ class AutoDocsEditorTUI(App):
         Binding("q", "quit", "Quit", priority=True),
     ]
 
-    def __init__(self, controller: ReviewController, **kwargs):
+    def __init__(
+        self,
+        controller: ReviewController,
+        **kwargs: Any,  # noqa: ANN401 - forwarded Textual options
+    ) -> None:
         super().__init__(**kwargs)
         self.controller = controller
-        self.callbacks = []
+        self.callbacks: list[BaseCallbackHandler] = []
 
         # Synchronization primitives for thread <-> UI communication
         self.review_event = asyncio.Event()
         self.review_lock = asyncio.Lock()
-        self.review_decision: dict | None = None
+        self.review_decision: dict[str, str] | None = None
         self.is_quitting = False
         self.current_proposal: tuple[str, str, str] | None = None
 
@@ -58,7 +66,7 @@ class AutoDocsEditorTUI(App):
         if handler:
             self.callbacks.append(handler)
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> Iterable[Widget]:
         """Create child widgets."""
         yield Header()
 
@@ -104,6 +112,7 @@ class AutoDocsEditorTUI(App):
             self.sync_notebook_background()
 
     @work
+    @beartype
     async def start_processing_guide(self) -> None:
         """Process the current style guide in a worker."""
         if self.controller.is_finished:
@@ -155,7 +164,7 @@ class AutoDocsEditorTUI(App):
         # Guide processing finished (or error was skipped)
         await self.save_and_next_guide()
 
-    async def ask_user_review(self, before: str, after: str, reason: str) -> dict:
+    async def ask_user_review(self, before: str, after: str, reason: str) -> dict[str, str]:
         """Callback invoked by the agent to request user review."""
         async with self.review_lock:
             if self.is_quitting:
@@ -200,8 +209,6 @@ class AutoDocsEditorTUI(App):
 
     def is_rejection_modal_active(self) -> bool:
         """Check if the RejectionModal is the active screen."""
-        from docs_style.widgets import RejectionModal
-
         return isinstance(self.screen, RejectionModal)
 
     async def show_diff_ui(self, before: str, after: str, reason: str) -> None:
@@ -232,9 +239,9 @@ class AutoDocsEditorTUI(App):
             activity_log = self.query_one("#activity-log", RichLog)
             activity_log.write(text)
         except Exception:
-            pass
+            logger.exception("Unable to write to the activity panel")
 
-    def on_button_pressed(self, event: Button.Pressed) -> None:
+    async def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button press events."""
         if event.button.id == "btn-accept":
             self.action_accept()
@@ -245,7 +252,7 @@ class AutoDocsEditorTUI(App):
         elif event.button.id == "btn-skip":
             self.action_skip_guide()
         elif event.button.id == "btn-quit":
-            self.action_quit()
+            await self.action_quit()
 
     def action_accept(self) -> None:
         """Handle accept action from UI."""
@@ -253,7 +260,7 @@ class AutoDocsEditorTUI(App):
             # Get edited text if any
             try:
                 # Use query().last() to handle potential race condition where old widget is not yet removed
-                edit_area = self.query("TextArea.edit-area").last()
+                edit_area = self.query("TextArea.edit-area").last(TextArea)
                 edited_after = edit_area.text
             except Exception as e:
                 logger.error(f"Failed to retrieve edited text: {e}")
@@ -318,7 +325,7 @@ class AutoDocsEditorTUI(App):
             self.review_event.set()
             self.log_activity("[dim]⏭ Skipped[/dim]")
 
-    def action_quit(self) -> None:
+    async def action_quit(self) -> None:
         """Handle quit action."""
         self.is_quitting = True
 
@@ -372,6 +379,7 @@ class AutoDocsEditorTUI(App):
         self.start_processing_guide()
 
     @work(exclusive=False, thread=True)
+    @beartype
     def sync_notebook_background(self) -> None:
         """Sync markdown changes back to notebook in a background worker."""
         try:
@@ -421,6 +429,7 @@ class AutoDocsEditorTUI(App):
         self.run_vale_enforcement()
 
     @work(exclusive=True, thread=True)
+    @beartype
     def run_initial_vale_check(self) -> None:
         """Run initial Vale check before processing style guides."""
         self.call_from_thread(
@@ -435,7 +444,7 @@ class AutoDocsEditorTUI(App):
             self.call_from_thread(
                 self.log_activity, f"[bold red]✗ Initial Vale check failed: {e}[/bold red]"
             )
-            raise e
+            raise
 
         # After Vale check, start processing guides from the main thread
         self.call_from_thread(self._start_processing_after_vale)
@@ -445,6 +454,7 @@ class AutoDocsEditorTUI(App):
         self.start_processing_guide()
 
     @work(exclusive=True, thread=True)
+    @beartype
     def run_vale_enforcement(self) -> None:
         """Run Vale enforcement in background and log to TUI."""
         self.call_from_thread(self.log_activity, "\n[bold]Starting Vale enforcement...[/bold]")
@@ -452,6 +462,7 @@ class AutoDocsEditorTUI(App):
             self.controller.run_vale()
             self.call_from_thread(self.log_activity, "[green]✓ Vale enforcement complete.[/green]")
         except Exception as e:
+            logger.exception("Vale enforcement failed")
             self.call_from_thread(
                 self.log_activity, f"[bold red]✗ Vale enforcement failed: {e}[/bold red]"
             )
@@ -489,37 +500,14 @@ class AutoDocsEditorTUI(App):
 
         self.in_error_state = False
 
-        if self.is_quitting:
-            return False
-        return True
+        return not self.is_quitting
 
 
 def run() -> None:
     """Entry point for the TUI application."""
-    import argparse
     import sys
 
-    parser = argparse.ArgumentParser(
-        description="Interactive TUI for applying Google style guide edits.",
-    )
-    parser.add_argument(
-        "markdown_document",
-        help="Path to the markdown document or Jupyter notebook (.ipynb) to process.",
-    )
-    parser.add_argument(
-        "--skip-through",
-        metavar="STYLE_FILE",
-        help="Skip all style guide pages up to and including the specified filename.",
-    )
-    parser.add_argument(
-        "--final-pass",
-        action="store_true",
-        help=(
-            "Process only the subset of style-guide pages whose filenames are marked "
-            f"with the '{FINAL_PASS_MARKER}' symbol."
-        ),
-    )
-    args = parser.parse_args()
+    args = parse_arguments()
 
     # Validate file exists before setting up logging (so error is visible to user)
     target_path = Path(args.markdown_document).expanduser().resolve()

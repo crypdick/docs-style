@@ -1,4 +1,4 @@
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -56,7 +56,7 @@ def test_load_and_validate_target_missing(tmp_path):
 
 
 @patch("docs_style.workflow.ensure_jupytext_installed")
-@patch("docs_style.workflow.NotebookHandler")
+@patch("docs_style.workflow.NotebookHandler", autospec=True)
 def test_load_and_validate_target_notebook(mock_handler_cls, mock_ensure_jupytext, tmp_path):
     """Test validating a notebook file."""
     nb_path = tmp_path / "test.ipynb"
@@ -66,7 +66,7 @@ def test_load_and_validate_target_notebook(mock_handler_cls, mock_ensure_jupytex
     mock_ensure_jupytext.return_value = True
 
     # Setup mock handler instance
-    mock_handler = Mock()
+    mock_handler = mock_handler_cls.return_value
     mock_handler.ensure_paired.return_value = md_path
     mock_handler_cls.return_value = mock_handler
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env -S uv run --script
 #
 # /// script
 # requires-python = ">=3.12"
@@ -97,8 +96,7 @@ def latest_session_log() -> Path:
     if not candidates:
         raise FileNotFoundError("session.log not found after running docs-style-edit")
     # Sort by mtime
-    newest = max(candidates, key=lambda p: p.stat().st_mtime)
-    return newest
+    return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
 def repo_full_name_from_remote_url(url: str) -> str:
@@ -111,8 +109,7 @@ def repo_full_name_from_remote_url(url: str) -> str:
         seg = url.split("github.com/", 1)[1]
     else:
         raise ValueError(f"Unsupported remote URL: {url}")
-    seg = seg.removesuffix(".git")
-    return seg
+    return seg.removesuffix(".git")
 
 
 # ---------------------------------------------------------------------------
@@ -127,7 +124,7 @@ def process_document(
     remote_name: str,
     github_client: Github,
     dry_run: bool,
-):
+) -> None:
     doc_path = repo_path / doc_rel
     if not doc_path.is_file():
         raise FileNotFoundError(f"Markdown file not found: {doc_path}")
@@ -142,13 +139,13 @@ def process_document(
 
     # 3. Run AutoDocsEditor twice
     cmd_common = ["uv", "run", "--project", str(ROOT_DIR), "docs-style-edit"]
-    run(cmd_common + ["--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
-    run(cmd_common + ["--final-pass", "--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
+    run([*cmd_common, "--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
+    run([*cmd_common, "--final-pass", "--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
 
     # 4. Detect changes
     status = run(["git", "status", "--porcelain"], cwd=repo_path, dry=dry_run)
     if not status:
-        logger.info("No changes produced – deleting branch and skipping PR.")
+        logger.info("No changes produced - deleting branch and skipping PR.")
         run(["git", "checkout", base_branch], cwd=repo_path, dry=dry_run)
         run(["git", "branch", "-D", branch], cwd=repo_path, dry=dry_run)
         return
@@ -160,10 +157,9 @@ def process_document(
 
     # 6. Locate session.log & create gist
     log_path = latest_session_log()
-    with open(log_path, encoding="utf-8") as fh:
-        log_text = fh.read()
+    log_text = Path(log_path).read_text(encoding="utf-8")
 
-    gist_desc = f"AutoDocsEditor log – {doc_rel}"
+    gist_desc = f"AutoDocsEditor log - {doc_rel}"
     if dry_run:
         gist_url = "https://gist.github.com/dry-run"
     else:
@@ -250,7 +246,7 @@ def main() -> None:
         docs = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
     if not docs:
-        logger.info("Greenlist is empty – nothing to do.")
+        logger.info("Greenlist is empty - nothing to do.")
         return
 
     logger.info(f"Processing {len(docs)} markdown documents…")
@@ -266,13 +262,12 @@ def main() -> None:
                 github_client,
                 args.dry_run,
             )
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             logger.exception(exc)
             if args.continue_on_error:
                 logger.warning("Continuing to next document despite error…")
                 continue
-            else:
-                sys.exit(1)
+            sys.exit(1)
 
     logger.success("All documents processed.")
 

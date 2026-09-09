@@ -1,0 +1,128 @@
+minimum_prek_version = "0.3.2"
+
+[[repos]]
+repo = "builtin"
+hooks = [
+    {id = "trailing-whitespace", exclude = "^(archive/|skills/docs-style/vale_styles/)"},
+    {id = "end-of-file-fixer", exclude = "^(archive/|skills/docs-style/vale_styles/)"},
+    {id = "check-json"},
+    {id = "check-toml"},
+    {id = "check-yaml"},
+    {id = "check-merge-conflict"},
+    {id = "detect-private-key"},
+    {id = "check-added-large-files"},
+    {id = "check-case-conflict"},
+    {id = "check-symlinks"},
+    {id = "destroyed-symlinks"},
+    {id = "fix-byte-order-marker"},
+    {id = "mixed-line-ending"},
+    {id = "check-executables-have-shebangs"},
+    {id = "check-shebang-scripts-are-executable"},
+]
+
+# All Python tools share the versions recorded in uv.lock.
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "ruff-check"
+name = "Ruff check (includes debugger detection)"
+entry = "uv run --locked ruff check --fix --quiet"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "ruff-format"
+name = "Ruff format"
+entry = "uv run --locked ruff format --quiet"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "pyupgrade"
+name = "Modernize Python syntax"
+entry = "uv run --locked pyupgrade --py312-plus"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "flynt"
+name = "Convert string formatting"
+entry = "uv run --locked flynt"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "check-python-syntax"
+name = "Check Python syntax"
+entry = "uv run --locked python -m py_compile"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "detect-secrets"
+name = "Detect secrets"
+entry = "uv run --locked detect-secrets-hook --baseline .secrets.baseline"
+language = "system"
+exclude = "(^uv\\.lock$|^\\.secrets\\.baseline$)"
+
+[[repos.hooks]]
+id = "mypy"
+name = "Strict type checking"
+entry = "uv run --locked mypy"
+language = "system"
+pass_filenames = false
+always_run = true
+
+[[repos.hooks]]
+id = "vulture"
+name = "Dead code detection"
+entry = "uv run --locked vulture"
+language = "system"
+pass_filenames = false
+always_run = true
+
+[[repos.hooks]]
+id = "deptry"
+name = "Dependency integrity"
+entry = "uv run --locked deptry ."
+language = "system"
+pass_filenames = false
+always_run = true
+
+[[repos.hooks]]
+id = "check-exception-handling"
+name = "Check exception handling"
+entry = "uv run --locked python scripts/prek_hooks/check_exception_handling.py"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "check-timeless-comments"
+name = "Check timeless comments"
+entry = "uv run --locked python scripts/prek_hooks/check_timeless_comments.py"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "check-file-length"
+name = "Check file length"
+entry = "uv run --locked python scripts/prek_hooks/check_file_length.py"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "check-private-test-imports"
+name = "Forbid private test imports"
+entry = "uv run --locked python scripts/prek_hooks/check_private_test_imports.py"
+language = "system"
+types = ["python"]
+
+[[repos.hooks]]
+id = "pytest"
+name = "Tests and branch coverage"
+entry = "uv run --locked pytest -n 2"
+language = "system"
+pass_filenames = false
+always_run = true
+require_serial = true

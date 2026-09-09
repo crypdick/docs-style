@@ -25,11 +25,11 @@ class LoguruCallbackHandler(BaseCallbackHandler):
     def on_chain_start(
         self,
         serialized: dict[str, Any] | None,
-        inputs: dict[str, Any],
+        inputs: dict[str, Any],  # noqa: ARG002 - LangChain callback signature
         *,
-        run_id: UUID,
+        run_id: UUID,  # noqa: ARG002 - LangChain callback signature
         parent_run_id: UUID | None = None,
-        **kwargs: Any,
+        **kwargs: object,  # noqa: ARG002 - LangChain callback signature
     ) -> None:
         """Log when a chain starts."""
         # Only log top-level chain starts (no parent) to reduce noise
@@ -39,11 +39,11 @@ class LoguruCallbackHandler(BaseCallbackHandler):
 
     def on_chain_end(
         self,
-        outputs: dict[str, Any],
+        outputs: dict[str, Any],  # noqa: ARG002 - LangChain callback signature
         *,
-        run_id: UUID,
+        run_id: UUID,  # noqa: ARG002 - LangChain callback signature
         parent_run_id: UUID | None = None,
-        **kwargs: Any,
+        **kwargs: object,  # noqa: ARG002 - LangChain callback signature
     ) -> None:
         """Log when a chain ends."""
         if parent_run_id is None:
@@ -54,9 +54,9 @@ class LoguruCallbackHandler(BaseCallbackHandler):
         serialized: dict[str, Any],
         input_str: str,
         *,
-        run_id: UUID,
-        parent_run_id: UUID | None = None,
-        **kwargs: Any,
+        run_id: UUID,  # noqa: ARG002 - LangChain callback signature
+        parent_run_id: UUID | None = None,  # noqa: ARG002 - LangChain callback signature
+        **kwargs: object,  # noqa: ARG002 - LangChain callback signature
     ) -> None:
         """Log when a tool is invoked."""
         tool_name = serialized.get("name", "unknown_tool")
@@ -69,9 +69,9 @@ class LoguruCallbackHandler(BaseCallbackHandler):
         self,
         output: str,
         *,
-        run_id: UUID,
-        parent_run_id: UUID | None = None,
-        **kwargs: Any,
+        run_id: UUID,  # noqa: ARG002 - LangChain callback signature
+        parent_run_id: UUID | None = None,  # noqa: ARG002 - LangChain callback signature
+        **kwargs: object,  # noqa: ARG002 - LangChain callback signature
     ) -> None:
         """Log when a tool returns."""
         # Truncate very long outputs for readability
@@ -82,9 +82,9 @@ class LoguruCallbackHandler(BaseCallbackHandler):
         self,
         error: BaseException,
         *,
-        run_id: UUID,
-        parent_run_id: UUID | None = None,
-        **kwargs: Any,
+        run_id: UUID,  # noqa: ARG002 - LangChain callback signature
+        parent_run_id: UUID | None = None,  # noqa: ARG002 - LangChain callback signature
+        **kwargs: object,  # noqa: ARG002 - LangChain callback signature
     ) -> None:
         """Log tool errors."""
         logger.warning(f"[Tool] Error: {error}")
@@ -99,7 +99,7 @@ class DocumentSession:
         seen_edits: set[tuple[str, str]],
         on_apply: Callable[[str], Any] | None = None,
         content_provider: Callable[[], Any] | None = None,
-    ):
+    ) -> None:
         self.initial_content = content
         self.current_content = content
         self.seen_edits = seen_edits  # Edits seen globally across all guides
@@ -126,7 +126,7 @@ class DocumentSession:
 
         return None
 
-    async def apply_edit(self, before: str, after: str, reason: str = "") -> str:
+    async def apply_edit(self, before: str, after: str, reason: str = "") -> str:  # noqa: ARG002 - tool schema
         """Tool implementation to replace text."""
         # Refresh content from provider if available to catch out-of-band edits
         if self.content_provider:
@@ -363,7 +363,7 @@ async def handle_edit_proposal(
                 raise RuntimeError(err_msg)
 
             return f"User accepted the proposal. {result}"
-        elif decision["status"] == "modified":
+        if decision["status"] == "modified":
             # User modified -> Apply new text, count as rejected (quality issue)
             session.stats["rejected"] += 1
             new_text = decision.get("new_text", expanded_after)
@@ -376,23 +376,21 @@ async def handle_edit_proposal(
                 raise RuntimeError(err_msg)
 
             return f"User changed suggested diff to:\n```{new_text}```\nResult: {result}"
-        else:
-            # User rejected -> Don't apply
-            session.stats["rejected"] += 1
-            rejection_reason = decision.get("reason", "No reason provided")
-            logger.info(f"User rejected edit. Reason: {rejection_reason}")
+        # User rejected -> Don't apply
+        session.stats["rejected"] += 1
+        rejection_reason = decision.get("reason", "No reason provided")
+        logger.info(f"User rejected edit. Reason: {rejection_reason}")
 
-            return f"User rejected the proposal. Reason given: {rejection_reason}. If the user provided feedback, incorporate that feedback and try again. If the user ignored your change, move on to the next proposed change. If you do not respond with a tool call, it will be assumed that you have no more edit proposals and the session will end."
-    else:
-        # Non-interactive mode: Apply immediately (no context expansion to stay faithful to agent request)
-        logger.info(f"Agent proposing edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n")
-        return await session.apply_edit(before, after, reason)
+        return f"User rejected the proposal. Reason given: {rejection_reason}. If the user provided feedback, incorporate that feedback and try again. If the user ignored your change, move on to the next proposed change. If you do not respond with a tool call, it will be assumed that you have no more edit proposals and the session will end."
+    # Non-interactive mode: Apply immediately (no context expansion to stay faithful to agent request)
+    logger.info(f"Agent proposing edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n")
+    return await session.apply_edit(before, after, reason)
 
 
 async def process_style_guide(
     style_guide_text: str,
     session: DocumentSession,
-    callbacks: list | None = None,
+    callbacks: list[BaseCallbackHandler] | None = None,
     review_callback: Callable[[str, str, str], Any] | None = None,
     guide_name: str = "",
 ) -> None:
@@ -419,8 +417,7 @@ async def process_style_guide(
     # Store current style guide in session for downstream use (e.g. logging)
     session.current_style_guide = style_guide_text
 
-    @tool
-    async def apply_edit(before: str, after: str, reason: str = ""):
+    async def apply_edit(before: str, after: str, reason: str = "") -> str:
         """
         Replaces exact text in the document.
         Args:
@@ -430,7 +427,7 @@ async def process_style_guide(
         """
         return await handle_edit_proposal(session, before, after, reason, review_callback)
 
-    tools = [apply_edit]
+    tools = [tool(apply_edit)]
 
     # Refactored prompt structure: Style Guide as System, Document as User
     # Escape curly braces in style guide to prevent them being interpreted as variables

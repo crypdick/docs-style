@@ -1,6 +1,5 @@
-#!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=3.12"
 # dependencies = ["requests", "beautifulsoup4", "markdownify"]
 # ///
 """crawl_to_markdown.py
@@ -94,13 +93,13 @@ def process_page(
         resp = session.get(url, timeout=10)
         resp.raise_for_status()
     except requests.RequestException as exc:
-        logger.warning(f"Skipping {url}: {exc}")
+        logger.warning("Skipping %s: %s", url, exc)
         return None, []
 
     soup = BeautifulSoup(resp.text, "html.parser")
     main_tag = extract_main_content(soup)
     if not main_tag:
-        logger.info(f"No main content found for {url}")
+        logger.info("No main content found for %s", url)
         return None, []
 
     markdown = md(str(main_tag), heading_style="ATX")
@@ -109,11 +108,9 @@ def process_page(
     out_path.write_text(markdown, encoding="utf-8")
 
     title = soup.title.string.strip() if soup.title and soup.title.string else url
-    logger.info(f"Saved {url} -> {out_path.relative_to(output_dir)}")
+    logger.info("Saved page", extra={"url": url, "path": str(out_path.relative_to(output_dir))})
 
-    links = []
-    for a in soup.find_all("a", href=True):
-        links.append(a["href"].strip())
+    links = [a["href"].strip() for a in soup.find_all("a", href=True)]
 
     return (url, title, out_path), links
 
@@ -205,7 +202,7 @@ def main() -> None:
     if args.combined_file:
         combined_path = Path(args.combined_file)
         write_concatenated_markdown(pages, combined_path)
-        logger.info(f"Wrote concatenated markdown to {combined_path}")
+        logger.info("Wrote concatenated markdown to %s", combined_path)
 
 
 if __name__ == "__main__":

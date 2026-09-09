@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Command-line interface for docs_style."""
 
 from __future__ import annotations
@@ -7,6 +6,7 @@ import argparse
 import asyncio
 import sys
 
+from langchain_core.callbacks import BaseCallbackHandler
 from loguru import logger
 
 from docs_style.core import DocumentSession, process_style_guide
@@ -69,7 +69,7 @@ def main() -> None:
     total_edits_applied = 0
 
     # Get Langfuse handler for callbacks
-    callbacks = []
+    callbacks: list[BaseCallbackHandler] = []
     handler = get_langfuse_handler()
     if handler:
         callbacks.append(handler)
@@ -82,7 +82,7 @@ def main() -> None:
         logger.success("Initial Vale check complete.")
     except Exception as e:
         logger.error(f"Initial Vale check failed: {e}")
-        raise e
+        raise
 
     for idx, page_path in enumerate(style_pages, 1):
         # Re-read the document so that any manual edits the user made after the
@@ -100,7 +100,7 @@ def main() -> None:
                 process_style_guide(style_text, session, callbacks=callbacks, review_callback=None)
             )
         except KeyboardInterrupt:
-            logger.info("\n↷ Skip requested via Ctrl+C/ESC – moving to next style guide.\n")
+            logger.info("\n↷ Skip requested via Ctrl+C/ESC - moving to next style guide.\n")
             continue
 
         # Check results

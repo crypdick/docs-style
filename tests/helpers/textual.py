@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import inspect
 from collections.abc import Callable
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from typing import Any
 
 from textual.app import ScreenStackError
@@ -23,10 +23,8 @@ async def drain_pilot(pilot, timeout: float = 1.0) -> None:
 
     wait_for_workers = getattr(screen, "wait_for_workers_idle", None)
     if callable(wait_for_workers):
-        try:
+        with suppress(TimeoutError):
             await wait_for_workers(timeout=timeout)
-        except TimeoutError:
-            pass
 
 
 async def wait_for_condition(
@@ -75,10 +73,8 @@ async def wait_for_screen_workers(screen: Any, pilot, timeout: float = 5.0) -> N
     """
     wait_for_workers = getattr(screen, "wait_for_workers_idle", None)
     if callable(wait_for_workers):
-        try:
+        with suppress(TimeoutError):
             await wait_for_workers(timeout=timeout)
-        except TimeoutError:
-            pass
     await drain_pilot(pilot, timeout=timeout)
 
 

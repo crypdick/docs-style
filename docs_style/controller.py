@@ -21,7 +21,7 @@ class ReviewController:
         style_pages: list[Path],
         seen_edits: set[tuple[str, str]],
         notebook_handler: NotebookHandler | None = None,
-    ):
+    ) -> None:
         self.document_path = document_path
         self.style_pages = style_pages
         self.seen_edits = seen_edits

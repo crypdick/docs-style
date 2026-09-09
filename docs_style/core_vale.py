@@ -4,6 +4,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -21,7 +22,7 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
 
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
 
-    callbacks = []
+    callbacks: list[BaseCallbackHandler] = []
     handler = get_langfuse_handler()
     if handler:
         callbacks.append(handler)
@@ -86,10 +87,10 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         # Filter/Format errors for the LLM
         error_list = []
         for err in file_errors:
-            line = err.get("Line")
-            msg = err.get("Message")
-            rule = err.get("Check")
-            error_list.append(f"- Line {line}: {msg} (Rule: {rule})")
+            error_line = err["Line"]
+            msg = err["Message"]
+            rule = err["Check"]
+            error_list.append(f"- Line {error_line}: {msg} (Rule: {rule})")
 
         formatted_errors = "\n".join(error_list)
         logger.info(f"[Vale] Found {len(error_list)} errors:\n{formatted_errors}")

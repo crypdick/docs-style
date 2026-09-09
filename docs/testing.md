@@ -13,7 +13,7 @@ dummy OpenAI key and removes Langfuse credentials.
 For a focused failure, run the relevant module in one process:
 
 ```shell
-uv run pytest tests/test_core.py -n 0
+uv run pytest tests/test_core.py -n 0 --no-cov
 ```
 
 The pytest configuration supplies a five-second timeout and parallel execution
@@ -58,7 +58,7 @@ or grouping tests.
 Run the configured formatting and file checks:
 
 ```shell
-uvx pre-commit run --all-files
+uv run prek run --all-files
 ```
 
 To check the bundled Vale configuration when Vale is installed:
@@ -70,3 +70,47 @@ bash skills/docs-style/scripts/vale_check.sh README.md
 Vale findings require editorial review; a lint suggestion is not automatically
 a useful edit. Changes to prompts or the skill also need a representative manual
 review because mocked LLM tests do not measure editing quality.
+
+## Fresh environments and worktrees
+
+Install Python 3.12 or later and uv, then run:
+
+```shell
+uv sync --locked
+uv run prek install
+uv run prek run --all-files
+```
+
+If the `new-feature` CLI is installed, `new-feature create NAME --no-agent`
+creates an isolated worktree and runs the setup configured in `pyproject.toml`.
+Tests need no `.env`; provide credentials locally only for interactive editing.
+Each checkout keeps its own `.venv`, logs, test cache, and coverage artifacts.
+The shared uv download cache is content-addressed.
+
+## Quality gates
+
+The native `prek.toml` configuration runs hygiene and secret checks, Ruff,
+pyupgrade, flynt, strict mypy, Vulture, deptry, source policy checks, and tests.
+CI runs the same command on Python 3.12 and 3.13. The standalone maintenance
+scripts use PEP 723 dependencies and are linted but are outside the application's
+mypy and deptry scopes. Tests are outside mypy; test behavior is checked by pytest.
+
+Branch coverage includes the full `docs_style` package, including entry points.
+The initial floor is 70%, the measured percentage rounded down; raise `fail_under`
+in `[tool.coverage.report]` as coverage improves toward 100%. Missing lines are
+printed in the terminal and rendered in `htmlcov/index.html`. Do not omit
+uncovered production modules or lower the floor to pass a change.
+
+For a focused test run that intentionally does not measure the whole package:
+
+```shell
+uv run pytest tests/test_core.py -n 0 --no-cov
+```
+
+The secrets baseline contains audited false positives only. Review each finding
+before updating it; never accept actual credentials into the baseline. Run scans
+with `--no-verify` to keep candidate credentials from being sent over the network.
+
+Changes to settings, CLI behavior, resource paths, and prompts require checking
+the corresponding README guidance. Review `docs/ARCHITECTURE.md` twice a year
+and update `docs/QUALITY.md` after meaningful coverage or scope changes.

@@ -1,6 +1,8 @@
 from unittest.mock import patch
 
 import pytest
+from textual.app import ScreenStackError
+from textual.css.query import NoMatches
 from textual.widgets import TextArea
 
 from docs_style.controller import ReviewController
@@ -54,8 +56,9 @@ async def test_rejection_ui_update_race(tmp_path):
             # 1. Wait for first proposal
             await wait_for_condition(
                 pilot,
-                lambda: app.current_proposal is not None
-                and app.current_proposal[1] == "First Proposal",
+                lambda: (
+                    app.current_proposal is not None and app.current_proposal[1] == "First Proposal"
+                ),
             )
 
             # 2. Reject
@@ -74,8 +77,10 @@ async def test_rejection_ui_update_race(tmp_path):
             # 6. Wait for second proposal in state
             await wait_for_condition(
                 pilot,
-                lambda: app.current_proposal is not None
-                and app.current_proposal[1] == "Second Proposal",
+                lambda: (
+                    app.current_proposal is not None
+                    and app.current_proposal[1] == "Second Proposal"
+                ),
             )
 
             # 7. Check if UI updated using safe query
@@ -87,7 +92,7 @@ async def test_rejection_ui_update_race(tmp_path):
                         return False
                     ta = app.query_one("TextArea.edit-area", TextArea)
                     return ta.text == "Second Proposal"
-                except Exception:
+                except (NoMatches, ScreenStackError):
                     return False
 
             await wait_for_condition(pilot, check_ui_text)

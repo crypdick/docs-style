@@ -26,7 +26,7 @@ def test_bulk_uses_current_editor_entrypoint(tmp_path):
     editor_calls = [call.args[0] for call in run.call_args_list if call.args[0][0] == "uv"]
     command = ["uv", "run", "--project", str(ROOT_DIR), "docs-style-edit"]
     assert editor_calls == [
-        command + ["--yolo", str(document)],
-        command + ["--final-pass", "--yolo", str(document)],
+        [*command, "--yolo", str(document)],
+        [*command, "--final-pass", "--yolo", str(document)],
     ]
     assert not github_client.mock_calls

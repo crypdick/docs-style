@@ -1,24 +1,32 @@
 from __future__ import annotations
 
 import difflib
+from collections.abc import Iterable
+from typing import Any
 
 from rich.text import Text
-from textual.app import ComposeResult
 from textual.containers import Container, Horizontal, Vertical
 from textual.screen import ModalScreen
+from textual.widget import Widget
 from textual.widgets import Button, Label, Static, TextArea
 
 
 class DiffView(Container):
     """Widget to display a git-style unified diff with editable after content."""
 
-    def __init__(self, before: str, after: str, reason: str = "", **kwargs):
+    def __init__(
+        self,
+        before: str,
+        after: str,
+        reason: str = "",
+        **kwargs: Any,  # noqa: ANN401 - forwarded Textual widget options
+    ) -> None:
         super().__init__(**kwargs)
         self.before = before
         self.after = after
         self.reason = reason
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> Iterable[Widget]:
         """Create child widgets."""
         if self.reason:
             yield Label(
@@ -65,7 +73,7 @@ class DiffView(Container):
 class RejectionModal(ModalScreen[str]):
     """Modal to enter rejection reason."""
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> Iterable[Widget]:
         yield Vertical(
             Label("Enter rejection reason (optional):"),
             TextArea(id="reason-input"),

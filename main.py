@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Main entry point for docs_style.
 
 This script allows you to launch either the TUI (interactive) or CLI (automatic) mode.

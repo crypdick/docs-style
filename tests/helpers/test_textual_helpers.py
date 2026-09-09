@@ -103,10 +103,12 @@ async def test_screen_session_cleans_up_on_error() -> None:
     app = FakeApp()
     pilot = FakePilot(app)
 
-    with patch("tests.helpers.textual.drain_pilot", new_callable=AsyncMock):
-        with pytest.raises(RuntimeError):
-            async with screen_session(app, pilot, "settings"):
-                raise RuntimeError("boom")
+    with (
+        patch("tests.helpers.textual.drain_pilot", new_callable=AsyncMock),
+        pytest.raises(RuntimeError),
+    ):
+        async with screen_session(app, pilot, "settings"):
+            raise RuntimeError("boom")
 
     # screen stack is restored despite the error
     assert app._screen_stack == ["root"]

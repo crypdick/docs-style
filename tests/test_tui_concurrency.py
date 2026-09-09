@@ -2,6 +2,8 @@ import asyncio
 from unittest.mock import patch
 
 import pytest
+from textual.app import ScreenStackError
+from textual.css.query import NoMatches
 from textual.widgets import TextArea
 
 from docs_style.controller import ReviewController
@@ -135,7 +137,7 @@ async def test_user_edits_are_preserved_with_concurrency(tmp_path):
             def text_area_mounted():
                 try:
                     return len(app.query("TextArea.edit-area")) > 0
-                except Exception:
+                except (NoMatches, ScreenStackError):
                     return False
 
             await wait_for_condition(pilot, text_area_mounted, timeout=2.0)

@@ -47,7 +47,7 @@ def test_expand_edit_context_partial_line():
     assert exp_before == "Hello Target World\n"
     assert exp_after == "Hello Replacement World\n"
 
-    # context_lines=1
+    # Include one surrounding line on each side.
     exp_before, exp_after = expand_edit_context(content, before, after, context_lines=1)
 
     assert exp_before == "Line 1\nHello Target World\nLine 3"

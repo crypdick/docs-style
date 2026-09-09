@@ -15,7 +15,7 @@ class NotebookHandler:
         jupytext --set-formats ipynb,md:myst notebook.ipynb
     """
 
-    def __init__(self, notebook_path: Path):
+    def __init__(self, notebook_path: Path) -> None:
         """Initialize handler for a notebook file.
 
         Args:
@@ -35,11 +35,11 @@ class NotebookHandler:
 
         # Check if the markdown file has jupytext metadata indicating pairing
         try:
-            with open(self.markdown_path, encoding="utf-8") as f:
+            with Path(self.markdown_path).open(encoding="utf-8") as f:
                 content = f.read(500)  # Read first 500 chars to check metadata
                 # Look for jupytext metadata in the frontmatter
                 return "jupytext:" in content and "ipynb" in content
-        except Exception:
+        except (OSError, UnicodeError):
             return False
 
     def ensure_paired(self) -> Path:
@@ -56,13 +56,12 @@ class NotebookHandler:
             if self.is_paired():
                 logger.info(f"Using existing paired Markdown: {self.markdown_path}")
                 return self.markdown_path
-            else:
-                raise RuntimeError(
-                    f"Markdown file exists but is not paired with the notebook: {self.markdown_path}\n"
-                    f"Please either:\n"
-                    f"  1. Delete the markdown file to let the tool create a paired version\n"
-                    f"  2. Pair it manually: jupytext --set-formats ipynb,md:myst {self.notebook_path}"
-                )
+            raise RuntimeError(
+                f"Markdown file exists but is not paired with the notebook: {self.markdown_path}\n"
+                f"Please either:\n"
+                f"  1. Delete the markdown file to let the tool create a paired version\n"
+                f"  2. Pair it manually: jupytext --set-formats ipynb,md:myst {self.notebook_path}"
+            )
 
         logger.info(f"Pairing notebook with Markdown: {self.notebook_path}")
 
