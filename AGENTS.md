@@ -9,6 +9,11 @@ Use `uv sync --locked`, `uv run --locked vale --version`, and
 the `pyproject.toml` and `uv.lock` files synchronized through uv commands. Run focused
 checks while editing, then the complete hook suite before finishing.
 
+For concurrent tasks, create a separate Git worktree before editing or running
+checks. Keep each task's hook configuration, virtual environment, and generated
+reports in its worktree. Run release checks from the worktree containing the
+changes being released.
+
 Preserve document meaning and link syntax. Default tests must not call external
 large language models (LLMs), publish pull requests (PRs), or require credentials.
 Keep temporary state separate for each test and checkout. Do not lower coverage
