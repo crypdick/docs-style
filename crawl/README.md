@@ -1,10 +1,14 @@
-# Crawl the style guide
+# Crawl the source style guide
 
-This directory contains a script to crawl the style guide and save the pages to the `style/` directory.
+From the repository root, run:
 
 ```shell
-uv run crawl_to_markdown.py --base-url https://developers.google.com/style \
-                            --output-dir ./out
+uv run --script crawl/crawl_to_markdown.py \
+  --base-url https://developers.google.com/style \
+  --output-dir /tmp/docs-style-crawl
 ```
 
-Note that the script is not perfect. It creates a few duplicate pages, includes unwanted elements, etc. I manually cleaned up the output and saved the pages to the `style/` directory.
+The crawler exports source pages for manual review. Its output can contain
+navigation elements and duplicate pages. Curate changes before copying them into
+[the active references](../skills/docs-style/references/style/); do not replace
+those references wholesale with a fresh crawl.

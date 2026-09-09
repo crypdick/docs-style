@@ -15,7 +15,7 @@ For every Markdown path listed in a *greenlist* text file, this script:
 
 1. Checks out the base branch of an **existing local clone**.
 2. Creates a dedicated branch `docs/auto-edit-<slug>`.
-3. Runs `auto_docs_edit.py` twice (normal + final-pass) **in YOLO mode**.
+3. Runs `docs-style-edit` twice (normal + final-pass) in YOLO mode.
 4. Opens a *secret* Gist containing the LLM session log.
 5. Pushes the branch and opens a *draft* PR that links to the Gist.
 """
@@ -30,13 +30,12 @@ import subprocess
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from dotenv import load_dotenv
-from github import Github, InputFileContent
 from loguru import logger
 
 from settings import (
-    AUTO_DOCS_EDIT_SCRIPT,
     BULK_LOGS_DIR,
     DEFAULT_BASE_BRANCH,
     DEFAULT_REMOTE,
@@ -44,6 +43,9 @@ from settings import (
     PR_BODY_TEMPLATE,
     ROOT_DIR,
 )
+
+if TYPE_CHECKING:
+    from github import Github
 
 # ---------------------------------------------------------------------------
 # Constants & configuration
@@ -88,12 +90,12 @@ def sanitize_branch_name(doc_path: Path) -> str:
 def latest_session_log() -> Path:
     """Return path to the newest session.log inside logs/.*/* ."""
     if not LOGS_DIR.exists():
-        raise FileNotFoundError("No logs directory produced by auto_docs_edit.py yet.")
+        raise FileNotFoundError("No logs directory produced by docs-style-edit yet.")
 
     # Find all session.log files under logs/*/session.log
     candidates = list(LOGS_DIR.glob("*/session.log"))
     if not candidates:
-        raise FileNotFoundError("session.log not found after running auto_docs_edit.py")
+        raise FileNotFoundError("session.log not found after running docs-style-edit")
     # Sort by mtime
     newest = max(candidates, key=lambda p: p.stat().st_mtime)
     return newest
@@ -109,7 +111,7 @@ def repo_full_name_from_remote_url(url: str) -> str:
         seg = url.split("github.com/", 1)[1]
     else:
         raise ValueError(f"Unsupported remote URL: {url}")
-    seg = seg.rstrip(".git")
+    seg = seg.removesuffix(".git")
     return seg
 
 
@@ -139,7 +141,7 @@ def process_document(
     run(["git", "checkout", "-B", branch], cwd=repo_path, dry=dry_run)
 
     # 3. Run AutoDocsEditor twice
-    cmd_common = ["uv", "run", "--script", str(AUTO_DOCS_EDIT_SCRIPT)]
+    cmd_common = ["uv", "run", "--project", str(ROOT_DIR), "docs-style-edit"]
     run(cmd_common + ["--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
     run(cmd_common + ["--final-pass", "--yolo", str(doc_path)], cwd=SCRIPT_DIR, dry=dry_run)
 
@@ -165,6 +167,8 @@ def process_document(
     if dry_run:
         gist_url = "https://gist.github.com/dry-run"
     else:
+        from github import InputFileContent
+
         gist = github_client.get_user().create_gist(
             False,  # secret gist
             {"session.log": InputFileContent(log_text)},
@@ -204,6 +208,8 @@ def process_document(
 
 
 def main() -> None:
+    from github import Github
+
     parser = argparse.ArgumentParser(description="Bulk-create PRs with AutoDocsEditor edits.")
     parser.add_argument("--repo", required=True, help="Path to existing local git clone.")
     parser.add_argument(

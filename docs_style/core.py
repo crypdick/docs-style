@@ -3,47 +3,28 @@
 from __future__ import annotations
 
 import inspect
-import os
 import re
 from collections.abc import Callable
 from typing import Any
 from uuid import UUID
 
-try:
-    from langchain.agents import AgentExecutor, create_tool_calling_agent
-except ImportError:
-    # Fallback for newer langchain versions (1.1.0+)
-    from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
+from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from loguru import logger
 
-try:
-    from langfuse import Langfuse
-    from langfuse.langchain import CallbackHandler as LangfuseCallbackHandler
-except ImportError:
-    Langfuse = None
-    LangfuseCallbackHandler = None
-
 from settings import MODEL_NAME
+from utils import get_langfuse_handler
 
 
 class LoguruCallbackHandler(BaseCallbackHandler):
-    """Callback handler that routes langchain agent actions to loguru.
-
-    This replaces the `verbose=True` flag on AgentExecutor, which writes directly
-    to stdout. Writing to stdout conflicts with Textual TUI applications that also
-    use stdout for rendering, causing the display to freeze or become corrupted.
-
-    By using a callback handler instead, we capture the same debugging information
-    but route it to the log file via loguru, keeping stdout clean for the TUI.
-    """
+    """Route agent logs through Loguru so they do not interfere with the TUI."""
 
     def on_chain_start(
         self,
-        serialized: dict[str, Any],
+        serialized: dict[str, Any] | None,
         inputs: dict[str, Any],
         *,
         run_id: UUID,
@@ -51,9 +32,9 @@ class LoguruCallbackHandler(BaseCallbackHandler):
         **kwargs: Any,
     ) -> None:
         """Log when a chain starts."""
-        chain_name = serialized.get("name", serialized.get("id", ["Unknown"])[-1])
         # Only log top-level chain starts (no parent) to reduce noise
         if parent_run_id is None:
+            chain_name = (serialized or {}).get("name", "Unknown")
             logger.debug(f"[Chain] Starting: {chain_name}")
 
     def on_chain_end(
@@ -124,7 +105,6 @@ class DocumentSession:
         self.seen_edits = seen_edits  # Edits seen globally across all guides
         self.session_edits: list[tuple[str, str]] = []  # Edits applied in this session
         self.failed_edits: list[str] = []
-        self.trace_id: str | None = None
         self.current_style_guide: str = ""
         # Metrics for queryability
         self.stats = {"accepted": 0, "rejected": 0}
@@ -244,26 +224,6 @@ CORE_INSTRUCTIONS = (
     "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
     "8. Provide a brief `reason` for each edit explaining which rule is being applied."
 )
-
-
-def update_trace_metrics(session: DocumentSession, langfuse: Any):
-    """Update trace metadata with running counters."""
-    if not session.trace_id:
-        return
-
-    n_accepted = session.stats["accepted"]
-    n_rejected = session.stats["rejected"]
-    total = n_accepted + n_rejected
-    frac_rejected = round(n_rejected / total, 2) if total > 0 else 0.0
-
-    langfuse.trace(
-        id=session.trace_id,
-        metadata={
-            "N_accepted": n_accepted,
-            "N_rejected": n_rejected,
-            "frac_rejected": frac_rejected,
-        },
-    )
 
 
 def expand_edit_context(
@@ -403,19 +363,6 @@ async def handle_edit_proposal(
                 logger.error(err_msg)
                 raise RuntimeError(err_msg)
 
-            if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
-                try:
-                    langfuse = Langfuse()
-                    langfuse.score(
-                        trace_id=session.trace_id,
-                        name="user-review",
-                        value=1,
-                        comment=f"Accepted edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\n",
-                    )
-                    update_trace_metrics(session, langfuse)
-                except Exception as e:
-                    logger.error(f"Failed to score Langfuse trace: {e}")
-
             return f"User accepted the proposal. {result}"
         elif decision["status"] == "modified":
             # User modified -> Apply new text, count as rejected (quality issue)
@@ -429,38 +376,12 @@ async def handle_edit_proposal(
                 logger.error(err_msg)
                 raise RuntimeError(err_msg)
 
-            if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
-                try:
-                    langfuse = Langfuse()
-                    langfuse.score(
-                        trace_id=session.trace_id,
-                        name="user-review",
-                        value=0,
-                        comment=f"User modified proposed edit.\nBefore:\n```{before}```\nAfter->\n```{new_text}```",
-                    )
-                    update_trace_metrics(session, langfuse)
-                except Exception as e:
-                    logger.error(f"Failed to score Langfuse trace: {e}")
-
             return f"User changed suggested diff to:\n```{new_text}```\nResult: {result}"
         else:
             # User rejected -> Don't apply
             session.stats["rejected"] += 1
             rejection_reason = decision.get("reason", "No reason provided")
             logger.info(f"User rejected edit. Reason: {rejection_reason}")
-
-            if session.trace_id and Langfuse and os.getenv("LANGFUSE_SECRET_KEY"):
-                try:
-                    langfuse = Langfuse()
-                    langfuse.score(
-                        trace_id=session.trace_id,
-                        name="user-review",
-                        value=0,
-                        comment=f"Rejected edit.\nBefore:\n```{before}```\nAfter->\n```{after}```\nReason: {rejection_reason}",
-                    )
-                    update_trace_metrics(session, langfuse)
-                except Exception as e:
-                    logger.error(f"Failed to score Langfuse trace: {e}")
 
             return f"User rejected the proposal. Reason given: {rejection_reason}. If the user provided feedback, incorporate that feedback and try again. If the user ignored your change, move on to the next proposed change. If you do not respond with a tool call, it will be assumed that you have no more edit proposals and the session will end."
     else:
@@ -491,27 +412,13 @@ async def process_style_guide(
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
 
     if callbacks is None:
-        callbacks = []
+        handler = get_langfuse_handler()
+        callbacks = [handler] if handler else []
+    else:
+        callbacks = list(callbacks)
 
     # Store current style guide in session for downstream use (e.g. logging)
     session.current_style_guide = style_guide_text
-
-    # Initialize Langfuse trace if credentials exist and Langfuse is available
-    if (
-        Langfuse
-        and LangfuseCallbackHandler
-        and os.getenv("LANGFUSE_SECRET_KEY")
-        and os.getenv("LANGFUSE_PUBLIC_KEY")
-    ):
-        try:
-            # Use CallbackHandler directly as Langfuse.trace() is not available in v3
-            # CallbackHandler in this version does not accept tags/version in __init__
-            handler = LangfuseCallbackHandler()
-            callbacks.append(handler)
-            # session.trace_id remains None as we rely on CallbackHandler's internal trace creation
-            logger.info("Langfuse handler initialized.")
-        except Exception as e:
-            logger.error(f"Failed to initialize Langfuse trace: {e}")
 
     @tool
     async def apply_edit(before: str, after: str, reason: str = ""):
@@ -541,18 +448,11 @@ async def process_style_guide(
 
     agent = create_tool_calling_agent(llm, tools, prompt)
 
-    # IMPORTANT: verbose must be False to avoid stdout pollution.
-    # Langchain's verbose=True writes directly to stdout, which conflicts with
-    # Textual TUI applications that also use stdout for rendering. This causes
-    # the TUI display to freeze or become corrupted.
-    #
-    # Instead, we use LoguruCallbackHandler to capture the same debugging
-    # information and route it to the log file. This keeps stdout clean while
-    # preserving full visibility into agent actions for debugging.
+    # AgentExecutor writes verbose output directly to stdout, disrupting the TUI.
     callbacks.append(LoguruCallbackHandler())
     agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False, max_iterations=50)
 
-    logger.info("Starting agent loop...")
+    logger.info(f"Processing {guide_name or 'style guide'}...")
 
     await agent_executor.ainvoke(
         {

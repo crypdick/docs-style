@@ -62,6 +62,9 @@ def load_and_validate_target(path_str: str) -> WorkflowContext:
 def get_style_guides(skip_through: str | None = None, final_pass: bool = False) -> list[Path]:
     """Retrieve and filter the list of style guide files."""
     style_pages = sorted(STYLE_DIR.glob("*.md"), key=lambda p: p.name)
+    if not style_pages:
+        logger.error(f"No style guide files found in {STYLE_DIR}.")
+        sys.exit(1)
 
     if final_pass:
         logger.info("Processing final pass style rules only.")
@@ -72,7 +75,7 @@ def get_style_guides(skip_through: str | None = None, final_pass: bool = False) 
         try:
             skip_idx = next(i for i, p in enumerate(style_pages) if p.name == skip_name)
             style_pages = style_pages[skip_idx + 1 :]
-            logger.info(f"Skipped {skip_idx} style pages.")
+            logger.info(f"Skipped {skip_idx + 1} style pages.")
         except StopIteration:
             logger.error(f"--skip-through: '{skip_name}' not found among style pages.")
             sys.exit(1)

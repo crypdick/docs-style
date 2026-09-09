@@ -1,1 +1,1 @@
-Great work! Let's commit your changes. Make all the hooks happy. You don't need to run the hooks manually, they will run automatically when you commit.
+Review the diff, run the repository's checks, and commit the intended changes with a concise message. Resolve any hook failures before retrying the commit.

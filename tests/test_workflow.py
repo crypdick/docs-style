@@ -149,4 +149,23 @@ def test_get_style_guides_empty(mock_style_dir):
 
     with pytest.raises(SystemExit) as exc:
         get_style_guides()
+    assert exc.value.code == 1
+
+
+def test_bundled_style_guides():
+    """The Python workflow must discover the same resources as the plugin."""
+    from settings import SKILL_DIR, VALE_CONFIG
+
+    guides = get_style_guides()
+    assert guides
+    assert all(p.is_file() and p.is_relative_to(SKILL_DIR) for p in guides)
+    assert VALE_CONFIG.is_file()
+    assert (SKILL_DIR / "vale_styles" / "Google" / "Headings.yml").is_file()
+
+
+@patch("docs_style.workflow.STYLE_DIR")
+def test_get_style_guides_skip_last(mock_style_dir, tmp_path):
+    mock_style_dir.glob.return_value = [tmp_path / "last.md"]
+    with pytest.raises(SystemExit) as exc:
+        get_style_guides(skip_through="last.md")
     assert exc.value.code == 0

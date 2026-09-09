@@ -4,7 +4,9 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: ^(archive/|skills/docs-style/vale_styles/)
       - id: end-of-file-fixer
+        exclude: ^(archive/|skills/docs-style/vale_styles/)
       - id: check-yaml
       - id: check-added-large-files
       - id: check-json
@@ -41,6 +43,8 @@ repos:
         types: [python]
       - id: pytest
         name: Run pytest
-        entry: uv run pytest tests/
+        entry: uv run pytest -n 2
         language: system
         types: [python]
+        pass_filenames: false
+        require_serial: true

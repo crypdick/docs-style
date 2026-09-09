@@ -1,145 +1,107 @@
-# AutoDocsEditor
+# docs-style
 
-`AutoDocsEditor` helps your documentation conform to the [Google Developer Documentation Style Guide](https://developers.google.com/style) by using *large language models* (*LLMs*). This is a large style guide (71 pages!), so the `AutoDocsEditor` breaks up the job into stages, proposing incremental edits to a document. This makes the process of hand-checking a long document against 71 individual style rules less tedious.
+Review and edit documentation with a curated adaptation of the
+[Google Developer Documentation Style Guide](https://developers.google.com/style).
+The repo provides an agent skill for Markdown and a Python editor, AutoDocsEditor,
+for Markdown and Jupyter notebooks.
 
-**Supports both Markdown files (.md) and Jupyter notebooks (.ipynb)!**
+## Agent skill
 
-![Screenshot of AutoDocsEditor in action](assets/screenshot.png)
+The [docs-style skill](skills/docs-style/SKILL.md) contains the editing workflow.
+Plugin manifests for Claude Code and Codex live at the repository root; the skill
+and its resources live under `skills/docs-style/`.
 
-## Claude Code plugin
+Example requests:
 
-This repo also ships a Claude Code plugin at [`docs-style/`](./docs-style/)
-that applies the same curated rules without the Python pipeline. See
-[`docs-style/README.md`](./docs-style/README.md) for install + usage.
+- “Review README.md for Google documentation style.”
+- “Apply docs-style to docs/setup.md.”
+- “Do a final style pass on docs/tutorial.md.”
 
-## Quick start
+The skill reads the relevant curated rules, reports findings or edits according
+to the request, and runs Vale if available. It can combine related corrections;
+ask for staged review if you want to approve each round.
 
-To get started, export your OpenAI key (or put it in a `.env` file):
+## Python editor
 
-```shell
-export OPENAI_API_KEY="YOUR_API_KEY"
-```
-
-Install the package:
+Run these commands from a checkout with Python 3.12 or later and `uv` installed:
 
 ```shell
 uv sync
-```
-
-### Interactive TUI Mode (Recommended)
-
-Run the interactive TUI to review and accept/reject each proposed edit:
-
-```shell
-# Using the unified entry point
-uv run python main.py tui docs/your_article.md
-
-# Or using the direct command
+export OPENAI_API_KEY="YOUR_API_KEY"
 uv run docs-style-tui docs/your_article.md
 ```
 
-The TUI provides a visual diff interface where you can:
+You can also put the API key in `.env`; see [.env.SAMPLE](.env.SAMPLE).
+The model is configured by `MODEL_NAME` in [settings.py](settings.py).
+Langfuse tracing is optional and enabled when its credentials are set.
 
-- Review each proposed edit with before/after comparison
-- Accept or reject individual edits (keyboard shortcuts: `a` to accept, `r` to reject)
-- Skip to the next style guide (`s`)
-- See the reason for each edit
+![AutoDocsEditor review interface](assets/screenshot.png)
 
-### CLI Mode (Automatic)
+The TUI shows proposed edits with context and a reason. Press `a` to accept,
+`r` to reject, `s` to skip the current guide, or `q` to quit.
+**Vale enforcement runs automatically before and after the guide passes and
+can edit the document without individual approval, including in TUI mode.**
 
-Run the CLI mode to automatically apply edits (original behavior):
+The CLI applies edits and pauses after each guide that changes the document:
 
 ```shell
-# Using the unified entry point
-uv run python main.py cli docs/your_article.md
-
-# Or using the direct command
 uv run docs-style-edit docs/your_article.md
 ```
 
-Both modes process the Markdown file against every page of the style guide (stored locally in the `style/` directory). The CLI mode pauses between each set of edits, giving you the opportunity to review the proposed edits and commit the incremental changes before moving on to the next set of style rules. The script itself doesn't touch Git.
+Use `--yolo` to skip those pauses. Both interfaces write changes to the target
+file; neither commits them to Git. `python main.py tui ...` and
+`python main.py cli ...` are alternative entry points.
 
-Note: we recommend using `o4-mini` for better results.
+### Notebooks
 
-### Jupyter Notebook Support
-
-AutoDocsEditor supports Jupyter notebooks via [Jupytext](https://jupytext.readthedocs.io/):
+Both interfaces accept `.ipynb` files:
 
 ```shell
-# Edit a notebook directly - works with both TUI and CLI modes
 uv run docs-style-tui notebooks/tutorial.ipynb
-uv run docs-style-edit notebooks/tutorial.ipynb
 ```
 
-**How it works:**
+Jupytext creates a paired MyST Markdown file for editing. The editor syncs it
+back to the notebook on completion and preserves the Markdown file. An existing
+Markdown file must already be paired with the notebook before it can be reused.
 
-1. The tool converts your `.ipynb` to MyST Markdown format using Jupytext
-2. Applies style guide edits to the Markdown representation
-3. Automatically syncs changes back to the notebook
-4. Cleans up temporary files
+### Resume or run a final pass
 
-### Skip style rules
-
-If you are resuming a run, you can skip style rules you have already processed:
+`--skip-through` skips a named guide and all preceding guides:
 
 ```shell
-uv run docs-style-tui --skip-through commas.md docs/your_article.md
-# or
-uv run docs-style-edit --skip-through commas.md docs/your_article.md
+uv run docs-style-tui --skip-through 01-lists.md docs/your_article.md
 ```
 
-This example skips every style rule **up to and including** the `commas.md` file.
-
-In TUI mode, you can also press `s` to skip to the next style guide, or `q` to quit.
-
-### Final pass sweep
-
-After you have iterated through the full style guide once and made additional manual edits, you can run a **quick compliance sweep** over only the most error-prone rules:
+`--final-pass` selects guides whose filenames end in `+.md`:
 
 ```shell
-uv run docs-style-tui --final-pass docs/your_article.md
-# or
 uv run docs-style-edit --final-pass docs/your_article.md
 ```
 
-The script will process **only** those style guide pages whose filenames end with a `+`, for example `00-tone+.md`.
+These options work in both interfaces. Guide filenames and their order are in
+[references/style](skills/docs-style/references/style/).
 
-### YOLO mode (CLI only, non-interactive)
+## Vale
 
-Run the CLI with `--yolo` to automatically accept every proposed edit and skip the manual review pauses:
+Install the Vale CLI separately to enable lint checks. The skill includes its
+configuration and Google rule bundle; no rule download is needed.
 
-```shell
-uv run docs-style-edit --yolo docs/your_article.md
-```
-
-YOLO mode is not recommended because mistakes will compound. Consider using the TUI mode instead for better control.
-
-### Bulk PR automation
-
-If you want to **batch-apply** the style rules and open one draft pull-request per document, use `bulk_pr_autodocs.py`.
-
-1. Ensure you have a local clone of the GitHub repository you want to patch.
-2. Export a **personal access token** with `repo` and `gist` scopes (required to push branches and create secret gists):
+To lint without the Python editor or an LLM:
 
 ```shell
-export GITHUB_TOKEN="YOUR_GITHUB_PAT"
+bash skills/docs-style/scripts/vale_check.sh docs/your_article.md
 ```
 
-or put it in a `.env` file:
+This wrapper only reports findings. The Python editor's Vale step additionally
+uses an LLM to apply fixes.
 
-```text
-GITHUB_TOKEN=YOUR_GITHUB_PAT
-```
+## Bulk draft PRs
 
-3. Create a *greenlist* text file that lists the Markdown paths (relative to the repo root) you want to process, for example:
+[bulk_pr_autodocs.py](bulk_pr_autodocs.py) processes Markdown paths listed in a
+text file, one path per line relative to an existing local clone. Blank lines
+and lines beginning with `#` are ignored.
 
-```text
-# greenlist.txt=
-docs/getting-started.md
-docs/advanced/configuration.md
-```
-
-4. Run the bulk script:
+Set `OPENAI_API_KEY` and `GITHUB_TOKEN`, then run:
 
 ```shell
 uv run --script bulk_pr_autodocs.py \
@@ -147,32 +109,29 @@ uv run --script bulk_pr_autodocs.py \
   --greenlist greenlist.txt
 ```
 
-Flags:
+The script checks out the base branch, creates a document branch, runs the
+editor twice (full and final passes) in YOLO mode, commits and pushes the result,
+then opens a draft PR. It uploads the final session log to a secret gist and
+archives a local copy under `logs/bulk_pr_logs/`. The GitHub token must allow the
+repository operations and gist creation.
 
-- `--dry-run` – print actions without touching GitHub.
-- `--continue-on-error` – keep processing even if one document fails.
-- `--base-branch` and `--remote` – customise the target branch/remote.
+Use a clean clone: the script switches branches and resets an existing branch
+with the same generated name. `--base-branch` and `--remote` select the target;
+`--continue-on-error` continues with later documents after a failure.
+`--dry-run` prints commands without executing them; it cannot predict the edits
+or PRs that a real run would produce.
 
-For every listed file the script will:
+## Curated rules
 
-1. Create a branch `docs/auto-edit-<slug>` inside your clone.
-2. Run `auto_docs_edit.py` in YOLO mode.
-3. Push the branch and open a **draft** PR against `<base-branch>`.
-4. Upload the LLM session log to a **secret gist** and link to it from the PR description.
-5. Archive a copy of the log under `logs/bulk_pr_logs/`.
+The 16 reference files consolidate the original guide into topics. They include
+local preferences and omit some Google-specific, HTML-specific, and irrelevant
+material. Unused source pages remain in [archive/](archive/); the crawler in
+[crawl/](crawl/) is a maintenance tool, not part of editing.
 
-## Differences to the official style guide
+The Python editor applies guides in filename order: broad principles first,
+then structure and terminology, followed by mechanics. The agent skill uses
+the same references with discretion about how to group edits. Technical accuracy,
+repository conventions, and explicit user preferences take precedence over
+mechanical compliance.
 
-- Moved some guides that are irrelevant for my use case to `archive/`.
-- Deleted Google- and Android-specific style rules.
-- Simplified some style rules to make them more "atomic" and less monolithic.
-- Added a few LLM hints to prevent common LLM mistakes while applying the style guides (for example, "Do not apply this style guide to code blocks.").
-- Added a few style precedence rules to enforce an ordering of the style guides.
-- Dropped preference for `_` over `*` for italics.
-- Removed internal links between style rule pages, since the LLM applies one set of style rules at a time and also can't follow the links.
-- Added some personal style rules. These personal style rules are prefixed with `PERSONAL-`.
-- Removed HTML-specific style rules.
-
-## Set style rule precedence
-
-The order in which the style rules are applied is important because subsequent edits may revert previous edits. The default order is alphabetic. Therefore, to enforce an ordering, you can add prefixes to the style guide names. The script applies the prefixes `00-`, `01-`, `02-` in that order, before non-numeric style guides. Conversely, the script applies `z-` last.
+See [docs/testing.md](docs/testing.md) for development checks.

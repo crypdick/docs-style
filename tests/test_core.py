@@ -5,12 +5,6 @@ import pytest
 from docs_style.core import DocumentSession, handle_edit_proposal, process_style_guide
 
 
-def test_document_session_apply_edit():
-    pass
-    # Original test removed because apply_edit is now async and requires an event loop
-    # See test_document_session_apply_edit_async below
-
-
 @pytest.mark.asyncio
 async def test_document_session_apply_edit_async():
     content = "Hello world"
@@ -153,7 +147,9 @@ async def test_process_style_guide_escapes_braces():
         mock_executor_cls.return_value = mock_executor
 
         # Run the function
-        await process_style_guide(style_guide_with_braces, session)
+        callbacks = []
+        await process_style_guide(style_guide_with_braces, session, callbacks=callbacks)
+        assert callbacks == []  # Reusing the caller's list must not accumulate handlers.
 
         # Verify ChatPromptTemplate.from_messages was called
         assert mock_prompt_cls.from_messages.called
