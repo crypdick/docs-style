@@ -4,9 +4,9 @@ A procedure is a sequence of numbered steps to accomplish a task.
 
 ## Best Practices
 
-* **One way only:** Document the best/easiest way to do a task. Do not document multiple methods (e.g., console vs CLI) unless necessary.
+* **Recommended path:** Lead with the usual way to complete the task. Include alternatives when they serve different platforms, permissions, or user needs.
 * **No repetition:** Link to existing procedures instead of repeating steps.
-* **Keyboard shortcuts:** Do not use them (they vary by OS/locale).
+* **Keyboard shortcuts:** Identify the platform when a shortcut varies by operating system. Preserve shortcuts that readers need to use the interface.
 * **Politeness:** Do not use "please".
 * **Introduction:** Provide context. End with a colon if steps follow immediately, or a period if there is intervening text.
 
@@ -22,7 +22,7 @@ A procedure is a sequence of numbered steps to accomplish a task.
 ## Formatting
 
 * **Single step:** Use a bullet, not a number.
-* **Sub-steps:** Use lowercase letters (a, b).
+* **Sub-steps:** Use nested lists supported by the document’s Markdown renderer.
 * **Optional steps:** Start with "Optional:" (no parentheses).
 * **Results:** Place the result of an action in the same paragraph as the step.
 * **Menu paths:** Use `>` to combine short menu selections.

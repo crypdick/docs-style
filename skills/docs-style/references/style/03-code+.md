@@ -19,12 +19,12 @@ Use code font to signal verbatim text, show boundaries, and separate code entiti
 
 ## Code samples
 
-* **Formatting:** Wrap lines at 80 characters.
+* **Formatting:** Keep lines readable, using 80 characters as a guide where practical. Preserve syntax and literal values when wrapping.
 * **Omissions:** Use comments (e.g., `# Code omitted`) instead of ellipses (`...`).
 * **Introductions:** Precede with an introductory sentence/paragraph.
   * End with a **colon** if the sample follows immediately.
   * End with a **period** if there is text between (e.g., a note) or if the sentence isn't a direct lead-in.
-* **Markdown:** Ensure multiline code blocks are surrounded by triple backticks.
+* **Markdown:** Use fenced code blocks with a language label. Preserve valid longer fences when examples contain backticks.
 * **Copyable:** Ensure samples are valid and copyable (unless they contain omissions/placeholders that break syntax).
 
 ## Command-line syntax
@@ -32,9 +32,9 @@ Use code font to signal verbatim text, show boundaries, and separate code entiti
 ### Formatting
 
 * Use code blocks with language-specific syntax highlighting (`shell` for console commands, `bash` for bash scripts, `python` for Python).
-* Indent code inside fences by 4 spaces.
+* Preserve the indentation required by the language; code fences do not require an extra four spaces.
 * Break lines at 80 characters when possible. After the first line, indent continuation lines by 4 spaces.
-* End each line (except the last) with the continuation character: `\` (Linux/Cloud Shell) or `^` (Windows).
+* When wrapping a command, use continuation syntax for the specified shell, such as `\` in Bash or `^` in cmd.exe. Do not add continuation characters to separate commands or language constructs that already span lines.
 * Link to the command reference when introducing a command.
 * Minimize arguments to what's needed for the task. Let the reference cover all options.
 
@@ -54,7 +54,7 @@ Use these characters to document syntax, not in click-to-copy examples:
 
 ### Click-to-copy examples
 
-Never use `[]`, `{}`, `|`, or `...` in copyable examples—they break if not removed. Instead:
+Do not leave syntax-diagram notation such as `[optional]` or `{choice1|choice2}` in copyable examples. Preserve these characters when they are literal command syntax, such as shell pipes or JSON braces. For alternatives:
 
 * **Remove optional arguments** and note alternatives in prose.
 * **Use separate code blocks** for each variant.
@@ -74,31 +74,7 @@ Never use `[]`, `{}`, `|`, or `...` in copyable examples—they break if not rem
 * **Prefer explaining what the command does** rather than naming each element, especially for complex Linux commands.
 * **Ask whether readers need terminology** or just need to understand the command's behavior.
 
-### gcloud CLI
-
-* **Structure:** `gcloud GROUP COMMAND --flag=VALUE ARGUMENT`
-  * Groups can be nested (e.g., `gcloud compute instances list`)
-  * `--` separates gcloud flags from user arguments
-* **Terms:** Use `command`, `group`, `flag`, and `argument`.
-* **Catchall:** *Option* works when you don't want specialized nomenclature.
-
-### Linux commands
-
-* **Complexity warning:** Linux syntax includes options, parameters, arguments, metacharacters (`*`, `?`), redirection (`|`, `>`, `<`), and more.
-* **Terms:** Use `command`, `option` (starts with `-`), and `argument`.
-* **Catchall:** *Option* is safe for general use.
-
-### Linux signals
-
-Use the specific verb associated with each signal:
-
-* `SIGKILL`: **kill** (Cannot be caught/ignored. Do not use *stop* or *terminate*).
-* `SIGTERM`: **terminate** (Requests termination, allows cleanup. Do not use *kill*).
-* `SIGQUIT`: **quit** (Keyboard quit, can be caught).
-* `SIGINT`: **interrupt** (Ctrl+C, terminates gracefully).
-* `SIGPAUSE`: **pause** or **sleep** (Waits for signal).
-* `SIGSUSPEND`: **suspend** (Temporarily pauses execution).
-* `SIGSTOP`: **stop** (Stops for later continuation with `SIGCONT`. Cannot be caught).
+Use *command*, *option* or *flag*, and *argument* as appropriate to the tool. Preserve established names for subcommands and signals.
 
 ## API reference code comments
 
@@ -139,4 +115,3 @@ For API/reference documentation descriptions:
   * Use "for example" or "such as".
   * Use parentheses if the example is short and in the middle of a sentence.
 * **Punctuation:** Use a comma or em dash before an example at the end of a sentence.
-

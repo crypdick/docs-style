@@ -12,11 +12,11 @@
 * **Abbreviations:** If the text has an abbreviation, include the full term in the link text to aid search/scanning.
   * *Recommended:* "Google Kubernetes Engine (GKE)"
 * **Code items:** If linking to a command or flag, include the description in the link text if possible.
-  * *Recommended:* "...run the `--hostname` flag."
+  * *Recommended:* "...set the hostname with the `--hostname` flag."
 
 ## Formatting
 
-* **Introduction:** Use "For more information, see Link Text."
+* **Introduction:** Explain why the link is useful, or use a short lead-in such as "For more information, see Link Text."
 * **Punctuation:** Place punctuation outside the link tags.
 * **Tabs/Downloads:**
   * Open links in the same tab.

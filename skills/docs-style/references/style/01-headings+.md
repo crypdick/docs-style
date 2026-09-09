@@ -20,4 +20,4 @@
 
 ## Grouping sections
 
-When introducing a group of subsections, use "The following sections describe..." instead of "This section" or "These sections".
+Add an introduction when it explains the relationship between subsections. Omit filler that merely announces that sections follow.

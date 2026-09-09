@@ -1,96 +1,73 @@
 ---
 name: docs-style
-description: Use when user wants to apply the Google Developer Documentation Style Guide to a markdown file or asks to "fix doc style", "edit docs", "review for style guide", "make this match Google style". Applies 16 curated style rules in staged passes with user approval between rounds, then runs vale for a mechanical lint sweep.
+description: Review or edit Markdown documentation using this repo's curated Google developer documentation style rules, with an optional Vale lint check. Use for documentation style requests, especially Google style compliance.
 ---
 
-# Apply Google Developer Documentation Style Guide
+# Documentation style
 
-## When to use
+Apply the curated rules to the Markdown files in the user's request. For a
+review, report findings; for an editing request, make the changes. Ask for a
+target only when the request and workspace leave it unclear.
 
-Trigger this skill when the user asks to apply, enforce, or check the
-Google Developer Documentation Style Guide on a markdown file. Common
-phrasings: "fix doc style", "edit this for style", "make this follow
-the style guide", "google-style this doc".
+All resource paths below are relative to this skill's directory.
 
-The skill operates on a single `.md` file at a time.
+## Review and edit
 
-## Process
+Read the target document and any applicable repository writing conventions.
+Use [references/style/](references/style/) for the curated rules:
 
-1. **Confirm the target file** with the user. Ensure it is a `.md` file
-   and exists.
+- `00-*`: documentation principles, voice, tone, tense, and person.
+- `01-*`: headings, paragraphs, lists, terminology, and inclusive language.
+- `02-*`: links, notices, procedures, and tables.
+- `03-code+.md`: code formatting, command examples, and API documentation.
+- `03-wordlist+.md`: vocabulary reference; look up terms used in the document.
+- `04-*`: accessibility, filenames, and placeholders.
+- `z-grammar-and-language+.md`: grammar and punctuation.
 
-2. **List the curated style rules** at
-   `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/references/style/*.md`,
-   sorted by filename. The numeric prefixes (`00-`, `01-`, ..., `z-`)
-   encode the order in which rules must be applied — earlier rules
-   establish baselines that later rules can refine.
+For a full review, cover all applicable topics. For a focused request, read
+only the relevant references. Filename order provides a useful progression
+from broad editorial choices to mechanics; it does not require separate edit
+rounds. Combine related corrections and continue without per-rule approval
+unless the user requests staged review.
 
-3. **For each rule file, in prefix order:**
-   - Read the rule file.
-   - Read the current state of the target document.
-   - Propose edits using the `Edit` tool. Apply **only** the current
-     rule's guidance. Do not anticipate later rules.
-   - Briefly summarize what changed (one to three sentences).
-   - Pause and let the user respond: continue, skip the next rule, or
-     abort the whole pass.
+Preserve meaning, technical claims, and the author's voice. Prefer a small,
+useful correction over rephrasing already clear prose. User instructions and
+repository conventions take precedence over these defaults. Resolve conflicts
+by preserving accuracy and readability, rather than repeatedly undoing edits.
 
-4. **After all rules have been applied,** run the vale wrapper for a
-   mechanical lint sweep:
+Keep link destinations, reference identifiers, explicit anchors, frontmatter,
+and Markdown structure intact. If a heading change affects generated anchors,
+check local references. Do not rename existing files, APIs, flags, or literal
+values to satisfy a prose rule. Edit code samples only when the relevant rule
+addresses their presentation and the change preserves syntax and behavior.
 
-   ```bash
-   ${CLAUDE_PLUGIN_ROOT}/skills/docs-style/scripts/vale_check.sh <document>
-   ```
+## Optional modes
 
-5. **Read vale's stdout** (line-format errors). For each error, decide
-   whether to apply a fix inline using the `Edit` tool, or note it as
-   pedantic / false positive and skip. Errors look like:
+- **Final pass / quick sweep:** Use the references whose filenames end in
+  `+.md`, concentrating on issues that remain after earlier edits.
+- **Resume:** “Start from lists” includes the matching reference; “skip through
+  wordlist” excludes it and all earlier references. Match filenames and ask
+  only if the requested starting point is ambiguous.
 
-   ```
-   <file>:<line>:<col>:<rule>:<message>
-   ```
+## Vale check
 
-6. **Print a final summary:**
-   - Number of rules applied.
-   - Number of vale errors fixed; number ignored as pedantic.
-   - Any rules the user explicitly skipped.
+If Vale is available, run the bundled wrapper after editing, or during a
+review. Invoke it using the resolved skill directory and an absolute document
+path so it works from any working directory:
 
-## Rule application discipline
+```bash
+bash /path/to/skills/docs-style/scripts/vale_check.sh /absolute/path/to/document.md
+```
 
-- **One rule at a time.** Do not batch rules into a single edit pass.
-- **Apply only the current rule.** Resist anticipating later rules — the
-  curated ordering exists because edits can interact.
-- **Skip code blocks** unless the rule explicitly addresses them. Most
-  rule files include a `Do not apply this style guide to code blocks`
-  hint at the top.
-- **Preserve structure:** headings, link targets, frontmatter, anchors,
-  and indentation must be retained.
+The wrapper uses [.vale.ini](.vale.ini) and the bundled
+[Google rules](vale_styles/Google/). It reports findings on stdout and uses
+`--no-exit` so style findings do not produce a failing exit status. Treat
+execution or configuration failures separately from style findings.
 
-## Resumption
+Use editorial judgment on each finding; skip suggestions that change meaning,
+conflict with the curated rules, or make the prose worse. Recheck after fixes.
+If Vale is unavailable, finish the editorial work and mention that the lint
+check was skipped.
 
-If the user says "start from lists", "skip through wordlist", or
-similar, find the matching rule file by filename substring and skip
-all earlier rules.
-
-## Final-pass mode
-
-If the user says "do a final pass" or "quick sweep", process **only**
-rule files whose names end with `+` (the error-prone subset). Skip
-all others.
-
-## Error handling
-
-| Condition                          | Behavior                                                        |
-|-----------------------------------|-----------------------------------------------------------------|
-| Target file missing                | Report, stop.                                                   |
-| Target is not `.md`                | Report, stop. Do not attempt other formats.                     |
-| `vale` not on `PATH`               | Tell user to install (`brew install vale` / `apt install vale`). Skip vale step; still print summary of staged passes.                                  |
-| User aborts mid-pass               | Leave doc in current state; summarize rules applied so far.     |
-| Rule conflicts with earlier edits  | Expected — prefix ordering is the resolution. Apply current rule; later rules may revert earlier edits by design.                                       |
-| `Edit` tool match failure          | Report the exact failed snippet to the user; ask how to proceed.|
-
-## References
-
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/references/style/*.md` — curated rule files (apply in prefix order)
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/scripts/vale_check.sh` — vale wrapper
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/.vale.ini` — vale config
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs-style/vale_styles/Google/` — vale rule bundle
+Summarize the substantive changes or findings, any unresolved issues, and
+whether Vale ran. Avoid a rule-by-rule transcript.

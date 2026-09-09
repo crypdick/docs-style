@@ -207,23 +207,22 @@ class DocumentSession:
             return []
 
 
-CORE_INSTRUCTIONS = (
-    "\n\nINSTRUCTIONS:\n"
-    "You are an expert technical editor. "
-    "Apply the MINIMAL set of textual edits needed for the document to follow the style guide rules above. "
-    "Use the `apply_edit` tool to apply changes. "
-    "IMPORTANT: \n"
-    "1. The 'before' text must match the document text *character-for-character*, including whitespace. "
-    "2. If an edit fails (not found), the tool will return an error. You may try to correct the snippet or skip it. "
-    "3. Do NOT apply purely stylistic rewrites unless mandated by the guide. "
-    "4. Ensure code blocks remain syntactically valid. "
-    "5. Check the ENTIRE document. If you find multiple issues, apply them ONE BY ONE. Do NOT call `apply_edit` multiple times in parallel. Wait for the tool to return before proposing the next edit. "
-    "Remember: each edit updates the document state immediately, so subsequent edits must target the NEW state of the document. "
-    "6. If no changes are needed, just stop. Do NOT call `apply_edit` with identical 'before' and 'after' text.\n"
-    "7. The `apply_edit` tool replaces ALL occurrences of the `before` text. "
-    "If you only intend to replace one instance, ensure your `before` text is unique enough to identify it."
-    "8. Provide a brief `reason` for each edit explaining which rule is being applied."
-)
+CORE_INSTRUCTIONS = """
+
+Apply the supplied style guide to the document with minimal, local edits.
+Use `apply_edit` with the exact current text and a brief reason for each change.
+The tool replaces every occurrence of `before`; include enough context to
+identify a single occurrence when that is your intent.
+
+Review the entire document, but apply edits sequentially: each tool call changes
+the text that subsequent edits must match. If a match fails, correct the snippet
+or skip it. Do not submit identical before and after text.
+
+Preserve meaning, link destinations, anchors, and literal code. Edit code samples
+only when the guide addresses their presentation and the change preserves syntax
+and behavior. Avoid rephrasing clear prose beyond the supplied guide. Stop when
+no useful corrections remain.
+"""
 
 
 def expand_edit_context(

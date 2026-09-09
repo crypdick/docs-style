@@ -11,14 +11,14 @@
 
 * **Parallelism:** Keep list items parallel in structure (e.g., all start with verbs, or all are noun phrases).
 * **Introduction:** Introduce lists with a complete sentence ending in a colon. Avoid partial sentences that flow into the list items.
-* **Multi-paragraph items:** Use paragraph tags (p) for items with multiple paragraphs.
-* **Unusual numbering:** If you need to reverse numbering or manually set values (e.g. starting at 0), use the appropriate HTML attributes (`reversed`, `value`).
+* **Multi-paragraph items:** Separate paragraphs with blank lines and indent them to stay within the list item.
+* **Numbering:** Preserve meaningful starting values. Use the Markdown renderer’s supported syntax; do not introduce HTML just to restyle a list.
 
 ## Capitalization and Punctuation
 
 * **Capitalization:** Start all list items with a capital letter.
 * **End Punctuation:**
-  * **Use a period** if the item is a complete sentence, contains a verb, or is a run-in heading with a sentence description.
+  * **Use a period** if the item is a complete sentence, including a run-in heading with a sentence description.
   * **No period** if the item is a single word, short phrase without a verb, or code-only.
 
 ## Comma-separated lists

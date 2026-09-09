@@ -30,4 +30,3 @@ Timeless documentation avoids words that anchor the text to a specific point in 
 * **Release notes & Blogs:** Time-based words (*new*, *currently*) are acceptable here as these documents are tied to a specific time.
 * **Installation:** "Install the *latest* version" is a valid instruction.
 * **Procedural timing:** "The VM restarts *soon* after you click..." is acceptable because it describes a sequence within the procedure, not the product roadmap.
-

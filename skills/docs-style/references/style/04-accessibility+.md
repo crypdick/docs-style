@@ -1,7 +1,7 @@
 # Accessible documentation
 
 * **Readability:**
-  * Break up text with headings and lists. Keep sentences short (<26 words).
+  * Break up text with headings and lists. Keep sentences easy to follow; do not split a clear sentence to meet a word limit.
   * Use parallel structure for lists.
   * Define acronyms on first use.
   * Place important info at the start of sentences.
@@ -14,6 +14,6 @@
   * Separate adjacent links with text/punctuation.
 * **Tables:**
   * Introduce tables in text.
-  * Use header cells (`th`) with `scope` attributes.
+  * Use descriptive headers. In HTML tables, preserve `th` cells and their `scope` attributes.
   * Avoid tables in procedures or for layout.
-* **Images:** Always provide `alt` text.
+* **Images:** Describe informative images in alt text. Use empty alt text for decorative images.

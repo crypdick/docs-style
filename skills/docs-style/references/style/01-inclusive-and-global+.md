@@ -30,7 +30,7 @@ Write to be easily understood by non-native speakers and machine translation.
 
 * **Short sentences:** Easier to translate and understand.
 * **Simple vocabulary:** Use *start* instead of *commence*, *use* instead of *leverage*.
-* **Avoid phrasal verbs:** Use *use* instead of *make use of*.
+* **Avoid wordy phrases:** Use *use* instead of *make use of*. Keep familiar technical phrases such as *log in*.
 * **Active voice:** "System processes data" (clear subject).
 * **No directional language:** Avoid *above* or *below* (layout may change).
 * **Explicit helper words:** Use *that*, *of*, *then* to clarify relationships (e.g., "The rule *that* you defined").
@@ -39,11 +39,10 @@ Write to be easily understood by non-native speakers and machine translation.
   * *Clear:* "If you use the term in an ad, make sure **the ad** is targeted."
 * **Modifier placement:** Place modifiers like *only* immediately before the word they modify.
   * *Correct:* "Request *only* one token."
-  * *Incorrect:* "*Only* request one token."
-* **Avoid noun trains:** Don't stack >2 nouns as modifiers ("Hybrid cloud-native DevSecOps pipeline").
+  * *Different meaning:* "*Only* request one token" can mean to request it without taking another action.
+* **Noun phrases:** Unpack dense strings of modifiers when their relationships are unclear. Preserve established technical terms.
 * **Repetition:** Repeat a word if it improves clarity.
   * *Better:* "IAM segmentation and network segmentation."
   * *Worse:* "IAM and network segmentation."
 * **Consistency:** Use the exact same term for the same concept every time.
 * **Inclusivity:** Avoid idioms (*ballpark*, *back burner*) and culturally specific references (seasons, holidays).
-

@@ -6,7 +6,7 @@ Use notices sparingly. Readers often skip them.
 
 * **Note:** Helpful information that is not critical.
 * **Caution:** Advises the reader to act carefully to avoid a minor issue or annoyance.
-* **Warning:** Critical information about risks of data loss, security breaches, or irreversible acts. Means "Don't do this."
+* **Warning:** Critical information about risks of data loss, security breaches, or irreversible acts. State the risk and how to avoid it.
 * **Success:** Confirms a successful action (use only in interactive UIs).
 
 ## When NOT to use a notice

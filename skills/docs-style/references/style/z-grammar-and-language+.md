@@ -84,7 +84,7 @@ If a possessive phrase sounds clunky or confusing, rewrite it using *of* or by r
 
 ### Colons
 
-* **Introduction:** Preceding text must be a complete sentence.
+* **Introduction:** Use a complete sentence before a colon that introduces a list or explanation. Short labels such as "Optional:" are also acceptable.
 
 ### Semicolons
 
@@ -141,10 +141,10 @@ Avoid parentheses for important information; assume readers might skip them. Use
 ### Slashes
 
 * **Avoid:** Do not use slashes for "or" (use the word *or*) or for abbreviations (*care of*, not *c/o*).
-* **And/or:** Avoid *and/or* (usually *and* suffices).
+* **And/or:** State the intended combination explicitly, such as "A, B, or both." Do not replace it with *and* if that changes the meaning.
 * **Dates/Fractions:** Do not use slashes.
 * **Allowed:** File paths and URLs.
-* **Line breaks:** If a long URL must be broken across lines, break it immediately after a slash. Do not add a hyphen.
+* **Line breaks:** Do not insert whitespace or hyphens into a URL. Use descriptive link text or let the renderer wrap the display.
 
 ### Dashes
 
@@ -181,4 +181,3 @@ Use hyphens for clarity and to combine terms.
 * **Ranges:** Use a hyphen (10-20), NOT an en dash.
 * **Units:** Do not hyphenate number + unit (*200 GB disk*), except for modifiers where the unit implies multiplication (*vCPU-hours*, *person-hours*).
 * **Suspended:** Use for shared base (*one- or two-hour intervals*).
-

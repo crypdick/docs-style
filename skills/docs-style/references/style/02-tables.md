@@ -1,22 +1,13 @@
 # Tables
 
-## When to use
+Use a table when readers need to compare items across shared attributes, including
+two-column mappings. Use prose or a list for long explanations, and a numbered
+list for procedures.
 
-* **Use tables for:** Sets of data with 3+ related attributes (columns).
-* **Do NOT use tables for:**
-  * Layout (use CSS).
-  * Code snippets.
-  * Long 1-dimensional lists (use columns or a list).
-  * Steps in a procedure.
-
-## Formatting
-
-* **Headers:** Use `th` elements with `scope="col"` or `scope="row"`. Use sentence case. Do not end headers with punctuation.
-* **Cells:**
-* Avoid empty cells.
-* **Captions:** If using multiple tables, number them (**Table 1.** Description) and refer to them by number.
-
-## Placement
-
-* Introduce the table with a complete sentence that describes its purpose.
-* Do not place a table in the middle of a sentence.
+- Give each column a descriptive header in sentence case.
+- Keep cell content brief and parallel. Explain missing or inapplicable values
+  instead of leaving ambiguous blank cells.
+- Use the document's existing Markdown table syntax. For an existing HTML table,
+  preserve header cells and their row or column scope.
+- Introduce the table with a sentence explaining what readers can compare.
+- Add a caption or label when readers need to refer to a particular table.

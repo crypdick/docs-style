@@ -26,7 +26,7 @@ Use italics in two specific cases:
 
 ## Product names
 
-* **Capitalization:** Use Title Case for official product names (*Google Cloud*). Follow official branding.
+* **Capitalization:** Follow the product’s official spelling and capitalization.
 * **Lowercase names:** If a product name starts with a lowercase letter (e.g., *macOS*), avoid starting a sentence with it. Rewrite the sentence.
   * *Avoid:* "macOS is required."
   * *Use:* "You need macOS to run the app."
@@ -46,4 +46,3 @@ Do not copy content from third-party sources to avoid copyright issues. Link to 
 * Open Source documentation (licenses vary).
 * GitHub repositories (licenses vary).
 * Wikipedia and other reference sites.
-

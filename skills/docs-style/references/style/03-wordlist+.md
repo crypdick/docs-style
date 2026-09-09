@@ -2,10 +2,9 @@
 
 ## How to use this list
 
-* **Use with caution**: Terms that might be appropriate in some contexts but not others
-* **Context-dependent**: Rules that vary based on technical domain, audience, or usage
-* **Capitalization/formatting**: Rules that depend on sentence position or product names
-* **Complex guidance**: Situations requiring examples or detailed explanation
+Look up terms that appear in the document. Apply each entry in context, preserving
+product names, literal code, and established terminology. This is a vocabulary
+reference, not a list of substitutions to apply mechanically.
 
 ---
 

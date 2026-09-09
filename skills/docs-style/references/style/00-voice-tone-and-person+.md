@@ -32,7 +32,7 @@ Don't attribute human qualities (seeing, telling, thinking, wanting) to software
 
 * **Avoid hype:** Don't use *best*, *fastest*, *guaranteed* unless verifiable.
 * **Future-proof:** Ensure claims will remain true over time. Avoid absolute statements that might be invalidated by future releases or competitor updates.
-* **Security:** Don't claim a product is "secure" (implies invulnerability). Say it "helps with security" or "is designed for security".
+* **Security:** Describe the specific protection and its limits. Avoid blanket claims such as "secure" or vague substitutes such as "helps with security".
 * **Comparisons:** Be factual, specific, and cite sources.
 
 ## Active voice
@@ -91,9 +91,9 @@ Ensure pronouns clearly refer to their antecedent.
 
 #### Ambiguous references
 
-* **Clarify 'it/this/that':** Follow demonstrative pronouns with a noun.
+* **Clarify 'it/this/that':** Add a noun when the reference would otherwise be ambiguous.
   * **Recommended:** "Set *this value* to true."
-  * **Not recommended:** "Set *this* to true."
+  * **Unclear without context:** "Set *this* to true."
 * **Vague antecedents:** Rewrite if the pronoun's target is unclear.
   * **Ambiguous:** "If you type text in the field, it doesn't change." (Does "it" refer to the text or the field?)
   * **Clear:** "If you type text in the field, the text doesn't change."
@@ -104,7 +104,6 @@ Ensure pronouns clearly refer to their antecedent.
 
 #### Personal pronouns
 
-* **Second person:** Use *you* whenever possible.
 * **First person:** Avoid *I*, *we*, *us* except in FAQs or when referring to the organization (e.g., "We recommend...").
 
 #### Relative pronouns
@@ -114,4 +113,3 @@ Ensure pronouns clearly refer to their antecedent.
   * Use *which* for non-restrictive clauses (comma): "The echidna, *which has a long snout*, is furry." (Adds extra info).
 * **Who:** Use *who* for people.
 * **Optional pronouns:** Use *that* and *which* to prevent ambiguity (e.g., "The link *that* you want to open").
-

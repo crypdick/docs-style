@@ -2,14 +2,13 @@
 
 ## Filenames and file types
 
-**Important:** Do not apply these naming rules to existing links or URLs (this will break them).
+Apply naming conventions when proposing new names. Preserve existing filenames, links, URLs, and code identifiers during a prose edit.
 
 ### Guidelines for names
 
 * **Format:** Use lowercase with hyphens (`query-data.html`).
-  * **Why?** Search engines interpret hyphens as spaces (good for SEO). Underscores are often treated as joining characters.
 * **Consistency Exception:** If a directory already uses underscores (e.g. `lesson_1.md`), match the existing pattern (`lesson_2.md`) rather than mixing styles.
-* **Characters:** Use only ASCII alphanumeric characters.
+* **Characters:** Prefer ASCII letters and digits, with hyphens or underscores as separators and a period before the extension.
 * **Clarity:** Avoid generic names (`document1.html`).
 
 ### Referencing
@@ -37,4 +36,3 @@ Explain placeholders on their first use.
 ### Output
 
 If example output contains placeholders, explain them: "This output includes the following values:"
-
