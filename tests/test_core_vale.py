@@ -14,14 +14,34 @@ def mock_openai_client():
 
 @patch("docs_style.core_vale.shutil.which")
 def test_vale_missing(mock_which, tmp_path):
-    """Test that function returns early when Vale is not installed."""
+    """A missing dependency must fail before model calls or document edits."""
     mock_which.return_value = None
     f = tmp_path / "test.md"
-    f.touch()
+    f.write_text("Original document\n")
 
-    # Should not raise, just return early
-    enforce_vale_style(f)
-    # Should exit early, log error (but logs disabled)
+    with (
+        patch("docs_style.core_vale.ChatOpenAI") as mock_llm,
+        pytest.raises(RuntimeError, match=r"Vale is required.*uv sync --locked"),
+    ):
+        enforce_vale_style(f)
+    mock_llm.assert_not_called()
+    assert f.read_text() == "Original document\n"
+
+
+@pytest.mark.parametrize("returncode", [1, 3, 127, -9])
+def test_vale_failed_execution_is_not_a_clean_document(tmp_path, returncode):
+    """Bootstrap and execution failures cannot be mistaken for zero findings."""
+    document = tmp_path / "test.md"
+    document.write_text("Original document\n")
+    result = Mock(returncode=returncode, stdout="", stderr="Vale could not start")
+    with (
+        patch("docs_style.core_vale.shutil.which", return_value="/usr/bin/vale"),
+        patch("docs_style.core_vale.subprocess.run", return_value=result) as run,
+        pytest.raises(RuntimeError, match="Vale execution failed"),
+    ):
+        enforce_vale_style(document)
+    assert "--no-exit" in run.call_args.args[0]
+    assert document.read_text() == "Original document\n"
 
 
 @patch("docs_style.core_vale.shutil.which")

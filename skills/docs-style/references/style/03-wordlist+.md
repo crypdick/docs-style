@@ -8,7 +8,7 @@ reference, not a list of substitutions to apply mechanically.
 
 ---
 
-## Conceptual Guidelines
+## Conceptual guidelines
 
 These are not literal keyword searches but conceptual distinctions to keep in mind:
 
@@ -40,7 +40,7 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 
 ---
 
-### Numbers and Symbols
+### Numbers and symbols
 
 **+**
 :   OK to use *+* with numbers in text, such as *customer records with
@@ -96,8 +96,9 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 
 **alpha**
 :   Lowercase except when part of a product name.
-:   Recommended: PRODUCT\_NAME Alpha
-:   Recommended: PRODUCT\_NAME is in alpha.
+:   Replace `PRODUCT_NAME` with the product name in these examples.
+:   Recommended: `PRODUCT_NAME` Alpha
+:   Recommended: `PRODUCT_NAME` is in alpha.
 
 **API**
 :   Use *API* to refer to either a web API or a language-specific API.
@@ -146,8 +147,8 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 
 **beta**
 :   Lowercase except when part of a product name.
-:   Recommended: PRODUCT\_NAME Beta
-:   Recommended: PRODUCT\_NAME is currently in beta.
+:   Recommended: `PRODUCT_NAME` Beta
+:   Recommended: `PRODUCT_NAME` is in beta.
 
 **big-endian**
 :   Hyphenate. Lowercase except at the beginning of a sentence,
@@ -201,9 +202,9 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 
 **Control+S, Command+S, and other keyboard commands**
 :   To refer to a `Control` character, use
-    `Control`+CHARACTER.
+    `Control+CHARACTER`.
 :   Don't use *Ctl-S*, *Cmd-S*, or *Cloverleaf-S*.
-:   In most cases, use an uppercase letter for CHARACTER.
+:   In most cases, use an uppercase letter for `CHARACTER`, the key to press.
 :   In macOS, many keyboard commands use the `Command` key instead of
     the `Control` key, and there's an `Option` key instead
     of an `Alt` key. If your audience includes macOS users and
@@ -294,7 +295,7 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 :   Consider using a more descriptive term like *constrain scope* or
     *reduce scope*. Because *downscope* might not be broadly
     understood, if you use the term, make sure to define it on first use.
-:   Don't use *down scope* or *down-scope*
+:   Don't use *down scope* or *down-scope*.
 
 **drop-down**
 :   In most cases, you can omit *drop-down* from phrases like *drop-down list* or
@@ -337,7 +338,7 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 
 **external VPN gateway**
 :   Write *external* and *gateway* all lowercase except at the
-    beginning of a sentence, heading or list item.
+    beginning of a sentence, heading, or list item.
 
 ---
 
@@ -594,7 +595,7 @@ These are not literal keyword searches but conceptual distinctions to keep in mi
 
 **media type**
 :   In general, use the term *media type*.
-    In contexts where you need to refer to a *content type*—For example, if you mention
+    In contexts where you need to refer to a *content type*—for example, if you mention
     the `Content-Type` HTTP header—it's okay to use *content type* instead, to avoid
     confusion. Don't use *MIME type*.
 

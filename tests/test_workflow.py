@@ -10,6 +10,13 @@ from docs_style.workflow import (
 )
 
 
+@pytest.fixture(autouse=True)
+def available_vale():
+    """Environment tests do not depend on host executables."""
+    with patch("docs_style.core_vale.shutil.which", return_value="/usr/bin/vale"):
+        yield
+
+
 def test_setup_environment_success(monkeypatch):
     """Test environment setup when API key is present."""
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")

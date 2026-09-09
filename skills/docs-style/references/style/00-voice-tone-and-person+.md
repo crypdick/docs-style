@@ -9,7 +9,7 @@
 
 * **Be conversational but not colloquial:** Use natural language, but avoid slang ("dude", "awesome") or text-speak.
 * **Be direct but polite:** Use the imperative mood ("Click Save") without excessive politeness ("Please click Save").
-  * *Exception:* "Please" is acceptable in FAQs or when asking for user feedback/help.
+  * *Exception:* "Please" is acceptable in FAQs or when asking for user feedback or help.
 * **Avoid fillers:** Remove phrases like "Please note," "At this time," or "It is important to note that."
 * **No "Let's":** Avoid "Let's do X." Use "Do X."
 * **No pop-culture references:** They age poorly and may not translate across cultures.
@@ -23,7 +23,7 @@
 
 Don't attribute human qualities (seeing, telling, thinking, wanting) to software or hardware.
 
-**Why?** Anthropomorphism is figurative language, which is imprecise and difficult to translate.
+Anthropomorphism is figurative language, which is imprecise and difficult to translate.
 
 * **Recommended:** "The system detects a new device." / "The object specifies the split point."
 * **Not recommended:** "The system sees a new device." / "The object tells the splitter..."
@@ -39,13 +39,13 @@ Don't attribute human qualities (seeing, telling, thinking, wanting) to software
 
 Use active voice. The grammatical subject should perform the action.
 
-**Why?** Passive voice often obscures the actor, making it hard for the reader to know *who* or *what* is responsible (the user? the system? a background process?).
+Passive voice often obscures the actor, making it hard for the reader to know *who* or *what* is responsible (the user? the system? a background process?).
 
 * **Active:** "The client queries the server." (Clear: Client -> Server)
 * **Passive:** "The server is queried." (Unclear: By whom?)
-* **Clumsy Passive:** "The server is queried by the client." (Wordy. Just use active.)
+* **Clumsy passive:** "The server is queried by the client." (Wordy. Just use active.)
 
-### Exceptions (When passive is okay)
+### Exceptions (when passive is okay)
 
 Passive voice is acceptable when the actor is unknown, irrelevant, or you want to emphasize the object.
 
@@ -80,8 +80,8 @@ Avoid the hypothetical future *would*. It often implies uncertainty.
 
 ### Second and first person
 
-* **Address the reader as *you*:** Use second person (*you/your*) for the reader. Use imperative verbs for instructions ("Click Submit").
-* **Software/Users as third person:** Use third person for the software or other users ("The system processes...", "The user account is created...").
+* **Address the reader as *you*:** Use second person (*you* or *your*) for the reader. Use imperative verbs for instructions ("Click Submit").
+* **Software and users as third person:** Use third person for the software or other users ("The system processes...", "The user account is created...").
 * **Organization as *we*:** Use *we* only to refer to the organization ("We recommend...", "Contact us").
 * **Audience consistency:** Identify who *you* is (developer? sysadmin?) and be consistent. Do not switch expected personas mid-document.
 
@@ -91,7 +91,7 @@ Ensure pronouns clearly refer to their antecedent.
 
 #### Ambiguous references
 
-* **Clarify 'it/this/that':** Add a noun when the reference would otherwise be ambiguous.
+* **Clarify *it*, *this*, or *that*:** Add a noun when the reference would otherwise be ambiguous.
   * **Recommended:** "Set *this value* to true."
   * **Unclear without context:** "Set *this* to true."
 * **Vague antecedents:** Rewrite if the pronoun's target is unclear.
@@ -108,7 +108,7 @@ Ensure pronouns clearly refer to their antecedent.
 
 #### Relative pronouns
 
-* **That vs. Which:**
+* **That and which:**
   * Use *that* for restrictive clauses (no comma): "The echidna *that has a long snout* is furry." (Specifies which one).
   * Use *which* for non-restrictive clauses (comma): "The echidna, *which has a long snout*, is furry." (Adds extra info).
 * **Who:** Use *who* for people.

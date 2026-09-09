@@ -6,16 +6,26 @@ pattern: don.?t use|always prefer|avoid|never do|instead of|I hate when|stop usi
 action: warn
 ---
 
-Keyword hit. The user might have expressed a coding preference or taste.
+The prompt matched a keyword for a possible coding preference.
 
-Reminder: always do the following when the user expresses a code preference that should be enforced going forward. Determine whether it can be codified as:
+When the user expresses a durable coding preference, determine how to enforce
+it with one of these mechanisms:
 
-1. **A prek hook script** — if it's about code patterns that can be detected statically (e.g., "don't use bare except", "avoid print statements"). Create or update a script in `scripts/prek_hooks/` and wire it into `prek.toml`.
+- **A prek hook script:** For code patterns that static analysis can detect,
+  such as bare `except` clauses or print statements, create or update a script
+  in `scripts/prek_hooks/` and configure it in `prek.toml`.
 
-2. **A hookify rule** — if it's about Claude's behavior during sessions (e.g., "don't create utils.py files", "always use NewType for IDs"). Create a `.claude/hookify.{name}.md` rule.
+- **A Hookify rule:** For Claude's behavior during sessions, such as avoiding
+  generic module names or using `NewType` for identifiers, create a rule in
+  `.claude/hookify.{name}.md`. Replace `{name}` with a descriptive rule name.
 
-3. **A pyproject.toml setting** — if it maps to an existing tool's configuration (e.g., "ban star imports" → ruff rule).
+- **A tool setting:** For preferences that an existing tool can enforce,
+  configure the tool in `pyproject.toml`. For example, use a Ruff rule to ban
+  star imports.
 
-If the preference is already enforced by an existing hook or rule but the user still had to say something about it, that means the existing enforcement failed to do its job. Identify why it didn't catch the issue (pattern too narrow? wrong event type? missing edge case?) and propose a fix to strengthen the existing hook or rule.
+If an existing hook or rule already enforces the preference, investigate why
+the issue occurred. Check the pattern, event type, and edge cases, then propose
+a fix to strengthen the existing hook or rule.
 
-Also: if the user previously expressed a taste in this conversation that this hook missed as a false negative, write a hook for that too.
+If this hook missed a preference that the user expressed earlier in the
+conversation, write a hook for that preference too.

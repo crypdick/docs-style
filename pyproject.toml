@@ -1,6 +1,6 @@
 [project]
 name = "docs-style"
-version = "0.1.1"
+version = "0.1.2"
 description = "AutoDocsEditor makes documentation conform to the Google Docs Style Guide"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -16,6 +16,7 @@ dependencies = [
     "python-dotenv>=1.2.1",
     "rich>=14.2.0",
     "textual>=6.6.0",
+    "vale",
 ]
 
 [project.scripts]
@@ -251,9 +252,9 @@ exclude-newer = "3 days"
 
 [tool.deptry.per_rule_ignores]
 # Executed as a subprocess; there is no Python import to discover.
-DEP002 = ["jupytext"]
+DEP002 = ["jupytext", "vale"]
 
 [tool.new-feature]
 target_branch = "main"
-setup = ["uv sync --locked", "uv run prek install"]
+setup = ["uv sync --locked", "uv run vale --version", "uv run prek install"]
 pre_merge = ["uv run prek run --all-files"]

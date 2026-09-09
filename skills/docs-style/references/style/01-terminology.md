@@ -2,7 +2,7 @@
 
 ## Jargon
 
-Avoid jargon (specialized or figurative terminology) unless it is standard in the industry or necessary for SEO.
+Avoid jargon (specialized or figurative terminology) unless it is standard in the industry or necessary for search engine optimization (SEO).
 
 ### Guidelines
 
@@ -40,9 +40,9 @@ Use italics in two specific cases:
 
 Do not copy content from third-party sources to avoid copyright issues. Link to the content instead.
 
-**Sources to avoid copying:**
+Avoid copying from these sources:
 
-* Books, blogs, articles.
-* Open Source documentation (licenses vary).
-* GitHub repositories (licenses vary).
-* Wikipedia and other reference sites.
+* Books, blogs, and articles
+* Open source documentation (licenses vary)
+* GitHub repositories (licenses vary)
+* Wikipedia and other reference sites

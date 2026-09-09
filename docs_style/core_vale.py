@@ -14,11 +14,19 @@ from settings import MODEL_NAME, VALE_CONFIG
 from utils import get_langfuse_handler
 
 
-def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
-    """Iteratively run Vale and use an LLM to fix the errors."""
+def require_vale() -> None:
+    """Reject an environment without the required Vale executable."""
+    # NOTE: README.md documents the required Vale setup and launch commands.
     if not shutil.which("vale"):
-        logger.error("Vale is not installed or not in PATH. Skipping Vale enforcement.")
-        return
+        raise RuntimeError(
+            "Vale is required but was not found in PATH. Run `uv sync --locked` and "
+            "`uv run vale --version`, then launch the editor with `uv run`."
+        )
+
+
+def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
+    """Iteratively run the required Vale check and use an LLM to fix findings."""
+    require_vale()
 
     llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
 
@@ -49,7 +57,13 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
         # Run Vale
         try:
             result = subprocess.run(
-                ["vale", f"--config={VALE_CONFIG}", "--output=line", str(document_path)],
+                [
+                    "vale",
+                    f"--config={VALE_CONFIG}",
+                    "--output=line",
+                    "--no-exit",
+                    str(document_path),
+                ],
                 capture_output=True,
                 text=True,
                 check=False,
@@ -58,13 +72,17 @@ def enforce_vale_style(document_path: Path, max_retries: int = 5) -> None:
             logger.error(f"[Vale] Failed to run vale: {e}")
             raise RuntimeError(f"Vale execution failed: {e}") from e
 
-        # Check if Vale itself failed (exit code 2 = configuration/syntax error)
-        # Exit code 1 = style violations found (expected)
-        # Exit code 0 = no violations
+        # --no-exit keeps style findings on stdout with a zero exit status.
+        # Any nonzero status means the required check could not complete.
         if result.returncode == 2:
             error_msg = f"[Vale] Configuration error:\n{result.stderr or result.stdout}"
             logger.error(error_msg)
             raise RuntimeError(error_msg)
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"Vale execution failed (exit status {result.returncode}):\n"
+                f"{result.stderr or result.stdout}"
+            )
 
         # Parse line output
         output_lines = result.stdout.strip().splitlines()

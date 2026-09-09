@@ -9,7 +9,7 @@ Use notices sparingly. Readers often skip them.
 * **Warning:** Critical information about risks of data loss, security breaches, or irreversible acts. State the risk and how to avoid it.
 * **Success:** Confirms a successful action (use only in interactive UIs).
 
-## When NOT to use a notice
+## When not to use a notice
 
 * **Prerequisites:** Put these in the main text before the procedure.
 * **Procedural steps:** Do not hide steps inside notes.
@@ -19,4 +19,4 @@ Use notices sparingly. Readers often skip them.
 ## Guidelines
 
 * **Don't stack notices:** Avoid putting two notices in a row. Reorganize content instead.
-* **Don't overuse:** Too many notices cause "banner blindness."
+* **Don't overuse:** Readers might overlook notices when there are too many.

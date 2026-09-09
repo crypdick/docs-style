@@ -5,15 +5,15 @@
 Use code font to signal verbatim text, show boundaries, and separate code entities from surrounding prose.
 
 * **Use code font for:** Classes, methods, commands (`gcloud`), filenames, paths, HTTP codes (`404`), SQL keywords, parameters, attributes, environment variables, DNS record types, database elements, IAM roles, data types, placeholders.
-* **Do not use code font for:** Product names, domain names (unless in code/configuration), URLs meant to be clicked (use links with descriptive text).
-* **UI Elements:** If a UI element displays code (filename, instance name), use bold code font (**`filename.txt`**).
-* **Plurals/Possessives:** Do not inflect code terms. Add a noun ("Value of the `wordCount` variable" not "`wordCount`'s value").
+* **Do not use code font for:** Product names, domain names (unless in code or configuration), URLs meant to be clicked (use links with descriptive text).
+* **UI elements:** If a UI element displays code (filename, instance name), use bold code font (**`filename.txt`**).
+* **Plurals and possessives:** Do not inflect code terms. Add a noun ("Value of the `wordCount` variable" not "`wordCount`'s value").
 
 ### Context-dependent formatting
 
 * **Booleans:** Use code font for literal values (`true`, `false`). Use regular font when describing evaluation ("If the condition is true").
-* **Commands vs Products:** Code font for the command (`gcc`), regular font for the product (GCC compiler).
-* **Email addresses:** Code font for input/output (`alex@example.com`). Regular font for contact information (support@example.com).
+* **Commands and products:** Code font for the command (`gcc`), regular font for the product (GCC compiler).
+* **Email addresses:** Code font for input or output (`alex@example.com`). Regular font for contact information (support@example.com).
 * **Method names:** Omit the class name unless necessary to prevent ambiguity ("Call the `get` method" not "Call the `animal.get` method").
 * **HTTP status codes:** Use format `Code Name` ("Returns a `404 Not Found` status code"). For ranges, use `Nxx` format ("Returns a `2xx` status code").
 
@@ -21,11 +21,11 @@ Use code font to signal verbatim text, show boundaries, and separate code entiti
 
 * **Formatting:** Keep lines readable, using 80 characters as a guide where practical. Preserve syntax and literal values when wrapping.
 * **Omissions:** Use comments (e.g., `# Code omitted`) instead of ellipses (`...`).
-* **Introductions:** Precede with an introductory sentence/paragraph.
+* **Introductions:** Precede with an introductory sentence or paragraph.
   * End with a **colon** if the sample follows immediately.
   * End with a **period** if there is text between (e.g., a note) or if the sentence isn't a direct lead-in.
 * **Markdown:** Use fenced code blocks with a language label. Preserve valid longer fences when examples contain backticks.
-* **Copyable:** Ensure samples are valid and copyable (unless they contain omissions/placeholders that break syntax).
+* **Copyable:** Ensure samples are valid and copyable (unless they contain omissions or placeholders that break syntax).
 
 ## Command-line syntax
 
@@ -79,12 +79,12 @@ Use *command*, *option* or *flag*, and *argument* as appropriate to the tool. Pr
 ## API reference code comments
 
 * **Coverage:** Document all public classes, methods, fields, and constants.
-* **Code Font:** Use code font for types, methods, and literals (`"true"`).
-* **First Sentence:** Many doc generators extract the first sentence for summaries. Make it unique and avoid periods in abbreviations (use "for example" not "e.g.").
+* **Code font:** Use code font for types, methods, and literals (`"true"`).
+* **First sentence:** Many doc generators extract the first sentence for summaries. Make it unique and avoid periods in abbreviations (use "for example" not "e.g.").
 * **Tense:** Use present tense for all descriptions (*Adds*, *Returns*, not *Will add*, *Will return*).
 * **Style:**
   * **Classes:** Start with a unique purpose (no "This class..."). Do not pluralize class names.
-  * **Members (fields/constants):** Be brief. Link to relevant methods that use them.
+  * **Members (fields and constants):** Be brief. Link to relevant methods that use them.
   * **Methods:** Start with a third-person singular verb. Document prerequisites, dependencies (e.g., permissions), and behavior when dependencies are missing.
     * *Operations that return data:* Start with the operation verb (*Adds a bird and returns its ID*).
     * *Getters (Boolean):* "Checks whether..."
@@ -103,7 +103,7 @@ Use *command*, *option* or *flag*, and *argument* as appropriate to the tool. Pr
 
 ## Verb forms in reference documentation
 
-For API/reference documentation descriptions:
+Use these verb forms in API reference descriptions:
 
 * **Use third-person singular:** Describes what the method does (*Creates*, *Lists*, *Gets*).
 * **Avoid imperative:** Do not use *Create*, *List*, *Get*.

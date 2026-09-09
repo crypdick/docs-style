@@ -7,11 +7,11 @@ Apply naming conventions when proposing new names. Preserve existing filenames, 
 ### Guidelines for names
 
 * **Format:** Use lowercase with hyphens (`query-data.html`).
-* **Consistency Exception:** If a directory already uses underscores (e.g. `lesson_1.md`), match the existing pattern (`lesson_2.md`) rather than mixing styles.
+* **Consistency exception:** If a directory already uses underscores (for example, `lesson_1.md`), match the existing pattern (`lesson_2.md`) rather than mixing styles.
 * **Characters:** Prefer ASCII letters and digits, with hyphens or underscores as separators and a period before the extension.
 * **Clarity:** Avoid generic names (`document1.html`).
 
-### Referencing
+### References
 
 * **Files:** Use code font and add "file" (e.g., "the `build.sh` file").
 * **Types:** Use formal names (PNG file), not extensions (`.png` file), unless discussing the extension itself.
@@ -25,7 +25,7 @@ Apply naming conventions when proposing new names. Preserve existing filenames, 
 * **No possessives:** Do not use possessive adjectives (`YOUR_PROJECT_ID`).
 * **Inline:** Mark with code font (`PROJECT_ID`).
 
-### Explaining Placeholders
+### Explain placeholders
 
 Explain placeholders on their first use.
 

@@ -1,11 +1,11 @@
 # Crawl the source style guide
 
-From the repository root, run:
+From the repository root, export the source guide for manual review:
 
 ```shell
 uv run --script crawl/crawl_to_markdown.py \
-  --base-url https://developers.google.com/style \
-  --output-dir /tmp/docs-style-crawl
+    --base-url https://developers.google.com/style \
+    --output-dir /tmp/docs-style-crawl
 ```
 
 The crawler exports source pages for manual review. Its output can contain

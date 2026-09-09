@@ -6,9 +6,9 @@
   * Numbers 0-9.
   * Any number at the start of a sentence.
   * Indefinite numbers (*millions*).
-* **Use Numerals:**
+* **Use numerals:**
   * 10 and greater.
-  * Technical quantities/measurements (even < 10): *5 MB*, *version 3*, *64-bit*.
+  * Technical quantities and measurements (even < 10): *5 MB*, *version 3*, *64-bit*.
   * Decimals, percentages (*5%*), negative numbers.
   * Dimensions (*192x192* - use lowercase x).
 * **Formatting:**
@@ -50,7 +50,7 @@ Italicize the letter and add *'s* (e.g., "Mind your *p*'s and *q*'s"). When capi
 
 ### Restrictions
 
-* **Products/Trademarks:** Do not form possessives of product names or trademarks.
+* **Products and trademarks:** Do not form possessives of product names or trademarks.
   * **Recommended:** "Performance of Google Search"
   * **Not recommended:** "Google Search's performance"
 * **Companies:** Possessives are allowed (*Google's office*) unless the name is used as a trademark.
@@ -72,7 +72,7 @@ If a possessive phrase sounds clunky or confusing, rewrite it using *of* or by r
 
 ## Sentence structure
 
-* **Conditions first:** Place circumstances/conditions before instructions so readers know if it applies to them.
+* **Conditions first:** Place circumstances or conditions before instructions so readers know if the instruction applies to them.
   * **Recommended:** "If you want to delete the file, click **Delete**."
   * **Not recommended:** "Click **Delete** if you want to delete the file."
 * **Natural order:** If putting the condition first creates a convoluted sentence, rewrite it for natural flow.
@@ -109,7 +109,7 @@ Avoid semicolons. Use them only for:
 * **Dependent clauses:**
   * Generally **no comma** if the dependent clause follows the independent one ("Flags are variables and can be read directly").
   * Use a comma *only* if the sentence is confusing without it.
-* **Nonrestrictive clauses:** Use commas to set off clauses that add extra info ("The group, *which is large*, ...").
+* **Nonrestrictive clauses:** Use commas to set off clauses that add extra information ("The group, *which is large*, ...").
 * **Conjunctive adverbs:** Comma after *however*, *therefore*, etc.
 
 ### Ellipses
@@ -142,7 +142,7 @@ Avoid parentheses for important information; assume readers might skip them. Use
 
 * **Avoid:** Do not use slashes for "or" (use the word *or*) or for abbreviations (*care of*, not *c/o*).
 * **And/or:** State the intended combination explicitly, such as "A, B, or both." Do not replace it with *and* if that changes the meaning.
-* **Dates/Fractions:** Do not use slashes.
+* **Dates and fractions:** Do not use slashes.
 * **Allowed:** File paths and URLs.
 * **Line breaks:** Do not insert whitespace or hyphens into a URL. Use descriptive link text or let the renderer wrap the display.
 
@@ -174,10 +174,10 @@ Use hyphens for clarity and to combine terms.
   * *self-*, *cross-*, *all-*, *ex-*
   * Proper nouns (*non-Google*)
   * Numbers (*post-2000*)
-  * Clarity (*re-sign* vs *resign*)
+  * Clarity (*re-sign* versus *resign*)
 
 #### Numbers
 
-* **Ranges:** Use a hyphen (10-20), NOT an en dash.
+* **Ranges:** Use a hyphen (10-20), not an en dash.
 * **Units:** Do not hyphenate number + unit (*200 GB disk*), except for modifiers where the unit implies multiplication (*vCPU-hours*, *person-hours*).
 * **Suspended:** Use for shared base (*one- or two-hour intervals*).

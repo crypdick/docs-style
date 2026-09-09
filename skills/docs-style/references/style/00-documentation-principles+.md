@@ -16,9 +16,9 @@ Write prescriptive (opinionated) documentation that tells the reader what to do 
 
 ## Timeless documentation
 
-Timeless documentation avoids words that anchor the text to a specific point in time or assume knowledge of past/future versions. It reduces maintenance and ensures accuracy even when read months or years later.
+Timeless documentation avoids words that anchor the text to a specific point in time or assume knowledge of past or future versions. It reduces maintenance and ensures accuracy even when read months or years later.
 
-**Focus on how the product works *right now*, not how it changed or might change.**
+Describe how the product works. Use release notes to explain changes over time.
 
 ### Words to avoid
 
@@ -27,6 +27,6 @@ Timeless documentation avoids words that anchor the text to a specific point in 
 
 ### Exceptions
 
-* **Release notes & Blogs:** Time-based words (*new*, *currently*) are acceptable here as these documents are tied to a specific time.
+* **Release notes and blogs:** Time-based words (*new*, *currently*) are acceptable here as these documents are tied to a specific time.
 * **Installation:** "Install the *latest* version" is a valid instruction.
 * **Procedural timing:** "The VM restarts *soon* after you click..." is acceptable because it describes a sequence within the procedure, not the product roadmap.

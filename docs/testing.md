@@ -6,8 +6,9 @@ Run the test suite from the repository root:
 uv run pytest -n 2
 ```
 
-Tests use temporary documents and mock external LLM and Vale calls. No API key,
-Langfuse account, or Vale installation is needed. The shared fixture supplies a
+Tests use temporary documents and mock external large language model (LLM) and
+Vale calls. No API key, Langfuse account, or system-wide Vale installation is needed.
+The shared fixture supplies a
 dummy OpenAI key and removes Langfuse credentials.
 
 For a focused failure, run the relevant module in one process:
@@ -21,6 +22,8 @@ by default. Use `-n` to choose a worker count appropriate to the machine.
 
 ## Coverage
 
+The suite covers these behaviors:
+
 - `test_core.py`, edit scenarios, and context tests cover document replacement,
   review decisions, whitespace matching, and surrounding context.
 - `test_core_vale.py` covers Vale findings, execution failures, retry limits,
@@ -28,8 +31,8 @@ by default. Use `-n` to choose a worker count appropriate to the machine.
 - `test_workflow.py` covers setup, target loading, and guide selection, including
   discovery of the actual bundled resources.
 - `test_notebook.py` covers Jupytext pairing and synchronization.
-- TUI tests cover startup, review actions, immediate writes, guide transitions,
-  and recovery after an error or skip.
+- Terminal user interface (TUI) tests cover startup, review actions, immediate
+  writes, guide transitions, and recovery after an error or skip.
 
 ## TUI tests
 
@@ -41,11 +44,11 @@ asserting state transitions: its truthy attributes can hide incorrect behavior.
 Run interactions inside `async with app.run_test() as pilot:`. The helpers in
 [tests/helpers/textual.py](../tests/helpers/textual.py) provide key presses,
 clicks, and message-queue draining. Use `wait_for_condition` to wait for an
-observable state change; a drained UI queue does not prove that every background
+observable state change; a drained TUI queue does not prove that every background
 worker has finished.
 
 The initial Vale check runs in a worker thread. Its handoff to guide processing
-must go through `call_from_thread()` to schedule work on the UI thread.
+must go through `call_from_thread()` to schedule work on the TUI thread.
 [test_vale_to_processing_flow.py](../tests/test_vale_to_processing_flow.py)
 checks that processing actually begins after Vale completes.
 
@@ -61,10 +64,10 @@ Run the configured formatting and file checks:
 uv run prek run --all-files
 ```
 
-To check the bundled Vale configuration when Vale is installed:
+To check the bundled Vale configuration with the required project dependency:
 
 ```shell
-bash skills/docs-style/scripts/vale_check.sh README.md
+uv run --locked bash skills/docs-style/scripts/vale_check.sh README.md
 ```
 
 Vale findings require editorial review; a lint suggestion is not automatically
@@ -77,40 +80,48 @@ Install Python 3.12 or later and uv, then run:
 
 ```shell
 uv sync --locked
+uv run --locked vale --version
 uv run prek install
 uv run prek run --all-files
 ```
 
-If the `new-feature` CLI is installed, `new-feature create NAME --no-agent`
+If the `new-feature` command-line interface (CLI) is installed,
+`new-feature create NAME --no-agent`
 creates an isolated worktree and runs the setup configured in `pyproject.toml`.
+Replace `NAME` with the name of your feature.
 Tests need no `.env`; provide credentials locally only for interactive editing.
 Each checkout keeps its own `.venv`, logs, test cache, and coverage artifacts.
 The shared uv download cache is content-addressed.
 
 ## Quality gates
 
-The native `prek.toml` configuration runs hygiene and secret checks, Ruff,
+The `prek.toml` configuration runs Vale, file hygiene and secret checks, Ruff,
 pyupgrade, flynt, strict mypy, Vulture, deptry, source policy checks, and tests.
-CI runs the same command on Python 3.12 and 3.13. The standalone maintenance
-scripts use PEP 723 dependencies and are linted but are outside the application's
+Continuous integration (CI) runs the same command on Python 3.12 and 3.13.
+The standalone maintenance scripts use PEP 723 dependencies and are linted but
+are outside the application's
 mypy and deptry scopes. Tests are outside mypy; test behavior is checked by pytest.
 
+Setup downloads the locked Vale executable on first use. The Vale hook checks
+maintained Markdown files with the bundled rules. Missing executables and
+configuration failures fail the hook; style findings remain subject to editorial
+review. Unit tests mock Vale or use temporary stub executables and do not download
+or run the real binary.
+
 Branch coverage includes the full `docs_style` package, including entry points.
-The initial floor is 70%, the measured percentage rounded down; raise `fail_under`
-in `[tool.coverage.report]` as coverage improves toward 100%. Missing lines are
+The enforced floor is 70%; raise `fail_under` in `[tool.coverage.report]` as
+coverage improves toward 100%. Missing lines are
 printed in the terminal and rendered in `htmlcov/index.html`. Do not omit
 uncovered production modules or lower the floor to pass a change.
 
-For a focused test run that intentionally does not measure the whole package:
-
-```shell
-uv run pytest tests/test_core.py -n 0 --no-cov
-```
+For a focused run that does not measure the whole package, use `--no-cov` as in
+the example at the start of this page.
 
 The secrets baseline contains audited false positives only. Review each finding
 before updating it; never accept actual credentials into the baseline. Run scans
 with `--no-verify` to keep candidate credentials from being sent over the network.
 
-Changes to settings, CLI behavior, resource paths, and prompts require checking
-the corresponding README guidance. Review `docs/ARCHITECTURE.md` twice a year
-and update `docs/QUALITY.md` after meaningful coverage or scope changes.
+When changing settings, CLI behavior, resource paths,
+or prompts, check the corresponding [README guidance](../README.md). Review
+[Architecture](ARCHITECTURE.md) twice a year and update the
+[Quality scorecard](QUALITY.md) after meaningful coverage or scope changes.

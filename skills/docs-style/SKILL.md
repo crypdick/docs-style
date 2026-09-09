@@ -1,6 +1,6 @@
 ---
 name: docs-style
-description: Review or edit Markdown documentation using this repo's curated Google developer documentation style rules, with an optional Vale lint check. Use for documentation style requests, especially Google style compliance.
+description: Review or edit Markdown documentation using this repo's curated Google developer documentation style rules and a required Vale lint check. Use for documentation style requests, especially Google style compliance.
 ---
 
 # Documentation style
@@ -9,7 +9,19 @@ Apply the curated rules to the Markdown files in the user's request. For a
 review, report findings; for an editing request, make the changes. Ask for a
 target only when the request and workspace leave it unclear.
 
-All resource paths below are relative to this skill's directory.
+All resource paths in this guide are relative to this skill's directory.
+
+## Required dependency
+
+Vale must be installed and runnable before reviewing or editing documentation.
+Check with `vale --version`. In a repository checkout, run `uv sync --locked`
+and `uv run --locked vale --version`; use `uv run --locked` before the wrapper
+command to run it in that environment. For a standalone skill installation,
+follow the [Vale installation instructions](https://docs.vale.sh/topics/installation)
+and make `vale` available on `PATH`.
+
+Install the dependency if it is missing. If installation or execution fails,
+report the failure and stop; do not skip Vale or claim that the review is complete.
 
 ## Review and edit
 
@@ -51,13 +63,17 @@ addresses their presentation and the change preserves syntax and behavior.
 
 ## Vale check
 
-If Vale is available, run the bundled wrapper after editing, or during a
+Run the bundled wrapper for every target document after editing, or during a
 review. Invoke it using the resolved skill directory and an absolute document
 path so it works from any working directory:
 
-```bash
+```shell
 bash /path/to/skills/docs-style/scripts/vale_check.sh /absolute/path/to/document.md
 ```
+
+Replace `/path/to/skills/docs-style` with the absolute path to this skill's
+directory and `/absolute/path/to/document.md` with the absolute path to the
+document.
 
 The wrapper uses [.vale.ini](.vale.ini) and the bundled
 [Google rules](vale_styles/Google/). It reports findings on stdout and uses
@@ -66,8 +82,7 @@ execution or configuration failures separately from style findings.
 
 Use editorial judgment on each finding; skip suggestions that change meaning,
 conflict with the curated rules, or make the prose worse. Recheck after fixes.
-If Vale is unavailable, finish the editorial work and mention that the lint
-check was skipped.
+Execution and configuration failures block completion until they are resolved.
 
 Summarize the substantive changes or findings, any unresolved issues, and
-whether Vale ran. Avoid a rule-by-rule transcript.
+the Vale result. Avoid a rule-by-rule transcript.

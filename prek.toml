@@ -25,6 +25,14 @@ hooks = [
 repo = "local"
 
 [[repos.hooks]]
+id = "vale"
+name = "Required Vale check (review style findings manually)"
+entry = "uv run --locked vale --config=skills/docs-style/.vale.ini --output=line --no-exit"
+language = "system"
+types = ["markdown"]
+exclude = "^archive/"
+
+[[repos.hooks]]
 id = "ruff-check"
 name = "Ruff check (includes debugger detection)"
 entry = "uv run --locked ruff check --fix --quiet"

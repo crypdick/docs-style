@@ -6,6 +6,7 @@ from typing import NamedTuple
 from dotenv import load_dotenv
 from loguru import logger
 
+from docs_style.core_vale import require_vale
 from docs_style.notebook import NotebookHandler, ensure_jupytext_installed, is_notebook
 from settings import FINAL_PASS_MARKER, STYLE_DIR
 
@@ -17,7 +18,8 @@ class WorkflowContext(NamedTuple):
 
 
 def setup_environment(require_api_key: bool = True) -> None:
-    """Load environment variables and validate API keys."""
+    """Require Vale, load environment variables, and validate API keys."""
+    require_vale()
     load_dotenv()
     if require_api_key and not os.getenv("OPENAI_API_KEY"):
         logger.error("OPENAI_API_KEY is not set. Provide it in the environment or .env file.")

@@ -8,9 +8,9 @@ Write documentation that is respectful and accessible to everyone.
 
 Avoid ableist, gendered, violent, and socially charged language. Vale automation checks for specific terms.
 
-### Handling legacy code terms
+### Handle legacy code terms
 
-If non-inclusive terms exist in code (e.g., a config parameter named `master`):
+If non-inclusive terms exist in code (e.g., a configuration parameter named `master`):
 
 * **Code font:** Always use code font for the term: `master`.
 * **Context:** Use the inclusive term in prose ("The primary node...").
