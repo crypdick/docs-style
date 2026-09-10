@@ -27,6 +27,9 @@ The suite covers these behaviors:
   review decisions, whitespace matching, and surrounding context.
 - `test_core_vale.py` covers Vale findings, execution failures, retry limits,
   and rejected full-document responses.
+- `test_vale_requirement.py` covers missing Vale, wrapper configuration discovery,
+  file-specific configuration paths, bundled fallback, and failure propagation
+  with a temporary Vale stub.
 - `test_workflow.py` covers setup, target loading, and guide selection, including
   discovery of the actual bundled resources.
 - `test_notebook.py` covers Jupytext pairing and synchronization.
@@ -63,11 +66,24 @@ Run the configured formatting and file checks:
 uv run prek run --all-files
 ```
 
-Check the bundled Vale configuration with the required project dependency:
+Run the Vale wrapper with the required project dependency:
 
 ```shell
 uv run --locked bash skills/docs-style/scripts/vale_check.sh README.md
 ```
+
+The wrapper prefers the nearest `.vale.ini` file in the document's directory or
+an ancestor directory. Without one, it uses the bundled configuration. It ignores
+global configuration and preserves file-specific project settings.
+
+Check rule behavior with the locked Vale executable:
+
+```shell
+uv run --locked python scripts/check_vale_rules.py
+```
+
+This deterministic check runs real Vale against regression fixtures. It's
+separate from the default pytest suite, which mocks external tool calls.
 
 Vale findings require editorial review. A lint suggestion is not automatically
 a useful edit. Changes to prompts or the skill also need a representative manual

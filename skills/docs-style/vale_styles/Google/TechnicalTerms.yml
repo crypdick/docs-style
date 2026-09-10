@@ -8,7 +8,6 @@ action:
 swap:
   '\bdata\s+cleansing\b': data cleaning
   '\bMIME\s+type\b': media type
-  '\bplain\s+text\b': plaintext
   '\bPOJO\b': simple object
   '\bRetriable\b': can be retried
   '\bTriable\b': can be tried
