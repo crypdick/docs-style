@@ -5,7 +5,8 @@ level: suggestion
 ignorecase: false
 # Ensures that the existence of 'first' implies the existence of 'second'.
 first: '\b([A-Z]{3,5})\b'
-second: '(?:\b[A-Z][a-z]+ )+\(([A-Z]{3,5})\)'
+# Expansions can use sentence case, hyphens, and wrapped prose.
+second: '(?:\b[A-Za-z][A-Za-z-]*\s+)+\(([A-Z]{3,5})\)'
 # ... with the exception of these:
 exceptions:
   - API

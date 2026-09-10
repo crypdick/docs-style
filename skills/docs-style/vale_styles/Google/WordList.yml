@@ -10,9 +10,11 @@ swap:
   "(?:API Console|dev|developer) key": API key
   "(?:cell ?phone|smart ?phone)": phone|mobile phone
   "(?:dev|developer|APIs) console": API console
-  "(?:e-mail|Email|E-mail)": email
+  "(?:e-mail|E-mail)": email
+  # Capitalization is correct at the start of a block or sentence.
+  '(?!^)(?<![.!?]\s+)Email': email
   "(?:file ?path|path ?name)": path
-  "(?:OAuth ?2|Oauth)": OAuth 2.0
+  '(?:OAuth 2(?!\.0)|OAuth2(?:\.0)?|Oauth)': OAuth 2.0
   "(?:ok|Okay)": OK|okay
   "(?:WiFi|wifi)": Wi-Fi
   '[\.]+apk': APK
@@ -57,7 +59,7 @@ swap:
   "(?:pre-submit)": presubmit
   "(?:run book)": runbook
   "(?:screen shot|screensnap)": screenshot
-  "(?:sign-on)": single sign-on
+  '(?<![Ss]ingle\s+)sign-on': single sign-on
   "(?:smart phone|smartphone)": mobile phone|phone
   "(?:statusbar|status-bar)": status bar
   "(?:sub-tree)": subtree
@@ -126,7 +128,7 @@ swap:
   regex: regular expression
   SHA1: SHA-1|HAS-SHA1
   sign into: sign in to
-  sign-?on: single sign-on
+  signon: single sign-on
   static IP address: static external IP address
   stylesheet: style sheet
   synch: sync

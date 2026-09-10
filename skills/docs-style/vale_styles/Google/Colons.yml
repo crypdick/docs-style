@@ -1,8 +1,9 @@
 extends: existence
 message: "'%s' should be in lowercase."
 link: 'https://developers.google.com/style/colons'
-nonword: true
+# Match the whole word so vocabulary can preserve proper nouns and acronyms.
+nonword: false
 level: warning
 scope: sentence
 tokens:
-  - '(?<!:[^ ]+?):\s[A-Z]'
+  - '(?<=(?<!:[^ ]+?):\s)[A-Z][\w-]*'

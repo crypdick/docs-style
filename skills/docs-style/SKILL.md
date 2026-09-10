@@ -77,10 +77,18 @@ Replace `/path/to/skills/docs-style` with the absolute path to this skill's
 directory and `/absolute/path/to/document.md` with the absolute path to the
 document.
 
-The wrapper uses the [`.vale.ini` configuration file](.vale.ini) and the bundled
-[Google rules](vale_styles/Google/). It reports findings on standard output and uses
-`--no-exit` so style findings do not produce a failing exit status. Treat
-execution or configuration failures separately from style findings.
+The wrapper searches from the document's directory upward and uses the nearest
+`.vale.ini` file. It runs from that configuration's directory with a relative
+document path so file-specific settings such as `[README.md]` apply. This
+preserves the project's rules and exceptions regardless of your working directory.
+If no configuration exists along that path, it uses the bundled
+[`.vale.ini` configuration file](.vale.ini) and [Google rules](vale_styles/Google/).
+It ignores Vale's global configuration in both cases.
+
+The wrapper reports findings on standard output and uses `--no-exit` so style
+findings don't produce a failing exit status. Treat execution or configuration
+failures separately from style findings. A broken project configuration stops
+the check without triggering the bundled fallback.
 
 Use editorial judgment on each finding. Skip suggestions that change meaning,
 conflict with the curated rules, or make the prose worse. Recheck after fixes.

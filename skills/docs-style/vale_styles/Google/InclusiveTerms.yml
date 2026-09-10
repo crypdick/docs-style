@@ -1,5 +1,5 @@
 extends: substitution
-message: "Don't use '%s'. Instead, use '%s'."
+message: "Use '%s' instead of '%s'."
 link: 'https://developers.google.com/style/inclusive-documentation'
 level: error
 ignorecase: true

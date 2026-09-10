@@ -13,8 +13,8 @@ swap:
   'No-SQL': NoSQL
   'No SQL': NoSQL
   'Oauth': OAuth 2.0
-  'OAuth 2': OAuth 2.0
-  'OAuth2': OAuth 2.0
+  'OAuth 2(?!\.0)': OAuth 2.0
+  'OAuth2(?:\.0)?': OAuth 2.0
   'WiFi': Wi-Fi
   'wifi': Wi-Fi
   'Wifi': Wi-Fi

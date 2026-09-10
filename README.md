@@ -114,6 +114,13 @@ uv run --locked bash skills/docs-style/scripts/vale_check.sh docs/your_article.m
 This wrapper reports findings only. The Python editor also uses an LLM to fix
 Vale findings.
 
+The wrapper uses the nearest `.vale.ini` file in the document's directory or
+an ancestor directory, preserving project rules and file-specific exceptions.
+It runs from the configuration's directory with a relative document path.
+Without a project configuration, it uses the bundled configuration and Google
+rules. Both modes ignore Vale's global configuration. Configuration and
+execution failures stop the check.
+
 ## Create draft pull requests in bulk
 
 [bulk_pr_autodocs.py](bulk_pr_autodocs.py) processes Markdown paths listed in a

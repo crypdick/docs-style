@@ -12,12 +12,13 @@ swap:
   '\bdisplay\s+(?!the)\b': appears|is displayed
   '\bexecute\b': run
   '\bexploit\b': use
-  '\bimpacts?\b': affects|has an impact on
+  '(?<!high-)\bimpacts?\b': affects|has an impact on
   '\binterface\s+with\b': interact with|communicate with
   '\blets?\s+us\b': we|let's
   '\bpersist\b': make persistent|save
   '\bpopulate\b': fill in|add data to
   '\breview\b': read|examine
   '\btarget\b': intended for|focused on
-  '\btype\b': enter
+  # Standalone table cells name a type; imperative uses have following text.
+  '\btype\b(?!-check|\s*$)': enter
 

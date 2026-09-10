@@ -33,6 +33,14 @@ types = ["markdown"]
 exclude = "^archive/"
 
 [[repos.hooks]]
+id = "vale-rules"
+name = "Check curated Vale rule behavior"
+entry = "uv run --locked python scripts/check_vale_rules.py"
+language = "system"
+pass_filenames = false
+files = "^(skills/docs-style/vale_styles/|scripts/check_vale_rules\\.py$)"
+
+[[repos.hooks]]
 id = "ruff-check"
 name = "Ruff check (includes debugger detection)"
 entry = "uv run --locked ruff check --fix --quiet"
