@@ -76,6 +76,13 @@ Do not leave syntax-diagram notation such as `[optional]` or `{choice1|choice2}`
 
 Use *command*, *option* or *flag*, and *argument* as appropriate to the tool. Preserve established names for subcommands and signals.
 
+## Comments that explain decisions
+
+When a design decision comes with reasoning that future maintainers need,
+capture that reasoning near the code implementing it. Preserve the intent and
+constraints; don't invent a rationale or add comments that merely repeat the
+code. Link to an existing design explanation when details belong there.
+
 ## API reference code comments
 
 * **Coverage:** Document all public classes, methods, fields, and constants.
