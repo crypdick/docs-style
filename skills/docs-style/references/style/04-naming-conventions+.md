@@ -19,6 +19,10 @@ Apply naming conventions when proposing new names. Preserve existing filenames, 
 
 ## Placeholders
 
+Keep reusable examples portable. Use placeholders for reader-specific usernames,
+email addresses, and home directory paths instead of copying an author's values.
+Use `~` for the home directory when the documented shell supports it.
+
 ### Format
 
 * **Style:** Uppercase with underscores (`PROJECT_ID`).
