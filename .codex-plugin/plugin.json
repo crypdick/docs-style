@@ -1,7 +1,7 @@
 {
   "name": "docs-style",
-  "version": "0.2.7",
-  "description": "Apply Google Developer Documentation Style Guide to markdown via staged edits and a Vale lint sweep.",
+  "version": "0.2.8",
+  "description": "Review documentation with curated Google style rules and Vale, or review user-facing application copy with a separate skill.",
   "author": {
     "name": "Ricardo Decal",
     "email": "biz@ricardodecal.com"
@@ -19,8 +19,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Docs Style",
-    "shortDescription": "Edit docs toward Google developer documentation style",
-    "longDescription": "Documentation editing workflows that apply the Google Developer Documentation Style Guide, stage targeted markdown edits, and use Vale as a lint sweep.",
+    "shortDescription": "Review documentation style and application copy",
+    "longDescription": "Separate skills for documentation edits with curated Google style rules and a Vale check, and for user-facing application copy grounded in product behavior.",
     "developerName": "Ricardo Decal",
     "category": "Coding",
     "capabilities": [

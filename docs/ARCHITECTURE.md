@@ -11,6 +11,9 @@ The modules and directories have these responsibilities:
 
 - The `skills/docs-style/` directory contains the agent workflow, curated references, Vale configuration,
   rule bundle, and lint wrapper. Plugin manifests expose this skill.
+- The `skills/app-copy/` directory contains a separate agent skill for user-facing
+  application text. Its rules are independent of the Python documentation editor
+  and the documentation Vale bundle.
 - The `docs_style/core.py` file defines `DocumentSession`, matching, context expansion, proposal
   handling, and LangChain agent construction. It does not import the user
   interface (UI).

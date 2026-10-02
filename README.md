@@ -3,7 +3,7 @@
 Review and edit documentation with a curated adaptation of the
 [Google Developer Documentation Style Guide](https://developers.google.com/style).
 The repository provides an agent skill for Markdown and a Python editor, AutoDocsEditor,
-for Markdown and Jupyter notebooks.
+for Markdown and Jupyter notebooks. A separate agent skill reviews application copy.
 
 ## Agent skill
 
@@ -20,6 +20,19 @@ Use requests such as these:
 The skill reads the relevant rules, reviews or edits the document as requested,
 and runs Vale. It can combine related corrections.
 If you want to approve each round, ask for staged review.
+
+## Application copy skill
+
+The [app-copy skill](skills/app-copy/SKILL.md) reviews or edits user-facing text
+in source code and localization files. It covers button and link labels, forms,
+errors, status, and confirmations. It checks wording against actual application
+behavior and preserves code syntax, interpolation, and localization structure.
+
+Use requests such as "Review the checkout button labels and error messages" or
+"Apply app-copy to the export flow." The skill uses the project's relevant
+checks. Vale's documentation rules do not govern application strings.
+Both skills ship in the plugin. The Python editor uses only the documentation
+references.
 
 ## Python editor
 
