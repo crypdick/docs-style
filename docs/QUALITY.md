@@ -73,6 +73,5 @@ is three days. The lockfile makes resolution reproducible.
 Review the import directions in [Architecture](ARCHITECTURE.md) when making
 structural changes. The package does not use a dedicated architecture linter.
 Review documentation drift with each affected feature and revisit the architecture
-map twice a year. Hookify reminders require a separately installed Hookify plugin.
-The prek hooks and continuous integration (CI) enforce the mechanical rules
-independently.
+map twice a year. The `coding-conventions` skill provides advisory design guidance.
+The prek hooks and continuous integration (CI) enforce mechanical rules independently.

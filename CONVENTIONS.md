@@ -1,5 +1,9 @@
 # Design conventions
 
+For advisory design reviews and durable coding preferences, use the
+`coding-conventions` skill shipped with Strictify. Read only its relevant
+references; the project-specific decisions below remain canonical.
+
 Run `uv run prek run --all-files` before submitting changes. Tool versions live
 in the `uv.lock` file. Manage dependencies with `uv add` and `uv remove`.
 
@@ -64,5 +68,4 @@ avoid claiming that mocked tests measure LLM editing quality.
 
 When the user states a durable coding preference, enforce it with an existing
 tool setting or a focused check when practical. Record judgment-based principles
-here. The `.claude/hookify.*.md` files provide reminders when Hookify is present.
-They do not install Hookify or replace the mechanical prek checks.
+here. The skill provides advisory guidance; prek checks enforce mechanical rules.
