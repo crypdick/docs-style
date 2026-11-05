@@ -40,6 +40,9 @@ The bulk script has a mocked command regression test. The crawler has no
 automated behavior suite.
 Ruff checks the source policy scripts. Tests verify that they reject representative
 policy violations, but these scripts are outside application coverage. Tests are outside mypy scope.
+Release preparation has CLI tests in temporary Git repositories covering version
+selection, manifest synchronization, retries, superseded pushes, and invalid data.
+This development script is outside application coverage.
 
 Vale runs as a required hook on maintained Markdown files. Its execution and
 configuration failures fail the check. Style findings require editorial review.
