@@ -11,7 +11,7 @@
       "name": "docs-style",
       "source": "./",
       "description": "Review documentation with curated Google style rules and Vale, or review user-facing application copy with a separate skill.",
-      "version": "0.2.8"
+      "version": "0.2.9"
     }
   ]
 }

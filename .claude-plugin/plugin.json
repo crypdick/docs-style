@@ -1,6 +1,6 @@
 {
   "name": "docs-style",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Review documentation with curated Google style rules and Vale, or review user-facing application copy with a separate skill.",
   "author": {
     "name": "Ricardo Decal",
@@ -8,5 +8,12 @@
   },
   "repository": "https://github.com/crypdick/docs-style",
   "license": "MIT",
-  "keywords": ["documentation", "style-guide", "google", "vale", "lint", "markdown"]
+  "keywords": [
+    "documentation",
+    "style-guide",
+    "google",
+    "vale",
+    "lint",
+    "markdown"
+  ]
 }
