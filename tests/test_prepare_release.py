@@ -13,7 +13,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "prepare_release.py"
 GIT = shutil.which("git") or "git"
 NAME = "docs-style"
-HAS_PROJECT = True
 
 
 class ReleaseTests(unittest.TestCase):
@@ -67,10 +66,9 @@ class ReleaseTests(unittest.TestCase):
                 else {"name": NAME, "version": version, "description": "Keep this"}
             )
             path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
-        if HAS_PROJECT:
-            (self.root / "pyproject.toml").write_text(
-                '[project]\nname = "docs-style"\nversion = "0.1.7"\n', encoding="utf-8"
-            )
+        (self.root / "pyproject.toml").write_text(
+            f'[project]\nname = "docs-style"\nversion = "{version}"\n', encoding="utf-8"
+        )
 
     def run_release(self, source: str, previous: str) -> subprocess.CompletedProcess[str]:
         (self.root / "output").unlink(missing_ok=True)
@@ -94,10 +92,9 @@ class ReleaseTests(unittest.TestCase):
             {"name": "other", "version": "9.0.0"},
             {"name": NAME, "version": expected},
         ]
-        if HAS_PROJECT:
-            assert f'version = "{expected}"' in (self.root / "pyproject.toml").read_text(
-                encoding="utf-8"
-            )
+        assert f'version = "{expected}"' in (self.root / "pyproject.toml").read_text(
+            encoding="utf-8"
+        )
 
     def test_patch_bump_synchronizes_versions(self) -> None:
         previous = self.commit("base")
@@ -109,13 +106,24 @@ class ReleaseTests(unittest.TestCase):
 
     def test_manual_bump_in_earlier_push_commit_is_preserved(self) -> None:
         previous = self.commit("base")
-        path = self.root / ".claude-plugin/plugin.json"
+        path = self.root / "pyproject.toml"
         path.write_text(path.read_text().replace('"1.2.3"', '"1.3.0"'))
         self.commit("manual release")
         source = self.commit("another commit in same push")
         result = self.run_release(source, previous)
         assert result.returncode == 0, result.stderr
         self.assert_versions("1.3.0")
+
+    def test_copied_manifest_version_does_not_choose_release_version(self) -> None:
+        previous = self.commit("base")
+        path = self.root / ".claude-plugin/plugin.json"
+        path.write_text(path.read_text().replace('"1.2.3"', '"2.0.0"'))
+        source = self.commit("manifest drift")
+
+        result = self.run_release(source, previous)
+
+        assert result.returncode == 0, result.stderr
+        self.assert_versions("1.2.4")
 
     def test_retry_reuses_release_commit(self) -> None:
         previous = self.commit("base")
