@@ -8,8 +8,6 @@ import subprocess
 import tomllib
 from pathlib import Path
 
-PLUGIN = Path(".claude-plugin/plugin.json")
-
 
 def _git(*args: str) -> str:
     environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
@@ -49,16 +47,22 @@ def _read_json(path: Path) -> dict[str, object]:
     return value
 
 
-def _version(manifest: dict[str, object]) -> str:
-    return ".".join(map(str, _parts(manifest.get("version"))))
+def _project_version(content: str) -> str:
+    return ".".join(map(str, _parts(tomllib.loads(content)["project"]["version"])))
 
 
 def _prepare_version(previous: str) -> str:
-    # NOTE: README.md names .claude-plugin/plugin.json as the version source of truth.
-    paths = [PLUGIN, Path(".codex-plugin/plugin.json"), Path(".claude-plugin/marketplace.json")]
+    # NOTE: README.md names pyproject.toml as the version source of truth.
+    project_path = Path("pyproject.toml")
+    project = project_path.read_text(encoding="utf-8")
+    current = _project_version(project)
+    baseline = _project_version(_git("show", f"{previous}:pyproject.toml"))
+    paths = [
+        Path(".claude-plugin/plugin.json"),
+        Path(".codex-plugin/plugin.json"),
+        Path(".claude-plugin/marketplace.json"),
+    ]
     manifests = [_read_json(path) for path in paths]
-    current = _version(manifests[0])
-    baseline = _version(json.loads(_git("show", f"{previous}:{PLUGIN}")))
     current_parts, baseline_parts = _parts(current), _parts(baseline)
     if current_parts < baseline_parts:
         raise ValueError(f"version decreased from {baseline} to {current}")
@@ -80,9 +84,6 @@ def _prepare_version(previous: str) -> str:
     for manifest in manifests[:2]:
         manifest["version"] = version
 
-    project_path = Path("pyproject.toml")
-    project = project_path.read_text(encoding="utf-8")
-    _parts(tomllib.loads(project)["project"]["version"])
     project, count = re.subn(
         r'^version = "[^"]+"$', f'version = "{version}"', project, count=1, flags=re.M
     )
@@ -107,7 +108,9 @@ def main() -> None:
         output_path = Path(os.environ["GITHUB_OUTPUT"])
         state = _release_state(args.source)
         version = (
-            _prepare_version(args.previous) if state == "new" else _version(_read_json(PLUGIN))
+            _prepare_version(args.previous)
+            if state == "new"
+            else _project_version(Path("pyproject.toml").read_text(encoding="utf-8"))
         )
         with output_path.open("a", encoding="utf-8") as output:
             output.write(f"state={state}\nversion={version}\n")

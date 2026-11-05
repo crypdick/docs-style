@@ -183,9 +183,9 @@ See [Testing](docs/testing.md) for development checks.
 
 After checks pass for a push to `main`, continuous integration (CI) increments
 its patch version and pushes a `Release X.Y.Z` commit. The version in
-`.claude-plugin/plugin.json` is authoritative. To choose a manual release, increase
-that version before committing. CI preserves increases anywhere in the push,
-synchronizes the Codex and marketplace manifests and `pyproject.toml`, refreshes
+`pyproject.toml` is authoritative. To choose a manual release, run
+`uv version --bump minor` (or `major` or `patch`) and commit the result. CI preserves
+increases anywhere in the push, synchronizes the Claude, Codex, and marketplace manifests, refreshes
 `uv.lock`, and checks the release before pushing. Feature branches and pull
 requests run checks without releasing. Retries reuse an existing release commit;
 runs superseded by another push skip release.
