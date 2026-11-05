@@ -35,6 +35,8 @@ The modules and directories have these responsibilities:
 - The `tests/` directory contains tests of public behavior and headless Textual
   interactions with external operations mocked. The `scripts/prek_hooks/` directory
   holds source policy checks.
+- `scripts/prepare_release.py` synchronizes plugin and package versions for the
+  release job. See [Plugin releases](../README.md#plugin-releases) for CI behavior.
 
 ## Invariants
 
