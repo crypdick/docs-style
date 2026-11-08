@@ -1,6 +1,6 @@
 {
   "name": "docs-style",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "Review documentation with curated Google style rules and Vale, or review user-facing application copy with a separate skill.",
   "author": {
     "name": "Ricardo Decal",
