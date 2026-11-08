@@ -63,6 +63,8 @@ def _prepare_version(previous: str) -> str:
         Path(".claude-plugin/marketplace.json"),
     ]
     manifests = [_read_json(path) for path in paths]
+    if any(manifest.get("name") != "docs-style" for manifest in manifests[:2]):
+        raise ValueError("plugin manifests must be named docs-style")
     current_parts, baseline_parts = _parts(current), _parts(baseline)
     if current_parts < baseline_parts:
         raise ValueError(f"version decreased from {baseline} to {current}")
@@ -74,12 +76,12 @@ def _prepare_version(previous: str) -> str:
     plugins = manifests[2].get("plugins")
     if not isinstance(plugins, list):
         raise TypeError("marketplace must contain a plugins array")
-    plugin = next(
-        (item for item in plugins if isinstance(item, dict) and item.get("name") == "docs-style"),
-        None,
-    )
-    if plugin is None:
-        raise ValueError("marketplace must register docs-style")
+    registrations = [
+        item for item in plugins if isinstance(item, dict) and item.get("name") == "docs-style"
+    ]
+    if len(registrations) != 1:
+        raise ValueError("marketplace must register docs-style exactly once")
+    plugin = registrations[0]
     plugin["version"] = version
     for manifest in manifests[:2]:
         manifest["version"] = version

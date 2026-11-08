@@ -1,12 +1,10 @@
 """Prek hook to enforce timeless comments.
 
-Philosophy: Comments should describe *what* code does and *why*, not narrate
-repository history. Temporal language that centers chronology instead of
-current behavior makes comments age poorly and obscures the code's present
-intent.
+Comments should explain current behavior and reasons, not narrate past changes.
+Only explicit historical phrases are checked; domain vocabulary is not history.
 
 Detects:
-- Temporal keywords in inline comments and docstrings (see ``TEMPORAL_KEYWORDS``)
+- Historical phrases in inline comments and docstrings (see ``TEMPORAL_KEYWORDS``)
 
 Allowed:
 - Lines annotated with ``# allow: timeless-comments``
@@ -26,18 +24,14 @@ import sys
 import tokenize
 from pathlib import Path
 
-# Keywords that indicate temporal language in comments
-# Editing documents inherently involves original/replacement text and prior decisions.
-# Flag historical narration, not vocabulary describing the editing domain.
+# Keep semantic judgments about words such as "fallback" or "compatible" advisory.
 TEMPORAL_KEYWORDS = [
-    r"\bused to\b",
+    r"\bno longer\b",
+    r"\bpreviously\b",
+    r"\bformerly\b",
     r"\bis now\b",
     r"\bfor now\b",
-    r"\bno longer\b",
-    r"\bwere removed\b",
-    r"\bbut wait\b",
-    r"\bactually,\b",
-    r"\bah!",
+    r"\bhas been (?:removed|replaced|renamed|deprecated)\b",
 ]
 
 
@@ -74,7 +68,7 @@ def extract_comments(content: str, filename: str = "<unknown>") -> list[tuple[in
             continue
         segment = ast.get_source_segment(content, first.value)
         if segment is not None:
-            comments.update(enumerate(segment.splitlines(), start=first.value.lineno))
+            comments.update(enumerate(segment.split("\n"), start=first.value.lineno))
     return sorted(comments)
 
 
