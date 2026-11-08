@@ -130,7 +130,7 @@ types = ["python"]
 [[repos.hooks]]
 id = "check-private-test-imports"
 name = "Forbid private test imports"
-entry = "uv run --locked python scripts/prek_hooks/check_private_test_imports.py"
+entry = "uv run --locked python scripts/prek_hooks/check_private_test_imports.py --package docs_style --package settings --package utils --package main --package bulk_pr_autodocs"
 language = "system"
 types = ["python"]
 
