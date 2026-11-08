@@ -5,94 +5,59 @@ description: Review or edit Markdown documentation using this repo's curated Goo
 
 # Documentation style
 
-Apply the curated rules to the Markdown files in the user's request. For a
-review, report findings. For an editing request, make the changes. Ask for a
-target only when the request and workspace leave it unclear.
+Review or edit the requested Markdown documentation using the
+[curated style references](references/style/). Report findings for a review;
+apply changes for an editing request. User instructions and repository writing
+conventions take precedence over style defaults.
 
-All resource paths in this guide are relative to this skill's directory.
+Resource paths below are relative to this skill's directory.
 
-## Required dependency
+## Vale prerequisite
 
-Vale must be installed and runnable before reviewing or editing documentation.
-Check with `vale --version`. In a repository checkout, run `uv sync --locked`
-and `uv run --locked vale --version`. Use `uv run --locked` before the wrapper
-command to run it in that environment. For a standalone skill installation,
-follow the [Vale installation instructions](https://docs.vale.sh/topics/installation)
-and make `vale` available on `PATH`.
+Vale must be runnable before reviewing or editing. In a repository checkout,
+run `uv sync --locked` and `uv run --locked vale --version`; prefix the wrapper
+command below with `uv run --locked`. For a standalone installation, check
+`vale --version` and follow the [Vale installation instructions](https://docs.vale.sh/topics/installation)
+if missing. Installation or execution failure blocks the workflow; report it
+rather than skipping Vale.
 
-Install the dependency if it is missing. If installation or execution fails,
-report the failure and stop. Do not skip Vale or claim that the review is complete.
+## Editorial judgment
 
-## Review and edit
+Read the target and applicable repository conventions. Cover all applicable
+style topics for a full review, or select relevant references for a focused
+request. Choose the editing order and grouping that suit the document; per-rule
+approval is unnecessary unless the user requests it.
 
-Read the target document and any applicable repository writing conventions.
-Use the [style references](references/style/) for the curated rules:
+Preserve meaning, technical accuracy, and the author's voice. Change clear
+prose only when doing so improves it. Keep link destinations, reference
+identifiers, explicit anchors, frontmatter, and Markdown structure intact.
+Check local references when heading changes affect generated anchors. Do not
+rename files, APIs, flags, or literal values for prose style. Change code samples
+only for presentation rules and without altering syntax or behavior.
 
-- `00-*`: documentation principles, voice, tone, tense, and person
-- `01-*`: headings, paragraphs, lists, terminology, and inclusive language
-- `02-*`: links, notices, procedures, and tables
-- `03-code+.md`: code formatting, command examples, and API documentation
-- `03-wordlist+.md`: vocabulary reference for terms used in the document
-- `04-*`: accessibility, filenames, and placeholders
-- `z-grammar-and-language+.md`: grammar and punctuation
-
-For a full review, cover all applicable topics. For a focused request, read
-only the relevant references. The files are ordered from broad editorial choices
-to mechanics, but you can combine related corrections in one pass. Continue
-without per-rule approval unless the user requests staged review.
-
-Preserve meaning, technical claims, and the author's voice. Prefer a small,
-useful correction over rephrasing already clear prose. User instructions and
-repository conventions take precedence over these defaults. Resolve conflicts
-by preserving accuracy and readability, rather than repeatedly undoing edits.
-
-Keep link destinations, reference identifiers, explicit anchors, frontmatter,
-and Markdown structure intact. If a heading change affects generated anchors,
-check local references. Do not rename existing files, APIs, flags, or literal
-values to satisfy a prose rule. Edit code samples only when the relevant rule
-addresses their presentation and the change preserves syntax and behavior.
-
-## Optional modes
-
-Use these modes to limit the scope of a review:
-
-- **Final pass or quick sweep:** Use the references whose filenames end in
-  `+.md`, concentrating on issues that remain after earlier edits.
-- **Resume:** "Start from lists" includes the matching reference. "Skip through
-  wordlist" excludes it and all earlier references. Match filenames and ask
-  only if the requested starting point is ambiguous.
+For a final pass or quick sweep, use references ending in `+.md`. When resuming,
+include the named reference for "start from" and exclude it and earlier
+references for "skip through." Ask only when the target or starting point cannot
+be inferred from the request and workspace.
 
 ## Vale check
 
-Run the bundled wrapper for every target document after editing, or during a
-review. Invoke it using the resolved skill directory and an absolute document
-path so it works from any working directory:
+Run the bundled wrapper on every target during a review or after editing.
+Use absolute paths so the invocation is independent of the working directory:
 
 ```shell
 bash /path/to/skills/docs-style/scripts/vale_check.sh \
     /absolute/path/to/document.md
 ```
 
-Replace `/path/to/skills/docs-style` with the absolute path to this skill's
-directory and `/absolute/path/to/document.md` with the absolute path to the
-document.
+The wrapper uses the nearest `.vale.ini` in the document's directory or an
+ancestor, preserving file-specific settings. Otherwise, it uses the bundled
+[configuration](.vale.ini) and [Google rules](vale_styles/Google/). It ignores
+global configuration; a broken project configuration does not trigger fallback.
 
-The wrapper searches from the document's directory upward and uses the nearest
-`.vale.ini` file. It runs from that configuration's directory with a relative
-document path so file-specific settings such as `[README.md]` apply. This
-preserves the project's rules and exceptions regardless of your working directory.
-If no configuration exists along that path, it uses the bundled
-[`.vale.ini` configuration file](.vale.ini) and [Google rules](vale_styles/Google/).
-It ignores Vale's global configuration in both cases.
+Style findings do not fail the command (`--no-exit`); execution and configuration
+failures block completion. Evaluate findings for accuracy, readability, and
+consistency with the curated rules rather than applying them mechanically.
+Recheck after fixes.
 
-The wrapper reports findings on standard output and uses `--no-exit` so style
-findings don't produce a failing exit status. Treat execution or configuration
-failures separately from style findings. A broken project configuration stops
-the check without triggering the bundled fallback.
-
-Use editorial judgment on each finding. Skip suggestions that change meaning,
-conflict with the curated rules, or make the prose worse. Recheck after fixes.
-Execution and configuration failures block completion until they are resolved.
-
-Summarize the substantive changes or findings, any unresolved issues, and
-the Vale result. Avoid a rule-by-rule transcript.
+Summarize substantive changes or findings, unresolved issues, and the Vale result.
